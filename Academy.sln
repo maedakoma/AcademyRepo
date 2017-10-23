@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Academy", "Academy\Academy.csproj", "{B31A2AD5-5F77-4B6B-99C2-FE858D0A8551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyGui", "Academy\AcademyGui.csproj", "{B31A2AD5-5F77-4B6B-99C2-FE858D0A8551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Academy", "AcademyMgr\Academy.csproj", "{14CB6A9A-95E6-4069-B8F6-FDD62E60CCA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B31A2AD5-5F77-4B6B-99C2-FE858D0A8551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B31A2AD5-5F77-4B6B-99C2-FE858D0A8551}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B31A2AD5-5F77-4B6B-99C2-FE858D0A8551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14CB6A9A-95E6-4069-B8F6-FDD62E60CCA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14CB6A9A-95E6-4069-B8F6-FDD62E60CCA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14CB6A9A-95E6-4069-B8F6-FDD62E60CCA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14CB6A9A-95E6-4069-B8F6-FDD62E60CCA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

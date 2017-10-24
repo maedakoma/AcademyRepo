@@ -33,7 +33,9 @@ namespace AcademyMgr
                 {
                     Payment payment = new Payment();
                     payment.Amount = (int)reader["amount"];
+                    payment.Debt = (int)reader["debt"];
                     payment.Type = reader["type"].ToString();
+                    payment.Name = reader["name"].ToString();
                     mem.Payments.Add(payment);
                 }
                 else
@@ -47,6 +49,8 @@ namespace AcademyMgr
                     if (reader["amount"] != DBNull.Value)
                     {
                         payment.Amount = (int)reader["amount"];
+                        payment.Debt = (int)reader["debt"];
+                        payment.Name = reader["name"].ToString();
                         payment.Type = reader["type"].ToString();
                         mem.Payments.Add(payment);
                     }

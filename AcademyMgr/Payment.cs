@@ -12,7 +12,8 @@ namespace AcademyMgr
         private readonly int _ID;
         private int _amount;
         private string _type;
-        private int _dette;
+        private string _name;
+        private int _debt;
 
         public int ID
         {
@@ -23,15 +24,20 @@ namespace AcademyMgr
             get { return this._type; }
             set { _type = value; }
         }
+        public string Name
+        {
+            get { return this._name; }
+            set { _name = value; }
+        }
         public int Amount
         {
             get { return this._amount; }
             set { _amount = value; }
         }
-        public int Dette
+        public int Debt
         {
-            get { return this._dette; }
-            set { _dette = value; }
+            get { return this._debt; }
+            set { _debt = value; }
         }
     }
 }

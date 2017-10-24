@@ -68,6 +68,7 @@ namespace Academy
             }
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
+            mainGrid.RowHeadersVisible = false;
             lblMembers.Text = People.Rows.Count.ToString() + " members";
         }
 

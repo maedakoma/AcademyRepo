@@ -30,6 +30,7 @@
         {
             this.mainGrid = new System.Windows.Forms.DataGridView();
             this.lblMembers = new System.Windows.Forms.Label();
+            this.bntNewMember = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,7 +41,7 @@
             this.mainGrid.Name = "mainGrid";
             this.mainGrid.Size = new System.Drawing.Size(571, 448);
             this.mainGrid.TabIndex = 0;
-            mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
+            this.mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
             // 
             // lblMembers
             // 
@@ -51,9 +52,20 @@
             this.lblMembers.TabIndex = 1;
             this.lblMembers.Text = "lblMembers";
             // 
+            // bntNewMember
+            // 
+            this.bntNewMember.Location = new System.Drawing.Point(12, 30);
+            this.bntNewMember.Name = "bntNewMember";
+            this.bntNewMember.Size = new System.Drawing.Size(107, 23);
+            this.bntNewMember.TabIndex = 2;
+            this.bntNewMember.Text = "Add new member";
+            this.bntNewMember.UseVisualStyleBackColor = true;
+            this.bntNewMember.Click += new System.EventHandler(this.bntNewMember_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(944, 567);
+            this.Controls.Add(this.bntNewMember);
             this.Controls.Add(this.lblMembers);
             this.Controls.Add(this.mainGrid);
             this.Name = "MainForm";
@@ -68,6 +80,7 @@
 
         private System.Windows.Forms.DataGridView mainGrid;
         private System.Windows.Forms.Label lblMembers;
+        private System.Windows.Forms.Button bntNewMember;
     }
 }
 

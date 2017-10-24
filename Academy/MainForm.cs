@@ -14,7 +14,7 @@ namespace Academy
     public partial class MainForm : Form
     {
         List<AcademyMgr.Member> members;
-
+        AcademyMgr.AcademyMgr manager;
         public MainForm()
         {
             InitializeComponent();
@@ -23,14 +23,16 @@ namespace Academy
 
         private void MainForm_Load()
         {
-            // TODO: This line of code loads data into the 'academyDataSet.members' table. You can move, or remove it, as needed.
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            members =  manager.getMembers();
-            FillGrid(members);
+            manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            FillGrid();
         }
             
-        private void FillGrid(List<AcademyMgr.Member> members)
+        public void FillGrid()
         {
+            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            members = manager.getMembers();
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable
@@ -74,12 +76,18 @@ namespace Academy
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            MemberForm mf = new MemberForm();
+            MemberForm mf = new MemberForm(this, manager);
             mf.Show();
             int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
             Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
             mf.Populate(member);
 
+        }
+
+        private void bntNewMember_Click(object sender, EventArgs e)
+        {
+            MemberForm mf = new MemberForm(this, manager);
+            mf.Show();
         }
     }
 }

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace AcademyMgr
 {
     public class AcademyMgr
     {
-        public List<Member> getMembers()
+        MySqlConnection dbConn;
+        public void Open()
         {
-            List<Member> members = new List<Member>();
-
-            MySql.Data.MySqlClient.MySqlConnection dbConn = new MySql.Data.MySqlClient.MySqlConnection("server=localhost;user id=admin;password=admin;database=academy;persistsecurityinfo=True");
-            MySql.Data.MySqlClient.MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
+            dbConn = new MySqlConnection("server=localhost;user id=admin;password=admin;database=academy;persistsecurityinfo=True");
             try
             {
                 dbConn.Open();
@@ -24,6 +22,14 @@ namespace AcademyMgr
                 //MessageBox.Show("Erro" + erro);
                 //this.Close();
             }
+        }
+
+        public List<Member> getMembers()
+        {
+            List<Member> members = new List<Member>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             Member mem = new Member();
@@ -59,6 +65,16 @@ namespace AcademyMgr
             }
             
             return members;
+        }
+        public bool InsertMember(Member member)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt) VALUES(@firstname, @lastname, @belt)";
+            comm.Parameters.Add("@firstname", member.Firstname);
+            comm.Parameters.Add("@lastname", member.Lastname);
+            comm.Parameters.Add("@belt", member.Belt);
+            comm.ExecuteNonQuery();
+            return true;
         }
     }
 }

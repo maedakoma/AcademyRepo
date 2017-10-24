@@ -13,12 +13,18 @@ namespace Academy
 {
     public partial class MemberForm : Form
     {
-        public MemberForm()
+        bool bCreateMode = true;
+        AcademyMgr.AcademyMgr AcademyMgr;
+        MainForm mainform;
+        public MemberForm(MainForm parentForm, AcademyMgr.AcademyMgr manager)
         {
+            AcademyMgr = manager;
+            mainform = parentForm;
             InitializeComponent();
         }
         public void Populate(Member member)
         {
+            bCreateMode = false;
             txtFirstname.Text = member.Firstname;
             txtLastname.Text = member.Lastname;
             txtBelt.Text = member.Belt;
@@ -62,6 +68,17 @@ namespace Academy
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (bCreateMode)
+            {
+                //Nous sommes en mode création, on va créer un nouveau member
+                Member newMember = new Member();
+                newMember.Firstname = txtFirstname.Text;
+                newMember.Lastname = txtLastname.Text;
+                newMember.Belt = txtBelt.Text;
+                //Gestion des paiements:
+                AcademyMgr.InsertMember(newMember);
+                mainform.FillGrid();
+            }
             this.Close();
         }
     }

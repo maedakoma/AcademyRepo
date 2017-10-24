@@ -9,7 +9,7 @@ namespace AcademyMgr
 
     public class Member
     {
-        private readonly int _ID;
+        private int _ID;
         private string _firstname;
         private string _lastname;
         private string _gender;
@@ -19,6 +19,7 @@ namespace AcademyMgr
         public int ID
         {
             get { return this._ID; }
+            set { _ID = value; }
         }
         public List<Payment> Payments
         {

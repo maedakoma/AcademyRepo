@@ -40,6 +40,7 @@
             this.mainGrid.Name = "mainGrid";
             this.mainGrid.Size = new System.Drawing.Size(571, 448);
             this.mainGrid.TabIndex = 0;
+            mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
             // 
             // lblMembers
             // 

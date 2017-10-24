@@ -39,6 +39,7 @@ namespace AcademyMgr
                 else
                 {
                     mem = new Member();
+                    mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
                     mem.Belt = reader["belt"].ToString();

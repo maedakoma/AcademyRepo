@@ -13,6 +13,8 @@ namespace Academy
 {
     public partial class MainForm : Form
     {
+        List<AcademyMgr.Member> members;
+
         public MainForm()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace Academy
         {
             // TODO: This line of code loads data into the 'academyDataSet.members' table. You can move, or remove it, as needed.
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            List<AcademyMgr.Member> members =  manager.getMembers();
+            members =  manager.getMembers();
             FillGrid(members);
         }
             
@@ -32,11 +34,12 @@ namespace Academy
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable
-            DataColumn c0 = new DataColumn("lastname");
-            DataColumn c1 = new DataColumn("firstname");
-            DataColumn c2 = new DataColumn("belt");
-            DataColumn c3 = new DataColumn("gender");
-            DataColumn c4 = new DataColumn("amount");
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("lastname");
+            DataColumn c2 = new DataColumn("firstname");
+            DataColumn c3 = new DataColumn("belt");
+            DataColumn c4 = new DataColumn("gender");
+            DataColumn c5 = new DataColumn("amount");
 
 
             //Add the Created Columns to the Datatable
@@ -45,10 +48,12 @@ namespace Academy
             People.Columns.Add(c2);
             People.Columns.Add(c3);
             People.Columns.Add(c4);
-            
+            People.Columns.Add(c5);
+
             foreach (Member mem in members)
             {
                 DataRow row = People.NewRow();
+                row["ID"] = mem.ID;
                 row["lastname"] = mem.Lastname;
                 row["firstname"] = mem.Firstname;
                 row["belt"] = mem.Belt;
@@ -62,7 +67,18 @@ namespace Academy
                 People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
+            mainGrid.Columns[0].Visible = false;
             lblMembers.Text = People.Rows.Count.ToString() + " members";
+        }
+
+        private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            MemberForm mf = new MemberForm();
+            mf.Show();
+            int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
+            Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
+            mf.Populate(member);
+
         }
     }
 }

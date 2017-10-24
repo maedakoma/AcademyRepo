@@ -76,5 +76,13 @@ namespace AcademyMgr
             comm.ExecuteNonQuery();
             return true;
         }
+        public bool DeleteMember(int memberID)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM MEMBERS WHERE ID=@ID";
+            comm.Parameters.Add("@ID", memberID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
     }
 }

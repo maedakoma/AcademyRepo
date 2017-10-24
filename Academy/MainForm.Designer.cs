@@ -31,6 +31,7 @@
             this.mainGrid = new System.Windows.Forms.DataGridView();
             this.lblMembers = new System.Windows.Forms.Label();
             this.bntNewMember = new System.Windows.Forms.Button();
+            this.btnDeleteMember = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,9 +63,20 @@
             this.bntNewMember.UseVisualStyleBackColor = true;
             this.bntNewMember.Click += new System.EventHandler(this.bntNewMember_Click);
             // 
+            // btnDeleteMember
+            // 
+            this.btnDeleteMember.Location = new System.Drawing.Point(12, 59);
+            this.btnDeleteMember.Name = "btnDeleteMember";
+            this.btnDeleteMember.Size = new System.Drawing.Size(107, 23);
+            this.btnDeleteMember.TabIndex = 3;
+            this.btnDeleteMember.Text = "Delete member";
+            this.btnDeleteMember.UseVisualStyleBackColor = true;
+            this.btnDeleteMember.Click += new System.EventHandler(this.btnDeleteMember_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(944, 567);
+            this.Controls.Add(this.btnDeleteMember);
             this.Controls.Add(this.bntNewMember);
             this.Controls.Add(this.lblMembers);
             this.Controls.Add(this.mainGrid);
@@ -81,6 +93,7 @@
         private System.Windows.Forms.DataGridView mainGrid;
         private System.Windows.Forms.Label lblMembers;
         private System.Windows.Forms.Button bntNewMember;
+        private System.Windows.Forms.Button btnDeleteMember;
     }
 }
 

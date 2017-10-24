@@ -71,6 +71,7 @@ namespace Academy
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
             mainGrid.RowHeadersVisible = false;
+            mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             lblMembers.Text = People.Rows.Count.ToString() + " members";
         }
 
@@ -88,6 +89,13 @@ namespace Academy
         {
             MemberForm mf = new MemberForm(this, manager);
             mf.Show();
+        }
+
+        private void btnDeleteMember_Click(object sender, EventArgs e)
+        {
+            int currentMemberID = Convert.ToInt32(mainGrid.SelectedRows[0].Cells[0].Value);
+            manager.DeleteMember(currentMemberID);
+            FillGrid();
         }
     }
 }

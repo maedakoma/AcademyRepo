@@ -34,10 +34,10 @@
             this.txtLastname = new System.Windows.Forms.TextBox();
             this.lblBelt = new System.Windows.Forms.Label();
             this.txtBelt = new System.Windows.Forms.TextBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.lblPayments = new System.Windows.Forms.Label();
             this.payGrid = new System.Windows.Forms.DataGridView();
+            this.btnAddPayment = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,25 +89,15 @@
             this.txtBelt.Size = new System.Drawing.Size(100, 20);
             this.txtBelt.TabIndex = 4;
             // 
-            // btnOK
+            // btnRemove
             // 
-            this.btnOK.Location = new System.Drawing.Point(292, 271);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 7;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(15, 271);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 8;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnRemove.Location = new System.Drawing.Point(15, 257);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 8;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lblPayments
             // 
@@ -126,15 +116,25 @@
             this.payGrid.Size = new System.Drawing.Size(352, 120);
             this.payGrid.TabIndex = 10;
             // 
+            // btnAddPayment
+            // 
+            this.btnAddPayment.Location = new System.Drawing.Point(292, 257);
+            this.btnAddPayment.Name = "btnAddPayment";
+            this.btnAddPayment.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPayment.TabIndex = 11;
+            this.btnAddPayment.Text = "Add Payment";
+            this.btnAddPayment.UseVisualStyleBackColor = true;
+            this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 304);
+            this.ClientSize = new System.Drawing.Size(388, 299);
+            this.Controls.Add(this.btnAddPayment);
             this.Controls.Add(this.payGrid);
             this.Controls.Add(this.lblPayments);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.lblBelt);
             this.Controls.Add(this.txtBelt);
             this.Controls.Add(this.lblLastname);
@@ -157,9 +157,9 @@
         private System.Windows.Forms.TextBox txtLastname;
         private System.Windows.Forms.Label lblBelt;
         private System.Windows.Forms.TextBox txtBelt;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Label lblPayments;
         private System.Windows.Forms.DataGridView payGrid;
+        private System.Windows.Forms.Button btnAddPayment;
     }
 }

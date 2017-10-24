@@ -16,14 +16,21 @@ namespace Academy
         bool bCreateMode = true;
         AcademyMgr.AcademyMgr AcademyMgr;
         MainForm mainform;
-        public MemberForm(MainForm parentForm, AcademyMgr.AcademyMgr manager)
+        Member currentMember;
+        public MemberForm(MainForm parentForm, AcademyMgr.AcademyMgr manager, bool createMode)
         {
             AcademyMgr = manager;
+            bCreateMode = createMode;
+            if (createMode)
+            {
+                currentMember = new Member();
+            }
             mainform = parentForm;
             InitializeComponent();
         }
         public void Populate(Member member)
         {
+            currentMember = member;
             bCreateMode = false;
             txtFirstname.Text = member.Firstname;
             txtLastname.Text = member.Lastname;
@@ -80,6 +87,12 @@ namespace Academy
                 mainform.FillGrid();
             }
             this.Close();
+        }
+
+        private void btnAddPayment_Click(object sender, EventArgs e)
+        {
+            PaymentForm payform = new PaymentForm(this, currentMember);
+            payform.Show();
         }
     }
 }

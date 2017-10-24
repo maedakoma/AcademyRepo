@@ -42,6 +42,7 @@ namespace Academy
             DataColumn c3 = new DataColumn("belt");
             DataColumn c4 = new DataColumn("gender");
             DataColumn c5 = new DataColumn("amount");
+            DataColumn c6 = new DataColumn("debt");
 
 
             //Add the Created Columns to the Datatable
@@ -51,6 +52,7 @@ namespace Academy
             People.Columns.Add(c3);
             People.Columns.Add(c4);
             People.Columns.Add(c5);
+            People.Columns.Add(c6);
 
             foreach (Member mem in members)
             {
@@ -61,11 +63,14 @@ namespace Academy
                 row["belt"] = mem.Belt;
                 row["gender"] = mem.Gender;
                 int amount = 0;
-                foreach(Payment pay in mem.Payments)
+                int debt = 0;
+                foreach (Payment pay in mem.Payments)
                 {
                     amount = amount  + pay.Amount;
+                    debt = debt + pay.Debt;
                 }
                 row["amount"] = amount;
+                row["debt"] = debt;
                 People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
@@ -77,7 +82,7 @@ namespace Academy
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            MemberForm mf = new MemberForm(this, manager);
+            MemberForm mf = new MemberForm(this, manager, false);
             mf.Show();
             int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
             Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
@@ -87,7 +92,7 @@ namespace Academy
 
         private void bntNewMember_Click(object sender, EventArgs e)
         {
-            MemberForm mf = new MemberForm(this, manager);
+            MemberForm mf = new MemberForm(this, manager, true);
             mf.Show();
         }
 

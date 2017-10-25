@@ -13,29 +13,27 @@ namespace Academy
 {
     public partial class MemberForm : Form
     {
-        bool bCreateMode = true;
         AcademyMgr.AcademyMgr AcademyMgr;
         MainForm mainform;
         Member currentMember;
-        public MemberForm(MainForm parentForm, AcademyMgr.AcademyMgr manager, bool createMode)
+        public MemberForm(MainForm parentForm, AcademyMgr.AcademyMgr manager)
         {
-            AcademyMgr = manager;
-            bCreateMode = createMode;
-            if (createMode)
-            {
-                currentMember = new Member();
-            }
-            mainform = parentForm;
             InitializeComponent();
+            AcademyMgr = manager;
+            currentMember = new Member();
+            mainform = parentForm;
+            cbBelt.SelectedIndex = 0;
         }
         public void Populate(Member member)
         {
             currentMember = member;
-            bCreateMode = false;
             txtFirstname.Text = member.Firstname;
             txtLastname.Text = member.Lastname;
-            txtBelt.Text = member.Belt;
-
+            cbBelt.Text = member.Belt.ToString();
+            PopulatePayments(member);
+        }
+        public void PopulatePayments(Member member)
+        {
             //Create a New DataTable to store the Data
             DataTable Payments = new DataTable("Payments");
             //Create the Columns in the DataTable
@@ -66,7 +64,6 @@ namespace Academy
             payGrid.Columns[0].Visible = false;
             payGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             payGrid.RowHeadersVisible = false;
-
         }
 
         private void btnAddPayment_Click(object sender, EventArgs e)
@@ -82,7 +79,7 @@ namespace Academy
             {
                 Payment pay = currentMember.Payments.Where(x => x.ID == currentPaymentID).ToList<Payment>()[0];
                 currentMember.Payments.Remove(pay);
-                Populate(currentMember);
+                PopulatePayments(currentMember);
             }
             else
             {
@@ -92,21 +89,18 @@ namespace Academy
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (bCreateMode)
+            currentMember.Firstname = txtFirstname.Text;
+            currentMember.Lastname = txtLastname.Text;
+            currentMember.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), cbBelt.Text, true);
+            if (currentMember.ID == 0)
             {
-                //Nous sommes en mode création, on va créer un nouveau member
-                Member newMember = new Member();
-                newMember.Firstname = txtFirstname.Text;
-                newMember.Lastname = txtLastname.Text;
-                newMember.Belt = txtBelt.Text;
-                AcademyMgr.InsertMember(newMember);
-                mainform.FillGrid();
+                AcademyMgr.InsertMember(currentMember);
             }
             else
             {
                 AcademyMgr.UpdateMember(currentMember);
-                mainform.FillGrid();
             }
+            mainform.FillGrid();
             this.Close();
         }
 

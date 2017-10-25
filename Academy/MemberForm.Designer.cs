@@ -33,12 +33,12 @@
             this.lblLastname = new System.Windows.Forms.Label();
             this.txtLastname = new System.Windows.Forms.TextBox();
             this.lblBelt = new System.Windows.Forms.Label();
-            this.txtBelt = new System.Windows.Forms.TextBox();
             this.btnRemove = new System.Windows.Forms.Button();
             this.lblPayments = new System.Windows.Forms.Label();
             this.payGrid = new System.Windows.Forms.DataGridView();
             this.btnAddPayment = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.cbBelt = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
             // 
             this.txtFirstname.Location = new System.Drawing.Point(70, 6);
             this.txtFirstname.Name = "txtFirstname";
-            this.txtFirstname.Size = new System.Drawing.Size(100, 20);
+            this.txtFirstname.Size = new System.Drawing.Size(121, 20);
             this.txtFirstname.TabIndex = 0;
             // 
             // lblFirstname
@@ -71,7 +71,7 @@
             // 
             this.txtLastname.Location = new System.Drawing.Point(70, 45);
             this.txtLastname.Name = "txtLastname";
-            this.txtLastname.Size = new System.Drawing.Size(100, 20);
+            this.txtLastname.Size = new System.Drawing.Size(121, 20);
             this.txtLastname.TabIndex = 2;
             // 
             // lblBelt
@@ -82,13 +82,6 @@
             this.lblBelt.Size = new System.Drawing.Size(25, 13);
             this.lblBelt.TabIndex = 5;
             this.lblBelt.Text = "Belt";
-            // 
-            // txtBelt
-            // 
-            this.txtBelt.Location = new System.Drawing.Point(70, 79);
-            this.txtBelt.Name = "txtBelt";
-            this.txtBelt.Size = new System.Drawing.Size(100, 20);
-            this.txtBelt.TabIndex = 4;
             // 
             // btnRemove
             // 
@@ -135,19 +128,35 @@
             this.btnOK.TabIndex = 12;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // cbBelt
+            // 
+            this.cbBelt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBelt.FormattingEnabled = true;
+            this.cbBelt.Items.AddRange(new object[] {
+            "White",
+            "Blue",
+            "Purple",
+            "Brown",
+            "Black"});
+            this.cbBelt.Location = new System.Drawing.Point(70, 79);
+            this.cbBelt.Name = "cbBelt";
+            this.cbBelt.Size = new System.Drawing.Size(121, 21);
+            this.cbBelt.TabIndex = 13;
             // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(389, 338);
+            this.Controls.Add(this.cbBelt);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnAddPayment);
             this.Controls.Add(this.payGrid);
             this.Controls.Add(this.lblPayments);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.lblBelt);
-            this.Controls.Add(this.txtBelt);
             this.Controls.Add(this.lblLastname);
             this.Controls.Add(this.txtLastname);
             this.Controls.Add(this.lblFirstname);
@@ -162,16 +171,16 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtFirstname;
+        public System.Windows.Forms.TextBox txtFirstname;
         private System.Windows.Forms.Label lblFirstname;
         private System.Windows.Forms.Label lblLastname;
-        private System.Windows.Forms.TextBox txtLastname;
+        public System.Windows.Forms.TextBox txtLastname;
         private System.Windows.Forms.Label lblBelt;
-        private System.Windows.Forms.TextBox txtBelt;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Label lblPayments;
         private System.Windows.Forms.DataGridView payGrid;
         private System.Windows.Forms.Button btnAddPayment;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.ComboBox cbBelt;
     }
 }

@@ -9,11 +9,20 @@ namespace AcademyMgr
 
     public class Member
     {
+        public enum beltEnum
+        {
+            White = 0,
+            Blue = 1,
+            Purple = 2,
+            Brown = 3,
+            Black = 4
+        }
+
         private int _ID;
         private string _firstname;
         private string _lastname;
         private string _gender;
-        private string _belt;
+        private beltEnum _belt;
         private List<Payment> _payments;
 
         public int ID
@@ -40,7 +49,7 @@ namespace AcademyMgr
             get { return this._gender; }
             set { _gender = value; }
         }
-        public string Belt
+        public beltEnum Belt
         {
             get { return this._belt; }
             set { _belt = value; }

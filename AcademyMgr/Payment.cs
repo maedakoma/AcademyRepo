@@ -9,7 +9,7 @@ namespace AcademyMgr
    
     public class Payment
     {
-        private readonly int _ID;
+        private int _ID;
         private int _amount;
         private string _type;
         private string _name;
@@ -19,6 +19,7 @@ namespace AcademyMgr
         public int ID
         {
             get { return this._ID; }
+            set { _ID = value; }
         }
         public string Type
         {

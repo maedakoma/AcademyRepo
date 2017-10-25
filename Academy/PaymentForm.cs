@@ -18,26 +18,36 @@ namespace Academy
         MemberForm parentForm;
         public PaymentForm(MemberForm form, Member member)
         {
+            InitializeComponent();
             parentMember = member;
             parentForm = form;
-            InitializeComponent();
+            txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
+            cbType.SelectedIndex = 0;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             Payment pay = new Payment();
             pay.Amount = Convert.ToInt32(txtAmount.Text);
-            pay.Debt = Convert.ToInt32(txtDebt.Text);
+            pay.Debt = Convert.ToInt32(Convert.ToDouble(txtDebt.Text));
             pay.Name = txtName.Text;
-            pay.Type = txtType.Text;
+            pay.Type = cbType.Text;
             parentMember.Payments.Add(pay);
-            parentForm.Populate(parentMember);
+            parentForm.PopulatePayments(parentMember);
             this.Close();
         }
 
         private void txtAmount_TextValidated(object sender, EventArgs e)
         {
-            txtDebt.Text = (0.6 * Convert.ToInt32(txtAmount.Text)).ToString();
+            int result;
+            if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedIndex!= 1)
+            {
+                txtDebt.Text = (0.6 * result).ToString();
+            }
+            else
+            {
+                txtDebt.Text = "0";
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace AcademyMgr
             List<Member> members = new List<Member>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
+            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             Member mem = new Member();
@@ -38,6 +38,7 @@ namespace AcademyMgr
                 if ((mem.Firstname == reader["firstname"].ToString()) && (mem.Lastname == reader["lastname"].ToString()))
                 {
                     Payment payment = new Payment();
+                    payment.ID = (int)reader["paymentID"];
                     payment.Amount = (int)reader["amount"];
                     payment.Debt = (int)reader["debt"];
                     payment.Type = reader["type"].ToString();
@@ -50,10 +51,15 @@ namespace AcademyMgr
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
-                    mem.Belt = reader["belt"].ToString();
+                    String sBelt = reader["belt"].ToString();
+                    if (sBelt != String.Empty)
+                    {
+                        mem.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), sBelt, true);
+                    }
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
+                        payment.ID = (int)reader["paymentID"];
                         payment.Amount = (int)reader["amount"];
                         payment.Debt = (int)reader["debt"];
                         payment.Name = reader["name"].ToString();
@@ -72,8 +78,25 @@ namespace AcademyMgr
             comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt) VALUES(@firstname, @lastname, @belt)";
             comm.Parameters.Add("@firstname", member.Firstname);
             comm.Parameters.Add("@lastname", member.Lastname);
-            comm.Parameters.Add("@belt", member.Belt);
+            comm.Parameters.Add("@belt", member.Belt.ToString());
             comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);
+            dbConn.Close();
+            dbConn.Open();
+            member.ID = id;
+
+            InsertPayments(member);
+            return true;
+        }
+        public bool InsertPayments(Member member)
+        {
+            MySqlCommand comm;
             foreach (Payment pay in member.Payments)
             {
                 comm = dbConn.CreateCommand();
@@ -91,6 +114,8 @@ namespace AcademyMgr
                 int id = 0;
                 reader.Read();
                 id = Convert.ToInt32(reader[0]);
+                dbConn.Close();
+                dbConn.Open();
 
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
@@ -100,41 +125,33 @@ namespace AcademyMgr
             }
             return true;
         }
+        public bool DeletePayments(Member member)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=@MemberID";
+            comm.Parameters.Add("@MemberID", member.ID);
+            comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE P FROM PAYMENTS AS P WHERE P.ID IN (SELECT PaymentID from MEMBERS_PAYMENTS WHERE MemberID=@MemberID)";
+            comm.Parameters.Add("@MemberID", member.ID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
         public bool UpdateMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt WHERE ID=@ID";
             comm.Parameters.Add("@firstname", member.Firstname);
             comm.Parameters.Add("@lastname", member.Lastname);
-            comm.Parameters.Add("@belt", member.Belt);
+            comm.Parameters.Add("@belt", member.Belt.ToString());
             comm.Parameters.Add("@ID", member.ID);
             comm.ExecuteNonQuery();
-            
-            //update des paiments:
-            //foreach (Payment pay in member.Payments)
-            //{
-            //    comm = dbConn.CreateCommand();
-            //    comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt) VALUES(@amount, @type, @receptionDate, @name, @debt)";
-            //    comm.Parameters.Add("@amount", pay.Amount);
-            //    comm.Parameters.Add("@type", pay.Type);
-            //    comm.Parameters.Add("@receptionDate", pay.ReceptionDate);
-            //    comm.Parameters.Add("@name", pay.Name);
-            //    comm.Parameters.Add("@debt", pay.Debt);
-            //    comm.ExecuteNonQuery();
 
-            //    comm = dbConn.CreateCommand();
-            //    comm.CommandText = "SELECT LAST_INSERT_ID();";
-            //    MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
-            //    int id = 0;
-            //    reader.Read();
-            //    id = Convert.ToInt32(reader[0]);
+            //On delete tous les paiements et on les rajoute tous:
+            DeletePayments(member);
+            InsertPayments(member);
 
-            //    comm = dbConn.CreateCommand();
-            //    comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
-            //    comm.Parameters.Add("@MemberID", member.ID);
-            //    comm.Parameters.Add("@PaymentID", id);
-            //    comm.ExecuteNonQuery();
-            //}
             return true;
         }
         public bool DeleteMember(int memberID)

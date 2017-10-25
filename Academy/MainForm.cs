@@ -82,17 +82,16 @@ namespace Academy
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            MemberForm mf = new MemberForm(this, manager, false);
+            MemberForm mf = new MemberForm(this, manager);
             mf.Show();
             int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
             Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
             mf.Populate(member);
-
         }
 
         private void bntNewMember_Click(object sender, EventArgs e)
         {
-            MemberForm mf = new MemberForm(this, manager, true);
+            MemberForm mf = new MemberForm(this, manager);
             mf.Show();
         }
 

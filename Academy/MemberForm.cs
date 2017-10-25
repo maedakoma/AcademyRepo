@@ -64,13 +64,24 @@ namespace Academy
             }
             payGrid.DataSource = Payments;
             payGrid.Columns[0].Visible = false;
+            payGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             payGrid.RowHeadersVisible = false;
 
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnAddPayment_Click(object sender, EventArgs e)
         {
-            this.Close();
+            PaymentForm payform = new PaymentForm(this, currentMember);
+            payform.Show();
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            //int currentPaymentID = Convert.ToInt32(payGrid.SelectedRows[0].Cells[0].Value);
+            //Payment pay = currentMember.Payments.Where(x => x.ID == currentPaymentID).ToList<Payment>()[0];
+            //currentMember.Payments.Remove(pay);
+            payGrid.Rows.Remove(payGrid.SelectedRows[0]);
+            //Populate(currentMember);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -83,16 +94,14 @@ namespace Academy
                 newMember.Lastname = txtLastname.Text;
                 newMember.Belt = txtBelt.Text;
                 //Gestion des paiements:
+
+
                 AcademyMgr.InsertMember(newMember);
                 mainform.FillGrid();
             }
             this.Close();
         }
 
-        private void btnAddPayment_Click(object sender, EventArgs e)
-        {
-            PaymentForm payform = new PaymentForm(this, currentMember);
-            payform.Show();
-        }
+        
     }
 }

@@ -38,16 +38,16 @@
             // mainGrid
             // 
             this.mainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainGrid.Location = new System.Drawing.Point(361, 30);
+            this.mainGrid.Location = new System.Drawing.Point(149, 30);
             this.mainGrid.Name = "mainGrid";
-            this.mainGrid.Size = new System.Drawing.Size(571, 448);
+            this.mainGrid.Size = new System.Drawing.Size(606, 448);
             this.mainGrid.TabIndex = 0;
             this.mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
             // 
             // lblMembers
             // 
             this.lblMembers.AutoSize = true;
-            this.lblMembers.Location = new System.Drawing.Point(358, 498);
+            this.lblMembers.Location = new System.Drawing.Point(146, 495);
             this.lblMembers.Name = "lblMembers";
             this.lblMembers.Size = new System.Drawing.Size(60, 13);
             this.lblMembers.TabIndex = 1;
@@ -75,7 +75,7 @@
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(944, 567);
+            this.ClientSize = new System.Drawing.Size(783, 522);
             this.Controls.Add(this.btnDeleteMember);
             this.Controls.Add(this.bntNewMember);
             this.Controls.Add(this.lblMembers);

@@ -34,5 +34,10 @@ namespace Academy
             parentForm.Populate(parentMember);
             this.Close();
         }
+
+        private void txtAmount_TextValidated(object sender, EventArgs e)
+        {
+            txtDebt.Text = (0.6 * Convert.ToInt32(txtAmount.Text)).ToString();
+        }
     }
 }

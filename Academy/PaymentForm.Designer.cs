@@ -56,6 +56,7 @@
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(100, 20);
             this.txtAmount.TabIndex = 1;
+            this.txtAmount.Validated += new System.EventHandler(this.txtAmount_TextValidated);
             // 
             // txtType
             // 

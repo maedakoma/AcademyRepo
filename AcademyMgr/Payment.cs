@@ -14,6 +14,7 @@ namespace AcademyMgr
         private string _type;
         private string _name;
         private int _debt;
+        private DateTime _receptionDate;
 
         public int ID
         {
@@ -38,6 +39,11 @@ namespace AcademyMgr
         {
             get { return this._debt; }
             set { _debt = value; }
+        }
+        public DateTime ReceptionDate
+        {
+            get { return this._receptionDate; }
+            set { _receptionDate = value; }
         }
     }
 }

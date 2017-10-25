@@ -77,11 +77,17 @@ namespace Academy
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            //int currentPaymentID = Convert.ToInt32(payGrid.SelectedRows[0].Cells[0].Value);
-            //Payment pay = currentMember.Payments.Where(x => x.ID == currentPaymentID).ToList<Payment>()[0];
-            //currentMember.Payments.Remove(pay);
-            payGrid.Rows.Remove(payGrid.SelectedRows[0]);
-            //Populate(currentMember);
+            int currentPaymentID = Convert.ToInt32(payGrid.SelectedRows[0].Cells[0].Value);
+            if (currentPaymentID != 0)
+            {
+                Payment pay = currentMember.Payments.Where(x => x.ID == currentPaymentID).ToList<Payment>()[0];
+                currentMember.Payments.Remove(pay);
+                Populate(currentMember);
+            }
+            else
+            {
+                payGrid.Rows.Remove(payGrid.SelectedRows[0]);
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -93,10 +99,12 @@ namespace Academy
                 newMember.Firstname = txtFirstname.Text;
                 newMember.Lastname = txtLastname.Text;
                 newMember.Belt = txtBelt.Text;
-                //Gestion des paiements:
-
-
                 AcademyMgr.InsertMember(newMember);
+                mainform.FillGrid();
+            }
+            else
+            {
+                AcademyMgr.UpdateMember(currentMember);
                 mainform.FillGrid();
             }
             this.Close();

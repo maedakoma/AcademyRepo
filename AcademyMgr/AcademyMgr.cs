@@ -74,6 +74,67 @@ namespace AcademyMgr
             comm.Parameters.Add("@lastname", member.Lastname);
             comm.Parameters.Add("@belt", member.Belt);
             comm.ExecuteNonQuery();
+            foreach (Payment pay in member.Payments)
+            {
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt) VALUES(@amount, @type, @receptionDate, @name, @debt)";
+                comm.Parameters.Add("@amount", pay.Amount);
+                comm.Parameters.Add("@type", pay.Type);
+                comm.Parameters.Add("@receptionDate", pay.ReceptionDate);
+                comm.Parameters.Add("@name", pay.Name);
+                comm.Parameters.Add("@debt", pay.Debt);
+                comm.ExecuteNonQuery();
+
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "SELECT LAST_INSERT_ID();";
+                MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+                int id = 0;
+                reader.Read();
+                id = Convert.ToInt32(reader[0]);
+
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
+                comm.Parameters.Add("@MemberID", member.ID);
+                comm.Parameters.Add("@PaymentID", id);
+                comm.ExecuteNonQuery();
+            }
+            return true;
+        }
+        public bool UpdateMember(Member member)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt WHERE ID=@ID";
+            comm.Parameters.Add("@firstname", member.Firstname);
+            comm.Parameters.Add("@lastname", member.Lastname);
+            comm.Parameters.Add("@belt", member.Belt);
+            comm.Parameters.Add("@ID", member.ID);
+            comm.ExecuteNonQuery();
+            
+            //update des paiments:
+            //foreach (Payment pay in member.Payments)
+            //{
+            //    comm = dbConn.CreateCommand();
+            //    comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt) VALUES(@amount, @type, @receptionDate, @name, @debt)";
+            //    comm.Parameters.Add("@amount", pay.Amount);
+            //    comm.Parameters.Add("@type", pay.Type);
+            //    comm.Parameters.Add("@receptionDate", pay.ReceptionDate);
+            //    comm.Parameters.Add("@name", pay.Name);
+            //    comm.Parameters.Add("@debt", pay.Debt);
+            //    comm.ExecuteNonQuery();
+
+            //    comm = dbConn.CreateCommand();
+            //    comm.CommandText = "SELECT LAST_INSERT_ID();";
+            //    MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            //    int id = 0;
+            //    reader.Read();
+            //    id = Convert.ToInt32(reader[0]);
+
+            //    comm = dbConn.CreateCommand();
+            //    comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
+            //    comm.Parameters.Add("@MemberID", member.ID);
+            //    comm.Parameters.Add("@PaymentID", id);
+            //    comm.ExecuteNonQuery();
+            //}
             return true;
         }
         public bool DeleteMember(int memberID)

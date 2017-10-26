@@ -16,23 +16,50 @@ namespace Academy
     {
         Member parentMember;
         MemberForm parentForm;
-        public PaymentForm(MemberForm form, Member member)
+        Payment currentPayment;
+        public PaymentForm(MemberForm form, Member member, Payment payment = null)
         {
             InitializeComponent();
             parentMember = member;
             parentForm = form;
-            txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
-            cbType.SelectedIndex = 0;
+            if (payment != null)
+            {
+                currentPayment = payment;
+                txtName.Text = payment.Name;
+                txtAmount.Text = payment.Amount.ToString();
+                txtDebt.Text = payment.Debt.ToString();
+                cbType.Text = payment.Type.ToString();
+                chkBank.Checked = payment.depotBank;
+                if (payment.ReceptionDate != DateTime.MinValue)
+                {
+                    dateTimePickerReception.Value = payment.ReceptionDate;
+                }
+                if (payment.DepotDate != DateTime.MinValue)
+                {
+                    DateTimePickerBank.Value = payment.DepotDate;
+                }
+            }
+            else
+            {
+                currentPayment = new Payment();
+                txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
+                cbType.SelectedIndex = 0;
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Payment pay = new Payment();
-            pay.Amount = Convert.ToInt32(txtAmount.Text);
-            pay.Debt = Convert.ToInt32(Convert.ToDouble(txtDebt.Text));
-            pay.Name = txtName.Text;
-            pay.Type = cbType.Text;
-            parentMember.Payments.Add(pay);
+            currentPayment.Amount = Convert.ToInt32(txtAmount.Text);
+            currentPayment.Debt = Convert.ToInt32(Convert.ToDouble(txtDebt.Text));
+            currentPayment.Name = txtName.Text;
+            currentPayment.Type = cbType.Text;
+            currentPayment.ReceptionDate = dateTimePickerReception.Value;
+            currentPayment.depotBank = chkBank.Checked;
+            currentPayment.DepotDate = DateTimePickerBank.Value;
+            if (currentPayment.ID == 0)
+            {
+                parentMember.Payments.Add(currentPayment);
+            }
             parentForm.PopulatePayments(parentMember);
             this.Close();
         }
@@ -40,13 +67,16 @@ namespace Academy
         private void txtAmount_TextValidated(object sender, EventArgs e)
         {
             int result;
-            if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedIndex!= 1)
+            if (currentPayment.ID == 0)
             {
-                txtDebt.Text = (0.6 * result).ToString();
-            }
-            else
-            {
-                txtDebt.Text = "0";
+                if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedIndex != 1)
+                {
+                    txtDebt.Text = (0.6 * result).ToString();
+                }
+                else
+                {
+                    txtDebt.Text = "0";
+                }
             }
         }
     }

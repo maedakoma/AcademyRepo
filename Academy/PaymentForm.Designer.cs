@@ -31,7 +31,7 @@
             this.lblAmount = new System.Windows.Forms.Label();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.lblType = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerReception = new System.Windows.Forms.DateTimePicker();
             this.lblDate = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
@@ -39,6 +39,9 @@
             this.lblDebt = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.cbType = new System.Windows.Forms.ComboBox();
+            this.chkBank = new System.Windows.Forms.CheckBox();
+            this.lblPutDate = new System.Windows.Forms.Label();
+            this.DateTimePickerBank = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // lblAmount
@@ -67,12 +70,12 @@
             this.lblType.TabIndex = 2;
             this.lblType.Text = "Type";
             // 
-            // dateTimePicker1
+            // dateTimePickerReception
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(73, 115);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimePickerReception.Location = new System.Drawing.Point(73, 115);
+            this.dateTimePickerReception.Name = "dateTimePickerReception";
+            this.dateTimePickerReception.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerReception.TabIndex = 4;
             // 
             // lblDate
             // 
@@ -117,7 +120,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(23, 183);
+            this.btnOK.Location = new System.Drawing.Point(24, 240);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 10;
@@ -137,11 +140,40 @@
             this.cbType.Size = new System.Drawing.Size(121, 21);
             this.cbType.TabIndex = 11;
             // 
+            // chkBank
+            // 
+            this.chkBank.AutoSize = true;
+            this.chkBank.Location = new System.Drawing.Point(24, 187);
+            this.chkBank.Name = "chkBank";
+            this.chkBank.Size = new System.Drawing.Size(63, 17);
+            this.chkBank.TabIndex = 12;
+            this.chkBank.Text = "In Bank";
+            this.chkBank.UseVisualStyleBackColor = true;
+            // 
+            // lblPutDate
+            // 
+            this.lblPutDate.AutoSize = true;
+            this.lblPutDate.Location = new System.Drawing.Point(93, 188);
+            this.lblPutDate.Name = "lblPutDate";
+            this.lblPutDate.Size = new System.Drawing.Size(46, 13);
+            this.lblPutDate.TabIndex = 14;
+            this.lblPutDate.Text = "PutDate";
+            // 
+            // DateTimePickerBank
+            // 
+            this.DateTimePickerBank.Location = new System.Drawing.Point(145, 182);
+            this.DateTimePickerBank.Name = "DateTimePickerBank";
+            this.DateTimePickerBank.Size = new System.Drawing.Size(200, 20);
+            this.DateTimePickerBank.TabIndex = 13;
+            // 
             // PaymentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 218);
+            this.ClientSize = new System.Drawing.Size(374, 275);
+            this.Controls.Add(this.lblPutDate);
+            this.Controls.Add(this.DateTimePickerBank);
+            this.Controls.Add(this.chkBank);
             this.Controls.Add(this.cbType);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtDebt);
@@ -149,7 +181,7 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePickerReception);
             this.Controls.Add(this.lblType);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.lblAmount);
@@ -165,7 +197,7 @@
         private System.Windows.Forms.Label lblAmount;
         private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.Label lblType;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerReception;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
@@ -173,5 +205,8 @@
         private System.Windows.Forms.Label lblDebt;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.ComboBox cbType;
+        private System.Windows.Forms.CheckBox chkBank;
+        private System.Windows.Forms.Label lblPutDate;
+        private System.Windows.Forms.DateTimePicker DateTimePickerBank;
     }
 }

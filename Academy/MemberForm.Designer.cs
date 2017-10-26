@@ -39,6 +39,8 @@
             this.btnAddPayment = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.cbBelt = new System.Windows.Forms.ComboBox();
+            this.cbGender = new System.Windows.Forms.ComboBox();
+            this.lblGender = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +63,7 @@
             // lblLastname
             // 
             this.lblLastname.AutoSize = true;
-            this.lblLastname.Location = new System.Drawing.Point(12, 48);
+            this.lblLastname.Location = new System.Drawing.Point(12, 35);
             this.lblLastname.Name = "lblLastname";
             this.lblLastname.Size = new System.Drawing.Size(53, 13);
             this.lblLastname.TabIndex = 3;
@@ -69,7 +71,7 @@
             // 
             // txtLastname
             // 
-            this.txtLastname.Location = new System.Drawing.Point(70, 45);
+            this.txtLastname.Location = new System.Drawing.Point(70, 35);
             this.txtLastname.Name = "txtLastname";
             this.txtLastname.Size = new System.Drawing.Size(121, 20);
             this.txtLastname.TabIndex = 2;
@@ -77,7 +79,7 @@
             // lblBelt
             // 
             this.lblBelt.AutoSize = true;
-            this.lblBelt.Location = new System.Drawing.Point(12, 82);
+            this.lblBelt.Location = new System.Drawing.Point(12, 66);
             this.lblBelt.Name = "lblBelt";
             this.lblBelt.Size = new System.Drawing.Size(25, 13);
             this.lblBelt.TabIndex = 5;
@@ -85,7 +87,7 @@
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(15, 257);
+            this.btnRemove.Location = new System.Drawing.Point(15, 347);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 8;
@@ -96,7 +98,7 @@
             // lblPayments
             // 
             this.lblPayments.AutoSize = true;
-            this.lblPayments.Location = new System.Drawing.Point(12, 115);
+            this.lblPayments.Location = new System.Drawing.Point(12, 130);
             this.lblPayments.Name = "lblPayments";
             this.lblPayments.Size = new System.Drawing.Size(53, 13);
             this.lblPayments.TabIndex = 9;
@@ -105,14 +107,15 @@
             // payGrid
             // 
             this.payGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.payGrid.Location = new System.Drawing.Point(15, 131);
+            this.payGrid.Location = new System.Drawing.Point(15, 146);
             this.payGrid.Name = "payGrid";
-            this.payGrid.Size = new System.Drawing.Size(352, 120);
+            this.payGrid.Size = new System.Drawing.Size(680, 184);
             this.payGrid.TabIndex = 10;
+            this.payGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.payGrid_CellMouseDoubleClick);
             // 
             // btnAddPayment
             // 
-            this.btnAddPayment.Location = new System.Drawing.Point(292, 257);
+            this.btnAddPayment.Location = new System.Drawing.Point(96, 347);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(75, 23);
             this.btnAddPayment.TabIndex = 11;
@@ -122,7 +125,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(292, 303);
+            this.btnOK.Location = new System.Drawing.Point(15, 376);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -140,16 +143,39 @@
             "Purple",
             "Brown",
             "Black"});
-            this.cbBelt.Location = new System.Drawing.Point(70, 79);
+            this.cbBelt.Location = new System.Drawing.Point(70, 66);
             this.cbBelt.Name = "cbBelt";
             this.cbBelt.Size = new System.Drawing.Size(121, 21);
             this.cbBelt.TabIndex = 13;
+            // 
+            // cbGender
+            // 
+            this.cbGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGender.FormattingEnabled = true;
+            this.cbGender.Items.AddRange(new object[] {
+            "M",
+            "F"});
+            this.cbGender.Location = new System.Drawing.Point(70, 93);
+            this.cbGender.Name = "cbGender";
+            this.cbGender.Size = new System.Drawing.Size(121, 21);
+            this.cbGender.TabIndex = 15;
+            // 
+            // lblGender
+            // 
+            this.lblGender.AutoSize = true;
+            this.lblGender.Location = new System.Drawing.Point(12, 93);
+            this.lblGender.Name = "lblGender";
+            this.lblGender.Size = new System.Drawing.Size(42, 13);
+            this.lblGender.TabIndex = 14;
+            this.lblGender.Text = "Gender";
             // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 338);
+            this.ClientSize = new System.Drawing.Size(713, 405);
+            this.Controls.Add(this.cbGender);
+            this.Controls.Add(this.lblGender);
             this.Controls.Add(this.cbBelt);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnAddPayment);
@@ -182,5 +208,7 @@
         private System.Windows.Forms.Button btnAddPayment;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.ComboBox cbBelt;
+        private System.Windows.Forms.ComboBox cbGender;
+        private System.Windows.Forms.Label lblGender;
     }
 }

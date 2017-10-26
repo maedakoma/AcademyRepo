@@ -28,7 +28,7 @@ namespace Academy
             FillGrid();
         }
             
-        public void FillGrid()
+        public void FillGrid(int rowIndex = 0)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             manager.Open();
@@ -77,7 +77,20 @@ namespace Academy
             mainGrid.Columns[0].Visible = false;
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            mainGrid.AllowUserToAddRows = false;
+            mainGrid.ReadOnly = true;
+            if (rowIndex != 0)
+            {
+                mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[1];
+                mainGrid.Rows[rowIndex].Selected = true;
+            }
             lblMembers.Text = People.Rows.Count.ToString() + " members";
+            int totalAmount = mainGrid.Rows.Cast<DataGridViewRow>().Sum(t => Convert.ToInt32(t.Cells[5].Value));
+            lblTotal.Text = "Licences: " + totalAmount.ToString() + " E";
+            int totalDebt = mainGrid.Rows.Cast<DataGridViewRow>().Sum(t => Convert.ToInt32(t.Cells[6].Value));
+            lblTotalDebt.Text = "Dettes: " + totalDebt.ToString() + " E";
+            int total = totalAmount - totalDebt;
+            lblBenef.Text = "Benefices Licences: " + total.ToString() + " E";
         }
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -86,7 +99,7 @@ namespace Academy
             mf.Show();
             int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
             Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
-            mf.Populate(member);
+            mf.Populate(member, e.RowIndex);
         }
 
         private void bntNewMember_Click(object sender, EventArgs e)

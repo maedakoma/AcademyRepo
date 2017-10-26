@@ -43,6 +43,12 @@ namespace AcademyMgr
                     payment.Debt = (int)reader["debt"];
                     payment.Type = reader["type"].ToString();
                     payment.Name = reader["name"].ToString();
+                    payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
+                    payment.depotBank = Convert.ToBoolean(reader["DepotBank"]);
+                    if (reader["DepotDate"] != DBNull.Value)
+                    {
+                        payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
+                    }
                     mem.Payments.Add(payment);
                 }
                 else
@@ -56,6 +62,11 @@ namespace AcademyMgr
                     {
                         mem.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), sBelt, true);
                     }
+                    String sGender = reader["gender"].ToString();
+                    if (sGender != String.Empty)
+                    {
+                        mem.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), sGender, true);
+                    }
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -64,6 +75,12 @@ namespace AcademyMgr
                         payment.Debt = (int)reader["debt"];
                         payment.Name = reader["name"].ToString();
                         payment.Type = reader["type"].ToString();
+                        payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
+                        payment.depotBank = Convert.ToBoolean(reader["DepotBank"]);
+                        if (reader["DepotDate"] != DBNull.Value)
+                        {
+                            payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
+                        }
                         mem.Payments.Add(payment);
                     }
                     members.Add(mem);
@@ -75,10 +92,11 @@ namespace AcademyMgr
         public bool InsertMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt) VALUES(@firstname, @lastname, @belt)";
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt, gender) VALUES(@firstname, @lastname, @belt, @gender)";
             comm.Parameters.Add("@firstname", member.Firstname);
             comm.Parameters.Add("@lastname", member.Lastname);
             comm.Parameters.Add("@belt", member.Belt.ToString());
+            comm.Parameters.Add("@gender", member.Gender.ToString());
             comm.ExecuteNonQuery();
 
             comm = dbConn.CreateCommand();
@@ -100,12 +118,14 @@ namespace AcademyMgr
             foreach (Payment pay in member.Payments)
             {
                 comm = dbConn.CreateCommand();
-                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt) VALUES(@amount, @type, @receptionDate, @name, @debt)";
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, DepotBank, DepotDate ) VALUES(@amount, @type, @receptionDate, @name, @debt, @DepotBank, @DepotDate)";
                 comm.Parameters.Add("@amount", pay.Amount);
                 comm.Parameters.Add("@type", pay.Type);
                 comm.Parameters.Add("@receptionDate", pay.ReceptionDate);
                 comm.Parameters.Add("@name", pay.Name);
                 comm.Parameters.Add("@debt", pay.Debt);
+                comm.Parameters.Add("@DepotBank", pay.depotBank);
+                comm.Parameters.Add("@DepotDate", pay.DepotDate);
                 comm.ExecuteNonQuery();
 
                 comm = dbConn.CreateCommand();
@@ -141,10 +161,11 @@ namespace AcademyMgr
         public bool UpdateMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt WHERE ID=@ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt, gender=@gender WHERE ID=@ID";
             comm.Parameters.Add("@firstname", member.Firstname);
             comm.Parameters.Add("@lastname", member.Lastname);
             comm.Parameters.Add("@belt", member.Belt.ToString());
+            comm.Parameters.Add("@gender", member.Gender.ToString());
             comm.Parameters.Add("@ID", member.ID);
             comm.ExecuteNonQuery();
 

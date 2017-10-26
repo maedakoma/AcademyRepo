@@ -18,10 +18,16 @@ namespace AcademyMgr
             Black = 4
         }
 
+        public enum genderEnum
+        {
+            M = 0,
+            F = 1
+        }
+
         private int _ID;
         private string _firstname;
         private string _lastname;
-        private string _gender;
+        private genderEnum _gender;
         private beltEnum _belt;
         private List<Payment> _payments;
 
@@ -44,7 +50,7 @@ namespace AcademyMgr
             get { return this._lastname; }
             set { _lastname = value; }
         }
-        public string Gender
+        public genderEnum Gender
         {
             get { return this._gender; }
             set { _gender = value; }

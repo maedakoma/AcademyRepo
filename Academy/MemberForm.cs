@@ -124,7 +124,7 @@ namespace Academy
             {
                 AcademyMgr.UpdateMember(currentMember);
             }
-            mainform.FillGrid(rowIndex);
+            mainform.FillMembersGrid(rowIndex);
             this.Close();
         }
 

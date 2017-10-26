@@ -25,10 +25,12 @@ namespace Academy
         {
             manager = new AcademyMgr.AcademyMgr();
             manager.Open();
-            FillGrid();
+            FillMembersGrid();
+            FillSeminarsGrid();
+            FillRefundsGrid();
         }
             
-        public void FillGrid(int rowIndex = 0)
+        public void FillMembersGrid(int rowIndex = 0)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             manager.Open();
@@ -38,7 +40,6 @@ namespace Academy
             {
                 TotalRefund = TotalRefund + refund.Amount;
             }
-            
             
             members = manager.getMembers();
             //Create a New DataTable to store the Data
@@ -103,6 +104,106 @@ namespace Academy
             lblStillDebt.Text = "Dette restante: " + (totalDebt - TotalRefund).ToString() + " E";
         }
 
+        public void FillSeminarsGrid(int rowIndex = 0)
+        {
+            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            List<Seminar> seminars = manager.getSeminars();
+            //Create a New DataTable to store the Data
+            DataTable Seminar = new DataTable("Seminar");
+            //Create the Columns in the DataTable
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("theme");
+            DataColumn c2 = new DataColumn("date");
+            DataColumn c3 = new DataColumn("webmembers");
+            DataColumn c4 = new DataColumn("localmembers");
+            DataColumn c5 = new DataColumn("amount");
+            DataColumn c6 = new DataColumn("debt");
+            DataColumn c7 = new DataColumn("comment");
+
+
+            //Add the Created Columns to the Datatable
+            Seminar.Columns.Add(c0);
+            Seminar.Columns.Add(c1);
+            Seminar.Columns.Add(c2);
+            Seminar.Columns.Add(c3);
+            Seminar.Columns.Add(c4);
+            Seminar.Columns.Add(c5);
+            Seminar.Columns.Add(c6);
+            Seminar.Columns.Add(c7);
+
+            foreach (Seminar seminar in seminars)
+            {
+                DataRow row = Seminar.NewRow();
+                row["ID"] = seminar.ID;
+                row["theme"] = seminar.Theme;
+                row["date"] = seminar.Date;
+                row["webmembers"] = seminar.WebMembers;
+                row["localmembers"] = seminar.LocalMembers;
+                row["amount"] = seminar.Amount;
+                row["debt"] = seminar.Debt;
+                row["comment"] = seminar.Comment;
+                Seminar.Rows.Add(row);
+            }
+            gridSeminars.DataSource = Seminar;
+            gridSeminars.Columns[0].Visible = false;
+            gridSeminars.RowHeadersVisible = false;
+            gridSeminars.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridSeminars.AllowUserToAddRows = false;
+            gridSeminars.ReadOnly = true;
+            if (rowIndex != 0)
+            {
+                gridSeminars.CurrentCell = gridSeminars.Rows[rowIndex].Cells[1];
+                gridSeminars.Rows[rowIndex].Selected = true;
+            }
+        }
+
+        public void FillRefundsGrid(int rowIndex = 0)
+        {
+            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            List<Refund> refunds = manager.getRefunds();
+            //Create a New DataTable to store the Data
+            DataTable Refund = new DataTable("Refund");
+            //Create the Columns in the DataTable
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("label");
+            DataColumn c2 = new DataColumn("amount");
+            DataColumn c3 = new DataColumn("date");
+            DataColumn c4 = new DataColumn("comment");
+
+
+            //Add the Created Columns to the Datatable
+            Refund.Columns.Add(c0);
+            Refund.Columns.Add(c1);
+            Refund.Columns.Add(c2);
+            Refund.Columns.Add(c3);
+            Refund.Columns.Add(c4);
+            
+
+            foreach (Refund refund in refunds)
+            {
+                DataRow row = Refund.NewRow();
+                row["ID"] = refund.ID;
+                row["label"] = refund.Label;
+                row["amount"] = refund.Amount;
+                row["date"] = refund.Date;
+                row["comment"] = refund.Comment;
+                Refund.Rows.Add(row);
+            }
+            gridRefunds.DataSource = Refund;
+            gridRefunds.Columns[0].Visible = false;
+            gridRefunds.RowHeadersVisible = false;
+            gridRefunds.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridRefunds.AllowUserToAddRows = false;
+            gridRefunds.ReadOnly = true;
+            if (rowIndex != 0)
+            {
+                gridRefunds.CurrentCell = gridRefunds.Rows[rowIndex].Cells[1];
+                gridRefunds.Rows[rowIndex].Selected = true;
+            }
+        }
+
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex != -1)
@@ -125,7 +226,7 @@ namespace Academy
         {
             int currentMemberID = Convert.ToInt32(mainGrid.SelectedRows[0].Cells[0].Value);
             manager.DeleteMember(currentMemberID);
-            FillGrid();
+            FillMembersGrid();
         }
     }
 }

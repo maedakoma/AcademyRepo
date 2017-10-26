@@ -43,6 +43,35 @@
             this.tabSeminars = new System.Windows.Forms.TabPage();
             this.gridRefunds = new System.Windows.Forms.DataGridView();
             this.gridSeminars = new System.Windows.Forms.DataGridView();
+            this.tabPrivates = new System.Windows.Forms.TabPage();
+            this.gridPrivates = new System.Windows.Forms.DataGridView();
+            this.tabResume = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtMembersCount = new System.Windows.Forms.TextBox();
+            this.txtLicencesAmount = new System.Windows.Forms.TextBox();
+            this.txtLicencesDebt = new System.Windows.Forms.TextBox();
+            this.txtLicencesBenef = new System.Windows.Forms.TextBox();
+            this.txtPrivates = new System.Windows.Forms.TextBox();
+            this.txtSeminar = new System.Windows.Forms.TextBox();
+            this.txtSeminarDebt = new System.Windows.Forms.TextBox();
+            this.txtSeminarBenef = new System.Windows.Forms.TextBox();
+            this.txtTeacherPays = new System.Windows.Forms.TextBox();
+            this.txtPaidDebt = new System.Windows.Forms.TextBox();
+            this.txtDebt = new System.Windows.Forms.TextBox();
+            this.txtTotalBenef = new System.Windows.Forms.TextBox();
+            this.txtBlackMonth = new System.Windows.Forms.TextBox();
+            this.txtOfficialMonth = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtTotalDebt = new System.Windows.Forms.TextBox();
+            this.tabCoachPay = new System.Windows.Forms.TabPage();
+            this.gridCoachPay = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -50,6 +79,11 @@
             this.tabSeminars.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridRefunds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridSeminars)).BeginInit();
+            this.tabPrivates.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrivates)).BeginInit();
+            this.tabResume.SuspendLayout();
+            this.tabCoachPay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCoachPay)).BeginInit();
             this.SuspendLayout();
             // 
             // mainGrid
@@ -64,11 +98,11 @@
             // lblMembers
             // 
             this.lblMembers.AutoSize = true;
-            this.lblMembers.Location = new System.Drawing.Point(9, 99);
+            this.lblMembers.Location = new System.Drawing.Point(6, 27);
             this.lblMembers.Name = "lblMembers";
-            this.lblMembers.Size = new System.Drawing.Size(60, 13);
+            this.lblMembers.Size = new System.Drawing.Size(89, 13);
             this.lblMembers.TabIndex = 1;
-            this.lblMembers.Text = "lblMembers";
+            this.lblMembers.Text = "Nombre d\'élèves:";
             // 
             // bntNewMember
             // 
@@ -93,57 +127,60 @@
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(9, 127);
+            this.lblTotal.Location = new System.Drawing.Point(6, 52);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(71, 13);
+            this.lblTotal.Size = new System.Drawing.Size(111, 13);
             this.lblTotal.TabIndex = 4;
-            this.lblTotal.Text = "lblTotalAmout";
+            this.lblTotal.Text = "Montant des licences:";
             // 
             // lblTotalDebt
             // 
             this.lblTotalDebt.AutoSize = true;
-            this.lblTotalDebt.Location = new System.Drawing.Point(9, 140);
+            this.lblTotalDebt.Location = new System.Drawing.Point(6, 77);
             this.lblTotalDebt.Name = "lblTotalDebt";
-            this.lblTotalDebt.Size = new System.Drawing.Size(64, 13);
+            this.lblTotalDebt.Size = new System.Drawing.Size(98, 13);
             this.lblTotalDebt.TabIndex = 5;
-            this.lblTotalDebt.Text = "lblTotalDebt";
+            this.lblTotalDebt.Text = "Dette des licences:";
             // 
             // lblBenef
             // 
             this.lblBenef.AutoSize = true;
-            this.lblBenef.Location = new System.Drawing.Point(9, 153);
+            this.lblBenef.Location = new System.Drawing.Point(6, 102);
             this.lblBenef.Name = "lblBenef";
-            this.lblBenef.Size = new System.Drawing.Size(45, 13);
+            this.lblBenef.Size = new System.Drawing.Size(132, 13);
             this.lblBenef.TabIndex = 6;
-            this.lblBenef.Text = "lblBenef";
+            this.lblBenef.Text = "Benefice net des licences:";
             // 
             // lblPaidDebt
             // 
             this.lblPaidDebt.AutoSize = true;
-            this.lblPaidDebt.Location = new System.Drawing.Point(9, 166);
+            this.lblPaidDebt.Location = new System.Drawing.Point(6, 402);
             this.lblPaidDebt.Name = "lblPaidDebt";
-            this.lblPaidDebt.Size = new System.Drawing.Size(61, 13);
+            this.lblPaidDebt.Size = new System.Drawing.Size(91, 13);
             this.lblPaidDebt.TabIndex = 7;
-            this.lblPaidDebt.Text = "lblPaidDebt";
+            this.lblPaidDebt.Text = "Dette déja payée:";
             // 
             // lblStillDebt
             // 
             this.lblStillDebt.AutoSize = true;
-            this.lblStillDebt.Location = new System.Drawing.Point(9, 179);
+            this.lblStillDebt.Location = new System.Drawing.Point(6, 428);
             this.lblStillDebt.Name = "lblStillDebt";
-            this.lblStillDebt.Size = new System.Drawing.Size(56, 13);
+            this.lblStillDebt.Size = new System.Drawing.Size(77, 13);
             this.lblStillDebt.TabIndex = 8;
-            this.lblStillDebt.Text = "lblStillDebt";
+            this.lblStillDebt.Text = "Dette restante:";
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabResume);
             this.tabControl1.Controls.Add(this.tabMembers);
             this.tabControl1.Controls.Add(this.tabRefunds);
             this.tabControl1.Controls.Add(this.tabSeminars);
-            this.tabControl1.Location = new System.Drawing.Point(150, 30);
+            this.tabControl1.Controls.Add(this.tabPrivates);
+            this.tabControl1.Controls.Add(this.tabCoachPay);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(953, 650);
+            this.tabControl1.Size = new System.Drawing.Size(1101, 728);
             this.tabControl1.TabIndex = 9;
             // 
             // tabMembers
@@ -197,16 +234,274 @@
             this.gridSeminars.Size = new System.Drawing.Size(769, 482);
             this.gridSeminars.TabIndex = 0;
             // 
+            // tabPrivates
+            // 
+            this.tabPrivates.Controls.Add(this.gridPrivates);
+            this.tabPrivates.Location = new System.Drawing.Point(4, 22);
+            this.tabPrivates.Name = "tabPrivates";
+            this.tabPrivates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPrivates.Size = new System.Drawing.Size(945, 624);
+            this.tabPrivates.TabIndex = 3;
+            this.tabPrivates.Text = "Privates";
+            this.tabPrivates.UseVisualStyleBackColor = true;
+            // 
+            // gridPrivates
+            // 
+            this.gridPrivates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrivates.Location = new System.Drawing.Point(20, 15);
+            this.gridPrivates.Name = "gridPrivates";
+            this.gridPrivates.Size = new System.Drawing.Size(864, 530);
+            this.gridPrivates.TabIndex = 0;
+            // 
+            // tabResume
+            // 
+            this.tabResume.Controls.Add(this.txtTotalDebt);
+            this.tabResume.Controls.Add(this.label9);
+            this.tabResume.Controls.Add(this.txtOfficialMonth);
+            this.tabResume.Controls.Add(this.txtBlackMonth);
+            this.tabResume.Controls.Add(this.txtTotalBenef);
+            this.tabResume.Controls.Add(this.txtDebt);
+            this.tabResume.Controls.Add(this.txtPaidDebt);
+            this.tabResume.Controls.Add(this.txtTeacherPays);
+            this.tabResume.Controls.Add(this.txtSeminarBenef);
+            this.tabResume.Controls.Add(this.txtSeminarDebt);
+            this.tabResume.Controls.Add(this.txtSeminar);
+            this.tabResume.Controls.Add(this.txtPrivates);
+            this.tabResume.Controls.Add(this.txtLicencesBenef);
+            this.tabResume.Controls.Add(this.txtLicencesDebt);
+            this.tabResume.Controls.Add(this.txtLicencesAmount);
+            this.tabResume.Controls.Add(this.txtMembersCount);
+            this.tabResume.Controls.Add(this.label8);
+            this.tabResume.Controls.Add(this.label7);
+            this.tabResume.Controls.Add(this.label6);
+            this.tabResume.Controls.Add(this.label5);
+            this.tabResume.Controls.Add(this.label4);
+            this.tabResume.Controls.Add(this.label3);
+            this.tabResume.Controls.Add(this.label2);
+            this.tabResume.Controls.Add(this.label1);
+            this.tabResume.Controls.Add(this.lblMembers);
+            this.tabResume.Controls.Add(this.lblStillDebt);
+            this.tabResume.Controls.Add(this.lblTotal);
+            this.tabResume.Controls.Add(this.lblPaidDebt);
+            this.tabResume.Controls.Add(this.lblTotalDebt);
+            this.tabResume.Controls.Add(this.lblBenef);
+            this.tabResume.Location = new System.Drawing.Point(4, 22);
+            this.tabResume.Name = "tabResume";
+            this.tabResume.Padding = new System.Windows.Forms.Padding(3);
+            this.tabResume.Size = new System.Drawing.Size(1093, 702);
+            this.tabResume.TabIndex = 4;
+            this.tabResume.Text = "Resume";
+            this.tabResume.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 207);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Montant des stages:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 232);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Dette des stages";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 259);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(124, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Benefice net des stages:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 151);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(151, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Montant des cours particuliers:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 303);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(142, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Salaire des profs déja payés:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 476);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Bénéfice total:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 514);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(128, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Salaire mensuel au black:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 551);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(122, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Salaire mensuel déclaré:";
+            // 
+            // txtMembersCount
+            // 
+            this.txtMembersCount.Location = new System.Drawing.Point(176, 20);
+            this.txtMembersCount.Name = "txtMembersCount";
+            this.txtMembersCount.Size = new System.Drawing.Size(100, 20);
+            this.txtMembersCount.TabIndex = 17;
+            // 
+            // txtLicencesAmount
+            // 
+            this.txtLicencesAmount.Location = new System.Drawing.Point(176, 45);
+            this.txtLicencesAmount.Name = "txtLicencesAmount";
+            this.txtLicencesAmount.Size = new System.Drawing.Size(100, 20);
+            this.txtLicencesAmount.TabIndex = 18;
+            // 
+            // txtLicencesDebt
+            // 
+            this.txtLicencesDebt.Location = new System.Drawing.Point(176, 70);
+            this.txtLicencesDebt.Name = "txtLicencesDebt";
+            this.txtLicencesDebt.Size = new System.Drawing.Size(100, 20);
+            this.txtLicencesDebt.TabIndex = 19;
+            // 
+            // txtLicencesBenef
+            // 
+            this.txtLicencesBenef.Location = new System.Drawing.Point(176, 95);
+            this.txtLicencesBenef.Name = "txtLicencesBenef";
+            this.txtLicencesBenef.Size = new System.Drawing.Size(100, 20);
+            this.txtLicencesBenef.TabIndex = 20;
+            // 
+            // txtPrivates
+            // 
+            this.txtPrivates.Location = new System.Drawing.Point(176, 144);
+            this.txtPrivates.Name = "txtPrivates";
+            this.txtPrivates.Size = new System.Drawing.Size(100, 20);
+            this.txtPrivates.TabIndex = 21;
+            // 
+            // txtSeminar
+            // 
+            this.txtSeminar.Location = new System.Drawing.Point(176, 200);
+            this.txtSeminar.Name = "txtSeminar";
+            this.txtSeminar.Size = new System.Drawing.Size(100, 20);
+            this.txtSeminar.TabIndex = 22;
+            // 
+            // txtSeminarDebt
+            // 
+            this.txtSeminarDebt.Location = new System.Drawing.Point(176, 225);
+            this.txtSeminarDebt.Name = "txtSeminarDebt";
+            this.txtSeminarDebt.Size = new System.Drawing.Size(100, 20);
+            this.txtSeminarDebt.TabIndex = 23;
+            // 
+            // txtSeminarBenef
+            // 
+            this.txtSeminarBenef.Location = new System.Drawing.Point(176, 251);
+            this.txtSeminarBenef.Name = "txtSeminarBenef";
+            this.txtSeminarBenef.Size = new System.Drawing.Size(100, 20);
+            this.txtSeminarBenef.TabIndex = 24;
+            // 
+            // txtTeacherPays
+            // 
+            this.txtTeacherPays.Location = new System.Drawing.Point(176, 296);
+            this.txtTeacherPays.Name = "txtTeacherPays";
+            this.txtTeacherPays.Size = new System.Drawing.Size(100, 20);
+            this.txtTeacherPays.TabIndex = 25;
+            // 
+            // txtPaidDebt
+            // 
+            this.txtPaidDebt.Location = new System.Drawing.Point(176, 395);
+            this.txtPaidDebt.Name = "txtPaidDebt";
+            this.txtPaidDebt.Size = new System.Drawing.Size(100, 20);
+            this.txtPaidDebt.TabIndex = 26;
+            // 
+            // txtDebt
+            // 
+            this.txtDebt.Location = new System.Drawing.Point(176, 421);
+            this.txtDebt.Name = "txtDebt";
+            this.txtDebt.Size = new System.Drawing.Size(100, 20);
+            this.txtDebt.TabIndex = 27;
+            // 
+            // txtTotalBenef
+            // 
+            this.txtTotalBenef.Location = new System.Drawing.Point(176, 469);
+            this.txtTotalBenef.Name = "txtTotalBenef";
+            this.txtTotalBenef.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalBenef.TabIndex = 28;
+            // 
+            // txtBlackMonth
+            // 
+            this.txtBlackMonth.Location = new System.Drawing.Point(176, 507);
+            this.txtBlackMonth.Name = "txtBlackMonth";
+            this.txtBlackMonth.Size = new System.Drawing.Size(100, 20);
+            this.txtBlackMonth.TabIndex = 29;
+            // 
+            // txtOfficialMonth
+            // 
+            this.txtOfficialMonth.Location = new System.Drawing.Point(176, 544);
+            this.txtOfficialMonth.Name = "txtOfficialMonth";
+            this.txtOfficialMonth.Size = new System.Drawing.Size(100, 20);
+            this.txtOfficialMonth.TabIndex = 30;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 375);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 13);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "Dette totale:";
+            // 
+            // txtTotalDebt
+            // 
+            this.txtTotalDebt.Location = new System.Drawing.Point(176, 368);
+            this.txtTotalDebt.Name = "txtTotalDebt";
+            this.txtTotalDebt.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalDebt.TabIndex = 32;
+            // 
+            // tabCoachPay
+            // 
+            this.tabCoachPay.Controls.Add(this.gridCoachPay);
+            this.tabCoachPay.Location = new System.Drawing.Point(4, 22);
+            this.tabCoachPay.Name = "tabCoachPay";
+            this.tabCoachPay.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCoachPay.Size = new System.Drawing.Size(1093, 702);
+            this.tabCoachPay.TabIndex = 5;
+            this.tabCoachPay.Text = "Coach Pay";
+            this.tabCoachPay.UseVisualStyleBackColor = true;
+            // 
+            // gridCoachPay
+            // 
+            this.gridCoachPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCoachPay.Location = new System.Drawing.Point(6, 6);
+            this.gridCoachPay.Name = "gridCoachPay";
+            this.gridCoachPay.Size = new System.Drawing.Size(681, 479);
+            this.gridCoachPay.TabIndex = 0;
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1615, 752);
+            this.ClientSize = new System.Drawing.Size(1113, 752);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.lblStillDebt);
-            this.Controls.Add(this.lblPaidDebt);
-            this.Controls.Add(this.lblBenef);
-            this.Controls.Add(this.lblTotalDebt);
-            this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.lblMembers);
             this.Name = "MainForm";
             this.Text = "Academy Cercle";
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).EndInit();
@@ -216,8 +511,13 @@
             this.tabSeminars.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridRefunds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridSeminars)).EndInit();
+            this.tabPrivates.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrivates)).EndInit();
+            this.tabResume.ResumeLayout(false);
+            this.tabResume.PerformLayout();
+            this.tabCoachPay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridCoachPay)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -238,6 +538,35 @@
         private System.Windows.Forms.TabPage tabSeminars;
         private System.Windows.Forms.DataGridView gridRefunds;
         private System.Windows.Forms.DataGridView gridSeminars;
+        private System.Windows.Forms.TabPage tabPrivates;
+        private System.Windows.Forms.DataGridView gridPrivates;
+        private System.Windows.Forms.TabPage tabResume;
+        private System.Windows.Forms.TextBox txtOfficialMonth;
+        private System.Windows.Forms.TextBox txtBlackMonth;
+        private System.Windows.Forms.TextBox txtTotalBenef;
+        private System.Windows.Forms.TextBox txtDebt;
+        private System.Windows.Forms.TextBox txtPaidDebt;
+        private System.Windows.Forms.TextBox txtTeacherPays;
+        private System.Windows.Forms.TextBox txtSeminarBenef;
+        private System.Windows.Forms.TextBox txtSeminarDebt;
+        private System.Windows.Forms.TextBox txtSeminar;
+        private System.Windows.Forms.TextBox txtPrivates;
+        private System.Windows.Forms.TextBox txtLicencesBenef;
+        private System.Windows.Forms.TextBox txtLicencesDebt;
+        private System.Windows.Forms.TextBox txtLicencesAmount;
+        private System.Windows.Forms.TextBox txtMembersCount;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtTotalDebt;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TabPage tabCoachPay;
+        private System.Windows.Forms.DataGridView gridCoachPay;
     }
 }
 

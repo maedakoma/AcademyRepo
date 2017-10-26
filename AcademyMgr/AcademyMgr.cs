@@ -45,6 +45,29 @@ namespace AcademyMgr
             dbConn.Close();
             return refunds;
         }
+        public List<CoachPay> getCoachPays()
+        {
+            List<CoachPay> CoachPays = new List<CoachPay>();
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from COACHSPAYMENTS";
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+                CoachPay pay = new CoachPay();
+                pay.ID = (int)reader["ID"];
+                pay.Month = reader["Month"].ToString();
+                pay.Coach = reader["Coach"].ToString();
+                pay.Lessons = (int)reader["Lessons"];
+                pay.Pay= (int)reader["Pay"];
+                pay.Amount = (int)reader["Amount"];
+                pay.Date = Convert.ToDateTime(reader["Date"]);
+                pay.Comment = reader["comment"].ToString();
+                CoachPays.Add(pay);
+            }
+            dbConn.Close();
+            return CoachPays;
+        }
         public List<Seminar> getSeminars()
         {
             List<Seminar> seminars = new List<Seminar>();
@@ -71,7 +94,28 @@ namespace AcademyMgr
             dbConn.Close();
             return seminars;
         }
+        public List<Private> getPrivates()
+        {
+            List<Private> privates = new List<Private>();
 
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from PRIVATES";
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Private priv = new Private();
+                priv.ID = (int)reader["ID"];
+                priv.Name = reader["Name"].ToString();
+                priv.Amount = (int)reader["amount"];
+                priv.Date = Convert.ToDateTime(reader["Date"]);
+                priv.BookedLessons = (int)reader["bookedLessons"];
+                priv.DoneLessons = (int)reader["doneLessons"];
+                privates.Add(priv);
+            }
+            dbConn.Close();
+            return privates;
+        }
         public List<Member> getMembers()
         {
             List<Member> members = new List<Member>();
@@ -137,6 +181,64 @@ namespace AcademyMgr
             
             return members;
         }
+
+        public int getMembersCount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) from MEMBERS";
+            int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nMemberCount;
+        }
+        public int getLicencesAmount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(amount) from PAYMENTS";
+            int nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nAmount;
+        }
+        public int getLicencesDebt()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(debt) from PAYMENTS";
+            int nDebt = Convert.ToInt32(cmd.ExecuteScalar());
+            return nDebt;
+        }
+        public int getPrivatesAmount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(amount) from PRIVATES";
+            int nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nAmount;
+        }
+        public int getSeminarsAmount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(amount) from SEMINARS";
+            int nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nAmount;
+        }
+        public int getSeminarsDebt()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(debt) from SEMINARS";
+            int nDebt = Convert.ToInt32(cmd.ExecuteScalar());
+            return nDebt;
+        }
+        public int getPaidDebt()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(amount) from REFUNDS";
+            int nDebt = Convert.ToInt32(cmd.ExecuteScalar());
+            return nDebt;
+        }
+        public int getCoachsPaysAmount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT SUM(amount) from COACHSPAYMENTS";
+            int nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nAmount;
+        }
+
         public bool InsertMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
@@ -193,16 +295,16 @@ namespace AcademyMgr
             }
             return true;
         }
-        public bool DeletePayments(Member member)
+        public bool DeletePayments(int memberID)
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=@MemberID";
-            comm.Parameters.Add("@MemberID", member.ID);
+            comm.Parameters.Add("@MemberID", memberID);
             comm.ExecuteNonQuery();
 
+            //on supprime tous les paiements non liés a un membre
             comm = dbConn.CreateCommand();
-            comm.CommandText = "DELETE P FROM PAYMENTS AS P WHERE P.ID IN (SELECT PaymentID from MEMBERS_PAYMENTS WHERE MemberID=@MemberID)";
-            comm.Parameters.Add("@MemberID", member.ID);
+            comm.CommandText = "DELETE P FROM PAYMENTS AS P WHERE P.ID NOT IN (SELECT PaymentID from MEMBERS_PAYMENTS)";
             comm.ExecuteNonQuery();
             return true;
         }
@@ -218,13 +320,16 @@ namespace AcademyMgr
             comm.ExecuteNonQuery();
 
             //On delete tous les paiements et on les rajoute tous:
-            DeletePayments(member);
+            DeletePayments(member.ID);
             InsertPayments(member);
 
             return true;
         }
         public bool DeleteMember(int memberID)
         {
+            //On delete d'abord les paiements associés:
+            DeletePayments(memberID);
+            //On delete le member
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM MEMBERS WHERE ID=@ID";
             comm.Parameters.Add("@ID", memberID);

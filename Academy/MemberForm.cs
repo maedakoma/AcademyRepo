@@ -78,6 +78,7 @@ namespace Academy
             payGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             payGrid.RowHeadersVisible = false;
             payGrid.AllowUserToAddRows = false;
+            payGrid.ReadOnly = true;
         }
 
         private void payGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcademyMgr.cs" />
+    <Compile Include="Private.cs" />
+    <Compile Include="CoachPay.cs" />
     <Compile Include="Seminar.cs" />
     <Compile Include="Refund.cs" />
     <Compile Include="Payment.cs" />

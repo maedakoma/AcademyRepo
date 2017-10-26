@@ -25,11 +25,44 @@ namespace Academy
         {
             manager = new AcademyMgr.AcademyMgr();
             manager.Open();
+            FillResume();
             FillMembersGrid();
             FillSeminarsGrid();
             FillRefundsGrid();
+            FillPrivatesGrid();
+            FillCoachPayGrid();
         }
-            
+
+        public void FillResume()
+        {
+            txtMembersCount.Text = manager.getMembersCount().ToString();
+            int nLicencesAmount = manager.getLicencesAmount();
+            txtLicencesAmount.Text = nLicencesAmount.ToString();
+            int nLicencesDebt = manager.getLicencesDebt();
+            txtLicencesDebt.Text = nLicencesDebt.ToString();
+            txtLicencesBenef.Text = (nLicencesAmount - nLicencesDebt).ToString();
+            int nPrivatesAmount = manager.getPrivatesAmount();
+            txtPrivates.Text = nPrivatesAmount.ToString();
+            int nSeminarsAmount = manager.getSeminarsAmount();
+            txtSeminar.Text = nSeminarsAmount.ToString();
+            int nSeminarsDebt = manager.getSeminarsDebt();
+            txtSeminarDebt.Text = nSeminarsDebt.ToString();
+            txtSeminarBenef.Text = (nSeminarsAmount - nSeminarsDebt).ToString();
+            int nCoachsPaysAmount = manager.getCoachsPaysAmount();
+            txtTeacherPays.Text = nCoachsPaysAmount.ToString();
+            txtTotalDebt.Text = (nSeminarsDebt + nLicencesDebt).ToString();
+            txtPaidDebt.Text = manager.getPaidDebt().ToString();
+            txtDebt.Text = (nSeminarsDebt + nLicencesDebt - manager.getPaidDebt()).ToString();
+            int nTotalBenef = nLicencesAmount - nLicencesDebt + nPrivatesAmount + nSeminarsAmount - nSeminarsDebt - nCoachsPaysAmount;
+            txtTotalBenef.Text = nTotalBenef.ToString();
+            //calcul d'un mensuel hypothétique:
+            DateTime beginDate = new DateTime(2017,5,1);
+            int nMonth = Math.Abs((beginDate.Month - DateTime.Now.Month) + 12 * (beginDate.Year - DateTime.Now.Year));
+            txtBlackMonth.Text = (nTotalBenef / nMonth).ToString();
+            txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
+
+        }
+
         public void FillMembersGrid(int rowIndex = 0)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
@@ -93,17 +126,8 @@ namespace Academy
                 mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[1];
                 mainGrid.Rows[rowIndex].Selected = true;
             }
-            lblMembers.Text = People.Rows.Count.ToString() + " members";
-            int totalAmount = mainGrid.Rows.Cast<DataGridViewRow>().Sum(t => Convert.ToInt32(t.Cells[5].Value));
-            lblTotal.Text = "Licences: " + totalAmount.ToString() + " E";
-            int totalDebt = mainGrid.Rows.Cast<DataGridViewRow>().Sum(t => Convert.ToInt32(t.Cells[6].Value));
-            lblTotalDebt.Text = "Dettes: " + totalDebt.ToString() + " E";
-            int total = totalAmount - totalDebt;
-            lblBenef.Text = "Benefices Licences: " + total.ToString() + " E";
-            lblPaidDebt.Text = "Dette payée: " + TotalRefund.ToString() + " E";
-            lblStillDebt.Text = "Dette restante: " + (totalDebt - TotalRefund).ToString() + " E";
+            
         }
-
         public void FillSeminarsGrid(int rowIndex = 0)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
@@ -157,7 +181,53 @@ namespace Academy
                 gridSeminars.Rows[rowIndex].Selected = true;
             }
         }
+        public void FillPrivatesGrid(int rowIndex = 0)
+        {
+            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            List<Private> privates = manager.getPrivates();
+            //Create a New DataTable to store the Data
+            DataTable Private = new DataTable("Private");
+            //Create the Columns in the DataTable
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("name");
+            DataColumn c2 = new DataColumn("amount");
+            DataColumn c3 = new DataColumn("date");
+            DataColumn c4 = new DataColumn("bookedLessons");
+            DataColumn c5 = new DataColumn("doneLessons");
 
+
+            //Add the Created Columns to the Datatable
+            Private.Columns.Add(c0);
+            Private.Columns.Add(c1);
+            Private.Columns.Add(c2);
+            Private.Columns.Add(c3);
+            Private.Columns.Add(c4);
+            Private.Columns.Add(c5);
+
+            foreach (Private priv in privates)
+            {
+                DataRow row = Private.NewRow();
+                row["ID"] = priv.ID;
+                row["name"] = priv.Name;
+                row["amount"] = priv.Amount;
+                row["date"] = priv.Date;
+                row["bookedLessons"] = priv.BookedLessons;
+                row["doneLessons"] = priv.DoneLessons;
+                Private.Rows.Add(row);
+            }
+            gridPrivates.DataSource = Private;
+            gridPrivates.Columns[0].Visible = false;
+            gridPrivates.RowHeadersVisible = false;
+            gridPrivates.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridPrivates.AllowUserToAddRows = false;
+            gridPrivates.ReadOnly = true;
+            if (rowIndex != 0)
+            {
+                gridPrivates.CurrentCell = gridPrivates.Rows[rowIndex].Cells[1];
+                gridPrivates.Rows[rowIndex].Selected = true;
+            }
+        }
         public void FillRefundsGrid(int rowIndex = 0)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
@@ -203,6 +273,59 @@ namespace Academy
                 gridRefunds.Rows[rowIndex].Selected = true;
             }
         }
+        public void FillCoachPayGrid(int rowIndex = 0)
+        {
+            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            List<CoachPay> pays = manager.getCoachPays();
+            //Create a New DataTable to store the Data
+            DataTable Coachpay = new DataTable("Coachpay");
+            //Create the Columns in the DataTable
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("Month");
+            DataColumn c2 = new DataColumn("Coach");
+            DataColumn c3 = new DataColumn("Lessons");
+            DataColumn c4 = new DataColumn("Pay");
+            DataColumn c5 = new DataColumn("Amount");
+            DataColumn c6 = new DataColumn("Date");
+            DataColumn c7 = new DataColumn("comment");
+
+
+            //Add the Created Columns to the Datatable
+            Coachpay.Columns.Add(c0);
+            Coachpay.Columns.Add(c1);
+            Coachpay.Columns.Add(c2);
+            Coachpay.Columns.Add(c3);
+            Coachpay.Columns.Add(c4);
+            Coachpay.Columns.Add(c5);
+            Coachpay.Columns.Add(c6);
+            Coachpay.Columns.Add(c7);
+
+            foreach (CoachPay pay in pays)
+            {
+                DataRow row = Coachpay.NewRow();
+                row["ID"] = pay.ID;
+                row["Month"] = pay.Month;
+                row["Coach"] = pay.Coach;
+                row["Lessons"] = pay.Lessons;
+                row["Pay"] = pay.Pay;
+                row["Amount"] = pay.Amount;
+                row["date"] = pay.Date;
+                row["comment"] = pay.Comment;
+                Coachpay.Rows.Add(row);
+            }
+            gridCoachPay.DataSource = Coachpay;
+            gridCoachPay.Columns[0].Visible = false;
+            gridCoachPay.RowHeadersVisible = false;
+            gridCoachPay.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridCoachPay.AllowUserToAddRows = false;
+            gridCoachPay.ReadOnly = true;
+            if (rowIndex != 0)
+            {
+                gridCoachPay.CurrentCell = gridCoachPay.Rows[rowIndex].Cells[1];
+                gridCoachPay.Rows[rowIndex].Selected = true;
+            }
+        }
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -215,13 +338,11 @@ namespace Academy
                 mf.Populate(member, e.RowIndex);
             }
         }
-
         private void bntNewMember_Click(object sender, EventArgs e)
         {
             MemberForm mf = new MemberForm(this, manager);
             mf.Show();
         }
-
         private void btnDeleteMember_Click(object sender, EventArgs e)
         {
             int currentMemberID = Convert.ToInt32(mainGrid.SelectedRows[0].Cells[0].Value);

@@ -24,6 +24,7 @@ namespace Academy
             currentMember = new Member();
             mainform = parentForm;
             cbBelt.SelectedIndex = 0;
+            cbGender.SelectedIndex = 0;
         }
         public void Populate(Member member, int index)
         {

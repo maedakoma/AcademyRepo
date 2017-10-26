@@ -35,22 +35,24 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.lblTotalDebt = new System.Windows.Forms.Label();
             this.lblBenef = new System.Windows.Forms.Label();
+            this.lblPaidDebt = new System.Windows.Forms.Label();
+            this.lblStillDebt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // mainGrid
             // 
             this.mainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainGrid.Location = new System.Drawing.Point(149, 30);
+            this.mainGrid.Location = new System.Drawing.Point(179, 30);
             this.mainGrid.Name = "mainGrid";
-            this.mainGrid.Size = new System.Drawing.Size(606, 448);
+            this.mainGrid.Size = new System.Drawing.Size(793, 673);
             this.mainGrid.TabIndex = 0;
             this.mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
             // 
             // lblMembers
             // 
             this.lblMembers.AutoSize = true;
-            this.lblMembers.Location = new System.Drawing.Point(146, 495);
+            this.lblMembers.Location = new System.Drawing.Point(9, 99);
             this.lblMembers.Name = "lblMembers";
             this.lblMembers.Size = new System.Drawing.Size(60, 13);
             this.lblMembers.TabIndex = 1;
@@ -79,7 +81,7 @@
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(146, 523);
+            this.lblTotal.Location = new System.Drawing.Point(9, 127);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(71, 13);
             this.lblTotal.TabIndex = 4;
@@ -88,7 +90,7 @@
             // lblTotalDebt
             // 
             this.lblTotalDebt.AutoSize = true;
-            this.lblTotalDebt.Location = new System.Drawing.Point(146, 536);
+            this.lblTotalDebt.Location = new System.Drawing.Point(9, 140);
             this.lblTotalDebt.Name = "lblTotalDebt";
             this.lblTotalDebt.Size = new System.Drawing.Size(64, 13);
             this.lblTotalDebt.TabIndex = 5;
@@ -97,15 +99,35 @@
             // lblBenef
             // 
             this.lblBenef.AutoSize = true;
-            this.lblBenef.Location = new System.Drawing.Point(146, 549);
+            this.lblBenef.Location = new System.Drawing.Point(9, 153);
             this.lblBenef.Name = "lblBenef";
             this.lblBenef.Size = new System.Drawing.Size(45, 13);
             this.lblBenef.TabIndex = 6;
             this.lblBenef.Text = "lblBenef";
             // 
+            // lblPaidDebt
+            // 
+            this.lblPaidDebt.AutoSize = true;
+            this.lblPaidDebt.Location = new System.Drawing.Point(9, 166);
+            this.lblPaidDebt.Name = "lblPaidDebt";
+            this.lblPaidDebt.Size = new System.Drawing.Size(61, 13);
+            this.lblPaidDebt.TabIndex = 7;
+            this.lblPaidDebt.Text = "lblPaidDebt";
+            // 
+            // lblStillDebt
+            // 
+            this.lblStillDebt.AutoSize = true;
+            this.lblStillDebt.Location = new System.Drawing.Point(9, 179);
+            this.lblStillDebt.Name = "lblStillDebt";
+            this.lblStillDebt.Size = new System.Drawing.Size(56, 13);
+            this.lblStillDebt.TabIndex = 8;
+            this.lblStillDebt.Text = "lblStillDebt";
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(783, 590);
+            this.ClientSize = new System.Drawing.Size(984, 715);
+            this.Controls.Add(this.lblStillDebt);
+            this.Controls.Add(this.lblPaidDebt);
             this.Controls.Add(this.lblBenef);
             this.Controls.Add(this.lblTotalDebt);
             this.Controls.Add(this.lblTotal);
@@ -130,6 +152,8 @@
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Label lblTotalDebt;
         private System.Windows.Forms.Label lblBenef;
+        private System.Windows.Forms.Label lblPaidDebt;
+        private System.Windows.Forms.Label lblStillDebt;
     }
 }
 

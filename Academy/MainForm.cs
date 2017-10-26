@@ -32,6 +32,14 @@ namespace Academy
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             manager.Open();
+            List<Refund> refunds = manager.getRefunds();
+            int TotalRefund = 0;
+            foreach(Refund refund in refunds)
+            {
+                TotalRefund = TotalRefund + refund.Amount;
+            }
+            
+            
             members = manager.getMembers();
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
@@ -91,15 +99,20 @@ namespace Academy
             lblTotalDebt.Text = "Dettes: " + totalDebt.ToString() + " E";
             int total = totalAmount - totalDebt;
             lblBenef.Text = "Benefices Licences: " + total.ToString() + " E";
+            lblPaidDebt.Text = "Dette payée: " + TotalRefund.ToString() + " E";
+            lblStillDebt.Text = "Dette restante: " + (totalDebt - TotalRefund).ToString() + " E";
         }
 
         private void mainGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            MemberForm mf = new MemberForm(this, manager);
-            mf.Show();
-            int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
-            Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
-            mf.Populate(member, e.RowIndex);
+            if (e.RowIndex != -1)
+            {
+                MemberForm mf = new MemberForm(this, manager);
+                mf.Show();
+                int currentMemberID = Convert.ToInt32(mainGrid.Rows[e.RowIndex].Cells[0].Value);
+                Member member = members.Where(x => x.ID == currentMemberID).ToList<Member>()[0];
+                mf.Populate(member, e.RowIndex);
+            }
         }
 
         private void bntNewMember_Click(object sender, EventArgs e)

@@ -23,6 +23,54 @@ namespace AcademyMgr
                 //this.Close();
             }
         }
+        public List<Refund> getRefunds()
+        {
+            List<Refund> refunds = new List<Refund>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from REFUNDS";
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+                    Refund refund = new Refund();
+                refund.ID = (int)reader["ID"];
+                refund.Label = reader["label"].ToString();
+                refund.Amount = (int)reader["amount"];
+                refund.Comment = reader["comment"].ToString();
+                refund.Date = Convert.ToDateTime(reader["Date"]);
+                refunds.Add(refund);
+            }
+            dbConn.Close();
+            return refunds;
+        }
+        public List<Seminar> getSeminars()
+        {
+            List<Seminar> seminars = new List<Seminar>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from SEMINARS";
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+                Seminar seminar = new Seminar();
+                seminar.ID = (int)reader["ID"];
+                seminar.Theme = reader["Theme"].ToString();
+                seminar.Date = Convert.ToDateTime(reader["Date"]);
+                seminar.WebMembers = (int)reader["WebMembers"];
+                seminar.LocalMembers = (int)reader["LocalMembers"];
+                seminar.Amount = (int)reader["amount"];
+                seminar.Debt = (int)reader["Debt"];
+                seminar.Comment = reader["comment"].ToString();
+                
+                seminars.Add(seminar);
+            }
+            dbConn.Close();
+            return seminars;
+        }
 
         public List<Member> getMembers()
         {
@@ -30,7 +78,7 @@ namespace AcademyMgr
 
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
-
+            dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             Member mem = new Member();
             while (reader.Read())

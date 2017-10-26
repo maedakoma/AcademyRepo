@@ -30,6 +30,7 @@ namespace AcademyMgr
         private genderEnum _gender;
         private beltEnum _belt;
         private List<Payment> _payments;
+        private Boolean _child;
 
         public int ID
         {
@@ -59,6 +60,11 @@ namespace AcademyMgr
         {
             get { return this._belt; }
             set { _belt = value; }
+        }
+        public Boolean Child
+        {
+            get { return this._child; }
+            set { _child = value; }
         }
         public Member()
         {

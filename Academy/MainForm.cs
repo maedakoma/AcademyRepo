@@ -60,7 +60,6 @@ namespace Academy
             int nMonth = Math.Abs((beginDate.Month - DateTime.Now.Month) + 12 * (beginDate.Year - DateTime.Now.Year));
             txtBlackMonth.Text = (nTotalBenef / nMonth).ToString();
             txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
-
         }
 
         public void FillMembersGrid(int rowIndex = 0)
@@ -83,8 +82,10 @@ namespace Academy
             DataColumn c2 = new DataColumn("firstname");
             DataColumn c3 = new DataColumn("belt");
             DataColumn c4 = new DataColumn("gender");
-            DataColumn c5 = new DataColumn("amount");
-            DataColumn c6 = new DataColumn("debt");
+            DataColumn c5 = new DataColumn("child");
+            c5.DataType = typeof(bool);
+            DataColumn c6 = new DataColumn("amount");
+            DataColumn c7 = new DataColumn("debt");
 
 
             //Add the Created Columns to the Datatable
@@ -95,6 +96,7 @@ namespace Academy
             People.Columns.Add(c4);
             People.Columns.Add(c5);
             People.Columns.Add(c6);
+            People.Columns.Add(c7);
 
             foreach (Member mem in members)
             {
@@ -104,6 +106,7 @@ namespace Academy
                 row["firstname"] = mem.Firstname;
                 row["belt"] = mem.Belt;
                 row["gender"] = mem.Gender;
+                row["child"] = mem.Child;
                 int amount = 0;
                 int debt = 0;
                 foreach (Payment pay in mem.Payments)
@@ -120,6 +123,8 @@ namespace Academy
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainGrid.AllowUserToAddRows = false;
+            mainGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            mainGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             mainGrid.ReadOnly = true;
             if (rowIndex != 0)
             {
@@ -174,6 +179,8 @@ namespace Academy
             gridSeminars.RowHeadersVisible = false;
             gridSeminars.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridSeminars.AllowUserToAddRows = false;
+            gridSeminars.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridSeminars.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridSeminars.ReadOnly = true;
             if (rowIndex != 0)
             {
@@ -221,6 +228,8 @@ namespace Academy
             gridPrivates.RowHeadersVisible = false;
             gridPrivates.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridPrivates.AllowUserToAddRows = false;
+            gridPrivates.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridPrivates.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridPrivates.ReadOnly = true;
             if (rowIndex != 0)
             {
@@ -266,6 +275,8 @@ namespace Academy
             gridRefunds.RowHeadersVisible = false;
             gridRefunds.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridRefunds.AllowUserToAddRows = false;
+            gridRefunds.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridRefunds.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridRefunds.ReadOnly = true;
             if (rowIndex != 0)
             {
@@ -319,6 +330,8 @@ namespace Academy
             gridCoachPay.RowHeadersVisible = false;
             gridCoachPay.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridCoachPay.AllowUserToAddRows = false;
+            gridCoachPay.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridCoachPay.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridCoachPay.ReadOnly = true;
             if (rowIndex != 0)
             {

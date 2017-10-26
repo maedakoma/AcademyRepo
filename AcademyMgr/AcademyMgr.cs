@@ -33,8 +33,7 @@ namespace AcademyMgr
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-
-                    Refund refund = new Refund();
+                Refund refund = new Refund();
                 refund.ID = (int)reader["ID"];
                 refund.Label = reader["label"].ToString();
                 refund.Amount = (int)reader["amount"];
@@ -159,6 +158,7 @@ namespace AcademyMgr
                     {
                         mem.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), sGender, true);
                     }
+                    mem.Child = Convert.ToBoolean(reader["Child"]);
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -242,11 +242,12 @@ namespace AcademyMgr
         public bool InsertMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt, gender) VALUES(@firstname, @lastname, @belt, @gender)";
-            comm.Parameters.Add("@firstname", member.Firstname);
-            comm.Parameters.Add("@lastname", member.Lastname);
-            comm.Parameters.Add("@belt", member.Belt.ToString());
-            comm.Parameters.Add("@gender", member.Gender.ToString());
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt, gender) VALUES(@firstname, @lastname, @belt, @gender, @child)";
+            comm.Parameters.AddWithValue("@firstname", member.Firstname);
+            comm.Parameters.AddWithValue("@lastname", member.Lastname);
+            comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
+            comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
+            comm.Parameters.AddWithValue("@child", member.Child);
             comm.ExecuteNonQuery();
 
             comm = dbConn.CreateCommand();
@@ -269,13 +270,13 @@ namespace AcademyMgr
             {
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, DepotBank, DepotDate ) VALUES(@amount, @type, @receptionDate, @name, @debt, @DepotBank, @DepotDate)";
-                comm.Parameters.Add("@amount", pay.Amount);
-                comm.Parameters.Add("@type", pay.Type);
-                comm.Parameters.Add("@receptionDate", pay.ReceptionDate);
-                comm.Parameters.Add("@name", pay.Name);
-                comm.Parameters.Add("@debt", pay.Debt);
-                comm.Parameters.Add("@DepotBank", pay.depotBank);
-                comm.Parameters.Add("@DepotDate", pay.DepotDate);
+                comm.Parameters.AddWithValue("@amount", pay.Amount);
+                comm.Parameters.AddWithValue("@type", pay.Type);
+                comm.Parameters.AddWithValue("@receptionDate", pay.ReceptionDate);
+                comm.Parameters.AddWithValue("@name", pay.Name);
+                comm.Parameters.AddWithValue("@debt", pay.Debt);
+                comm.Parameters.AddWithValue("@DepotBank", pay.depotBank);
+                comm.Parameters.AddWithValue("@DepotDate", pay.DepotDate);
                 comm.ExecuteNonQuery();
 
                 comm = dbConn.CreateCommand();
@@ -289,8 +290,8 @@ namespace AcademyMgr
 
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
-                comm.Parameters.Add("@MemberID", member.ID);
-                comm.Parameters.Add("@PaymentID", id);
+                comm.Parameters.AddWithValue("@MemberID", member.ID);
+                comm.Parameters.AddWithValue("@PaymentID", id);
                 comm.ExecuteNonQuery();
             }
             return true;
@@ -311,12 +312,13 @@ namespace AcademyMgr
         public bool UpdateMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt, gender=@gender WHERE ID=@ID";
-            comm.Parameters.Add("@firstname", member.Firstname);
-            comm.Parameters.Add("@lastname", member.Lastname);
-            comm.Parameters.Add("@belt", member.Belt.ToString());
-            comm.Parameters.Add("@gender", member.Gender.ToString());
-            comm.Parameters.Add("@ID", member.ID);
+            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt, gender=@gender, child=@child WHERE ID=@ID";
+            comm.Parameters.AddWithValue("@firstname", member.Firstname);
+            comm.Parameters.AddWithValue("@lastname", member.Lastname);
+            comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
+            comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
+            comm.Parameters.AddWithValue("@child", member.Child);
+            comm.Parameters.AddWithValue("@ID", member.ID);
             comm.ExecuteNonQuery();
 
             //On delete tous les paiements et on les rajoute tous:

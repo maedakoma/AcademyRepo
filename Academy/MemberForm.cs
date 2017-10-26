@@ -28,12 +28,14 @@ namespace Academy
         }
         public void Populate(Member member, int index)
         {
+            this.Text = member.Firstname + " " + member.Lastname;
             rowIndex = index;
             currentMember = member;
             txtFirstname.Text = member.Firstname;
             txtLastname.Text = member.Lastname;
             cbBelt.Text = member.Belt.ToString();
             cbGender.Text = member.Gender.ToString();
+            chkChild.Checked = member.Child;
             PopulatePayments(member);
         }
         public void PopulatePayments(Member member)
@@ -48,6 +50,7 @@ namespace Academy
             DataColumn c4 = new DataColumn("Debt");
             DataColumn c5 = new DataColumn("ReceptionDate");
             DataColumn c6 = new DataColumn("InBank");
+            c6.DataType = typeof(bool);
             DataColumn c7 = new DataColumn("BankDate");
 
             //Add the Created Columns to the Datatable
@@ -78,6 +81,8 @@ namespace Academy
             payGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             payGrid.RowHeadersVisible = false;
             payGrid.AllowUserToAddRows = false;
+            payGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            payGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             payGrid.ReadOnly = true;
         }
 
@@ -117,6 +122,7 @@ namespace Academy
             currentMember.Lastname = txtLastname.Text;
             currentMember.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), cbBelt.Text, true);
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
+            currentMember.Child = chkChild.Checked;
             if (currentMember.ID == 0)
             {
                 AcademyMgr.InsertMember(currentMember);

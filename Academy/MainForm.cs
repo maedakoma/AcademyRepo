@@ -349,5 +349,6 @@ namespace Academy
             manager.DeleteMember(currentMemberID);
             FillMembersGrid();
         }
+        
     }
 }

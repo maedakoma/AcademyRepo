@@ -72,6 +72,10 @@
             this.gridPrivates = new System.Windows.Forms.DataGridView();
             this.tabCoachPay = new System.Windows.Forms.TabPage();
             this.gridCoachPay = new System.Windows.Forms.DataGridView();
+            this.txtPrevOfficialMonth = new System.Windows.Forms.TextBox();
+            this.txtPrevBlackMonth = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabResume.SuspendLayout();
@@ -185,6 +189,10 @@
             // 
             // tabResume
             // 
+            this.tabResume.Controls.Add(this.txtPrevOfficialMonth);
+            this.tabResume.Controls.Add(this.txtPrevBlackMonth);
+            this.tabResume.Controls.Add(this.label10);
+            this.tabResume.Controls.Add(this.label11);
             this.tabResume.Controls.Add(this.txtTotalDebt);
             this.tabResume.Controls.Add(this.label9);
             this.tabResume.Controls.Add(this.txtOfficialMonth);
@@ -241,14 +249,14 @@
             // 
             // txtOfficialMonth
             // 
-            this.txtOfficialMonth.Location = new System.Drawing.Point(493, 273);
+            this.txtOfficialMonth.Location = new System.Drawing.Point(816, 246);
             this.txtOfficialMonth.Name = "txtOfficialMonth";
             this.txtOfficialMonth.Size = new System.Drawing.Size(100, 20);
             this.txtOfficialMonth.TabIndex = 30;
             // 
             // txtBlackMonth
             // 
-            this.txtBlackMonth.Location = new System.Drawing.Point(493, 247);
+            this.txtBlackMonth.Location = new System.Drawing.Point(816, 220);
             this.txtBlackMonth.Name = "txtBlackMonth";
             this.txtBlackMonth.Size = new System.Drawing.Size(100, 20);
             this.txtBlackMonth.TabIndex = 29;
@@ -340,20 +348,20 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(323, 280);
+            this.label8.Location = new System.Drawing.Point(646, 253);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(122, 13);
+            this.label8.Size = new System.Drawing.Size(88, 13);
             this.label8.TabIndex = 16;
-            this.label8.Text = "Salaire mensuel déclaré:";
+            this.label8.Text = "Mensuel déclaré:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(323, 254);
+            this.label7.Location = new System.Drawing.Point(646, 227);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(128, 13);
+            this.label7.Size = new System.Drawing.Size(94, 13);
             this.label7.TabIndex = 15;
-            this.label7.Text = "Salaire mensuel au black:";
+            this.label7.Text = "Mensuel au black:";
             // 
             // label6
             // 
@@ -498,6 +506,38 @@
             this.gridCoachPay.Size = new System.Drawing.Size(1160, 690);
             this.gridCoachPay.TabIndex = 0;
             // 
+            // txtPrevOfficialMonth
+            // 
+            this.txtPrevOfficialMonth.Location = new System.Drawing.Point(1139, 246);
+            this.txtPrevOfficialMonth.Name = "txtPrevOfficialMonth";
+            this.txtPrevOfficialMonth.Size = new System.Drawing.Size(100, 20);
+            this.txtPrevOfficialMonth.TabIndex = 36;
+            // 
+            // txtPrevBlackMonth
+            // 
+            this.txtPrevBlackMonth.Location = new System.Drawing.Point(1139, 220);
+            this.txtPrevBlackMonth.Name = "txtPrevBlackMonth";
+            this.txtPrevBlackMonth.Size = new System.Drawing.Size(100, 20);
+            this.txtPrevBlackMonth.TabIndex = 35;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(969, 253);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 13);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "Mensuel prévu déclaré:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(969, 227);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(124, 13);
+            this.label11.TabIndex = 33;
+            this.label11.Text = "Mensuel prevu au black:";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1340, 752);
@@ -567,6 +607,10 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabCoachPay;
         private System.Windows.Forms.DataGridView gridCoachPay;
+        private System.Windows.Forms.TextBox txtPrevOfficialMonth;
+        private System.Windows.Forms.TextBox txtPrevBlackMonth;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }
 

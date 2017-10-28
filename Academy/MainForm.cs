@@ -31,6 +31,15 @@ namespace Academy
             FillRefundsGrid();
             FillPrivatesGrid();
             FillCoachPayGrid();
+
+            //TODO
+            // Faire des chiffres previsionels
+            // Comment enregistrer des reports et lesquels?
+            // faire une version web
+            // faire un script de svg SQL
+            // Faire des alertes sur la fin d'inscritpion des élèves (code couleur, pop up etc....)
+            // Rajouter un champ commentaire sur l'élève (genre il est blessé pour un moi par ex) et date de fin d'abo
+            // Mettre dans la grille une colonne paiement avec ($$$ ou 2 / 5 posés par ex)
         }
 
         public void FillResume()

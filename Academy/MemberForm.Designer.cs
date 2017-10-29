@@ -42,6 +42,11 @@
             this.cbGender = new System.Windows.Forms.ComboBox();
             this.lblGender = new System.Windows.Forms.Label();
             this.chkChild = new System.Windows.Forms.CheckBox();
+            this.lblEndDate = new System.Windows.Forms.Label();
+            this.dateEnd = new System.Windows.Forms.DateTimePicker();
+            this.lblComment = new System.Windows.Forms.Label();
+            this.txtComment = new System.Windows.Forms.TextBox();
+            this.chkAlert = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,7 +93,7 @@
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(15, 347);
+            this.btnRemove.Location = new System.Drawing.Point(16, 346);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 8;
@@ -116,7 +121,7 @@
             // 
             // btnAddPayment
             // 
-            this.btnAddPayment.Location = new System.Drawing.Point(96, 347);
+            this.btnAddPayment.Location = new System.Drawing.Point(97, 346);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(75, 23);
             this.btnAddPayment.TabIndex = 11;
@@ -126,7 +131,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(15, 376);
+            this.btnOK.Location = new System.Drawing.Point(15, 435);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -180,11 +185,58 @@
             this.chkChild.Text = "Child";
             this.chkChild.UseVisualStyleBackColor = true;
             // 
+            // lblEndDate
+            // 
+            this.lblEndDate.AutoSize = true;
+            this.lblEndDate.Location = new System.Drawing.Point(355, 13);
+            this.lblEndDate.Name = "lblEndDate";
+            this.lblEndDate.Size = new System.Drawing.Size(49, 13);
+            this.lblEndDate.TabIndex = 17;
+            this.lblEndDate.Text = "EndDate";
+            // 
+            // dateEnd
+            // 
+            this.dateEnd.Location = new System.Drawing.Point(407, 9);
+            this.dateEnd.Name = "dateEnd";
+            this.dateEnd.Size = new System.Drawing.Size(200, 20);
+            this.dateEnd.TabIndex = 18;
+            // 
+            // lblComment
+            // 
+            this.lblComment.AutoSize = true;
+            this.lblComment.Location = new System.Drawing.Point(12, 416);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(51, 13);
+            this.lblComment.TabIndex = 19;
+            this.lblComment.Text = "Comment";
+            // 
+            // txtComment
+            // 
+            this.txtComment.Location = new System.Drawing.Point(70, 409);
+            this.txtComment.Name = "txtComment";
+            this.txtComment.Size = new System.Drawing.Size(538, 20);
+            this.txtComment.TabIndex = 20;
+            // 
+            // chkAlert
+            // 
+            this.chkAlert.AutoSize = true;
+            this.chkAlert.Location = new System.Drawing.Point(17, 386);
+            this.chkAlert.Name = "chkAlert";
+            this.chkAlert.Size = new System.Drawing.Size(61, 17);
+            this.chkAlert.TabIndex = 21;
+            this.chkAlert.Text = "ALERT";
+            this.chkAlert.UseVisualStyleBackColor = true;
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 405);
+            this.ClientSize = new System.Drawing.Size(713, 466);
+            this.Controls.Add(this.chkAlert);
+            this.Controls.Add(this.txtComment);
+            this.Controls.Add(this.lblComment);
+            this.Controls.Add(this.dateEnd);
+            this.Controls.Add(this.lblEndDate);
             this.Controls.Add(this.chkChild);
             this.Controls.Add(this.cbGender);
             this.Controls.Add(this.lblGender);
@@ -223,5 +275,10 @@
         private System.Windows.Forms.ComboBox cbGender;
         private System.Windows.Forms.Label lblGender;
         private System.Windows.Forms.CheckBox chkChild;
+        private System.Windows.Forms.Label lblEndDate;
+        private System.Windows.Forms.DateTimePicker dateEnd;
+        private System.Windows.Forms.Label lblComment;
+        private System.Windows.Forms.TextBox txtComment;
+        private System.Windows.Forms.CheckBox chkAlert;
     }
 }

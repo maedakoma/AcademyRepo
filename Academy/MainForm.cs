@@ -37,8 +37,6 @@ namespace Academy
             // Comment enregistrer des reports et lesquels?
             // faire une version web
             // faire un script de svg SQL
-            // Faire des alertes sur la fin d'inscritpion des élèves (code couleur, pop up etc....)
-            // Rajouter un champ commentaire sur l'élève (genre il est blessé pour un moi par ex) et date de fin d'abo
             // Mettre dans la grille une colonne paiement avec ($$$ ou 2 / 5 posés par ex)
         }
 
@@ -91,12 +89,17 @@ namespace Academy
             DataColumn c0 = new DataColumn("ID");
             DataColumn c1 = new DataColumn("lastname");
             DataColumn c2 = new DataColumn("firstname");
-            DataColumn c3 = new DataColumn("belt");
-            DataColumn c4 = new DataColumn("gender");
-            DataColumn c5 = new DataColumn("child");
-            c5.DataType = typeof(bool);
-            DataColumn c6 = new DataColumn("amount");
-            DataColumn c7 = new DataColumn("debt");
+            DataColumn c3 = new DataColumn("enddate");
+            c3.DataType = typeof(DateTime);
+            DataColumn c4 = new DataColumn("belt");
+            DataColumn c5 = new DataColumn("gender");
+            DataColumn c6 = new DataColumn("child");
+            c6.DataType = typeof(bool);
+            DataColumn c7 = new DataColumn("alert");
+            c7.DataType = typeof(bool);
+            DataColumn c8 = new DataColumn("amount");
+            DataColumn c9 = new DataColumn("debt");
+            DataColumn c10 = new DataColumn("comment");
 
 
             //Add the Created Columns to the Datatable
@@ -108,6 +111,9 @@ namespace Academy
             People.Columns.Add(c5);
             People.Columns.Add(c6);
             People.Columns.Add(c7);
+            People.Columns.Add(c8);
+            People.Columns.Add(c9);
+            People.Columns.Add(c10);
 
             foreach (Member mem in members)
             {
@@ -115,9 +121,11 @@ namespace Academy
                 row["ID"] = mem.ID;
                 row["lastname"] = mem.Lastname;
                 row["firstname"] = mem.Firstname;
+                row["enddate"] = mem.Enddate;
                 row["belt"] = mem.Belt;
                 row["gender"] = mem.Gender;
                 row["child"] = mem.Child;
+                row["alert"] = mem.Alert;
                 int amount = 0;
                 int debt = 0;
                 foreach (Payment pay in mem.Payments)
@@ -127,10 +135,14 @@ namespace Academy
                 }
                 row["amount"] = amount;
                 row["debt"] = debt;
+                row["comment"] = mem.Comment;
                 People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
+            mainGrid.Columns[5].Visible = false;
+            mainGrid.Columns[6].Visible = false;
+            mainGrid.Columns[7].Visible = false;
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainGrid.AllowUserToAddRows = false;
@@ -373,6 +385,18 @@ namespace Academy
             manager.DeleteMember(currentMemberID);
             FillMembersGrid();
         }
-        
+
+        private void mainGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            foreach (DataGridViewRow row in mainGrid.Rows)
+            {
+                bool bAlert = Convert.ToBoolean(row.Cells[7].Value);
+                if (bAlert)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
+        }
     }
 }

@@ -27,10 +27,14 @@ namespace AcademyMgr
         private int _ID;
         private string _firstname;
         private string _lastname;
+        private DateTime _enddate;
         private genderEnum _gender;
         private beltEnum _belt;
         private List<Payment> _payments;
         private Boolean _child;
+        private Boolean _alert;
+        private string _comment;
+
 
         public int ID
         {
@@ -51,6 +55,11 @@ namespace AcademyMgr
             get { return this._lastname; }
             set { _lastname = value; }
         }
+        public DateTime Enddate
+        {
+            get { return this._enddate; }
+            set { _enddate = value; }
+        }
         public genderEnum Gender
         {
             get { return this._gender; }
@@ -65,6 +74,16 @@ namespace AcademyMgr
         {
             get { return this._child; }
             set { _child = value; }
+        }
+        public Boolean Alert
+        {
+            get { return this._alert; }
+            set { _alert = value; }
+        }
+        public string Comment
+        {
+            get { return this._comment; }
+            set { _comment = value; }
         }
         public Member()
         {

@@ -98,6 +98,7 @@
             this.mainGrid.Size = new System.Drawing.Size(1163, 690);
             this.mainGrid.TabIndex = 0;
             this.mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
+            this.mainGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.mainGrid_DataBindingComplete);
             // 
             // lblMembers
             // 
@@ -175,12 +176,12 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabResume);
             this.tabControl1.Controls.Add(this.tabMembers);
             this.tabControl1.Controls.Add(this.tabRefunds);
             this.tabControl1.Controls.Add(this.tabSeminars);
             this.tabControl1.Controls.Add(this.tabPrivates);
             this.tabControl1.Controls.Add(this.tabCoachPay);
+            this.tabControl1.Controls.Add(this.tabResume);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;

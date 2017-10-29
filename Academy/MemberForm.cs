@@ -36,6 +36,12 @@ namespace Academy
             cbBelt.Text = member.Belt.ToString();
             cbGender.Text = member.Gender.ToString();
             chkChild.Checked = member.Child;
+            chkAlert.Checked = member.Alert;
+            txtComment.Text = member.Comment;
+            if (member.Enddate != DateTime.MinValue)
+            {
+                dateEnd.Value = member.Enddate;
+            }
             PopulatePayments(member);
         }
         public void PopulatePayments(Member member)
@@ -123,6 +129,9 @@ namespace Academy
             currentMember.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), cbBelt.Text, true);
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
             currentMember.Child = chkChild.Checked;
+            currentMember.Alert = chkAlert.Checked;
+            currentMember.Comment = txtComment.Text;
+            currentMember.Enddate = dateEnd.Value;
             if (currentMember.ID == 0)
             {
                 AcademyMgr.InsertMember(currentMember);

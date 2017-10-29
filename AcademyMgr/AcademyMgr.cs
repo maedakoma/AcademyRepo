@@ -12,7 +12,7 @@ namespace AcademyMgr
         MySqlConnection dbConn;
         public void Open()
         {
-            dbConn = new MySqlConnection("server=localhost;user id=admin;password=admin;database=academy;persistsecurityinfo=True");
+            dbConn = new MySqlConnection("server=mysql-cercle.alwaysdata.net;user id=cercle;password=iimg4jek;database=cercle_academy;persistsecurityinfo=True");
             try
             {
                 dbConn.Open();
@@ -120,7 +120,7 @@ namespace AcademyMgr
             List<Member> members = new List<Member>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join members_payments MP on MP.MemberID = M.ID left outer join payments P on P.ID = MP.PaymentID ORDER BY lastname";
+            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID left outer join PAYMENTS P on P.ID = MP.PaymentID ORDER BY lastname";
             dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             Member mem = new Member();
@@ -148,6 +148,10 @@ namespace AcademyMgr
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
+                    if (reader["enddate"] != DBNull.Value)
+                    {
+                        mem.Enddate = Convert.ToDateTime(reader["enddate"]);
+                    }
                     String sBelt = reader["belt"].ToString();
                     if (sBelt != String.Empty)
                     {
@@ -159,6 +163,8 @@ namespace AcademyMgr
                         mem.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), sGender, true);
                     }
                     mem.Child = Convert.ToBoolean(reader["Child"]);
+                    mem.Alert = Convert.ToBoolean(reader["Alert"]);
+                    mem.Comment = reader["comment"].ToString();
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -242,12 +248,16 @@ namespace AcademyMgr
         public bool InsertMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, belt, gender) VALUES(@firstname, @lastname, @belt, @gender, @child)";
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, child, alert, comment) VALUES(@firstname, @lastname, @enddate, @belt, @gender, @child, @alert, @comment)";
             comm.Parameters.AddWithValue("@firstname", member.Firstname);
             comm.Parameters.AddWithValue("@lastname", member.Lastname);
+            comm.Parameters.AddWithValue("@enddate", member.Enddate);
             comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("@child", member.Child);
+            comm.Parameters.AddWithValue("@alert", member.Alert);
+            comm.Parameters.AddWithValue("@comment", member.Comment);
+
             comm.ExecuteNonQuery();
 
             comm = dbConn.CreateCommand();
@@ -312,12 +322,15 @@ namespace AcademyMgr
         public bool UpdateMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, belt=@belt, gender=@gender, child=@child WHERE ID=@ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, enddate=@enddate, belt=@belt, gender=@gender, child=@child, alert=@alert, comment=@comment WHERE ID=@ID";
             comm.Parameters.AddWithValue("@firstname", member.Firstname);
             comm.Parameters.AddWithValue("@lastname", member.Lastname);
+            comm.Parameters.AddWithValue("@enddate", member.Enddate);
             comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("@child", member.Child);
+            comm.Parameters.AddWithValue("@alert", member.Alert);
+            comm.Parameters.AddWithValue("@comment", member.Comment);
             comm.Parameters.AddWithValue("@ID", member.ID);
             comm.ExecuteNonQuery();
 

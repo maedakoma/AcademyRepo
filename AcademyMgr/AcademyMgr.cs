@@ -13,15 +13,7 @@ namespace AcademyMgr
         public void Open()
         {
             dbConn = new MySqlConnection("server=mysql-cercle.alwaysdata.net;user id=cercle;password=iimg4jek;database=cercle_academy;persistsecurityinfo=True");
-            try
-            {
-                dbConn.Open();
-            }
-            catch (Exception erro)
-            {
-                //MessageBox.Show("Erro" + erro);
-                //this.Close();
-            }
+            dbConn.Open();
         }
         public List<Refund> getRefunds()
         {
@@ -310,7 +302,7 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=@MemberID";
-            comm.Parameters.Add("@MemberID", memberID);
+            comm.Parameters.AddWithValue("@MemberID", memberID);
             comm.ExecuteNonQuery();
 
             //on supprime tous les paiements non liés a un membre
@@ -347,7 +339,7 @@ namespace AcademyMgr
             //On delete le member
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM MEMBERS WHERE ID=@ID";
-            comm.Parameters.Add("@ID", memberID);
+            comm.Parameters.AddWithValue("@ID", memberID);
             comm.ExecuteNonQuery();
             return true;
         }

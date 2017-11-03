@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace AcademyMgr
@@ -12,7 +11,8 @@ namespace AcademyMgr
         MySqlConnection dbConn;
         public void Open()
         {
-            dbConn = new MySqlConnection("server=mysql-cercle.alwaysdata.net;user id=cercle;password=iimg4jek;database=cercle_academy;persistsecurityinfo=True");
+            dbConn = new MySqlConnection("server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy");
+            //dbConn = new MySql.Data.MySqlClient.MySqlConnection("server=localhost;user id=admin;password=admin;database=academy");
             dbConn.Open();
         }
         public List<Refund> getRefunds()
@@ -240,15 +240,16 @@ namespace AcademyMgr
         public bool InsertMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, child, alert, comment) VALUES(@firstname, @lastname, @enddate, @belt, @gender, @child, @alert, @comment)";
-            comm.Parameters.AddWithValue("@firstname", member.Firstname);
-            comm.Parameters.AddWithValue("@lastname", member.Lastname);
-            comm.Parameters.AddWithValue("@enddate", member.Enddate);
-            comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
-            comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
-            comm.Parameters.AddWithValue("@child", member.Child);
-            comm.Parameters.AddWithValue("@alert", member.Alert);
-            comm.Parameters.AddWithValue("@comment", member.Comment);
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, child, alert, comment) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?child, ?alert, ?comment)";
+            comm.Parameters.Add("?firstname", member.Firstname);
+            comm.Parameters.Add("?lastname", member.Lastname);
+            comm.Parameters.Add("?enddate", member.Enddate);
+            comm.Parameters.Add("?belt", member.Belt.ToString());
+            comm.Parameters.Add("?gender", member.Gender.ToString());
+            comm.Parameters.Add("?child", member.Child);
+            comm.Parameters.Add("?alert", member.Alert);
+            comm.Parameters.Add("?comment", member.Comment);
 
             comm.ExecuteNonQuery();
 
@@ -271,14 +272,14 @@ namespace AcademyMgr
             foreach (Payment pay in member.Payments)
             {
                 comm = dbConn.CreateCommand();
-                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, DepotBank, DepotDate ) VALUES(@amount, @type, @receptionDate, @name, @debt, @DepotBank, @DepotDate)";
-                comm.Parameters.AddWithValue("@amount", pay.Amount);
-                comm.Parameters.AddWithValue("@type", pay.Type);
-                comm.Parameters.AddWithValue("@receptionDate", pay.ReceptionDate);
-                comm.Parameters.AddWithValue("@name", pay.Name);
-                comm.Parameters.AddWithValue("@debt", pay.Debt);
-                comm.Parameters.AddWithValue("@DepotBank", pay.depotBank);
-                comm.Parameters.AddWithValue("@DepotDate", pay.DepotDate);
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, DepotBank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?DepotBank, ?DepotDate)";
+                comm.Parameters.AddWithValue("?amount", pay.Amount);
+                comm.Parameters.AddWithValue("?type", pay.Type);
+                comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
+                comm.Parameters.AddWithValue("?name", pay.Name);
+                comm.Parameters.AddWithValue("?debt", pay.Debt);
+                comm.Parameters.AddWithValue("?DepotBank", pay.depotBank);
+                comm.Parameters.AddWithValue("?DepotDate", pay.DepotDate);
                 comm.ExecuteNonQuery();
 
                 comm = dbConn.CreateCommand();
@@ -291,9 +292,9 @@ namespace AcademyMgr
                 dbConn.Open();
 
                 comm = dbConn.CreateCommand();
-                comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(@MemberID, @PaymentID)";
-                comm.Parameters.AddWithValue("@MemberID", member.ID);
-                comm.Parameters.AddWithValue("@PaymentID", id);
+                comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(?MemberID, ?PaymentID)";
+                comm.Parameters.AddWithValue("?MemberID", member.ID);
+                comm.Parameters.AddWithValue("?PaymentID", id);
                 comm.ExecuteNonQuery();
             }
             return true;
@@ -301,8 +302,8 @@ namespace AcademyMgr
         public bool DeletePayments(int memberID)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=@MemberID";
-            comm.Parameters.AddWithValue("@MemberID", memberID);
+            comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=?MemberID";
+            comm.Parameters.AddWithValue("?MemberID", memberID);
             comm.ExecuteNonQuery();
 
             //on supprime tous les paiements non liés a un membre
@@ -314,16 +315,16 @@ namespace AcademyMgr
         public bool UpdateMember(Member member)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=@firstname, lastname=@lastname, enddate=@enddate, belt=@belt, gender=@gender, child=@child, alert=@alert, comment=@comment WHERE ID=@ID";
-            comm.Parameters.AddWithValue("@firstname", member.Firstname);
-            comm.Parameters.AddWithValue("@lastname", member.Lastname);
-            comm.Parameters.AddWithValue("@enddate", member.Enddate);
-            comm.Parameters.AddWithValue("@belt", member.Belt.ToString());
-            comm.Parameters.AddWithValue("@gender", member.Gender.ToString());
-            comm.Parameters.AddWithValue("@child", member.Child);
-            comm.Parameters.AddWithValue("@alert", member.Alert);
-            comm.Parameters.AddWithValue("@comment", member.Comment);
-            comm.Parameters.AddWithValue("@ID", member.ID);
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, comment=?comment WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?firstname", member.Firstname);
+            comm.Parameters.AddWithValue("?lastname", member.Lastname);
+            comm.Parameters.AddWithValue("?enddate", member.Enddate);
+            comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
+            comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
+            comm.Parameters.AddWithValue("?child", member.Child);
+            comm.Parameters.AddWithValue("?alert", member.Alert);
+            comm.Parameters.AddWithValue("?comment", member.Comment);
+            comm.Parameters.AddWithValue("?ID", member.ID);
             comm.ExecuteNonQuery();
 
             //On delete tous les paiements et on les rajoute tous:
@@ -338,8 +339,8 @@ namespace AcademyMgr
             DeletePayments(memberID);
             //On delete le member
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "DELETE FROM MEMBERS WHERE ID=@ID";
-            comm.Parameters.AddWithValue("@ID", memberID);
+            comm.CommandText = "DELETE FROM MEMBERS WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?ID", memberID);
             comm.ExecuteNonQuery();
             return true;
         }

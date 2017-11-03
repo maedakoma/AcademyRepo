@@ -88,8 +88,8 @@ CREATE TABLE `MEMBERS_PAYMENTS` (
   `PaymentID` int(11) NOT NULL,
   PRIMARY KEY (`MemberID`,`PaymentID`),
   KEY `FKPayment` (`PaymentID`),
-  CONSTRAINT `FKMember` FOREIGN KEY (`MemberID`) REFERENCES `members` (`ID`),
-  CONSTRAINT `FKPayment` FOREIGN KEY (`PaymentID`) REFERENCES `payments` (`ID`)
+  CONSTRAINT `FKMember` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`),
+  CONSTRAINT `FKPayment` FOREIGN KEY (`PaymentID`) REFERENCES `PAYMENTS` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into `SEMINARS`(`ID`,`Theme`,`Date`,`WebMEMBERS`,`LocalMEMBERS`,`Amount`,`Debt`,`Comment`) values (1,'Spider guard','2017-06-10 00:00:00',14,21,1000,200,null);

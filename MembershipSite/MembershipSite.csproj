@@ -71,8 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
-    <Content Include="LogIn.aspx" />
-    <Content Include="Members\Member.aspx" />
+    <Content Include="Logon.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -83,24 +82,14 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LogIn.aspx.cs">
-      <DependentUpon>LogIn.aspx</DependentUpon>
+    <Compile Include="Logon.aspx.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="LogIn.aspx.designer.cs">
-      <DependentUpon>LogIn.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Members\Member.aspx.cs">
-      <DependentUpon>Member.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Members\Member.aspx.designer.cs">
-      <DependentUpon>Member.aspx</DependentUpon>
+    <Compile Include="Logon.aspx.designer.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Members\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AcademyMgr;
 using System.Data;
+using System.Web.Security;
 
 namespace MembershipSite
 {
@@ -140,6 +141,11 @@ namespace MembershipSite
                     e.Row.BackColor = System.Drawing.Color.Orange;
                 }
             }
+        }
+        protected void Signout_Click(object sender, EventArgs e)
+        {
+            FormsAuthentication.SignOut();
+            Response.Redirect("Logon.aspx");
         }
     }
 }

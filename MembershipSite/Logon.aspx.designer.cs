@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebAca {
+namespace MembershipSite {
     
     
-    public partial class WebMainForm {
+    public partial class LogInPage {
         
         /// <summary>
         /// form1 control.
@@ -22,12 +22,21 @@ namespace WebAca {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// mainGrid control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView mainGrid;
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// LoginControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Login LoginControl;
     }
 }

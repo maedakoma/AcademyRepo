@@ -15,6 +15,7 @@ namespace MembershipSite
 {
     public partial class LogInPage : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }

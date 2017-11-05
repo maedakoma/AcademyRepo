@@ -18,12 +18,6 @@ namespace MembershipSite
         {
             manager = new AcademyMgr.AcademyMgr();
             manager.Open();
-            List<Refund> refunds = manager.getRefunds();
-            int TotalRefund = 0;
-            foreach (Refund refund in refunds)
-            {
-                TotalRefund = TotalRefund + refund.Amount;
-            }
 
             members = manager.getMembers();
             //Create a New DataTable to store the Data

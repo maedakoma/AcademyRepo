@@ -4,13 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using AcademyMgr;
+using System.Data;
 
-
-namespace WebAca
+namespace MembershipSite
 {
-    public partial class WebMainForm : System.Web.UI.Page
+    public partial class _Default : System.Web.UI.Page
     {
         List<AcademyMgr.Member> members;
         AcademyMgr.AcademyMgr manager;

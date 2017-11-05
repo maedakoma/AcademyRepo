@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
+
+
+
 namespace AcademyMgr
 {
     public class AcademyMgr
     {
         MySqlConnection dbConn;
+        //public string connectionString = "server=localhost;user id=admin;password=admin;database=academy";
+        public string connectionString = "server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy";
         public void Open()
         {
-            dbConn = new MySqlConnection("server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy");
-            //dbConn = new MySql.Data.MySqlClient.MySqlConnection("server=localhost;user id=admin;password=admin;database=academy");
+            //dbConn = new MySqlConnection("server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy");
+            dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
         }
         public List<Refund> getRefunds()
@@ -33,7 +38,7 @@ namespace AcademyMgr
                 refund.Date = Convert.ToDateTime(reader["Date"]);
                 refunds.Add(refund);
             }
-            dbConn.Close();
+            reader.Close();
             return refunds;
         }
         public List<CoachPay> getCoachPays()
@@ -56,7 +61,7 @@ namespace AcademyMgr
                 pay.Comment = reader["comment"].ToString();
                 CoachPays.Add(pay);
             }
-            dbConn.Close();
+            reader.Close();
             return CoachPays;
         }
         public List<Seminar> getSeminars()
@@ -82,7 +87,7 @@ namespace AcademyMgr
                 
                 seminars.Add(seminar);
             }
-            dbConn.Close();
+            reader.Close();
             return seminars;
         }
         public List<Private> getPrivates()
@@ -104,7 +109,7 @@ namespace AcademyMgr
                 priv.DoneLessons = (int)reader["doneLessons"];
                 privates.Add(priv);
             }
-            dbConn.Close();
+            reader.Close();
             return privates;
         }
         public List<Member> getMembers()
@@ -113,8 +118,9 @@ namespace AcademyMgr
 
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID left outer join PAYMENTS P on P.ID = MP.PaymentID ORDER BY lastname";
-            dbConn.Open();
+            //dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            //dbConn.Close();
             Member mem = new Member();
             while (reader.Read())
             {
@@ -143,6 +149,12 @@ namespace AcademyMgr
                     if (reader["enddate"] != DBNull.Value)
                     {
                         mem.Enddate = Convert.ToDateTime(reader["enddate"]);
+                        //int result = DateTime.Compare(DateTime.Now, mem.Enddate);
+                        int daydiff =(int)(DateTime.Now - mem.Enddate).TotalDays;
+                        if (daydiff > 30)
+                        {
+                            mem.MembershipOK = false;
+                        }
                     }
                     String sBelt = reader["belt"].ToString();
                     if (sBelt != String.Empty)
@@ -156,7 +168,9 @@ namespace AcademyMgr
                     }
                     mem.Child = Convert.ToBoolean(reader["Child"]);
                     mem.Alert = Convert.ToBoolean(reader["Alert"]);
+                    mem.Active = Convert.ToBoolean(reader["active"]);
                     mem.Comment = reader["comment"].ToString();
+                    mem.Job = reader["job"].ToString();
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -176,13 +190,14 @@ namespace AcademyMgr
                     members.Add(mem);
                 }
             }
-            
+            reader.Close();
             return members;
         }
 
         public int getMembersCount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
+            //dbConn.Open();
             cmd.CommandText = "SELECT count(*) from MEMBERS";
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
@@ -241,15 +256,17 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, child, alert, comment) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?child, ?alert, ?comment)";
-            comm.Parameters.Add("?firstname", member.Firstname);
-            comm.Parameters.Add("?lastname", member.Lastname);
-            comm.Parameters.Add("?enddate", member.Enddate);
-            comm.Parameters.Add("?belt", member.Belt.ToString());
-            comm.Parameters.Add("?gender", member.Gender.ToString());
-            comm.Parameters.Add("?child", member.Child);
-            comm.Parameters.Add("?alert", member.Alert);
-            comm.Parameters.Add("?comment", member.Comment);
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job)";
+            comm.Parameters.AddWithValue("?firstname", member.Firstname);
+            comm.Parameters.AddWithValue("?lastname", member.Lastname);
+            comm.Parameters.AddWithValue("?enddate", member.Enddate);
+            comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
+            comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
+            comm.Parameters.AddWithValue("?child", member.Child);
+            comm.Parameters.AddWithValue("?active", member.Active);
+            comm.Parameters.AddWithValue("?alert", member.Alert);
+            comm.Parameters.AddWithValue("?comment", member.Comment);
+            comm.Parameters.AddWithValue("?job", member.Job);
 
             comm.ExecuteNonQuery();
 
@@ -259,8 +276,8 @@ namespace AcademyMgr
             int id = 0;
             reader.Read();
             id = Convert.ToInt32(reader[0]);
-            dbConn.Close();
-            dbConn.Open();
+            reader.Close();
+            //dbConn.Open();
             member.ID = id;
 
             InsertPayments(member);
@@ -288,8 +305,8 @@ namespace AcademyMgr
                 int id = 0;
                 reader.Read();
                 id = Convert.ToInt32(reader[0]);
-                dbConn.Close();
-                dbConn.Open();
+                reader.Close();
+                //dbConn.Open();
 
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(?MemberID, ?PaymentID)";
@@ -314,8 +331,26 @@ namespace AcademyMgr
         }
         public bool UpdateMember(Member member)
         {
+            if (!member.Active)
+            {
+                bool bNotpaid = false;
+                //On verifie que tout a bien été encaissé:
+                foreach(Payment pay in member.Payments)
+                {
+                    if ((pay.Type == "check") && (pay.depotBank == false))
+                    {
+                        bNotpaid = true;
+                        break;
+                    }
+                }
+                if (bNotpaid)
+                {
+                    throw new Exception("Unable to inactive a member with pending payments ");
+                }
+            }
+
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, comment=?comment WHERE ID=?ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job WHERE ID=?ID";
             comm.Parameters.AddWithValue("?firstname", member.Firstname);
             comm.Parameters.AddWithValue("?lastname", member.Lastname);
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -323,7 +358,9 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("?child", member.Child);
             comm.Parameters.AddWithValue("?alert", member.Alert);
+            comm.Parameters.AddWithValue("?active", member.Active);
             comm.Parameters.AddWithValue("?comment", member.Comment);
+            comm.Parameters.AddWithValue("?job", member.Job);
             comm.Parameters.AddWithValue("?ID", member.ID);
             comm.ExecuteNonQuery();
 

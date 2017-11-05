@@ -17,13 +17,14 @@ namespace Academy
         public MainForm()
         {
             InitializeComponent();
+            manager = new AcademyMgr.AcademyMgr();
+            manager.Open();
+            this.Text = "Academy Cercle - " + manager.connectionString;
             MainForm_Load();
         }
 
         private void MainForm_Load()
         {
-            manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
             FillResume();
             FillMembersGrid();
             FillSeminarsGrid();
@@ -32,11 +33,14 @@ namespace Academy
             FillCoachPayGrid();
 
             //TODO
+            //Bug: Quand on modifie les paiements et ferme la fenetre, c'est encore en mémoire....
             // Faire des chiffres previsionels
             // Comment enregistrer des reports et lesquels?
             // faire une version web
             // faire un script de svg SQL
             // Mettre dans la grille une colonne paiement avec ($$$ ou 2 / 5 posés par ex)
+            // Gerer les ouvertures fermetures de connection
+            // Faire de payment.type une énumération??
         }
 
         public void FillResume()
@@ -72,15 +76,6 @@ namespace Academy
 
         public void FillMembersGrid(int rowIndex = 0)
         {
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
-            List<Refund> refunds = manager.getRefunds();
-            int TotalRefund = 0;
-            foreach(Refund refund in refunds)
-            {
-                TotalRefund = TotalRefund + refund.Amount;
-            }
-            
             members = manager.getMembers();
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
@@ -89,7 +84,6 @@ namespace Academy
             DataColumn c1 = new DataColumn("lastname");
             DataColumn c2 = new DataColumn("firstname");
             DataColumn c3 = new DataColumn("enddate");
-            c3.DataType = typeof(DateTime);
             DataColumn c4 = new DataColumn("belt");
             DataColumn c5 = new DataColumn("gender");
             DataColumn c6 = new DataColumn("child");
@@ -99,6 +93,7 @@ namespace Academy
             DataColumn c8 = new DataColumn("amount");
             DataColumn c9 = new DataColumn("debt");
             DataColumn c10 = new DataColumn("comment");
+            DataColumn c11 = new DataColumn("membershipOK");
 
 
             //Add the Created Columns to the Datatable
@@ -113,35 +108,41 @@ namespace Academy
             People.Columns.Add(c8);
             People.Columns.Add(c9);
             People.Columns.Add(c10);
+            People.Columns.Add(c11);
 
             foreach (Member mem in members)
             {
-                DataRow row = People.NewRow();
-                row["ID"] = mem.ID;
-                row["lastname"] = mem.Lastname;
-                row["firstname"] = mem.Firstname;
-                row["enddate"] = mem.Enddate;
-                row["belt"] = mem.Belt;
-                row["gender"] = mem.Gender;
-                row["child"] = mem.Child;
-                row["alert"] = mem.Alert;
-                int amount = 0;
-                int debt = 0;
-                foreach (Payment pay in mem.Payments)
+                if (mem.Active)
                 {
-                    amount = amount  + pay.Amount;
-                    debt = debt + pay.Debt;
+                    DataRow row = People.NewRow();
+                    row["ID"] = mem.ID;
+                    row["lastname"] = mem.Lastname;
+                    row["firstname"] = mem.Firstname;
+                    row["enddate"] = mem.Enddate.ToString("MMMM yy");
+                    row["belt"] = mem.Belt;
+                    row["gender"] = mem.Gender;
+                    row["child"] = mem.Child;
+                    row["alert"] = mem.Alert;
+                    int amount = 0;
+                    int debt = 0;
+                    foreach (Payment pay in mem.Payments)
+                    {
+                        amount = amount + pay.Amount;
+                        debt = debt + pay.Debt;
+                    }
+                    row["amount"] = amount;
+                    row["debt"] = debt;
+                    row["comment"] = mem.Comment;
+                    row["membershipOK"] = mem.MembershipOK;
+                    People.Rows.Add(row);
                 }
-                row["amount"] = amount;
-                row["debt"] = debt;
-                row["comment"] = mem.Comment;
-                People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
             mainGrid.Columns[5].Visible = false;
             mainGrid.Columns[6].Visible = false;
             mainGrid.Columns[7].Visible = false;
+            mainGrid.Columns[11].Visible = false;
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainGrid.AllowUserToAddRows = false;
@@ -157,8 +158,8 @@ namespace Academy
         }
         public void FillSeminarsGrid(int rowIndex = 0)
         {
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            //manager.Open();
             List<Seminar> seminars = manager.getSeminars();
             //Create a New DataTable to store the Data
             DataTable Seminar = new DataTable("Seminar");
@@ -212,8 +213,8 @@ namespace Academy
         }
         public void FillPrivatesGrid(int rowIndex = 0)
         {
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            //manager.Open();
             List<Private> privates = manager.getPrivates();
             //Create a New DataTable to store the Data
             DataTable Private = new DataTable("Private");
@@ -261,8 +262,8 @@ namespace Academy
         }
         public void FillRefundsGrid(int rowIndex = 0)
         {
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            //manager.Open();
             List<Refund> refunds = manager.getRefunds();
             //Create a New DataTable to store the Data
             DataTable Refund = new DataTable("Refund");
@@ -308,8 +309,8 @@ namespace Academy
         }
         public void FillCoachPayGrid(int rowIndex = 0)
         {
-            AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
+            //manager.Open();
             List<CoachPay> pays = manager.getCoachPays();
             //Create a New DataTable to store the Data
             DataTable Coachpay = new DataTable("Coachpay");
@@ -389,6 +390,12 @@ namespace Academy
         {
             foreach (DataGridViewRow row in mainGrid.Rows)
             {
+                bool bMembershipOK = Convert.ToBoolean(row.Cells[11].Value);
+                if (!bMembershipOK)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
                 bool bAlert = Convert.ToBoolean(row.Cells[7].Value);
                 if (bAlert)
                 {

@@ -11,7 +11,7 @@
     <div>
     
     </div>
-        <asp:GridView ID="mainGrid" runat="server">
+        <asp:GridView ID="mainGrid" runat="server" OnPreRender="Page_Load" OnRowDataBound="mainGrid_RowDataBound">
         </asp:GridView>
     </form>
 </body>

@@ -47,6 +47,9 @@
             this.lblComment = new System.Windows.Forms.Label();
             this.txtComment = new System.Windows.Forms.TextBox();
             this.chkAlert = new System.Windows.Forms.CheckBox();
+            this.lblJob = new System.Windows.Forms.Label();
+            this.txtJob = new System.Windows.Forms.TextBox();
+            this.chkActive = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,7 +134,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(15, 435);
+            this.btnOK.Location = new System.Drawing.Point(15, 511);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -227,11 +230,40 @@
             this.chkAlert.Text = "ALERT";
             this.chkAlert.UseVisualStyleBackColor = true;
             // 
+            // lblJob
+            // 
+            this.lblJob.AutoSize = true;
+            this.lblJob.Location = new System.Drawing.Point(13, 454);
+            this.lblJob.Name = "lblJob";
+            this.lblJob.Size = new System.Drawing.Size(24, 13);
+            this.lblJob.TabIndex = 22;
+            this.lblJob.Text = "Job";
+            // 
+            // txtJob
+            // 
+            this.txtJob.Location = new System.Drawing.Point(70, 447);
+            this.txtJob.Name = "txtJob";
+            this.txtJob.Size = new System.Drawing.Size(538, 20);
+            this.txtJob.TabIndex = 23;
+            // 
+            // chkActive
+            // 
+            this.chkActive.AutoSize = true;
+            this.chkActive.Location = new System.Drawing.Point(278, 97);
+            this.chkActive.Name = "chkActive";
+            this.chkActive.Size = new System.Drawing.Size(47, 17);
+            this.chkActive.TabIndex = 24;
+            this.chkActive.Text = "Actif";
+            this.chkActive.UseVisualStyleBackColor = true;
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 466);
+            this.ClientSize = new System.Drawing.Size(733, 546);
+            this.Controls.Add(this.chkActive);
+            this.Controls.Add(this.txtJob);
+            this.Controls.Add(this.lblJob);
             this.Controls.Add(this.chkAlert);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.lblComment);
@@ -253,6 +285,7 @@
             this.Controls.Add(this.txtFirstname);
             this.Name = "MemberForm";
             this.Text = "MemberForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MemberForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -280,5 +313,8 @@
         private System.Windows.Forms.Label lblComment;
         private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.CheckBox chkAlert;
+        private System.Windows.Forms.Label lblJob;
+        private System.Windows.Forms.TextBox txtJob;
+        private System.Windows.Forms.CheckBox chkActive;
     }
 }

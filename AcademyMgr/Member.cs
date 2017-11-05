@@ -32,7 +32,11 @@ namespace AcademyMgr
         private List<Payment> _payments;
         private Boolean _child;
         private Boolean _alert;
+        private Boolean _active;
+        private Boolean _membershipOK = true;
         private string _comment;
+        private string _job;
+
 
 
         public int ID
@@ -79,10 +83,25 @@ namespace AcademyMgr
             get { return this._alert; }
             set { _alert = value; }
         }
+        public Boolean Active
+        {
+            get { return this._active; }
+            set { _active = value; }
+        }
+        public Boolean MembershipOK
+        {
+            get { return this._membershipOK; }
+            set { _membershipOK = value; }
+        }
         public string Comment
         {
             get { return this._comment; }
             set { _comment = value; }
+        }
+        public string Job
+        {
+            get { return this._job; }
+            set { _job = value; }
         }
         public Member()
         {

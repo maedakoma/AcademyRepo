@@ -24,6 +24,7 @@ namespace Academy
             mainform = parentForm;
             cbBelt.SelectedIndex = 0;
             cbGender.SelectedIndex = 0;
+            chkActive.Checked = true;
         }
         public void Populate(Member member, int index)
         {
@@ -36,7 +37,9 @@ namespace Academy
             cbGender.Text = member.Gender.ToString();
             chkChild.Checked = member.Child;
             chkAlert.Checked = member.Alert;
+            chkActive.Checked = member.Active;
             txtComment.Text = member.Comment;
+            txtJob.Text = member.Job;
             if (member.Enddate != DateTime.MinValue)
             {
                 dateEnd.Value = member.Enddate;
@@ -128,8 +131,10 @@ namespace Academy
             currentMember.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), cbBelt.Text, true);
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
             currentMember.Child = chkChild.Checked;
+            currentMember.Active = chkActive.Checked;
             currentMember.Alert = chkAlert.Checked;
             currentMember.Comment = txtComment.Text;
+            currentMember.Job = txtJob.Text;
             currentMember.Enddate = dateEnd.Value;
             if (currentMember.ID == 0)
             {
@@ -139,10 +144,12 @@ namespace Academy
             {
                 AcademyMgr.UpdateMember(currentMember);
             }
-            mainform.FillMembersGrid(rowIndex);
             this.Close();
         }
 
-        
+        private void MemberForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainform.FillMembersGrid(rowIndex);
+        }
     }
 }

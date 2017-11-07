@@ -55,7 +55,7 @@ namespace AcademyMgr
                 pay.Month = reader["Month"].ToString();
                 pay.Coach = reader["Coach"].ToString();
                 pay.Lessons = (int)reader["Lessons"];
-                pay.Pay= (int)reader["Pay"];
+                pay.Pay = (int)reader["Pay"];
                 pay.Amount = (int)reader["Amount"];
                 pay.Date = Convert.ToDateTime(reader["Date"]);
                 pay.Comment = reader["comment"].ToString();
@@ -84,7 +84,7 @@ namespace AcademyMgr
                 seminar.Amount = (int)reader["amount"];
                 seminar.Debt = (int)reader["Debt"];
                 seminar.Comment = reader["comment"].ToString();
-                
+
                 seminars.Add(seminar);
             }
             reader.Close();
@@ -150,7 +150,7 @@ namespace AcademyMgr
                     {
                         mem.Enddate = Convert.ToDateTime(reader["enddate"]);
                         //int result = DateTime.Compare(DateTime.Now, mem.Enddate);
-                        int daydiff =(int)(DateTime.Now - mem.Enddate).TotalDays;
+                        int daydiff = (int)(DateTime.Now - mem.Enddate).TotalDays;
                         if (daydiff > 30)
                         {
                             mem.MembershipOK = false;
@@ -283,6 +283,59 @@ namespace AcademyMgr
             InsertPayments(member);
             return true;
         }
+        public bool UpdateMember(Member member)
+        {
+            if (!member.Active)
+            {
+                bool bNotpaid = false;
+                //On verifie que tout a bien été encaissé:
+                foreach (Payment pay in member.Payments)
+                {
+                    if ((pay.Type == "check") && (pay.depotBank == false))
+                    {
+                        bNotpaid = true;
+                        break;
+                    }
+                }
+                if (bNotpaid)
+                {
+                    throw new Exception("Unable to inactive a member with pending payments ");
+                }
+            }
+
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?firstname", member.Firstname);
+            comm.Parameters.AddWithValue("?lastname", member.Lastname);
+            comm.Parameters.AddWithValue("?enddate", member.Enddate);
+            comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
+            comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
+            comm.Parameters.AddWithValue("?child", member.Child);
+            comm.Parameters.AddWithValue("?alert", member.Alert);
+            comm.Parameters.AddWithValue("?active", member.Active);
+            comm.Parameters.AddWithValue("?comment", member.Comment);
+            comm.Parameters.AddWithValue("?job", member.Job);
+            comm.Parameters.AddWithValue("?ID", member.ID);
+            comm.ExecuteNonQuery();
+
+            //On delete tous les paiements et on les rajoute tous:
+            DeletePayments(member.ID);
+            InsertPayments(member);
+
+            return true;
+        }
+        public bool DeleteMember(int memberID)
+        {
+            //On delete d'abord les paiements associés:
+            DeletePayments(memberID);
+            //On delete le member
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM MEMBERS WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?ID", memberID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
+
         public bool InsertPayments(Member member)
         {
             MySqlCommand comm;
@@ -329,56 +382,84 @@ namespace AcademyMgr
             comm.ExecuteNonQuery();
             return true;
         }
-        public bool UpdateMember(Member member)
-        {
-            if (!member.Active)
-            {
-                bool bNotpaid = false;
-                //On verifie que tout a bien été encaissé:
-                foreach(Payment pay in member.Payments)
-                {
-                    if ((pay.Type == "check") && (pay.depotBank == false))
-                    {
-                        bNotpaid = true;
-                        break;
-                    }
-                }
-                if (bNotpaid)
-                {
-                    throw new Exception("Unable to inactive a member with pending payments ");
-                }
-            }
 
+        public bool InsertPrivate(Private priv)
+        {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?firstname", member.Firstname);
-            comm.Parameters.AddWithValue("?lastname", member.Lastname);
-            comm.Parameters.AddWithValue("?enddate", member.Enddate);
-            comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
-            comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
-            comm.Parameters.AddWithValue("?child", member.Child);
-            comm.Parameters.AddWithValue("?alert", member.Alert);
-            comm.Parameters.AddWithValue("?active", member.Active);
-            comm.Parameters.AddWithValue("?comment", member.Comment);
-            comm.Parameters.AddWithValue("?job", member.Job);
-            comm.Parameters.AddWithValue("?ID", member.ID);
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO PRIVATES(name, amount, date, bookedLessons, donelessons) VALUES(?name, ?amount, ?date, ?bookedLessons, ?donelessons)";
+            comm.Parameters.AddWithValue("?name", priv.Name);
+            comm.Parameters.AddWithValue("?date", priv.Date);
+            comm.Parameters.AddWithValue("?amount", priv.Amount);
+            comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
+            comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
+
             comm.ExecuteNonQuery();
 
-            //On delete tous les paiements et on les rajoute tous:
-            DeletePayments(member.ID);
-            InsertPayments(member);
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);
+            reader.Close();
+            //dbConn.Open();
+            priv.ID = id;
+            return true;
+        }
+        public bool UpdatePrivate(Private priv)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE PRIVATES SET name=?name, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?name", priv.Name);
+            comm.Parameters.AddWithValue("?date", priv.Date);
+            comm.Parameters.AddWithValue("?amount", priv.Amount);
+            comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
+            comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
+            comm.Parameters.AddWithValue("?ID", priv.ID);
+            comm.ExecuteNonQuery();
 
             return true;
         }
-        public bool DeleteMember(int memberID)
+
+        public bool InsertCoachPayment(CoachPay pay)
         {
-            //On delete d'abord les paiements associés:
-            DeletePayments(memberID);
-            //On delete le member
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "DELETE FROM MEMBERS WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?ID", memberID);
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO COACHSPAYMENTS(month, coach, lessons, pay, amount, date) VALUES(?month, ?coach, ?lessons, ?pay, ?amount, ?date)";
+            comm.Parameters.AddWithValue("?month", pay.Month);
+            comm.Parameters.AddWithValue("?coach", pay.Coach);
+            comm.Parameters.AddWithValue("?lessons", pay.Lessons);
+            comm.Parameters.AddWithValue("?pay", pay.Pay);
+            comm.Parameters.AddWithValue("?amount", pay.Amount);
+            comm.Parameters.AddWithValue("?date", pay.Date);
+
             comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);    
+            reader.Close();
+            //dbConn.Open();
+            pay.ID = id;
+            return true;
+        }
+        public bool UpdateCoachPayment(CoachPay pay)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE COACHSPAYMENTS SET month=?month, coach=?coach, lessons=?lessons, pay=?pay, amount=?amount, date=?date WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?month", pay.Month);
+            comm.Parameters.AddWithValue("?coach", pay.Coach);
+            comm.Parameters.AddWithValue("?lessons", pay.Lessons);
+            comm.Parameters.AddWithValue("?pay", pay.Pay);
+            comm.Parameters.AddWithValue("?amount", pay.Amount);
+            comm.Parameters.AddWithValue("?date", pay.Date);
+            comm.Parameters.AddWithValue("?ID", pay.ID);
+            comm.ExecuteNonQuery();
+
             return true;
         }
     }

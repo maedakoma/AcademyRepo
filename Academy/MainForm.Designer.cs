@@ -44,8 +44,10 @@
             this.tabSeminars = new System.Windows.Forms.TabPage();
             this.gridSeminars = new System.Windows.Forms.DataGridView();
             this.tabPrivates = new System.Windows.Forms.TabPage();
+            this.btnAddPrivate = new System.Windows.Forms.Button();
             this.gridPrivates = new System.Windows.Forms.DataGridView();
             this.tabCoachPay = new System.Windows.Forms.TabPage();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.gridCoachPay = new System.Windows.Forms.DataGridView();
             this.tabResume = new System.Windows.Forms.TabPage();
             this.txtPrevOfficialMonth = new System.Windows.Forms.TextBox();
@@ -241,6 +243,7 @@
             // 
             // tabPrivates
             // 
+            this.tabPrivates.Controls.Add(this.btnAddPrivate);
             this.tabPrivates.Controls.Add(this.gridPrivates);
             this.tabPrivates.Location = new System.Drawing.Point(4, 22);
             this.tabPrivates.Name = "tabPrivates";
@@ -250,6 +253,16 @@
             this.tabPrivates.Text = "Privates";
             this.tabPrivates.UseVisualStyleBackColor = true;
             // 
+            // btnAddPrivate
+            // 
+            this.btnAddPrivate.Location = new System.Drawing.Point(7, 16);
+            this.btnAddPrivate.Name = "btnAddPrivate";
+            this.btnAddPrivate.Size = new System.Drawing.Size(106, 23);
+            this.btnAddPrivate.TabIndex = 1;
+            this.btnAddPrivate.Text = "Add private";
+            this.btnAddPrivate.UseVisualStyleBackColor = true;
+            this.btnAddPrivate.Click += new System.EventHandler(this.btnAddPrivate_Click);
+            // 
             // gridPrivates
             // 
             this.gridPrivates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -257,9 +270,11 @@
             this.gridPrivates.Name = "gridPrivates";
             this.gridPrivates.Size = new System.Drawing.Size(1160, 690);
             this.gridPrivates.TabIndex = 0;
+            this.gridPrivates.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPrivates_CellMouseDoubleClick);
             // 
             // tabCoachPay
             // 
+            this.tabCoachPay.Controls.Add(this.btnAdd);
             this.tabCoachPay.Controls.Add(this.gridCoachPay);
             this.tabCoachPay.Location = new System.Drawing.Point(4, 22);
             this.tabCoachPay.Name = "tabCoachPay";
@@ -269,6 +284,16 @@
             this.tabCoachPay.Text = "Coach Pay";
             this.tabCoachPay.UseVisualStyleBackColor = true;
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(3, 6);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(110, 23);
+            this.btnAdd.TabIndex = 1;
+            this.btnAdd.Text = "Add new Payment";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAddCoachPayment_Click);
+            // 
             // gridCoachPay
             // 
             this.gridCoachPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -276,6 +301,7 @@
             this.gridCoachPay.Name = "gridCoachPay";
             this.gridCoachPay.Size = new System.Drawing.Size(1160, 690);
             this.gridCoachPay.TabIndex = 0;
+            this.gridCoachPay.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridCoachPay_CellMouseDoubleClick);
             // 
             // tabResume
             // 
@@ -612,6 +638,8 @@
         private System.Windows.Forms.TextBox txtPrevBlackMonth;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnAddPrivate;
     }
 }
 

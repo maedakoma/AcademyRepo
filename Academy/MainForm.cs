@@ -12,7 +12,9 @@ namespace Academy
 {
     public partial class MainForm : Form
     {
-        List<AcademyMgr.Member> members;
+        List<Member> members;
+        List<Private> privates;
+        List<CoachPay> pays;
         AcademyMgr.AcademyMgr manager;
         public MainForm()
         {
@@ -215,7 +217,7 @@ namespace Academy
         {
             //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             //manager.Open();
-            List<Private> privates = manager.getPrivates();
+            privates = manager.getPrivates();
             //Create a New DataTable to store the Data
             DataTable Private = new DataTable("Private");
             //Create the Columns in the DataTable
@@ -311,7 +313,7 @@ namespace Academy
         {
             //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             //manager.Open();
-            List<CoachPay> pays = manager.getCoachPays();
+            pays = manager.getCoachPays();
             //Create a New DataTable to store the Data
             DataTable Coachpay = new DataTable("Coachpay");
             //Create the Columns in the DataTable
@@ -374,6 +376,28 @@ namespace Academy
                 mf.Populate(member, e.RowIndex);
             }
         }
+        private void gridPrivates_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                PrivateForm pf = new PrivateForm(this, manager);
+                pf.Show();
+                int currentPrivateID = Convert.ToInt32(gridPrivates.Rows[e.RowIndex].Cells[0].Value);
+                Private priv = privates.Where(x => x.ID == currentPrivateID).ToList<Private>()[0];
+                pf.Populate(priv, e.RowIndex);
+            }
+        }
+        private void gridCoachPay_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                CoachPayForm cpf = new CoachPayForm(this, manager);
+                cpf.Show();
+                int currentCoachPayID = Convert.ToInt32(gridCoachPay.Rows[e.RowIndex].Cells[0].Value);
+                CoachPay pay = pays.Where(x => x.ID == currentCoachPayID).ToList<CoachPay>()[0];
+                cpf.Populate(pay, e.RowIndex);
+            }
+        }
         private void bntNewMember_Click(object sender, EventArgs e)
         {
             MemberForm mf = new MemberForm(this, manager);
@@ -403,6 +427,18 @@ namespace Academy
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
             }
+        }
+
+        private void btnAddCoachPayment_Click(object sender, EventArgs e)
+        {
+            CoachPayForm cpf = new CoachPayForm(this, manager);
+            cpf.Show();
+        }
+
+        private void btnAddPrivate_Click(object sender, EventArgs e)
+        {
+            PrivateForm pf = new PrivateForm(this, manager);
+            pf.Show();
         }
     }
 }

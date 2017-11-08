@@ -94,6 +94,9 @@
             // 
             // mainGrid
             // 
+            this.mainGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainGrid.Location = new System.Drawing.Point(116, 6);
             this.mainGrid.Name = "mainGrid";
@@ -178,6 +181,9 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabMembers);
             this.tabControl1.Controls.Add(this.tabRefunds);
             this.tabControl1.Controls.Add(this.tabSeminars);
@@ -216,6 +222,9 @@
             // 
             // gridRefunds
             // 
+            this.gridRefunds.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridRefunds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridRefunds.Location = new System.Drawing.Point(118, 6);
             this.gridRefunds.Name = "gridRefunds";
@@ -235,10 +244,13 @@
             // 
             // gridSeminars
             // 
+            this.gridSeminars.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridSeminars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSeminars.Location = new System.Drawing.Point(118, 6);
+            this.gridSeminars.Location = new System.Drawing.Point(117, 6);
             this.gridSeminars.Name = "gridSeminars";
-            this.gridSeminars.Size = new System.Drawing.Size(1171, 690);
+            this.gridSeminars.Size = new System.Drawing.Size(1162, 690);
             this.gridSeminars.TabIndex = 0;
             // 
             // tabPrivates
@@ -265,6 +277,9 @@
             // 
             // gridPrivates
             // 
+            this.gridPrivates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridPrivates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPrivates.Location = new System.Drawing.Point(119, 6);
             this.gridPrivates.Name = "gridPrivates";
@@ -296,6 +311,9 @@
             // 
             // gridCoachPay
             // 
+            this.gridCoachPay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridCoachPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridCoachPay.Location = new System.Drawing.Point(119, 6);
             this.gridCoachPay.Name = "gridCoachPay";

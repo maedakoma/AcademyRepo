@@ -74,7 +74,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblPrivates = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -208,6 +208,7 @@
             this.tabMembers.TabIndex = 0;
             this.tabMembers.Text = "Members";
             this.tabMembers.UseVisualStyleBackColor = true;
+            this.tabMembers.Enter += new System.EventHandler(this.tabMembers_Enter);
             // 
             // tabRefunds
             // 
@@ -219,6 +220,7 @@
             this.tabRefunds.TabIndex = 1;
             this.tabRefunds.Text = "Refunds";
             this.tabRefunds.UseVisualStyleBackColor = true;
+            this.tabRefunds.Enter += new System.EventHandler(this.tabRefunds_Enter);
             // 
             // gridRefunds
             // 
@@ -241,6 +243,7 @@
             this.tabSeminars.TabIndex = 2;
             this.tabSeminars.Text = "Seminars";
             this.tabSeminars.UseVisualStyleBackColor = true;
+            this.tabSeminars.Enter += new System.EventHandler(this.tabSeminars_Enter);
             // 
             // gridSeminars
             // 
@@ -264,6 +267,7 @@
             this.tabPrivates.TabIndex = 3;
             this.tabPrivates.Text = "Privates";
             this.tabPrivates.UseVisualStyleBackColor = true;
+            this.tabPrivates.Enter += new System.EventHandler(this.tabPrivates_Enter);
             // 
             // btnAddPrivate
             // 
@@ -298,6 +302,7 @@
             this.tabCoachPay.TabIndex = 5;
             this.tabCoachPay.Text = "Coach Pay";
             this.tabCoachPay.UseVisualStyleBackColor = true;
+            this.tabCoachPay.Enter += new System.EventHandler(this.tabCoachPay_Enter);
             // 
             // btnAdd
             // 
@@ -347,7 +352,7 @@
             this.tabResume.Controls.Add(this.label7);
             this.tabResume.Controls.Add(this.label6);
             this.tabResume.Controls.Add(this.label5);
-            this.tabResume.Controls.Add(this.label4);
+            this.tabResume.Controls.Add(this.lblPrivates);
             this.tabResume.Controls.Add(this.label3);
             this.tabResume.Controls.Add(this.label2);
             this.tabResume.Controls.Add(this.label1);
@@ -364,6 +369,7 @@
             this.tabResume.TabIndex = 4;
             this.tabResume.Text = "Resume";
             this.tabResume.UseVisualStyleBackColor = true;
+            this.tabResume.Enter += new System.EventHandler(this.tabResume_Enter);
             // 
             // txtPrevOfficialMonth
             // 
@@ -547,14 +553,14 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Salaire des profs déja payés:";
             // 
-            // label4
+            // lblPrivates
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(323, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Montant des cours particuliers:";
+            this.lblPrivates.AutoSize = true;
+            this.lblPrivates.Location = new System.Drawing.Point(323, 27);
+            this.lblPrivates.Name = "lblPrivates";
+            this.lblPrivates.Size = new System.Drawing.Size(151, 13);
+            this.lblPrivates.TabIndex = 12;
+            this.lblPrivates.Text = "Montant des cours particuliers:";
             // 
             // label3
             // 
@@ -644,7 +650,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblPrivates;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

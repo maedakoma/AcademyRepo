@@ -13,6 +13,9 @@
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Signout_Click" Text="LogOut" />
         <br />
+        <br />
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Resume.aspx">Resume</asp:HyperLink>
+        <br />
     </div>
         <asp:GridView ID="mainGrid" runat="server" OnRowDataBound="mainGrid_RowDataBound">
         </asp:GridView>

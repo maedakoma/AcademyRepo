@@ -27,12 +27,6 @@ namespace Academy
 
         private void MainForm_Load()
         {
-            FillResume();
-            FillMembersGrid();
-            FillSeminarsGrid();
-            FillRefundsGrid();
-            FillPrivatesGrid();
-            FillCoachPayGrid();
 
             //TODO
             //Bug: Quand on modifie les paiements et ferme la fenetre, c'est encore en mémoire....
@@ -439,6 +433,36 @@ namespace Academy
         {
             PrivateForm pf = new PrivateForm(this, manager);
             pf.Show();
+        }
+
+        private void tabResume_Enter(object sender, EventArgs e)
+        {
+            FillResume();
+        }
+
+        private void tabSeminars_Enter(object sender, EventArgs e)
+        {
+            FillSeminarsGrid();
+        }
+
+        private void tabRefunds_Enter(object sender, EventArgs e)
+        {
+            FillRefundsGrid();
+        }
+
+        private void tabPrivates_Enter(object sender, EventArgs e)
+        {
+            FillPrivatesGrid();
+        }
+
+        private void tabCoachPay_Enter(object sender, EventArgs e)
+        {
+            FillCoachPayGrid();
+        }
+
+        private void tabMembers_Enter(object sender, EventArgs e)
+        {
+            FillMembersGrid();
         }
     }
 }

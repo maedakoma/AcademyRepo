@@ -9,7 +9,7 @@ namespace AcademyMgr
 
         private int _ID;
         private string _month;
-        private string _coach;
+        private Member _coach;
         private int _lessons;
         private int _pay;
         private int _amount;
@@ -26,7 +26,7 @@ namespace AcademyMgr
             get { return this._month; }
             set { _month = value; }
         }
-        public string Coach
+        public Member Coach
         {
             get { return this._coach; }
             set { _coach = value; }

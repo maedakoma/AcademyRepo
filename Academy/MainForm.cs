@@ -72,7 +72,7 @@ namespace Academy
 
         public void FillMembersGrid(int rowIndex = 0)
         {
-            members = manager.getMembers();
+            members = manager.getMembers(null);
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable
@@ -336,7 +336,7 @@ namespace Academy
                 DataRow row = Coachpay.NewRow();
                 row["ID"] = pay.ID;
                 row["Month"] = pay.Month;
-                row["Coach"] = pay.Coach;
+                row["Coach"] = pay.Coach.Firstname + " " + pay.Coach.Lastname;
                 row["Lessons"] = pay.Lessons;
                 row["Pay"] = pay.Pay;
                 row["Amount"] = pay.Amount;

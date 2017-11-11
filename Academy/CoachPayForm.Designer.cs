@@ -32,7 +32,6 @@
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.dateTimePickerReception = new System.Windows.Forms.DateTimePicker();
             this.lblDate = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtMonth = new System.Windows.Forms.TextBox();
             this.lblMonth = new System.Windows.Forms.Label();
@@ -41,6 +40,7 @@
             this.lblLessons = new System.Windows.Forms.Label();
             this.txtLessonPrice = new System.Windows.Forms.TextBox();
             this.lblLessonPrice = new System.Windows.Forms.Label();
+            this.cbCoachs = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblAmount
@@ -75,21 +75,14 @@
             this.lblDate.TabIndex = 5;
             this.lblDate.Text = "Date";
             // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(99, 16);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(122, 20);
-            this.txtName.TabIndex = 7;
-            // 
             // lblName
             // 
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(21, 19);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(35, 13);
+            this.lblName.Size = new System.Drawing.Size(38, 13);
             this.lblName.TabIndex = 6;
-            this.lblName.Text = "Name";
+            this.lblName.Text = "Coach";
             // 
             // txtMonth
             // 
@@ -149,11 +142,20 @@
             this.lblLessonPrice.TabIndex = 13;
             this.lblLessonPrice.Text = "LessonPrice";
             // 
+            // cbCoachs
+            // 
+            this.cbCoachs.FormattingEnabled = true;
+            this.cbCoachs.Location = new System.Drawing.Point(100, 19);
+            this.cbCoachs.Name = "cbCoachs";
+            this.cbCoachs.Size = new System.Drawing.Size(121, 21);
+            this.cbCoachs.TabIndex = 15;
+            // 
             // CoachPayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 275);
+            this.Controls.Add(this.cbCoachs);
             this.Controls.Add(this.txtLessonPrice);
             this.Controls.Add(this.lblLessonPrice);
             this.Controls.Add(this.txtLessons);
@@ -161,7 +163,6 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtMonth);
             this.Controls.Add(this.lblMonth);
-            this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.dateTimePickerReception);
@@ -181,7 +182,6 @@
         private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.DateTimePicker dateTimePickerReception;
         private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtMonth;
         private System.Windows.Forms.Label lblMonth;
@@ -190,5 +190,6 @@
         private System.Windows.Forms.Label lblLessons;
         private System.Windows.Forms.TextBox txtLessonPrice;
         private System.Windows.Forms.Label lblLessonPrice;
+        private System.Windows.Forms.ComboBox cbCoachs;
     }
 }

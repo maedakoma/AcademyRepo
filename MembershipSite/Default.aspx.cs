@@ -19,7 +19,7 @@ namespace MembershipSite
             manager = new AcademyMgr.AcademyMgr();
             manager.Open();
 
-            members = manager.getMembers();
+            members = manager.getMembers(null);
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable

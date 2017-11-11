@@ -23,13 +23,17 @@ namespace Academy
             AcademyMgr = manager;
             mainform = parentForm;
             currentCoachPayment = new CoachPay();
+            //On remplit la combo des coachs:
+            List<Member> coachs = AcademyMgr.getMembers(true);
+            cbCoachs.Items.AddRange(coachs.ToArray());
+            cbCoachs.DisplayMember = "Lastname";
         }
 
         public void Populate(CoachPay pay, int index)
         {
             rowIndex = index;
             currentCoachPayment = pay;
-            txtName.Text = pay.Coach;
+            cbCoachs.SelectedIndex = cbCoachs.FindStringExact(pay.Coach.Lastname);
             txtMonth.Text = pay.Month;
             txtLessons.Text = pay.Lessons.ToString();
             txtLessonPrice.Text = pay.Pay.ToString();
@@ -42,7 +46,7 @@ namespace Academy
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            currentCoachPayment.Coach = txtName.Text;
+            currentCoachPayment.Coach = (Member)cbCoachs.SelectedItem;
             currentCoachPayment.Month = txtMonth.Text;
             currentCoachPayment.Lessons = Convert.ToInt32(txtLessons.Text);
             currentCoachPayment.Pay = Convert.ToInt32(txtLessonPrice.Text);

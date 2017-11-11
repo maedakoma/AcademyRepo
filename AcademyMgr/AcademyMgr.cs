@@ -45,7 +45,7 @@ namespace AcademyMgr
         {
             List<CoachPay> CoachPays = new List<CoachPay>();
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from COACHSPAYMENTS";
+            cmd.CommandText = "SELECT * from COACHSPAYMENTS C INNER JOIN MEMBERS M on M.ID=C.MemberID";
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -53,7 +53,11 @@ namespace AcademyMgr
                 CoachPay pay = new CoachPay();
                 pay.ID = (int)reader["ID"];
                 pay.Month = reader["Month"].ToString();
-                pay.Coach = reader["Coach"].ToString();
+                Member coach = new Member();
+                coach.ID = (int)reader["MemberID"];
+                coach.Firstname = reader["Firstname"].ToString();
+                coach.Lastname = reader["Lastname"].ToString();
+                pay.Coach = coach;
                 pay.Lessons = (int)reader["Lessons"];
                 pay.Pay = (int)reader["Pay"];
                 pay.Amount = (int)reader["Amount"];
@@ -112,12 +116,24 @@ namespace AcademyMgr
             reader.Close();
             return privates;
         }
-        public List<Member> getMembers()
+        public List<Member> getMembers(bool? coach = false)
         {
             List<Member> members = new List<Member>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID left outer join PAYMENTS P on P.ID = MP.PaymentID ORDER BY lastname";
+
+            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID left outer join PAYMENTS P on P.ID = MP.PaymentID";
+            if (coach!= null)
+            {
+                cmd.CommandText += " WHERE M.coach=?coach";
+                int nCoach = 0;
+                if (coach == true)
+                {
+                    nCoach = 1;
+                }
+                cmd.Parameters.AddWithValue("?coach", nCoach);
+            }
+                cmd.CommandText += " ORDER BY lastname";
             //dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             //dbConn.Close();
@@ -426,9 +442,9 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO COACHSPAYMENTS(month, coach, lessons, pay, amount, date) VALUES(?month, ?coach, ?lessons, ?pay, ?amount, ?date)";
+            comm.CommandText = "INSERT INTO COACHSPAYMENTS(month, memberID, lessons, pay, amount, date) VALUES(?month, ?memberID, ?lessons, ?pay, ?amount, ?date)";
             comm.Parameters.AddWithValue("?month", pay.Month);
-            comm.Parameters.AddWithValue("?coach", pay.Coach);
+            comm.Parameters.AddWithValue("?memberID", pay.Coach.ID);
             comm.Parameters.AddWithValue("?lessons", pay.Lessons);
             comm.Parameters.AddWithValue("?pay", pay.Pay);
             comm.Parameters.AddWithValue("?amount", pay.Amount);
@@ -450,9 +466,9 @@ namespace AcademyMgr
         public bool UpdateCoachPayment(CoachPay pay)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE COACHSPAYMENTS SET month=?month, coach=?coach, lessons=?lessons, pay=?pay, amount=?amount, date=?date WHERE ID=?ID";
+            comm.CommandText = "UPDATE COACHSPAYMENTS SET month=?month, memberID=?memberID, lessons=?lessons, pay=?pay, amount=?amount, date=?date WHERE ID=?ID";
             comm.Parameters.AddWithValue("?month", pay.Month);
-            comm.Parameters.AddWithValue("?coach", pay.Coach);
+            comm.Parameters.AddWithValue("?memberID", pay.Coach.ID);
             comm.Parameters.AddWithValue("?lessons", pay.Lessons);
             comm.Parameters.AddWithValue("?pay", pay.Pay);
             comm.Parameters.AddWithValue("?amount", pay.Amount);

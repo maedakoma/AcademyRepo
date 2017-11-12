@@ -210,11 +210,11 @@ namespace AcademyMgr
             return members;
         }
 
-        public int getActiveMembersCount()
+        public int getStudentsCount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1";
+            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1 and coach=0";
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }

@@ -17,7 +17,7 @@ namespace MembershipSite
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             manager.Open();
 
-            txtMembersCount.Text = manager.getActiveMembersCount().ToString();
+            txtMembersCount.Text = manager.getStudentsCount().ToString();
             int nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
             int nLicencesDebt = manager.getLicencesDebt();

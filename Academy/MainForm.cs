@@ -41,7 +41,7 @@ namespace Academy
 
         public void FillResume()
         {
-            txtMembersCount.Text = manager.getActiveMembersCount().ToString();
+            txtMembersCount.Text = manager.getStudentsCount().ToString();
             int nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
             int nLicencesDebt = manager.getLicencesDebt();

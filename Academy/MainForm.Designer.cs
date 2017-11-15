@@ -78,6 +78,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAddRefund = new System.Windows.Forms.Button();
+            this.btnDelRefund = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -212,6 +214,8 @@
             // 
             // tabRefunds
             // 
+            this.tabRefunds.Controls.Add(this.btnAddRefund);
+            this.tabRefunds.Controls.Add(this.btnDelRefund);
             this.tabRefunds.Controls.Add(this.gridRefunds);
             this.tabRefunds.Location = new System.Drawing.Point(4, 22);
             this.tabRefunds.Name = "tabRefunds";
@@ -232,6 +236,7 @@
             this.gridRefunds.Name = "gridRefunds";
             this.gridRefunds.Size = new System.Drawing.Size(1161, 690);
             this.gridRefunds.TabIndex = 0;
+            this.gridRefunds.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridRefunds_CellMouseDoubleClick);
             // 
             // tabSeminars
             // 
@@ -589,6 +594,26 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Montant des stages:";
             // 
+            // btnAddRefund
+            // 
+            this.btnAddRefund.Location = new System.Drawing.Point(5, 6);
+            this.btnAddRefund.Name = "btnAddRefund";
+            this.btnAddRefund.Size = new System.Drawing.Size(107, 23);
+            this.btnAddRefund.TabIndex = 4;
+            this.btnAddRefund.Text = "Add new refund";
+            this.btnAddRefund.UseVisualStyleBackColor = true;
+            this.btnAddRefund.Click += new System.EventHandler(this.btnAddRefund_Click);
+            // 
+            // btnDelRefund
+            // 
+            this.btnDelRefund.Location = new System.Drawing.Point(5, 35);
+            this.btnDelRefund.Name = "btnDelRefund";
+            this.btnDelRefund.Size = new System.Drawing.Size(107, 23);
+            this.btnDelRefund.TabIndex = 5;
+            this.btnDelRefund.Text = "Delete refund";
+            this.btnDelRefund.UseVisualStyleBackColor = true;
+            this.btnDelRefund.Click += new System.EventHandler(this.btnDelRefund_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1340, 752);
@@ -664,6 +689,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnAddPrivate;
+        private System.Windows.Forms.Button btnAddRefund;
+        private System.Windows.Forms.Button btnDelRefund;
     }
 }
 

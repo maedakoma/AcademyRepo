@@ -65,6 +65,12 @@
     <Compile Include="PaymentForm.Designer.cs">
       <DependentUpon>PaymentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RefundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RefundForm.Designer.cs">
+      <DependentUpon>RefundForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrivateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PaymentForm.resx">
       <DependentUpon>PaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RefundForm.resx">
+      <DependentUpon>RefundForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrivateForm.resx">
       <DependentUpon>PrivateForm.cs</DependentUpon>

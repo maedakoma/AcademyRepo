@@ -438,6 +438,52 @@ namespace AcademyMgr
             return true;
         }
 
+        public bool InsertRefund(Refund refund)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO REFUNDS(label, amount, date, comment) VALUES(?label, ?amount, ?date, ?comment)";
+            comm.Parameters.AddWithValue("?label", refund.Label);
+            comm.Parameters.AddWithValue("?date", refund.Date);
+            comm.Parameters.AddWithValue("?amount", refund.Amount);
+            comm.Parameters.AddWithValue("?comment", refund.Comment);
+
+            comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);
+            reader.Close();
+            //dbConn.Open();
+            refund.ID = id;
+            return true;
+        }
+        public bool UpdateRefund(Refund refund)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE REFUNDS SET label=?label, amount=?amount, date=?date, comment=?comment WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?label", refund.Label);
+            comm.Parameters.AddWithValue("?date", refund.Date);
+            comm.Parameters.AddWithValue("?amount", refund.Amount);
+            comm.Parameters.AddWithValue("?comment", refund.Comment);
+            comm.Parameters.AddWithValue("?ID", refund.ID);
+            comm.ExecuteNonQuery();
+
+            return true;
+        }
+        public bool DeleteRefund(int refundID)
+        {
+            //On delete le virement
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM REFUNDS WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?ID", refundID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
+
         public bool InsertCoachPayment(CoachPay pay)
         {
             MySqlCommand comm = dbConn.CreateCommand();

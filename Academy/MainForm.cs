@@ -15,6 +15,7 @@ namespace Academy
         List<Member> members;
         List<Private> privates;
         List<CoachPay> pays;
+        List<Refund> refunds;
         AcademyMgr.AcademyMgr manager;
         public MainForm()
         {
@@ -260,7 +261,7 @@ namespace Academy
         {
             //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             //manager.Open();
-            List<Refund> refunds = manager.getRefunds();
+            refunds = manager.getRefunds();
             //Create a New DataTable to store the Data
             DataTable Refund = new DataTable("Refund");
             //Create the Columns in the DataTable
@@ -463,6 +464,31 @@ namespace Academy
         private void tabMembers_Enter(object sender, EventArgs e)
         {
             FillMembersGrid();
+        }
+
+        private void btnAddRefund_Click(object sender, EventArgs e)
+        {
+            RefundForm rf = new RefundForm(this, manager);
+            rf.Show();
+        }
+
+        private void btnDelRefund_Click(object sender, EventArgs e)
+        {
+            int currentRefundID = Convert.ToInt32(gridRefunds.SelectedRows[0].Cells[0].Value);
+            manager.DeleteRefund(currentRefundID);
+            FillRefundsGrid();
+        }
+
+        private void gridRefunds_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                RefundForm rf = new RefundForm(this, manager);
+                rf.Show();
+                int currentRefundID = Convert.ToInt32(gridRefunds.Rows[e.RowIndex].Cells[0].Value);
+                Refund refund = refunds.Where(x => x.ID == currentRefundID).ToList<Refund>()[0];
+                rf.Populate(refund, e.RowIndex);
+            }
         }
     }
 }

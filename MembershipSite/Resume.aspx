@@ -13,7 +13,9 @@
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Signout_Click" Text="LogOut" />
         <br />
+        <br />
         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Default.aspx">Members</asp:HyperLink>
+        <br />
         <br />
     </div>
         <br />

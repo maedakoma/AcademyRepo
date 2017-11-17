@@ -16,6 +16,7 @@
         <br />
         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Resume.aspx">Resume</asp:HyperLink>
         <br />
+        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Privates.aspx">Privates</asp:HyperLink>
         <br />
         <br />
         <asp:Button ID="btnAddMember" runat="server" OnClick="btnAddMember_Click" Text="Add new member" />

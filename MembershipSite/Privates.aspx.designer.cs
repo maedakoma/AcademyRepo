@@ -10,7 +10,7 @@
 namespace MembershipSite {
     
     
-    public partial class _Default {
+    public partial class _Privates {
         
         /// <summary>
         /// form1 control.
@@ -58,76 +58,58 @@ namespace MembershipSite {
         protected global::System.Web.UI.WebControls.HyperLink HyperLink2;
         
         /// <summary>
-        /// btnAddMember control.
+        /// btnAddPrivate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddMember;
+        protected global::System.Web.UI.WebControls.Button btnAddPrivate;
         
         /// <summary>
-        /// pnlMember control.
+        /// pnlPrivate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlMember;
+        protected global::System.Web.UI.WebControls.Panel pnlPrivate;
         
         /// <summary>
-        /// tbFirstname control.
+        /// txtName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbFirstname;
+        protected global::System.Web.UI.WebControls.TextBox txtName;
         
         /// <summary>
-        /// tbLastname control.
+        /// txtAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLastname;
+        protected global::System.Web.UI.WebControls.TextBox txtAmount;
         
         /// <summary>
-        /// ddBelt control.
+        /// txtBooked control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddBelt;
+        protected global::System.Web.UI.WebControls.TextBox txtBooked;
         
         /// <summary>
-        /// chkActive control.
+        /// txtDone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkActive;
-        
-        /// <summary>
-        /// chkAlert control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAlert;
-        
-        /// <summary>
-        /// tbComment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbComment;
+        protected global::System.Web.UI.WebControls.TextBox txtDone;
         
         /// <summary>
         /// btnCancel control.
@@ -148,12 +130,12 @@ namespace MembershipSite {
         protected global::System.Web.UI.WebControls.Button btnOK;
         
         /// <summary>
-        /// mainGrid control.
+        /// GridPrivates control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView mainGrid;
+        protected global::System.Web.UI.WebControls.GridView GridPrivates;
     }
 }

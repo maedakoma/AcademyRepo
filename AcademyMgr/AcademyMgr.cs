@@ -437,6 +437,15 @@ namespace AcademyMgr
 
             return true;
         }
+        public bool DeletePrivate(int privID)
+        {
+            //On delete le virement
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM PRIVATES WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?ID", privID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
 
         public bool InsertRefund(Refund refund)
         {

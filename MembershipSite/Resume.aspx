@@ -7,7 +7,7 @@
 </head>
 <body style="height: 507px">
     <form id="form1" runat="server">
-    <div>
+    <div style="height: 174px">
         <h2>Home Page</h2>
         <asp:Label ID="Label1" runat="server" Text="Welcome to my site!"></asp:Label>
         <br />
@@ -16,6 +16,7 @@
         <br />
         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Default.aspx">Members</asp:HyperLink>
         <br />
+        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Privates.aspx">Privates</asp:HyperLink>
         <br />
     </div>
         <br />

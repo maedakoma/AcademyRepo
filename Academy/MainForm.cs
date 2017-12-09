@@ -425,6 +425,21 @@ namespace Academy
             }
         }
 
+        private void privateGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            foreach (DataGridViewRow row in gridPrivates.Rows)
+            {
+                if (row.Cells[4].Value != null && row.Cells[5].Value != null)
+                {
+                    if (row.Cells[4].Value.ToString() == row.Cells[5].Value.ToString())
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                        //row.DefaultCellStyle.ForeColor = Color.White;
+                    }
+                }
+            }
+        }
+
         private void btnAddCoachPayment_Click(object sender, EventArgs e)
         {
             CoachPayForm cpf = new CoachPayForm(this, manager);

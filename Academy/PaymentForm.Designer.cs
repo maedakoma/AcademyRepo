@@ -39,9 +39,10 @@
             this.lblDebt = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.cbType = new System.Windows.Forms.ComboBox();
-            this.chkBank = new System.Windows.Forms.CheckBox();
             this.lblPutDate = new System.Windows.Forms.Label();
             this.DateTimePickerBank = new System.Windows.Forms.DateTimePicker();
+            this.cbBank = new System.Windows.Forms.ComboBox();
+            this.lblBank = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblAmount
@@ -120,7 +121,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(24, 240);
+            this.btnOK.Location = new System.Drawing.Point(24, 277);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 10;
@@ -140,20 +141,10 @@
             this.cbType.Size = new System.Drawing.Size(121, 21);
             this.cbType.TabIndex = 11;
             // 
-            // chkBank
-            // 
-            this.chkBank.AutoSize = true;
-            this.chkBank.Location = new System.Drawing.Point(24, 187);
-            this.chkBank.Name = "chkBank";
-            this.chkBank.Size = new System.Drawing.Size(63, 17);
-            this.chkBank.TabIndex = 12;
-            this.chkBank.Text = "In Bank";
-            this.chkBank.UseVisualStyleBackColor = true;
-            // 
             // lblPutDate
             // 
             this.lblPutDate.AutoSize = true;
-            this.lblPutDate.Location = new System.Drawing.Point(93, 188);
+            this.lblPutDate.Location = new System.Drawing.Point(21, 191);
             this.lblPutDate.Name = "lblPutDate";
             this.lblPutDate.Size = new System.Drawing.Size(46, 13);
             this.lblPutDate.TabIndex = 14;
@@ -161,19 +152,41 @@
             // 
             // DateTimePickerBank
             // 
-            this.DateTimePickerBank.Location = new System.Drawing.Point(145, 182);
+            this.DateTimePickerBank.Location = new System.Drawing.Point(73, 185);
             this.DateTimePickerBank.Name = "DateTimePickerBank";
             this.DateTimePickerBank.Size = new System.Drawing.Size(200, 20);
             this.DateTimePickerBank.TabIndex = 13;
+            // 
+            // cbBank
+            // 
+            this.cbBank.FormattingEnabled = true;
+            this.cbBank.Items.AddRange(new object[] {
+            "None",
+            "Academy",
+            "Perso"});
+            this.cbBank.Location = new System.Drawing.Point(73, 223);
+            this.cbBank.Name = "cbBank";
+            this.cbBank.Size = new System.Drawing.Size(121, 21);
+            this.cbBank.TabIndex = 15;
+            // 
+            // lblBank
+            // 
+            this.lblBank.AutoSize = true;
+            this.lblBank.Location = new System.Drawing.Point(24, 226);
+            this.lblBank.Name = "lblBank";
+            this.lblBank.Size = new System.Drawing.Size(32, 13);
+            this.lblBank.TabIndex = 16;
+            this.lblBank.Text = "Bank";
             // 
             // PaymentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 275);
+            this.ClientSize = new System.Drawing.Size(417, 324);
+            this.Controls.Add(this.lblBank);
+            this.Controls.Add(this.cbBank);
             this.Controls.Add(this.lblPutDate);
             this.Controls.Add(this.DateTimePickerBank);
-            this.Controls.Add(this.chkBank);
             this.Controls.Add(this.cbType);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtDebt);
@@ -205,8 +218,9 @@
         private System.Windows.Forms.Label lblDebt;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.ComboBox cbType;
-        private System.Windows.Forms.CheckBox chkBank;
         private System.Windows.Forms.Label lblPutDate;
         private System.Windows.Forms.DateTimePicker DateTimePickerBank;
+        private System.Windows.Forms.ComboBox cbBank;
+        private System.Windows.Forms.Label lblBank;
     }
 }

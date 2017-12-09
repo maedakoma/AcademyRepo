@@ -28,7 +28,7 @@ namespace Academy
                 txtAmount.Text = payment.Amount.ToString();
                 txtDebt.Text = payment.Debt.ToString();
                 cbType.Text = payment.Type.ToString();
-                chkBank.Checked = payment.depotBank;
+                cbBank.Text = payment.Bank.ToString();
                 if (payment.ReceptionDate != DateTime.MinValue)
                 {
                     dateTimePickerReception.Value = payment.ReceptionDate;
@@ -53,7 +53,7 @@ namespace Academy
             currentPayment.Name = txtName.Text;
             currentPayment.Type = cbType.Text;
             currentPayment.ReceptionDate = dateTimePickerReception.Value;
-            currentPayment.depotBank = chkBank.Checked;
+            currentPayment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), cbBank.Text, true);  ;
             currentPayment.DepotDate = DateTimePickerBank.Value;
             if (currentPayment.ID == 0)
             {

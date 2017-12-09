@@ -60,5 +60,6 @@ namespace Academy
         {
             mainform.FillPrivatesGrid(rowIndex);
         }
+
     }
 }

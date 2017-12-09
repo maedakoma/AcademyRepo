@@ -57,8 +57,7 @@ namespace Academy
             DataColumn c3 = new DataColumn("Name");
             DataColumn c4 = new DataColumn("Debt");
             DataColumn c5 = new DataColumn("ReceptionDate");
-            DataColumn c6 = new DataColumn("InBank");
-            c6.DataType = typeof(bool);
+            DataColumn c6 = new DataColumn("Bank");
             DataColumn c7 = new DataColumn("BankDate");
 
             //Add the Created Columns to the Datatable
@@ -80,7 +79,7 @@ namespace Academy
                 row["Name"] = pay.Name;
                 row["Debt"] = pay.Debt;
                 row["ReceptionDate"] = pay.ReceptionDate;
-                row["InBank"] = pay.depotBank;
+                row["Bank"] = pay.Bank.ToString();
                 row["BankDate"] = pay.DepotDate;
                 Payments.Rows.Add(row);
             }

@@ -317,6 +317,7 @@
             this.gridPrivates.Size = new System.Drawing.Size(1160, 690);
             this.gridPrivates.TabIndex = 0;
             this.gridPrivates.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPrivates_CellMouseDoubleClick);
+            this.gridPrivates.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.privateGrid_DataBindingComplete);
             // 
             // tabCoachPay
             // 

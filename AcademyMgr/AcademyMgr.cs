@@ -150,7 +150,11 @@ namespace AcademyMgr
                     payment.Type = reader["type"].ToString();
                     payment.Name = reader["name"].ToString();
                     payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
-                    payment.depotBank = Convert.ToBoolean(reader["DepotBank"]);
+                    String sBank = reader["bank"].ToString();
+                    if (sBank != String.Empty)
+                    {
+                        payment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), sBank, true);
+                    }
                     if (reader["DepotDate"] != DBNull.Value)
                     {
                         payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
@@ -197,7 +201,11 @@ namespace AcademyMgr
                         payment.Name = reader["name"].ToString();
                         payment.Type = reader["type"].ToString();
                         payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
-                        payment.depotBank = Convert.ToBoolean(reader["DepotBank"]);
+                        String sBank = reader["bank"].ToString();
+                        if (sBank != String.Empty)
+                        {
+                            payment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), sBank, true);
+                        }
                         if (reader["DepotDate"] != DBNull.Value)
                         {
                             payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
@@ -309,7 +317,7 @@ namespace AcademyMgr
                 //On verifie que tout a bien été encaissé:
                 foreach (Payment pay in member.Payments)
                 {
-                    if ((pay.Type == "check") && (pay.depotBank == false))
+                    if ((pay.Type == "check") && (pay.Bank == Payment.bankEnum.None))
                     {
                         bNotpaid = true;
                         break;
@@ -360,13 +368,13 @@ namespace AcademyMgr
             foreach (Payment pay in member.Payments)
             {
                 comm = dbConn.CreateCommand();
-                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, DepotBank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?DepotBank, ?DepotDate)";
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
                 comm.Parameters.AddWithValue("?amount", pay.Amount);
                 comm.Parameters.AddWithValue("?type", pay.Type);
                 comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
                 comm.Parameters.AddWithValue("?name", pay.Name);
                 comm.Parameters.AddWithValue("?debt", pay.Debt);
-                comm.Parameters.AddWithValue("?DepotBank", pay.depotBank);
+                comm.Parameters.AddWithValue("?Bank", pay.Bank.ToString());
                 comm.Parameters.AddWithValue("?DepotDate", pay.DepotDate);
                 comm.ExecuteNonQuery();
 

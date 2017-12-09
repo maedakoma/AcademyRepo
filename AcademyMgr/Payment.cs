@@ -8,15 +8,22 @@ namespace AcademyMgr
    
     public class Payment
     {
+        public enum bankEnum
+        {
+            None = 0,
+            Academy = 1,
+            Perso = 2
+        }
+
         private int _ID;
         private int _amount;
         private string _type;
         private string _name;
         private int _debt;
-        private Boolean _depotBank;
+        private bankEnum _bank;
         private DateTime _receptionDate;
         private DateTime _depotDate;
-
+        
         public int ID
         {
             get { return this._ID; }
@@ -42,10 +49,10 @@ namespace AcademyMgr
             get { return this._debt; }
             set { _debt = value; }
         }
-        public Boolean depotBank
+        public bankEnum Bank
         {
-            get { return this._depotBank; }
-            set { _depotBank = value; }
+            get { return this._bank; }
+            set { _bank = value; }
         }
         public DateTime ReceptionDate
         {

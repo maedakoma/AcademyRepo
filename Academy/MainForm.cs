@@ -71,7 +71,7 @@ namespace Academy
             txtPrevOfficialMonth.Text = ((nTotalBenef * 75) / (12 * 100)).ToString();
         }
 
-        public void FillMembersGrid(int rowIndex = 0)
+        public void FillMembersGrid(int rowIndex = 0, bool onlyActive = true)
         {
             members = manager.getMembers(null);
             //Create a New DataTable to store the Data
@@ -109,30 +109,31 @@ namespace Academy
 
             foreach (Member mem in members)
             {
-                if (mem.Active)
+                if (!mem.Active && onlyActive)
                 {
-                    DataRow row = People.NewRow();
-                    row["ID"] = mem.ID;
-                    row["lastname"] = mem.Lastname;
-                    row["firstname"] = mem.Firstname;
-                    row["enddate"] = mem.Enddate.ToString("MMMM yy");
-                    row["belt"] = mem.Belt;
-                    row["gender"] = mem.Gender;
-                    row["child"] = mem.Child;
-                    row["alert"] = mem.Alert;
-                    int amount = 0;
-                    int debt = 0;
-                    foreach (Payment pay in mem.Payments)
-                    {
-                        amount = amount + pay.Amount;
-                        debt = debt + pay.Debt;
-                    }
-                    row["amount"] = amount;
-                    row["debt"] = debt;
-                    row["comment"] = mem.Comment;
-                    row["membershipOK"] = mem.MembershipOK;
-                    People.Rows.Add(row);
+                    continue;
                 }
+                DataRow row = People.NewRow();
+                row["ID"] = mem.ID;
+                row["lastname"] = mem.Lastname;
+                row["firstname"] = mem.Firstname;
+                row["enddate"] = mem.Enddate.ToString("MMMM yy");
+                row["belt"] = mem.Belt;
+                row["gender"] = mem.Gender;
+                row["child"] = mem.Child;
+                row["alert"] = mem.Alert;
+                int amount = 0;
+                int debt = 0;
+                foreach (Payment pay in mem.Payments)
+                {
+                    amount = amount + pay.Amount;
+                    debt = debt + pay.Debt;
+                }
+                row["amount"] = amount;
+                row["debt"] = debt;
+                row["comment"] = mem.Comment;
+                row["membershipOK"] = mem.MembershipOK;
+                People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
@@ -488,6 +489,18 @@ namespace Academy
                 int currentRefundID = Convert.ToInt32(gridRefunds.Rows[e.RowIndex].Cells[0].Value);
                 Refund refund = refunds.Where(x => x.ID == currentRefundID).ToList<Refund>()[0];
                 rf.Populate(refund, e.RowIndex);
+            }
+        }
+
+        private void chkInactive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkInactive.Checked == true)
+            {
+                FillMembersGrid(0,false);
+            }
+            else
+            {
+                FillMembersGrid(0, true);
             }
         }
     }

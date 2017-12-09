@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
@@ -99,14 +100,14 @@ namespace AcademyMgr
             List<Private> privates = new List<Private>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from PRIVATES";
+            cmd.CommandText = "SELECT * from PRIVATES P inner join MEMBERS M on M.ID = P.memberID";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 Private priv = new Private();
                 priv.ID = (int)reader["ID"];
-                priv.Name = reader["Name"].ToString();
+                priv.Name = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
                 priv.Amount = (int)reader["amount"];
                 priv.Date = Convert.ToDateTime(reader["Date"]);
                 priv.BookedLessons = (int)reader["bookedLessons"];
@@ -272,9 +273,9 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job)";
-            comm.Parameters.AddWithValue("?firstname", member.Firstname);
-            comm.Parameters.AddWithValue("?lastname", member.Lastname);
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job, ?coach)";
+            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
+            comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
             comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
@@ -283,6 +284,7 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?alert", member.Alert);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
+            comm.Parameters.AddWithValue("?coach", 0);
 
             comm.ExecuteNonQuery();
 
@@ -321,8 +323,8 @@ namespace AcademyMgr
 
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?firstname", member.Firstname);
-            comm.Parameters.AddWithValue("?lastname", member.Lastname);
+            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
+            comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
             comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());

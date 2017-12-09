@@ -40,6 +40,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMembers = new System.Windows.Forms.TabPage();
             this.tabRefunds = new System.Windows.Forms.TabPage();
+            this.btnAddRefund = new System.Windows.Forms.Button();
+            this.btnDelRefund = new System.Windows.Forms.Button();
             this.gridRefunds = new System.Windows.Forms.DataGridView();
             this.tabSeminars = new System.Windows.Forms.TabPage();
             this.gridSeminars = new System.Windows.Forms.DataGridView();
@@ -78,8 +80,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnAddRefund = new System.Windows.Forms.Button();
-            this.btnDelRefund = new System.Windows.Forms.Button();
+            this.chkInactive = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -200,6 +201,7 @@
             // 
             // tabMembers
             // 
+            this.tabMembers.Controls.Add(this.chkInactive);
             this.tabMembers.Controls.Add(this.mainGrid);
             this.tabMembers.Controls.Add(this.bntNewMember);
             this.tabMembers.Controls.Add(this.btnDeleteMember);
@@ -225,6 +227,26 @@
             this.tabRefunds.Text = "Refunds";
             this.tabRefunds.UseVisualStyleBackColor = true;
             this.tabRefunds.Enter += new System.EventHandler(this.tabRefunds_Enter);
+            // 
+            // btnAddRefund
+            // 
+            this.btnAddRefund.Location = new System.Drawing.Point(5, 6);
+            this.btnAddRefund.Name = "btnAddRefund";
+            this.btnAddRefund.Size = new System.Drawing.Size(107, 23);
+            this.btnAddRefund.TabIndex = 4;
+            this.btnAddRefund.Text = "Add new refund";
+            this.btnAddRefund.UseVisualStyleBackColor = true;
+            this.btnAddRefund.Click += new System.EventHandler(this.btnAddRefund_Click);
+            // 
+            // btnDelRefund
+            // 
+            this.btnDelRefund.Location = new System.Drawing.Point(5, 35);
+            this.btnDelRefund.Name = "btnDelRefund";
+            this.btnDelRefund.Size = new System.Drawing.Size(107, 23);
+            this.btnDelRefund.TabIndex = 5;
+            this.btnDelRefund.Text = "Delete refund";
+            this.btnDelRefund.UseVisualStyleBackColor = true;
+            this.btnDelRefund.Click += new System.EventHandler(this.btnDelRefund_Click);
             // 
             // gridRefunds
             // 
@@ -594,25 +616,16 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Montant des stages:";
             // 
-            // btnAddRefund
+            // chkInactive
             // 
-            this.btnAddRefund.Location = new System.Drawing.Point(5, 6);
-            this.btnAddRefund.Name = "btnAddRefund";
-            this.btnAddRefund.Size = new System.Drawing.Size(107, 23);
-            this.btnAddRefund.TabIndex = 4;
-            this.btnAddRefund.Text = "Add new refund";
-            this.btnAddRefund.UseVisualStyleBackColor = true;
-            this.btnAddRefund.Click += new System.EventHandler(this.btnAddRefund_Click);
-            // 
-            // btnDelRefund
-            // 
-            this.btnDelRefund.Location = new System.Drawing.Point(5, 35);
-            this.btnDelRefund.Name = "btnDelRefund";
-            this.btnDelRefund.Size = new System.Drawing.Size(107, 23);
-            this.btnDelRefund.TabIndex = 5;
-            this.btnDelRefund.Text = "Delete refund";
-            this.btnDelRefund.UseVisualStyleBackColor = true;
-            this.btnDelRefund.Click += new System.EventHandler(this.btnDelRefund_Click);
+            this.chkInactive.AutoSize = true;
+            this.chkInactive.Location = new System.Drawing.Point(7, 65);
+            this.chkInactive.Name = "chkInactive";
+            this.chkInactive.Size = new System.Drawing.Size(94, 17);
+            this.chkInactive.TabIndex = 4;
+            this.chkInactive.Text = "Show Inactive";
+            this.chkInactive.UseVisualStyleBackColor = true;
+            this.chkInactive.CheckedChanged += new System.EventHandler(this.chkInactive_CheckedChanged);
             // 
             // MainForm
             // 
@@ -623,6 +636,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabMembers.ResumeLayout(false);
+            this.tabMembers.PerformLayout();
             this.tabRefunds.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridRefunds)).EndInit();
             this.tabSeminars.ResumeLayout(false);
@@ -691,6 +705,7 @@
         private System.Windows.Forms.Button btnAddPrivate;
         private System.Windows.Forms.Button btnAddRefund;
         private System.Windows.Forms.Button btnDelRefund;
+        private System.Windows.Forms.CheckBox chkInactive;
     }
 }
 

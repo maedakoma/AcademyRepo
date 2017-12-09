@@ -29,7 +29,7 @@ namespace Academy
         private void MainForm_Load()
         {
 
-            //TODO
+            //TODO TODO
             //Bug: Quand on modifie les paiements et ferme la fenetre, c'est encore en mémoire....
             // Faire des chiffres previsionels
             // Comment enregistrer des reports et lesquels?

@@ -40,9 +40,8 @@ namespace Academy
             // Faire de payment.type une énumération??
         }
 
-        public void FillResume()
+        public void FillFinancialResume()
         {
-            txtMembersCount.Text = manager.getStudentsCount().ToString();
             int nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
             int nLicencesDebt = manager.getLicencesDebt();
@@ -69,6 +68,11 @@ namespace Academy
             txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
             txtPrevBlackMonth.Text = (nTotalBenef / 12).ToString();
             txtPrevOfficialMonth.Text = ((nTotalBenef * 75) / (12 * 100)).ToString();
+        }
+
+        public void FillMembersResume()
+        {
+            txtMembersCount.Text = manager.getStudentsCount().ToString();
         }
 
         public void FillMembersGrid(int rowIndex = 0, bool onlyActive = true)
@@ -454,7 +458,12 @@ namespace Academy
 
         private void tabResume_Enter(object sender, EventArgs e)
         {
-            FillResume();
+            FillFinancialResume();
+        }
+
+        private void tabMembersResume_Enter(object sender, EventArgs e)
+        {
+            FillMembersResume();
         }
 
         private void tabSeminars_Enter(object sender, EventArgs e)
@@ -518,5 +527,7 @@ namespace Academy
                 FillMembersGrid(0, true);
             }
         }
+
+        
     }
 }

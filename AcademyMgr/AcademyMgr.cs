@@ -100,13 +100,14 @@ namespace AcademyMgr
             List<Private> privates = new List<Private>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from PRIVATES P inner join MEMBERS M on M.ID = P.memberID";
+            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 Private priv = new Private();
                 priv.ID = (int)reader["ID"];
+                priv.MemberID = (int)reader["memberID"];
                 priv.Name = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
                 priv.Amount = (int)reader["amount"];
                 priv.Date = Convert.ToDateTime(reader["Date"]);
@@ -413,8 +414,8 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO PRIVATES(name, amount, date, bookedLessons, donelessons) VALUES(?name, ?amount, ?date, ?bookedLessons, ?donelessons)";
-            comm.Parameters.AddWithValue("?name", priv.Name);
+            comm.CommandText = "INSERT INTO PRIVATES(memberID, amount, date, bookedLessons, donelessons) VALUES(?memberID, ?amount, ?date, ?bookedLessons, ?donelessons)";
+            comm.Parameters.AddWithValue("?memberID", priv.MemberID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
@@ -436,8 +437,8 @@ namespace AcademyMgr
         public bool UpdatePrivate(Private priv)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE PRIVATES SET name=?name, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?name", priv.Name);
+            comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?memberID", priv.MemberID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);

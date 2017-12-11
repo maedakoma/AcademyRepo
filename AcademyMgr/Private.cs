@@ -10,6 +10,7 @@ namespace AcademyMgr
     {
 
         private int _ID;
+        private int _memberID;
         private string _name;
         private int _amount;
         private DateTime _date;
@@ -20,6 +21,11 @@ namespace AcademyMgr
         {
             get { return this._ID; }
             set { _ID = value; }
+        }
+        public int MemberID
+        {
+            get { return this._memberID; }
+            set { _memberID = value; }
         }
         public string Name
         {

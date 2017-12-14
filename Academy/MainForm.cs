@@ -241,7 +241,7 @@ namespace Academy
             {
                 DataRow row = Private.NewRow();
                 row["ID"] = priv.ID;
-                row["name"] = priv.Name;
+                row["name"] = priv.member.Lastname;
                 row["amount"] = priv.Amount;
                 row["date"] = priv.Date;
                 row["bookedLessons"] = priv.BookedLessons;
@@ -528,6 +528,6 @@ namespace Academy
             }
         }
 
-        
+       
     }
 }

@@ -107,8 +107,11 @@ namespace AcademyMgr
             {
                 Private priv = new Private();
                 priv.ID = (int)reader["ID"];
-                priv.MemberID = (int)reader["memberID"];
-                priv.Name = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
+                Member member = new Member();
+                member.ID = (int)reader["MemberID"];
+                member.Firstname = reader["Firstname"].ToString();
+                member.Lastname = reader["Lastname"].ToString();
+                priv.member= member;
                 priv.Amount = (int)reader["amount"];
                 priv.Date = Convert.ToDateTime(reader["Date"]);
                 priv.BookedLessons = (int)reader["bookedLessons"];
@@ -415,7 +418,7 @@ namespace AcademyMgr
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
             comm.CommandText = "INSERT INTO PRIVATES(memberID, amount, date, bookedLessons, donelessons) VALUES(?memberID, ?amount, ?date, ?bookedLessons, ?donelessons)";
-            comm.Parameters.AddWithValue("?memberID", priv.MemberID);
+            comm.Parameters.AddWithValue("?memberID", priv.member.ID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
@@ -438,7 +441,7 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?memberID", priv.MemberID);
+            comm.Parameters.AddWithValue("?memberID", priv.member.ID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);

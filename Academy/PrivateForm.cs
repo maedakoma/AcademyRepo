@@ -22,13 +22,17 @@ namespace Academy
             AcademyMgr = manager;
             currentPrivate = new Private();
             mainform = parentForm;
+            //On remplit la combo des eleves:
+            List<Member> members = AcademyMgr.getMembers();
+            cbMember.Items.AddRange(members.ToArray());
+            cbMember.DisplayMember = "Lastname";
         }
         public void Populate(Private privateLesson, int index)
         {
-            this.Text = privateLesson.Name;
+            this.Text = privateLesson.member.Lastname;
             rowIndex = index;
             currentPrivate = privateLesson;
-            txtName.Text = privateLesson.Name;
+            cbMember.SelectedIndex = cbMember.FindStringExact(privateLesson.member.Lastname);
             txtAmount.Text = privateLesson.Amount.ToString();
             txtBooked.Text = privateLesson.BookedLessons.ToString();
             txtDone.Text = privateLesson.DoneLessons.ToString();
@@ -40,7 +44,7 @@ namespace Academy
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            currentPrivate.Name = txtName.Text;
+            currentPrivate.member = (Member)cbMember.SelectedItem;
             currentPrivate.Amount = Convert.ToInt32(txtAmount.Text);
             currentPrivate.BookedLessons = Convert.ToInt32(txtBooked.Text);
             currentPrivate.DoneLessons = Convert.ToInt32(txtDone.Text);

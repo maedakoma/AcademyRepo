@@ -19,6 +19,14 @@ namespace MembershipSite
         {
             manager = new AcademyMgr.AcademyMgr();
             manager.Open();
+            if (!Page.IsPostBack)
+            {
+                List<Member> members = manager.getMembers();
+                ddMembers.DataSource = members;
+                ddMembers.DataTextField = "Lastname";
+                ddMembers.DataValueField = "ID";
+                ddMembers.DataBind();
+            }
             // Populate the GridView.
             BindGridView();
         }
@@ -51,7 +59,7 @@ namespace MembershipSite
             {
                 DataRow row = Privates.NewRow();
                 row["ID"] = prv.ID;
-                row["name"] = prv.Name;
+                row["name"] = prv.member.Lastname;
                 row["date"] = prv.Date;
                 row["amount"] = prv.Amount;
                 row["booked"] = prv.BookedLessons;
@@ -99,7 +107,7 @@ namespace MembershipSite
 
         private void PopulatePrivatePanel(Private prv)
         {
-            txtName.Text = prv.Name;
+            ddMembers.SelectedValue = prv.member.ID.ToString();
             txtAmount.Text = prv.Amount.ToString();
             txtBooked.Text = prv.BookedLessons.ToString();
             txtDone.Text = prv.DoneLessons.ToString();
@@ -118,7 +126,9 @@ namespace MembershipSite
             {
                 prv = privates.Where(x => x.ID == currentPrivateID).ToList<Private>()[0];
             }
-            prv.Name = txtName.Text;
+            Member member = new Member();
+            member.ID = Convert.ToInt32(ddMembers.SelectedValue);
+            prv.member = member;
             prv.Amount = Convert.ToInt32(txtAmount.Text);
             prv.BookedLessons = Convert.ToInt32(txtBooked.Text);
             prv.DoneLessons = Convert.ToInt32(txtDone.Text);
@@ -138,7 +148,7 @@ namespace MembershipSite
         protected void btnAddPrivate_Click(object sender, EventArgs e)
         {
             Application["currentPrivateID"] = 0;
-            txtName.Text = "";
+            ddMembers.SelectedIndex = 0;
             txtAmount.Text = "";
             txtBooked.Text = "";
             txtDone.Text = "";

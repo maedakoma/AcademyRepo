@@ -76,13 +76,13 @@ namespace MembershipSite {
         protected global::System.Web.UI.WebControls.Panel pnlPrivate;
         
         /// <summary>
-        /// txtName control.
+        /// ddMembers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtName;
+        protected global::System.Web.UI.WebControls.DropDownList ddMembers;
         
         /// <summary>
         /// txtAmount control.

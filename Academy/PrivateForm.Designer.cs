@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblLastname = new System.Windows.Forms.Label();
             this.txtAmount = new System.Windows.Forms.TextBox();
@@ -39,14 +38,8 @@
             this.txtBooked = new System.Windows.Forms.TextBox();
             this.lblDone = new System.Windows.Forms.Label();
             this.txtDone = new System.Windows.Forms.TextBox();
+            this.cbMember = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(70, 6);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(121, 20);
-            this.txtName.TabIndex = 0;
             // 
             // lblName
             // 
@@ -131,11 +124,20 @@
             this.txtDone.Size = new System.Drawing.Size(121, 20);
             this.txtDone.TabIndex = 23;
             // 
+            // cbMember
+            // 
+            this.cbMember.FormattingEnabled = true;
+            this.cbMember.Location = new System.Drawing.Point(70, 6);
+            this.cbMember.Name = "cbMember";
+            this.cbMember.Size = new System.Drawing.Size(121, 21);
+            this.cbMember.TabIndex = 24;
+            // 
             // PrivateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 184);
+            this.Controls.Add(this.cbMember);
             this.Controls.Add(this.txtDone);
             this.Controls.Add(this.lblDone);
             this.Controls.Add(this.txtBooked);
@@ -146,7 +148,6 @@
             this.Controls.Add(this.lblLastname);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.lblName);
-            this.Controls.Add(this.txtName);
             this.Name = "PrivateForm";
             this.Text = "PrivateForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MemberForm_FormClosed);
@@ -156,8 +157,6 @@
         }
 
         #endregion
-
-        public System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblLastname;
         public System.Windows.Forms.TextBox txtAmount;
@@ -168,5 +167,6 @@
         private System.Windows.Forms.TextBox txtBooked;
         private System.Windows.Forms.Label lblDone;
         private System.Windows.Forms.TextBox txtDone;
+        private System.Windows.Forms.ComboBox cbMember;
     }
 }

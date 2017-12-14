@@ -23,7 +23,8 @@
     </div>
         <asp:Panel ID="pnlPrivate" runat="server" Height="154px" Visible="False">
             &nbsp;Name:&nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+            <asp:DropDownList ID="ddMembers" runat="server" Height="41px" style="margin-left: 0px" Width="122px">
+            </asp:DropDownList>
             <br />
             Amount:
             <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>

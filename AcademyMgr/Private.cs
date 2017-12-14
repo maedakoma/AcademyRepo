@@ -10,8 +10,7 @@ namespace AcademyMgr
     {
 
         private int _ID;
-        private int _memberID;
-        private string _name;
+        private Member _member;
         private int _amount;
         private DateTime _date;
         private int _bookedLessons;
@@ -22,17 +21,12 @@ namespace AcademyMgr
             get { return this._ID; }
             set { _ID = value; }
         }
-        public int MemberID
+        public Member member
         {
-            get { return this._memberID; }
-            set { _memberID = value; }
+            get { return this._member; }
+            set { _member = value; }
         }
-        public string Name
-        {
-            get { return this._name; }
-            set { _name = value; }
-        }
-        public int Amount
+                public int Amount
         {
             get { return this._amount; }
             set { _amount = value; }

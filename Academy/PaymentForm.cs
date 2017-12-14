@@ -43,6 +43,7 @@ namespace Academy
                 currentPayment = new Payment();
                 txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
                 cbType.SelectedIndex = 0;
+                cbBank.SelectedIndex = 0;
             }
         }
 

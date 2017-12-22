@@ -50,6 +50,15 @@
             this.lblJob = new System.Windows.Forms.Label();
             this.txtJob = new System.Windows.Forms.TextBox();
             this.chkActive = new System.Windows.Forms.CheckBox();
+            this.lblMail = new System.Windows.Forms.Label();
+            this.txtMail = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtFacebook = new System.Windows.Forms.TextBox();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.txtPhone = new System.Windows.Forms.TextBox();
+            this.btnGo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,7 +143,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(15, 511);
+            this.btnOK.Location = new System.Drawing.Point(620, 645);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -233,7 +242,7 @@
             // lblJob
             // 
             this.lblJob.AutoSize = true;
-            this.lblJob.Location = new System.Drawing.Point(13, 454);
+            this.lblJob.Location = new System.Drawing.Point(16, 443);
             this.lblJob.Name = "lblJob";
             this.lblJob.Size = new System.Drawing.Size(24, 13);
             this.lblJob.TabIndex = 22;
@@ -241,7 +250,7 @@
             // 
             // txtJob
             // 
-            this.txtJob.Location = new System.Drawing.Point(70, 447);
+            this.txtJob.Location = new System.Drawing.Point(70, 440);
             this.txtJob.Name = "txtJob";
             this.txtJob.Size = new System.Drawing.Size(538, 20);
             this.txtJob.TabIndex = 23;
@@ -256,11 +265,94 @@
             this.chkActive.Text = "Actif";
             this.chkActive.UseVisualStyleBackColor = true;
             // 
+            // lblMail
+            // 
+            this.lblMail.AutoSize = true;
+            this.lblMail.Location = new System.Drawing.Point(14, 486);
+            this.lblMail.Name = "lblMail";
+            this.lblMail.Size = new System.Drawing.Size(26, 13);
+            this.lblMail.TabIndex = 25;
+            this.lblMail.Text = "Mail";
+            // 
+            // txtMail
+            // 
+            this.txtMail.Location = new System.Drawing.Point(70, 479);
+            this.txtMail.Name = "txtMail";
+            this.txtMail.Size = new System.Drawing.Size(538, 20);
+            this.txtMail.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 521);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Phone";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 581);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "Facebook";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 550);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "Address";
+            // 
+            // txtFacebook
+            // 
+            this.txtFacebook.Location = new System.Drawing.Point(69, 578);
+            this.txtFacebook.Name = "txtFacebook";
+            this.txtFacebook.Size = new System.Drawing.Size(538, 20);
+            this.txtFacebook.TabIndex = 30;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Location = new System.Drawing.Point(69, 547);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(538, 20);
+            this.txtAddress.TabIndex = 31;
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.Location = new System.Drawing.Point(69, 511);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(538, 20);
+            this.txtPhone.TabIndex = 32;
+            // 
+            // btnGo
+            // 
+            this.btnGo.Location = new System.Drawing.Point(613, 578);
+            this.btnGo.Name = "btnGo";
+            this.btnGo.Size = new System.Drawing.Size(42, 20);
+            this.btnGo.TabIndex = 33;
+            this.btnGo.Text = "Go";
+            this.btnGo.UseVisualStyleBackColor = true;
+            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 546);
+            this.ClientSize = new System.Drawing.Size(733, 680);
+            this.Controls.Add(this.btnGo);
+            this.Controls.Add(this.txtPhone);
+            this.Controls.Add(this.txtAddress);
+            this.Controls.Add(this.txtFacebook);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtMail);
+            this.Controls.Add(this.lblMail);
             this.Controls.Add(this.chkActive);
             this.Controls.Add(this.txtJob);
             this.Controls.Add(this.lblJob);
@@ -316,5 +408,14 @@
         private System.Windows.Forms.Label lblJob;
         private System.Windows.Forms.TextBox txtJob;
         private System.Windows.Forms.CheckBox chkActive;
+        private System.Windows.Forms.Label lblMail;
+        private System.Windows.Forms.TextBox txtMail;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtFacebook;
+        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.TextBox txtPhone;
+        private System.Windows.Forms.Button btnGo;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -72,7 +73,20 @@ namespace Academy
 
         public void FillMembersResume()
         {
-            txtMembersCount.Text = manager.getStudentsCount().ToString();
+            int nTotal = manager.getStudentsCount();
+            int nWhite = manager.getStudentsCount(Member.beltEnum.White);
+            int nBlue = manager.getStudentsCount(Member.beltEnum.Blue);
+            int nPurple = manager.getStudentsCount(Member.beltEnum.Purple);
+            int nBrown = manager.getStudentsCount(Member.beltEnum.Brown);
+            int nBlack = manager.getStudentsCount(Member.beltEnum.Black);
+
+            txtMembersCount.Text = nTotal.ToString();
+            txtWhite.Text = nWhite.ToString() + " (" + (((double)nWhite/ (double)nTotal)).ToString("P", CultureInfo.InvariantCulture)+")";
+            txtBlue.Text = nBlue.ToString() + " (" + (((double)nBlue / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+            txtPurple.Text = nPurple.ToString() + " (" + (((double)nPurple / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+            txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+            txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+
         }
 
         public void FillMembersGrid(int rowIndex = 0, bool onlyActive = true)

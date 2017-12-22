@@ -40,6 +40,10 @@ namespace Academy
             chkActive.Checked = member.Active;
             txtComment.Text = member.Comment;
             txtJob.Text = member.Job;
+            txtMail.Text = member.Mail;
+            txtPhone.Text = member.Phone;
+            txtAddress.Text = member.Address;
+            txtFacebook.Text = member.Facebook;
             if (member.Enddate != DateTime.MinValue)
             {
                 dateEnd.Value = member.Enddate;
@@ -134,6 +138,10 @@ namespace Academy
             currentMember.Alert = chkAlert.Checked;
             currentMember.Comment = txtComment.Text;
             currentMember.Job = txtJob.Text;
+            currentMember.Mail = txtMail.Text;
+            currentMember.Phone = txtPhone.Text;
+            currentMember.Address = txtAddress.Text;
+            currentMember.Facebook = txtFacebook.Text;
             currentMember.Enddate = dateEnd.Value;
             if (currentMember.ID == 0)
             {
@@ -149,6 +157,11 @@ namespace Academy
         private void MemberForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             mainform.FillMembersGrid(rowIndex);
+        }
+
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(txtFacebook.Text);
         }
     }
 }

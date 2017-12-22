@@ -36,6 +36,10 @@ namespace AcademyMgr
         private Boolean _membershipOK = true;
         private string _comment;
         private string _job;
+        private string _mail;
+        private string _phone;
+        private string _address;
+        private string _facebook;
 
 
 
@@ -102,6 +106,26 @@ namespace AcademyMgr
         {
             get { return this._job; }
             set { _job = value; }
+        }
+        public string Mail
+        {
+            get { return this._mail; }
+            set { _mail = value; }
+        }
+        public string Phone
+        {
+            get { return this._phone; }
+            set { _phone = value; }
+        }
+        public string Address
+        {
+            get { return this._address; }
+            set { _address = value; }
+        }
+        public string Facebook
+        {
+            get { return this._facebook; }
+            set { _facebook = value; }
         }
         public Member()
         {

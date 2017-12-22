@@ -196,6 +196,10 @@ namespace AcademyMgr
                     mem.Active = Convert.ToBoolean(reader["active"]);
                     mem.Comment = reader["comment"].ToString();
                     mem.Job = reader["job"].ToString();
+                    mem.Mail = reader["mail"].ToString();
+                    mem.Phone = reader["phone"].ToString();
+                    mem.Address = reader["address"].ToString();
+                    mem.Facebook = reader["facebook"].ToString();
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -227,7 +231,15 @@ namespace AcademyMgr
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1 and coach=0";
+            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1";
+            int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nMemberCount;
+        }
+        public int getStudentsCount(Member.beltEnum belt)
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1 and belt=?belt";
+            cmd.Parameters.AddWithValue("?belt", belt.ToString());
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }
@@ -285,7 +297,7 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job, ?coach)";
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -296,6 +308,10 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?alert", member.Alert);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
+            comm.Parameters.AddWithValue("?mail", member.Mail);
+            comm.Parameters.AddWithValue("?phone", member.Phone);
+            comm.Parameters.AddWithValue("?address", member.Address);
+            comm.Parameters.AddWithValue("?facebook", member.Facebook);
             comm.Parameters.AddWithValue("?coach", 0);
 
             comm.ExecuteNonQuery();
@@ -334,7 +350,7 @@ namespace AcademyMgr
             }
 
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job WHERE ID=?ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -345,6 +361,10 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?active", member.Active);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
+            comm.Parameters.AddWithValue("?mail", member.Mail);
+            comm.Parameters.AddWithValue("?phone", member.Phone);
+            comm.Parameters.AddWithValue("?address", member.Address);
+            comm.Parameters.AddWithValue("?facebook", member.Facebook);
             comm.Parameters.AddWithValue("?ID", member.ID);
             comm.ExecuteNonQuery();
 

@@ -226,6 +226,45 @@ namespace AcademyMgr
             reader.Close();
             return members;
         }
+        public List<Payment> getPayments(bool bydepot = false)
+        {
+            List<Payment> payments = new List<Payment>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+
+            if (bydepot)
+            {
+                cmd.CommandText = "SELECT * FROM PAYMENTS WHERE Bank <>'None' ORDER BY depotdate, name";
+            }
+            else
+            {
+                cmd.CommandText = "SELECT * FROM PAYMENTS ORDER BY receptiondate, name";
+            }
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            Payment pay = new Payment();
+            while (reader.Read())
+            {
+                    Payment payment = new Payment();
+                    payment.ID = (int)reader["ID"];
+                    payment.Amount = (int)reader["amount"];
+                    payment.Debt = (int)reader["debt"];
+                    payment.Type = reader["type"].ToString();
+                    payment.Name = reader["name"].ToString();
+                    payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
+                    String sBank = reader["bank"].ToString();
+                    if (sBank != String.Empty)
+                    {
+                        payment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), sBank, true);
+                    }
+                    if (reader["DepotDate"] != DBNull.Value)
+                    {
+                        payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
+                    }
+                    payments.Add(payment);
+            }
+            reader.Close();
+            return payments;
+        }
 
         public int getStudentsCount()
         {

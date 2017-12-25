@@ -170,7 +170,101 @@ namespace Academy
                 mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[1];
                 mainGrid.Rows[rowIndex].Selected = true;
             }
-            
+
+            mainGrid.BorderStyle = BorderStyle.Fixed3D;
+            mainGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            mainGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            mainGrid.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
+            mainGrid.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
+            mainGrid.BackgroundColor = Color.White;
+            mainGrid.EnableHeadersVisualStyles = false;
+            mainGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            mainGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
+            mainGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+
+        }
+        public void FillMoneyGrid(bool byDepot = false )
+        {
+            //List<Payment> pays = manager.getPayments(byDepot);
+            ////Create a New DataTable to store the Data
+            //DataTable Payments = new DataTable("Payments");
+            ////Create the Columns in the DataTable
+            //DataColumn c0 = new DataColumn("ID");
+            //DataColumn c1;
+            //if (byDepot)
+            //{
+            //    c1 = new DataColumn("DepotDate");
+            //}
+            //else
+            //{
+            //    c1 = new DataColumn("ReceptionDate");
+            //}
+            //c1.DataType = typeof(DateTime);
+            //DataColumn c2 = new DataColumn("name");
+            //DataColumn c3 = new DataColumn("amount");
+            //DataColumn c4 = new DataColumn("type");
+
+            ////Add the Created Columns to the Datatable
+            //Payments.Columns.Add(c0);
+            //Payments.Columns.Add(c1);
+            //Payments.Columns.Add(c2);
+            //Payments.Columns.Add(c3);
+            //Payments.Columns.Add(c4);
+
+            //foreach (Payment pay in pays)
+            //{
+            //    DataRow row = Payments.NewRow();
+            //    row["ID"] = pay.ID;
+            //    if (byDepot)
+            //    {
+            //        row["DepotDate"] = pay.DepotDate;
+            //    }
+            //    else
+            //    {
+            //        row["ReceptionDate"] = pay.ReceptionDate;
+            //    }
+            //    row["name"] = pay.Name;
+            //    row["amount"] = pay.Amount;
+            //    row["type"] = pay.Type;
+            //    Payments.Rows.Add(row);
+            //}
+            //gridMoney.DataSource = Payments;
+            //gridMoney.Columns[0].Visible = false;
+            //gridMoney.RowHeadersVisible = false;
+            //gridMoney.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //gridMoney.AllowUserToAddRows = false;
+            //gridMoney.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //gridMoney.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            //gridMoney.ReadOnly = true;
+
+
+            List<Payment> pays = manager.getPayments(byDepot);
+            trMoney.Nodes.Clear();
+            trMoney.BeginUpdate();
+            foreach (Payment pay in pays)
+            {
+                string date = "";
+                if (byDepot)
+                {
+                    date = pay.DepotDate.ToShortDateString();
+                }
+                else
+                {
+                    date = pay.ReceptionDate.ToShortDateString();
+                }
+                if (!trMoney.Nodes.ContainsKey(date))
+                {
+                    trMoney.Nodes.Add(date, date);
+                }
+                if (!trMoney.Nodes[date].Nodes.ContainsKey(pay.Name))
+                {
+                    trMoney.Nodes[date].Nodes.Add(pay.Name, pay.Name);
+                }
+
+                trMoney.Nodes[date].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
+            }
+            trMoney.EndUpdate();
+
         }
         public void FillSeminarsGrid(int rowIndex = 0)
         {
@@ -183,6 +277,7 @@ namespace Academy
             DataColumn c0 = new DataColumn("ID");
             DataColumn c1 = new DataColumn("theme");
             DataColumn c2 = new DataColumn("date");
+            c2.DataType = typeof(DateTime);
             DataColumn c3 = new DataColumn("webmembers");
             DataColumn c4 = new DataColumn("localmembers");
             DataColumn c5 = new DataColumn("amount");
@@ -239,6 +334,7 @@ namespace Academy
             DataColumn c1 = new DataColumn("name");
             DataColumn c2 = new DataColumn("amount");
             DataColumn c3 = new DataColumn("date");
+            c3.DataType = typeof(DateTime);
             DataColumn c4 = new DataColumn("bookedLessons");
             DataColumn c5 = new DataColumn("doneLessons");
 
@@ -288,6 +384,7 @@ namespace Academy
             DataColumn c1 = new DataColumn("label");
             DataColumn c2 = new DataColumn("amount");
             DataColumn c3 = new DataColumn("date");
+            c3.DataType = typeof(DateTime);
             DataColumn c4 = new DataColumn("comment");
 
 
@@ -338,6 +435,7 @@ namespace Academy
             DataColumn c4 = new DataColumn("Pay");
             DataColumn c5 = new DataColumn("Amount");
             DataColumn c6 = new DataColumn("Date");
+            c6.DataType = typeof(DateTime);
             DataColumn c7 = new DataColumn("comment");
 
 
@@ -419,9 +517,12 @@ namespace Academy
         }
         private void btnDeleteMember_Click(object sender, EventArgs e)
         {
-            int currentMemberID = Convert.ToInt32(mainGrid.SelectedRows[0].Cells[0].Value);
-            manager.DeleteMember(currentMemberID);
-            FillMembersGrid();
+            if (MessageBox.Show("Opération irreversible, etes vous bien sur?", "warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                int currentMemberID = Convert.ToInt32(mainGrid.SelectedRows[0].Cells[0].Value);
+                manager.DeleteMember(currentMemberID);
+                FillMembersGrid();
+            }
         }
 
         private void mainGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -505,6 +606,11 @@ namespace Academy
             FillMembersGrid();
         }
 
+        private void tabMoney_Enter(object sender, EventArgs e)
+        {
+            FillMoneyGrid();
+        }
+
         private void btnAddRefund_Click(object sender, EventArgs e)
         {
             RefundForm rf = new RefundForm(this, manager);
@@ -542,6 +648,16 @@ namespace Academy
             }
         }
 
-       
+        private void chkDepot_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDepot.Checked == true)
+            {
+                FillMoneyGrid(true);
+            }
+            else
+            {
+                FillMoneyGrid(false);
+            }
+        }
     }
 }

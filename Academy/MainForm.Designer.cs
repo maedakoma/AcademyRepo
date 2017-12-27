@@ -105,6 +105,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
+            this.pieChart1 = new LiveCharts.WinForms.PieChart();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -819,6 +820,7 @@
             // 
             // tabMembersResume
             // 
+            this.tabMembersResume.Controls.Add(this.pieChart1);
             this.tabMembersResume.Controls.Add(this.txtBlack);
             this.tabMembersResume.Controls.Add(this.txtBrown);
             this.tabMembersResume.Controls.Add(this.txtPurple);
@@ -954,6 +956,14 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
+            // pieChart1
+            // 
+            this.pieChart1.Location = new System.Drawing.Point(711, 99);
+            this.pieChart1.Name = "pieChart1";
+            this.pieChart1.Size = new System.Drawing.Size(379, 370);
+            this.pieChart1.TabIndex = 30;
+            this.pieChart1.Text = "pieChart1";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1340, 752);
@@ -1052,6 +1062,7 @@
         private System.Windows.Forms.TabPage tabMoney;
         private System.Windows.Forms.CheckBox chkDepot;
         private System.Windows.Forms.TreeView trMoney;
+        private LiveCharts.WinForms.PieChart pieChart1;
     }
 }
 

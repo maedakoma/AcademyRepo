@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AcademyMgr;
-using Nevron.Chart;
-using Nevron.Chart.Windows;
-using Nevron.GraphicsCore;
+using LiveCharts; //Core of the library
+using LiveCharts.Wpf; //The WPF controls
+using LiveCharts.WinForms; //the WinForm wrappers
 
 namespace Academy
 {
@@ -90,33 +90,56 @@ namespace Academy
             txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
 
-            ////initialisation du chart:
-            //nChartControl1.Controller.Tools.Add(new NSelectorTool());
-            //nChartControl1.Controller.Tools.Add(new NTrackballTool());
+            Func<ChartPoint, string> labelPoint = chartPoint =>
+            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
-            //NPieChart chart = new NPieChart();
-            //nChartControl1.Charts.Clear();
-            //nChartControl1.Charts.Add(chart);
-            //chart.Enable3D = true;
-            //chart.Width = 70;
-            //chart.Depth = 10;
-            //chart.Projection.SetPredefinedProjection(PredefinedProjection.PerspectiveElevated);
-            //chart.LightModel.SetPredefinedLightModel(PredefinedLightModel.ShinyCameraLight);
+            pieChart1.Series = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "White",
+                    Values = new ChartValues<double> {nWhite},
+                    PushOut = 15,
+                    Fill  = System.Windows.Media.Brushes.White,
+                    Stroke  = System.Windows.Media.Brushes.Black,
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                },
+                new PieSeries
+                {
+                    Title = "Blue",
+                    Values = new ChartValues<double> {nBlue},
+                    Fill  = System.Windows.Media.Brushes.Blue,
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                },
+                new PieSeries
+                {
+                    Title = "Purple",
+                    Values = new ChartValues<double> {nPurple},
+                    Fill  = System.Windows.Media.Brushes.Purple,
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                },
+                new PieSeries
+                {
+                    Title = "Brown",
+                    Values = new ChartValues<double> {nBrown},
+                    Fill  = System.Windows.Media.Brushes.Brown,
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                },
+                new PieSeries
+                {
+                    Title = "Black",
+                    Values = new ChartValues<double> {nBlack},
+                    Fill  = System.Windows.Media.Brushes.Black,
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                }
+            };
 
-            //NPieSeries pie = (NPieSeries)chart.Series.Add(SeriesType.Pie);
-            //pie.PieStyle = PieStyle.SmoothEdgePie;
-            //pie.LabelMode = PieLabelMode.SpiderNoOverlap;
-            
-            //pie.AddDataPoint(new NDataPoint(nWhite, "White belts"));
-            //pie.AddDataPoint(new NDataPoint(nBlue, "Blue belts"));
-            //pie.AddDataPoint(new NDataPoint(nPurple, "Purple belts"));
-            //pie.AddDataPoint(new NDataPoint(nBrown, "Brown belts"));
-            //pie.AddDataPoint(new NDataPoint(nBlack, "Black belts"));
-
-            //NStyleSheet styleSheet = NStyleSheet.CreatePredefinedStyleSheet(PredefinedStyleSheet.NevronMultiColor);
-            //styleSheet.Apply(nChartControl1.Document);
-
-            //nChartControl1.Refresh();
+            pieChart1.LegendLocation = LegendLocation.Bottom;
 
         }
 

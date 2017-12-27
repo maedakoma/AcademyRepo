@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AcademyMgr;
+using Nevron.Chart;
+using Nevron.Chart.Windows;
+using Nevron.GraphicsCore;
 
 namespace Academy
 {
@@ -22,7 +25,7 @@ namespace Academy
         {
             InitializeComponent();
             manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            manager.Initialize();
             this.Text = "Academy Cercle - " + manager.connectionString;
             MainForm_Load();
         }
@@ -73,12 +76,12 @@ namespace Academy
 
         public void FillMembersResume()
         {
-            int nTotal = manager.getStudentsCount();
-            int nWhite = manager.getStudentsCount(Member.beltEnum.White);
-            int nBlue = manager.getStudentsCount(Member.beltEnum.Blue);
-            int nPurple = manager.getStudentsCount(Member.beltEnum.Purple);
-            int nBrown = manager.getStudentsCount(Member.beltEnum.Brown);
-            int nBlack = manager.getStudentsCount(Member.beltEnum.Black);
+            int nTotal = manager.getActiveStudentsCount();
+            int nWhite = manager.getActiveStudentsCount(Member.beltEnum.White);
+            int nBlue = manager.getActiveStudentsCount(Member.beltEnum.Blue);
+            int nPurple = manager.getActiveStudentsCount(Member.beltEnum.Purple);
+            int nBrown = manager.getActiveStudentsCount(Member.beltEnum.Brown);
+            int nBlack = manager.getActiveStudentsCount(Member.beltEnum.Black);
 
             txtMembersCount.Text = nTotal.ToString();
             txtWhite.Text = nWhite.ToString() + " (" + (((double)nWhite/ (double)nTotal)).ToString("P", CultureInfo.InvariantCulture)+")";
@@ -86,6 +89,34 @@ namespace Academy
             txtPurple.Text = nPurple.ToString() + " (" + (((double)nPurple / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+
+            ////initialisation du chart:
+            //nChartControl1.Controller.Tools.Add(new NSelectorTool());
+            //nChartControl1.Controller.Tools.Add(new NTrackballTool());
+
+            //NPieChart chart = new NPieChart();
+            //nChartControl1.Charts.Clear();
+            //nChartControl1.Charts.Add(chart);
+            //chart.Enable3D = true;
+            //chart.Width = 70;
+            //chart.Depth = 10;
+            //chart.Projection.SetPredefinedProjection(PredefinedProjection.PerspectiveElevated);
+            //chart.LightModel.SetPredefinedLightModel(PredefinedLightModel.ShinyCameraLight);
+
+            //NPieSeries pie = (NPieSeries)chart.Series.Add(SeriesType.Pie);
+            //pie.PieStyle = PieStyle.SmoothEdgePie;
+            //pie.LabelMode = PieLabelMode.SpiderNoOverlap;
+            
+            //pie.AddDataPoint(new NDataPoint(nWhite, "White belts"));
+            //pie.AddDataPoint(new NDataPoint(nBlue, "Blue belts"));
+            //pie.AddDataPoint(new NDataPoint(nPurple, "Purple belts"));
+            //pie.AddDataPoint(new NDataPoint(nBrown, "Brown belts"));
+            //pie.AddDataPoint(new NDataPoint(nBlack, "Black belts"));
+
+            //NStyleSheet styleSheet = NStyleSheet.CreatePredefinedStyleSheet(PredefinedStyleSheet.NevronMultiColor);
+            //styleSheet.Apply(nChartControl1.Document);
+
+            //nChartControl1.Refresh();
 
         }
 
@@ -185,59 +216,6 @@ namespace Academy
         }
         public void FillMoneyGrid(bool byDepot = false )
         {
-            //List<Payment> pays = manager.getPayments(byDepot);
-            ////Create a New DataTable to store the Data
-            //DataTable Payments = new DataTable("Payments");
-            ////Create the Columns in the DataTable
-            //DataColumn c0 = new DataColumn("ID");
-            //DataColumn c1;
-            //if (byDepot)
-            //{
-            //    c1 = new DataColumn("DepotDate");
-            //}
-            //else
-            //{
-            //    c1 = new DataColumn("ReceptionDate");
-            //}
-            //c1.DataType = typeof(DateTime);
-            //DataColumn c2 = new DataColumn("name");
-            //DataColumn c3 = new DataColumn("amount");
-            //DataColumn c4 = new DataColumn("type");
-
-            ////Add the Created Columns to the Datatable
-            //Payments.Columns.Add(c0);
-            //Payments.Columns.Add(c1);
-            //Payments.Columns.Add(c2);
-            //Payments.Columns.Add(c3);
-            //Payments.Columns.Add(c4);
-
-            //foreach (Payment pay in pays)
-            //{
-            //    DataRow row = Payments.NewRow();
-            //    row["ID"] = pay.ID;
-            //    if (byDepot)
-            //    {
-            //        row["DepotDate"] = pay.DepotDate;
-            //    }
-            //    else
-            //    {
-            //        row["ReceptionDate"] = pay.ReceptionDate;
-            //    }
-            //    row["name"] = pay.Name;
-            //    row["amount"] = pay.Amount;
-            //    row["type"] = pay.Type;
-            //    Payments.Rows.Add(row);
-            //}
-            //gridMoney.DataSource = Payments;
-            //gridMoney.Columns[0].Visible = false;
-            //gridMoney.RowHeadersVisible = false;
-            //gridMoney.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            //gridMoney.AllowUserToAddRows = false;
-            //gridMoney.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            //gridMoney.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
-            //gridMoney.ReadOnly = true;
-
-
             List<Payment> pays = manager.getPayments(byDepot);
             trMoney.Nodes.Clear();
             trMoney.BeginUpdate();

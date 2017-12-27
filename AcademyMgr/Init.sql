@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:3306
--- Généré le :  Lun 25 Décembre 2017 à 01:21
+-- Généré le :  Mer 27 Décembre 2017 à 16:38
 -- Version du serveur :  5.1.73-community
 -- Version de PHP :  5.5.30
 
@@ -110,7 +110,7 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`ID`, `Firstname`, `Lastname`, `Enddate`, `Belt`, `Gender`, `Child`, `Alert`, `Comment`, `Job`, `Mail`, `Phone`, `Address`, `Facebook`, `Active`, `Coach`) VALUES
-(1, 'David', 'GAUTHIER', '2018-09-12', 'blue', 'M', 0, 0, '', 'prof d''EPS', NULL, NULL, NULL, NULL, 1, 0),
+(1, 'David', 'GAUTHIER', '2018-09-12', 'purple', 'M', 0, 0, '', 'prof d''EPS', '', '', '', '', 1, 0),
 (2, 'Raphael', 'ARIE', '2018-10-05', 'blue', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 0),
 (3, 'Zacharie', 'ATTALI', '2018-10-17', 'white', 'M', 0, 0, 'Vient de débuter', '', NULL, NULL, NULL, NULL, 1, 0),
 (4, 'Eddy', 'BARCLAY', '2018-09-12', 'white', 'M', 0, 0, 'En attente de 2 cheques que j''ai donné à Kelly -> Récupérés le 09/11/2017 -> anciens cheques déchirés le 19/12', '', '', '', '', '', 1, 0),
@@ -221,14 +221,14 @@ INSERT INTO `members` (`ID`, `Firstname`, `Lastname`, `Enddate`, `Belt`, `Gender
 (126, 'Martin', 'CZABADAJ', '2017-12-09', 'blue', 'M', 0, 0, 'veut faire la coupe de zone mais s''inscrit qu''un mois??', '', NULL, NULL, NULL, NULL, 1, 0),
 (127, 'Denis', 'DAVIDKOV', '2017-12-09', 'white', 'M', 0, 0, 'Pourquoi j''ai reçu ce montant et pas 30 E?', '', NULL, NULL, NULL, NULL, 1, 0),
 (128, 'Thibaut', 'OLIVIER', '2019-12-11', 'black', 'M', 0, 0, 'Moi', 'Jiu-Jitsu headcoach', 'thibautolivier77@gmail.com', '0675403464', '44 rue faidherbe 78800 HOUILLES', 'https://www.facebook.com/thibautolivier77', 1, 1),
-(129, 'François', 'MOLESLAS', '2020-11-11', 'brown', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 1),
+(129, 'François', 'MOLESLAS', '2020-11-11', 'black', 'M', 0, 0, '', '', '', '', '', '', 1, 1),
 (130, 'Stéphane', 'HENNEQUIN', '2020-11-11', 'black', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 1),
 (131, 'Etienne', 'GREGOIRE', '2019-12-01', 'black', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 1),
 (132, 'Matthieu', 'DELALANDRE', '2019-12-11', 'black', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 1),
 (136, 'Jean-Baptiste', 'QUINQUENEL', '2018-11-15', 'white', 'M', 0, 0, '2 disciplines j''imagine', '', NULL, NULL, NULL, NULL, 1, 0),
 (137, 'Julien', 'FARAUT', '2018-11-15', 'white', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 0),
 (138, 'Michel-Ange', 'MATOUBA', '2018-11-15', 'white', 'M', 0, 0, 'Enfant?', '', '', '', '', '', 1, 0),
-(139, 'Akhmed', 'SALAMOV', '2018-09-18', 'white', 'M', 0, 1, 'Son reste de  paiement (250) a été récupéré par la boxe', '', '', '', '', '', 1, 0),
+(139, 'Akhmed', 'SALAMOV', '2018-09-18', 'blue', 'M', 0, 1, 'Son reste de  paiement (250) a été récupéré par la boxe', '', '', '', '', '', 1, 0),
 (142, 'Sylvain', 'DESHORS', '2018-05-01', 'white', 'M', 0, 0, 'Prend des CP', 'Chez veolia', '', '', '', '', 1, 0),
 (143, 'Brice', 'DONADELLI', '2017-11-20', 'brown', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 0, 0),
 (144, 'Marco', 'GONCALVES', '2017-11-20', 'white', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 0, 0),
@@ -248,7 +248,7 @@ INSERT INTO `members` (`ID`, `Firstname`, `Lastname`, `Enddate`, `Belt`, `Gender
 (158, 'Zou', 'THIEN DU CHABERT', '2018-02-07', 'purple', 'M', 0, 0, '2 mois abonnement', '', '', '', '', '', 1, 0),
 (159, 'Roy', 'HARRIS', '2017-12-07', 'brown', 'M', 0, 0, '', '', NULL, NULL, NULL, NULL, 1, 0),
 (160, 'Hernan', 'VASQUEZ MORA', '2018-12-07', 'black', 'M', 0, 0, '', 'policier', '', '', '', '', 1, 0),
-(162, 'David', 'ANKRI', '2017-11-12', 'brown', 'M', 0, 0, 'Juif integriste', 'Vendeur de cuir', '', '', '', '', 1, 0),
+(162, 'David', 'ANKRI', '2019-04-25', 'brown', 'M', 0, 0, 'Juif integriste', 'Vendeur de cuir', '', '', '', '', 1, 0),
 (163, 'Matthieu', 'LHOSPITALIER', '2018-01-19', 'white', 'M', 0, 0, '', '', '', '', '', '', 1, 0),
 (164, 'Aissa', 'EDDAMI', '2017-12-19', 'white', 'M', 0, 0, 'pote de bagdad', '', '', '', '', '', 1, 0),
 (165, 'Lothaire', 'EPEE', '2018-12-19', 'purple', 'M', 0, 0, '', '', '', '', '', '', 1, 0);
@@ -412,10 +412,6 @@ INSERT INTO `members_payments` (`MemberID`, `PaymentID`) VALUES
 (10, 1266),
 (10, 1267),
 (10, 1268),
-(1, 1269),
-(1, 1270),
-(1, 1271),
-(1, 1272),
 (12, 1273),
 (12, 1274),
 (12, 1275),
@@ -508,8 +504,6 @@ INSERT INTO `members_payments` (`MemberID`, `PaymentID`) VALUES
 (85, 1412),
 (85, 1413),
 (120, 1414),
-(139, 1415),
-(139, 1416),
 (142, 1420),
 (163, 1421),
 (164, 1422),
@@ -527,12 +521,46 @@ INSERT INTO `members_payments` (`MemberID`, `PaymentID`) VALUES
 (33, 1443),
 (55, 1444),
 (51, 1445),
-(162, 1446),
 (156, 1447),
 (158, 1448),
 (4, 1449),
 (4, 1450),
-(4, 1451);
+(4, 1451),
+(139, 1452),
+(139, 1453),
+(1, 1454),
+(1, 1455),
+(1, 1456),
+(1, 1457),
+(162, 1466),
+(162, 1467),
+(162, 1468),
+(162, 1469);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `metrics`
+--
+
+CREATE TABLE `metrics` (
+  `ID` int(11) NOT NULL,
+  `Name` varchar(50) NOT NULL DEFAULT '0',
+  `Value` int(11) NOT NULL DEFAULT '0',
+  `Date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `metrics`
+--
+
+INSERT INTO `metrics` (`ID`, `Name`, `Value`, `Date`) VALUES
+(1, 'activeStudents', 131, '2017-12-27'),
+(2, 'activeWhiteStudents', 86, '2017-12-27'),
+(3, 'activeBlueStudents', 16, '2017-12-27'),
+(4, 'activePurpleStudents', 13, '2017-12-27'),
+(5, 'activeBrownStudents', 6, '2017-12-27'),
+(6, 'activeBlackStudents', 10, '2017-12-27');
 
 -- --------------------------------------------------------
 
@@ -699,10 +727,6 @@ INSERT INTO `payments` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 (1266, 100, 'Check', '2017-09-12', 'Sebastien BIDAULT', 60, 'Academy', '2017-12-04'),
 (1267, 100, 'Check', '2017-09-12', 'Sebastien BIDAULT', 60, 'Academy', '2017-11-04'),
 (1268, 100, 'Check', '2017-09-12', 'Sebastien BIDAULT', 60, 'Academy', '2017-10-04'),
-(1269, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-10-04'),
-(1270, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-11-04'),
-(1271, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-12-04'),
-(1272, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'None', '2017-10-26'),
 (1273, 100, 'Check', '2017-09-15', 'Julien BOURGEOIS', 60, 'None', '2017-10-26'),
 (1274, 100, 'Check', '2017-09-15', 'Julien BOURGEOIS', 60, 'None', '2017-10-26'),
 (1275, 100, 'Check', '2017-09-15', 'Julien BOURGEOIS', 60, 'Academy', '2017-12-04'),
@@ -795,8 +819,6 @@ INSERT INTO `payments` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 (1412, 140, 'Check', '2017-12-07', 'Adrien TIREL', 84, 'None', '2017-12-07'),
 (1413, 140, 'Check', '2017-12-07', 'Adrien TIREL', 84, 'None', '2017-12-07'),
 (1414, 210, 'Check', '2017-11-09', 'Simon THULEAU', 126, 'Academy', '2017-11-10'),
-(1415, 125, 'Check', '2017-12-18', 'Akhmed SALAMOV', 75, 'None', '2017-12-18'),
-(1416, 125, 'Check', '2017-12-18', 'Akhmed SALAMOV', 75, 'None', '2017-12-18'),
 (1420, 500, 'Check', '2017-12-19', 'Sylvain DESHORS', 300, 'None', '2017-12-19'),
 (1421, 80, 'Check', '2017-12-19', 'Matthieu LHOSPITALIER', 48, 'None', '2017-12-19'),
 (1422, 250, 'Cash', '2017-12-19', 'aissa eddami', 0, 'None', '2017-12-19'),
@@ -814,12 +836,21 @@ INSERT INTO `payments` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 (1443, 150, 'Cash', '2017-11-15', 'Brice FIGARO', 0, 'None', '2017-11-15'),
 (1444, 100, 'Cash', '2017-09-18', 'Jonas LEBLANC', 0, 'None', '2017-10-26'),
 (1445, 30, 'Cash', '2017-10-20', 'Olivier KAZ', 0, 'None', '2017-10-26'),
-(1446, 50, 'Cash', '2017-12-12', 'david ankri', 0, 'None', '2017-12-12'),
 (1447, 40, 'Cash', '2017-12-07', 'inconnnu HORSKYY', 0, 'None', '2017-12-07'),
 (1448, 160, 'Check', '2017-12-07', 'zou thien du chabert', 96, 'Academy', '2017-12-07'),
 (1449, 200, 'Check', '2017-09-18', 'Eddy BARCLAY', 120, 'Academy', '2017-11-10'),
 (1450, 150, 'Check', '2017-09-18', 'Eddy BARCLAY', 90, 'None', '2017-10-26'),
-(1451, 150, 'Check', '2017-09-18', 'Eddy BARCLAY', 90, 'Academy', '2017-10-04');
+(1451, 150, 'Check', '2017-09-18', 'Eddy BARCLAY', 90, 'Academy', '2017-10-04'),
+(1452, 125, 'Check', '2017-12-18', 'Akhmed SALAMOV', 75, 'None', '2017-12-18'),
+(1453, 125, 'Check', '2017-12-18', 'Akhmed SALAMOV', 75, 'None', '2017-12-18'),
+(1454, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-10-04'),
+(1455, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-11-04'),
+(1456, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'Academy', '2017-12-04'),
+(1457, 125, 'Check', '2017-09-14', 'David Gauthier', 75, 'None', '2017-10-26'),
+(1466, 50, 'Cash', '2017-12-12', 'david ankri', 0, 'None', '2017-12-12'),
+(1467, 120, 'Check', '2017-12-26', 'David ANKRI', 72, 'Perso', '2017-12-26'),
+(1468, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'None', '2017-12-26'),
+(1469, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'None', '2017-12-26');
 
 -- --------------------------------------------------------
 
@@ -935,6 +966,12 @@ ALTER TABLE `members_payments`
   ADD KEY `FKPayment` (`PaymentID`);
 
 --
+-- Index pour la table `metrics`
+--
+ALTER TABLE `metrics`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Index pour la table `payments`
 --
 ALTER TABLE `payments`
@@ -977,12 +1014,17 @@ ALTER TABLE `dojo`
 -- AUTO_INCREMENT pour la table `members`
 --
 ALTER TABLE `members`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+--
+-- AUTO_INCREMENT pour la table `metrics`
+--
+ALTER TABLE `metrics`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1452;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1470;
 --
 -- AUTO_INCREMENT pour la table `privates`
 --

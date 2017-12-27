@@ -15,9 +15,9 @@ namespace MembershipSite
         protected void Page_Load(object sender, EventArgs e)
         {
             AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            manager.Initialize();
 
-            txtMembersCount.Text = manager.getStudentsCount().ToString();
+            txtMembersCount.Text = manager.getActiveStudentsCount().ToString();
             int nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
             int nLicencesDebt = manager.getLicencesDebt();

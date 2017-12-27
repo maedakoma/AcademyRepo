@@ -18,7 +18,7 @@ namespace MembershipSite
         protected void Page_Load(object sender, EventArgs e)
         {
             manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            manager.Initialize();
             ddBelt.Items.Add("White");
             ddBelt.Items.Add("Blue");
             ddBelt.Items.Add("Purple");

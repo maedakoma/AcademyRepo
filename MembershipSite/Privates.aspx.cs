@@ -18,7 +18,7 @@ namespace MembershipSite
         protected void Page_Load(object sender, EventArgs e)
         {
             manager = new AcademyMgr.AcademyMgr();
-            manager.Open();
+            manager.Initialize();
             if (!Page.IsPostBack)
             {
                 List<Member> members = manager.getMembers();

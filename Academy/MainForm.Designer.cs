@@ -50,6 +50,7 @@
             this.tabMembers = new System.Windows.Forms.TabPage();
             this.chkInactive = new System.Windows.Forms.CheckBox();
             this.tabMoney = new System.Windows.Forms.TabPage();
+            this.trMoney = new System.Windows.Forms.TreeView();
             this.chkDepot = new System.Windows.Forms.CheckBox();
             this.tabRefunds = new System.Windows.Forms.TabPage();
             this.btnAddRefund = new System.Windows.Forms.Button();
@@ -104,7 +105,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
-            this.trMoney = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -279,6 +279,13 @@
             this.tabMoney.Text = "Money Flow";
             this.tabMoney.UseVisualStyleBackColor = true;
             this.tabMoney.Enter += new System.EventHandler(this.tabMoney_Enter);
+            // 
+            // trMoney
+            // 
+            this.trMoney.Location = new System.Drawing.Point(107, 16);
+            this.trMoney.Name = "trMoney";
+            this.trMoney.Size = new System.Drawing.Size(1163, 657);
+            this.trMoney.TabIndex = 3;
             // 
             // chkDepot
             // 
@@ -946,13 +953,6 @@
             this.lblMembers.Size = new System.Drawing.Size(141, 24);
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
-            // 
-            // trMoney
-            // 
-            this.trMoney.Location = new System.Drawing.Point(107, 16);
-            this.trMoney.Name = "trMoney";
-            this.trMoney.Size = new System.Drawing.Size(1163, 657);
-            this.trMoney.TabIndex = 3;
             // 
             // MainForm
             // 

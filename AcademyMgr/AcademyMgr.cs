@@ -13,13 +13,59 @@ namespace AcademyMgr
     public class AcademyMgr
     {
         MySqlConnection dbConn;
+        public string activeStudentsMetric = "activeStudents";
+        public string activeWhiteStudentsMetric = "activeWhiteStudents";
+        public string activeBlueStudentsMetric = "activeBlueStudents";
+        public string activePurpleStudentsMetric = "activePurpleStudents";
+        public string activeBrownStudentsMetric = "activeBrownStudents";
+        public string activeBlackStudentsMetric = "activeBlackStudents";
+
         //public string connectionString = "server=localhost;user id=admin;password=admin;database=academy";
         public string connectionString = "server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy";
-        public void Open()
+        public void Initialize()
         {
             //dbConn = new MySqlConnection("server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy");
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
+            InsertMetrics();
+        }
+        public Metric getLastMetric(string metricName)
+        {
+            Metric metric = new Metric();
+            metric.Name = metricName;
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date limit 1";
+            cmd.Parameters.AddWithValue("?name", metricName);
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                metric.ID = (int)reader["ID"];
+                metric.Value = (int)reader["value"];
+                metric.Date = Convert.ToDateTime(reader["Date"]);
+            }
+            reader.Close();
+            return metric;
+        }
+        public List<Metric> getMetrics(string metricName)
+        {
+            List<Metric> metrics = new List<Metric>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date";
+            cmd.Parameters.AddWithValue("?name", metricName);
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Metric metric = new Metric();
+                metric.ID = (int)reader["ID"];
+                metric.Name = reader["name"].ToString();
+                metric.Value = (int)reader["value"];
+                metric.Date = Convert.ToDateTime(reader["Date"]);
+                metrics.Add(metric);
+            }
+            reader.Close();
+            return metrics;
         }
         public List<Refund> getRefunds()
         {
@@ -266,7 +312,7 @@ namespace AcademyMgr
             return payments;
         }
 
-        public int getStudentsCount()
+        public int getActiveStudentsCount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
@@ -274,7 +320,7 @@ namespace AcademyMgr
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }
-        public int getStudentsCount(Member.beltEnum belt)
+        public int getActiveStudentsCount(Member.beltEnum belt)
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT count(*) from MEMBERS where active=1 and belt=?belt";
@@ -604,6 +650,51 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?ID", pay.ID);
             comm.ExecuteNonQuery();
 
+            return true;
+        }
+
+        public bool InsertMetrics()
+        {
+            List<KeyValuePair<Metric, int>> listMetric = new List<KeyValuePair<Metric, int>>();
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeStudentsMetric), getActiveStudentsCount()));
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeWhiteStudentsMetric), getActiveStudentsCount( Member.beltEnum.White)));
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBlueStudentsMetric), getActiveStudentsCount(Member.beltEnum.Blue)));
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activePurpleStudentsMetric), getActiveStudentsCount(Member.beltEnum.Purple)));
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBrownStudentsMetric), getActiveStudentsCount(Member.beltEnum.Brown)));
+            listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBlackStudentsMetric), getActiveStudentsCount(Member.beltEnum.Black)));
+
+            foreach (KeyValuePair<Metric, int> kv in listMetric)
+            {
+                if (kv.Key == null || kv.Key.Value != kv.Value)
+                {
+                    Metric metric = new Metric();
+                    metric.Name = kv.Key.Name;
+                    metric.Value = kv.Value;
+                    metric.Date = DateTime.Now;
+                    InsertMetric(metric);
+                }
+            }
+            return true;
+        }
+        public bool InsertMetric(Metric metric)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO METRICS(name, value, date) VALUES(?name, ?value, ?date)";
+            comm.Parameters.AddWithValue("?name", metric.Name);
+            comm.Parameters.AddWithValue("?value", metric.Value);
+            comm.Parameters.AddWithValue("?date", metric.Date);
+
+            comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);
+            reader.Close();
+            metric.ID = id;
             return true;
         }
     }

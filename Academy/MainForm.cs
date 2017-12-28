@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using AcademyMgr;
 using LiveCharts; //Core of the library
 using LiveCharts.Wpf; //The WPF controls
-using LiveCharts.WinForms; //the WinForm wrappers
+using LiveCharts.Defaults;
+using LiveCharts.Configurations;
 
 namespace Academy
 {
@@ -72,6 +71,107 @@ namespace Academy
             txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
             txtPrevBlackMonth.Text = (nTotalBenef / 12).ToString();
             txtPrevOfficialMonth.Text = ((nTotalBenef * 75) / (12 * 100)).ToString();
+
+            var dayConfig = Mappers.Xy<DateModel>()
+                                  .X(dateModel => dateModel.DateTime.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
+                                  .Y(dateModel => dateModel.Value);
+
+
+            cartesianChart1.Series = new SeriesCollection(dayConfig)
+            {
+                new LineSeries
+                {
+                    Title = "Licences", Values = new ChartValues<DateModel>{},
+                    Fill = System.Windows.Media.Brushes.Transparent
+                },
+                new LineSeries
+                {
+                    Title = "Stage", Values = new ChartValues<DateModel>{},
+                    Fill = System.Windows.Media.Brushes.Transparent
+                },
+                new LineSeries
+                {
+                    Title = "Privates", Values = new ChartValues<DateModel>{},
+                    Fill = System.Windows.Media.Brushes.Transparent
+                }
+            };
+            List<Payment> payments = manager.getPayments();
+            //aggregation des montants
+            DateTime datetemp = DateTime.MinValue;
+            int amounttemp = 0;
+            foreach(Payment pay in payments)
+            {
+                if(amounttemp!=0 && pay.ReceptionDate.Month != datetemp.Month)
+                {
+                    //on est sur un nouveau paiement on ajoute le précedent:
+                    cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                    amounttemp = 0;
+                }
+                datetemp = pay.ReceptionDate;
+                amounttemp += (pay.Amount - pay.Debt);
+                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
+            }
+            cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+
+            List<Seminar> seminars = manager.getSeminars();
+            //aggregation des montants
+            datetemp = DateTime.MinValue;
+            amounttemp = 0;
+            foreach (Seminar seminar in seminars)
+            {
+                if (amounttemp != 0 && seminar.Date.Month != datetemp.Month)
+                {
+                    //on est sur un nouveau paiement on ajoute le précedent:
+                    cartesianChart1.Series[1].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                    amounttemp = 0;
+                }
+                datetemp = seminar.Date;
+                amounttemp += (seminar.Amount - seminar.Debt);
+                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
+            }
+            cartesianChart1.Series[1].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+
+            List<Private> privates = manager.getPrivates();
+            //aggregation des montants
+            datetemp = DateTime.MinValue;
+            amounttemp = 0;
+            foreach (Private priv in privates)
+            {
+                if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
+                {
+                    //on est sur un nouveau paiement on ajoute le précedent:
+                    cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                    amounttemp = 0;
+                }
+                datetemp = priv.Date;
+                amounttemp += (priv.Amount);
+                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
+            }
+            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+
+
+            double minV = new DateTime(2017, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = new DateTime(2018, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            cartesianChart1.AxisX.Clear();
+            cartesianChart1.AxisX.Add(new Axis
+            {
+                LabelFormatter = value => new DateTime((long)(value * TimeSpan.FromDays(1).Ticks * 30.44)).ToString("M"),
+                MinValue = minV,
+                MaxValue = maxV,
+                Separator = new Separator
+                {
+                    Step = (maxV - minV) / 12
+                }
+            });
+            cartesianChart1.AxisY.Clear();
+            cartesianChart1.AxisY.Add(new Axis
+            {
+                Title = "Montant",
+                MinValue = 0
+            });
+
+            cartesianChart1.LegendLocation = LegendLocation.Right;
+
         }
 
         public void FillMembersResume()
@@ -660,5 +760,11 @@ namespace Academy
                 FillMoneyGrid(false);
             }
         }
+    }
+
+    public class DateModel
+    {
+        public System.DateTime DateTime { get; set; }
+        public double Value { get; set; }
     }
 }

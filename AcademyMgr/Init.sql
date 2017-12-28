@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 27 Décembre 2017 à 16:38
+-- Généré le :  Ven 29 Décembre 2017 à 00:39
 -- Version du serveur :  5.1.73-community
 -- Version de PHP :  5.5.30
 
@@ -251,7 +251,8 @@ INSERT INTO `members` (`ID`, `Firstname`, `Lastname`, `Enddate`, `Belt`, `Gender
 (162, 'David', 'ANKRI', '2019-04-25', 'brown', 'M', 0, 0, 'Juif integriste', 'Vendeur de cuir', '', '', '', '', 1, 0),
 (163, 'Matthieu', 'LHOSPITALIER', '2018-01-19', 'white', 'M', 0, 0, '', '', '', '', '', '', 1, 0),
 (164, 'Aissa', 'EDDAMI', '2017-12-19', 'white', 'M', 0, 0, 'pote de bagdad', '', '', '', '', '', 1, 0),
-(165, 'Lothaire', 'EPEE', '2018-12-19', 'purple', 'M', 0, 0, '', '', '', '', '', '', 1, 0);
+(165, 'Lothaire', 'EPEE', '2018-12-19', 'purple', 'M', 0, 0, '', '', '', '', '', '', 1, 0),
+(166, 'Dioumé', 'SANGARÉ', '2018-12-28', 'brown', 'M', 0, 0, 'club d''origine le maccabi', 'finance?', '', '', '', 'https://www.facebook.com/dioum.sangare', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -535,7 +536,8 @@ INSERT INTO `members_payments` (`MemberID`, `PaymentID`) VALUES
 (162, 1466),
 (162, 1467),
 (162, 1468),
-(162, 1469);
+(162, 1469),
+(166, 1470);
 
 -- --------------------------------------------------------
 
@@ -560,7 +562,105 @@ INSERT INTO `metrics` (`ID`, `Name`, `Value`, `Date`) VALUES
 (3, 'activeBlueStudents', 16, '2017-12-27'),
 (4, 'activePurpleStudents', 13, '2017-12-27'),
 (5, 'activeBrownStudents', 6, '2017-12-27'),
-(6, 'activeBlackStudents', 10, '2017-12-27');
+(6, 'activeBlackStudents', 10, '2017-12-27'),
+(7, 'activeStudents', 132, '2017-12-28'),
+(8, 'activeBrownStudents', 7, '2017-12-28'),
+(9, 'activeStudents', 132, '2017-12-28'),
+(10, 'activeBrownStudents', 7, '2017-12-28'),
+(11, 'activeStudents', 132, '2017-12-28'),
+(12, 'activeBrownStudents', 7, '2017-12-28'),
+(13, 'activeStudents', 132, '2017-12-28'),
+(14, 'activeBrownStudents', 7, '2017-12-28'),
+(15, 'activeStudents', 132, '2017-12-28'),
+(16, 'activeBrownStudents', 7, '2017-12-28'),
+(17, 'activeStudents', 132, '2017-12-28'),
+(18, 'activeBrownStudents', 7, '2017-12-28'),
+(19, 'activeStudents', 132, '2017-12-28'),
+(20, 'activeBrownStudents', 7, '2017-12-28'),
+(21, 'activeStudents', 132, '2017-12-28'),
+(22, 'activeBrownStudents', 7, '2017-12-28'),
+(23, 'activeStudents', 132, '2017-12-28'),
+(24, 'activeBrownStudents', 7, '2017-12-28'),
+(25, 'activeStudents', 132, '2017-12-28'),
+(26, 'activeBrownStudents', 7, '2017-12-28'),
+(27, 'activeStudents', 132, '2017-12-28'),
+(28, 'activeBrownStudents', 7, '2017-12-28'),
+(29, 'activeStudents', 132, '2017-12-28'),
+(30, 'activeBrownStudents', 7, '2017-12-28'),
+(31, 'activeStudents', 132, '2017-12-28'),
+(32, 'activeBrownStudents', 7, '2017-12-28'),
+(33, 'activeStudents', 132, '2017-12-28'),
+(34, 'activeBrownStudents', 7, '2017-12-28'),
+(35, 'activeStudents', 132, '2017-12-28'),
+(36, 'activeBrownStudents', 7, '2017-12-28'),
+(37, 'activeStudents', 132, '2017-12-28'),
+(38, 'activeBrownStudents', 7, '2017-12-28'),
+(39, 'activeStudents', 132, '2017-12-28'),
+(40, 'activeBrownStudents', 7, '2017-12-28'),
+(41, 'activeStudents', 132, '2017-12-28'),
+(42, 'activeBrownStudents', 7, '2017-12-28'),
+(43, 'activeStudents', 132, '2017-12-28'),
+(44, 'activeBrownStudents', 7, '2017-12-28'),
+(45, 'activeStudents', 132, '2017-12-28'),
+(46, 'activeBrownStudents', 7, '2017-12-28'),
+(47, 'activeStudents', 132, '2017-12-28'),
+(48, 'activeBrownStudents', 7, '2017-12-28'),
+(49, 'activeStudents', 132, '2017-12-28'),
+(50, 'activeBrownStudents', 7, '2017-12-28'),
+(51, 'activeStudents', 132, '2017-12-28'),
+(52, 'activeBrownStudents', 7, '2017-12-28'),
+(53, 'activeStudents', 132, '2017-12-28'),
+(54, 'activeBrownStudents', 7, '2017-12-28'),
+(55, 'activeStudents', 132, '2017-12-28'),
+(56, 'activeBrownStudents', 7, '2017-12-28'),
+(57, 'activeStudents', 132, '2017-12-28'),
+(58, 'activeBrownStudents', 7, '2017-12-28'),
+(59, 'activeStudents', 132, '2017-12-28'),
+(60, 'activeBrownStudents', 7, '2017-12-28'),
+(61, 'activeStudents', 132, '2017-12-28'),
+(62, 'activeBrownStudents', 7, '2017-12-28'),
+(63, 'activeStudents', 132, '2017-12-28'),
+(64, 'activeBrownStudents', 7, '2017-12-28'),
+(65, 'activeStudents', 132, '2017-12-28'),
+(66, 'activeBrownStudents', 7, '2017-12-28'),
+(67, 'activeStudents', 132, '2017-12-28'),
+(68, 'activeBrownStudents', 7, '2017-12-28'),
+(69, 'activeStudents', 132, '2017-12-28'),
+(70, 'activeBrownStudents', 7, '2017-12-28'),
+(71, 'activeStudents', 132, '2017-12-28'),
+(72, 'activeBrownStudents', 7, '2017-12-28'),
+(73, 'activeStudents', 132, '2017-12-28'),
+(74, 'activeBrownStudents', 7, '2017-12-28'),
+(75, 'activeStudents', 132, '2017-12-28'),
+(76, 'activeBrownStudents', 7, '2017-12-28'),
+(77, 'activeStudents', 132, '2017-12-28'),
+(78, 'activeBrownStudents', 7, '2017-12-28'),
+(79, 'activeStudents', 132, '2017-12-28'),
+(80, 'activeBrownStudents', 7, '2017-12-28'),
+(81, 'activeStudents', 132, '2017-12-28'),
+(82, 'activeBrownStudents', 7, '2017-12-28'),
+(83, 'activeStudents', 132, '2017-12-28'),
+(84, 'activeBrownStudents', 7, '2017-12-28'),
+(85, 'activeStudents', 132, '2017-12-28'),
+(86, 'activeBrownStudents', 7, '2017-12-28'),
+(87, 'activeStudents', 132, '2017-12-28'),
+(88, 'activeBrownStudents', 7, '2017-12-28'),
+(89, 'activeStudents', 132, '2017-12-28'),
+(90, 'activeBrownStudents', 7, '2017-12-28'),
+(91, 'activeStudents', 132, '2017-12-28'),
+(92, 'activeBrownStudents', 7, '2017-12-28'),
+(93, 'activeStudents', 132, '2017-12-28'),
+(94, 'activeBrownStudents', 7, '2017-12-28'),
+(95, 'activeStudents', 132, '2017-12-28'),
+(96, 'activeBrownStudents', 7, '2017-12-28'),
+(97, 'activeStudents', 132, '2017-12-28'),
+(98, 'activeBrownStudents', 7, '2017-12-28'),
+(99, 'activeStudents', 132, '2017-12-29'),
+(100, 'activeBrownStudents', 7, '2017-12-29'),
+(101, 'activeStudents', 132, '2017-12-29'),
+(102, 'activeBrownStudents', 7, '2017-12-29'),
+(103, 'activeStudents', 132, '2017-12-29'),
+(104, 'activeBrownStudents', 7, '2017-12-29');
 
 -- --------------------------------------------------------
 
@@ -850,7 +950,8 @@ INSERT INTO `payments` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 (1466, 50, 'Cash', '2017-12-12', 'david ankri', 0, 'None', '2017-12-12'),
 (1467, 120, 'Check', '2017-12-26', 'David ANKRI', 72, 'Perso', '2017-12-26'),
 (1468, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'None', '2017-12-26'),
-(1469, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'None', '2017-12-26');
+(1469, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'None', '2017-12-26'),
+(1470, 200, 'Cash', '2017-12-28', 'dioumé sangaré', 0, 'None', '2017-12-28');
 
 -- --------------------------------------------------------
 
@@ -1014,17 +1115,17 @@ ALTER TABLE `dojo`
 -- AUTO_INCREMENT pour la table `members`
 --
 ALTER TABLE `members`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 --
 -- AUTO_INCREMENT pour la table `metrics`
 --
 ALTER TABLE `metrics`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT pour la table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1470;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1471;
 --
 -- AUTO_INCREMENT pour la table `privates`
 --

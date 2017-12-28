@@ -24,7 +24,6 @@ namespace AcademyMgr
         public string connectionString = "server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy";
         public void Initialize()
         {
-            //dbConn = new MySqlConnection("server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy");
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
             InsertMetrics();
@@ -120,7 +119,7 @@ namespace AcademyMgr
             List<Seminar> seminars = new List<Seminar>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from SEMINARS";
+            cmd.CommandText = "SELECT * from SEMINARS order by date";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -146,7 +145,7 @@ namespace AcademyMgr
             List<Private> privates = new List<Private>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID";
+            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID order by date";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())

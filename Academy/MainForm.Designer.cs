@@ -65,6 +65,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.gridCoachPay = new System.Windows.Forms.DataGridView();
             this.tabResume = new System.Windows.Forms.TabPage();
+            this.cartesianChart1 = new LiveCharts.WinForms.CartesianChart();
             this.txtPrevOfficialMonth = new System.Windows.Forms.TextBox();
             this.txtPrevBlackMonth = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -93,6 +94,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMembersResume = new System.Windows.Forms.TabPage();
+            this.pieChart1 = new LiveCharts.WinForms.PieChart();
             this.txtBlack = new System.Windows.Forms.TextBox();
             this.txtBrown = new System.Windows.Forms.TextBox();
             this.txtPurple = new System.Windows.Forms.TextBox();
@@ -105,7 +107,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
-            this.pieChart1 = new LiveCharts.WinForms.PieChart();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -239,7 +240,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1293, 728);
+            this.tabControl1.Size = new System.Drawing.Size(1402, 876);
             this.tabControl1.TabIndex = 9;
             // 
             // tabMembers
@@ -505,6 +506,7 @@
             // 
             // tabResume
             // 
+            this.tabResume.Controls.Add(this.cartesianChart1);
             this.tabResume.Controls.Add(this.txtPrevOfficialMonth);
             this.tabResume.Controls.Add(this.txtPrevBlackMonth);
             this.tabResume.Controls.Add(this.label10);
@@ -542,11 +544,19 @@
             this.tabResume.Location = new System.Drawing.Point(4, 32);
             this.tabResume.Name = "tabResume";
             this.tabResume.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResume.Size = new System.Drawing.Size(1285, 692);
+            this.tabResume.Size = new System.Drawing.Size(1394, 840);
             this.tabResume.TabIndex = 4;
             this.tabResume.Text = "Financial resume";
             this.tabResume.UseVisualStyleBackColor = true;
             this.tabResume.Enter += new System.EventHandler(this.tabResume_Enter);
+            // 
+            // cartesianChart1
+            // 
+            this.cartesianChart1.Location = new System.Drawing.Point(15, 387);
+            this.cartesianChart1.Name = "cartesianChart1";
+            this.cartesianChart1.Size = new System.Drawing.Size(1334, 434);
+            this.cartesianChart1.TabIndex = 37;
+            this.cartesianChart1.Text = "cartesianChart1";
             // 
             // txtPrevOfficialMonth
             // 
@@ -842,6 +852,14 @@
             this.tabMembersResume.UseVisualStyleBackColor = true;
             this.tabMembersResume.Enter += new System.EventHandler(this.tabMembersResume_Enter);
             // 
+            // pieChart1
+            // 
+            this.pieChart1.Location = new System.Drawing.Point(383, 27);
+            this.pieChart1.Name = "pieChart1";
+            this.pieChart1.Size = new System.Drawing.Size(357, 262);
+            this.pieChart1.TabIndex = 30;
+            this.pieChart1.Text = "pieChart1";
+            // 
             // txtBlack
             // 
             this.txtBlack.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -956,17 +974,9 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
-            // pieChart1
-            // 
-            this.pieChart1.Location = new System.Drawing.Point(711, 99);
-            this.pieChart1.Name = "pieChart1";
-            this.pieChart1.Size = new System.Drawing.Size(379, 370);
-            this.pieChart1.TabIndex = 30;
-            this.pieChart1.Text = "pieChart1";
-            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1340, 752);
+            this.ClientSize = new System.Drawing.Size(1449, 900);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.Text = "Academy Cercle";
@@ -1063,6 +1073,7 @@
         private System.Windows.Forms.CheckBox chkDepot;
         private System.Windows.Forms.TreeView trMoney;
         private LiveCharts.WinForms.PieChart pieChart1;
+        private LiveCharts.WinForms.CartesianChart cartesianChart1;
     }
 }
 

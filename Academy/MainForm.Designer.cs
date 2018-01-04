@@ -107,6 +107,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
+            this.cartesianChart2 = new LiveCharts.WinForms.CartesianChart();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -147,7 +148,7 @@
             this.mainGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.mainGrid.Location = new System.Drawing.Point(116, 6);
             this.mainGrid.Name = "mainGrid";
-            this.mainGrid.Size = new System.Drawing.Size(1163, 680);
+            this.mainGrid.Size = new System.Drawing.Size(1272, 828);
             this.mainGrid.TabIndex = 0;
             this.mainGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mainGrid_CellMouseDoubleClick);
             this.mainGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.mainGrid_DataBindingComplete);
@@ -252,7 +253,7 @@
             this.tabMembers.Location = new System.Drawing.Point(4, 32);
             this.tabMembers.Name = "tabMembers";
             this.tabMembers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMembers.Size = new System.Drawing.Size(1285, 692);
+            this.tabMembers.Size = new System.Drawing.Size(1394, 840);
             this.tabMembers.TabIndex = 0;
             this.tabMembers.Text = "Members";
             this.tabMembers.UseVisualStyleBackColor = true;
@@ -276,7 +277,7 @@
             this.tabMoney.Location = new System.Drawing.Point(4, 32);
             this.tabMoney.Name = "tabMoney";
             this.tabMoney.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMoney.Size = new System.Drawing.Size(1285, 692);
+            this.tabMoney.Size = new System.Drawing.Size(1394, 840);
             this.tabMoney.TabIndex = 7;
             this.tabMoney.Text = "Money Flow";
             this.tabMoney.UseVisualStyleBackColor = true;
@@ -308,7 +309,7 @@
             this.tabRefunds.Location = new System.Drawing.Point(4, 32);
             this.tabRefunds.Name = "tabRefunds";
             this.tabRefunds.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRefunds.Size = new System.Drawing.Size(1285, 692);
+            this.tabRefunds.Size = new System.Drawing.Size(1394, 840);
             this.tabRefunds.TabIndex = 1;
             this.tabRefunds.Text = "Refunds";
             this.tabRefunds.UseVisualStyleBackColor = true;
@@ -358,7 +359,7 @@
             this.gridRefunds.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridRefunds.Location = new System.Drawing.Point(118, 6);
             this.gridRefunds.Name = "gridRefunds";
-            this.gridRefunds.Size = new System.Drawing.Size(1161, 680);
+            this.gridRefunds.Size = new System.Drawing.Size(1270, 828);
             this.gridRefunds.TabIndex = 0;
             this.gridRefunds.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridRefunds_CellMouseDoubleClick);
             // 
@@ -368,7 +369,7 @@
             this.tabSeminars.Location = new System.Drawing.Point(4, 32);
             this.tabSeminars.Name = "tabSeminars";
             this.tabSeminars.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSeminars.Size = new System.Drawing.Size(1285, 692);
+            this.tabSeminars.Size = new System.Drawing.Size(1394, 840);
             this.tabSeminars.TabIndex = 2;
             this.tabSeminars.Text = "Seminars";
             this.tabSeminars.UseVisualStyleBackColor = true;
@@ -398,7 +399,7 @@
             this.gridSeminars.DefaultCellStyle = dataGridViewCellStyle6;
             this.gridSeminars.Location = new System.Drawing.Point(117, 6);
             this.gridSeminars.Name = "gridSeminars";
-            this.gridSeminars.Size = new System.Drawing.Size(1162, 680);
+            this.gridSeminars.Size = new System.Drawing.Size(1271, 828);
             this.gridSeminars.TabIndex = 0;
             // 
             // tabPrivates
@@ -408,7 +409,7 @@
             this.tabPrivates.Location = new System.Drawing.Point(4, 32);
             this.tabPrivates.Name = "tabPrivates";
             this.tabPrivates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrivates.Size = new System.Drawing.Size(1285, 692);
+            this.tabPrivates.Size = new System.Drawing.Size(1394, 840);
             this.tabPrivates.TabIndex = 3;
             this.tabPrivates.Text = "Privates";
             this.tabPrivates.UseVisualStyleBackColor = true;
@@ -448,7 +449,7 @@
             this.gridPrivates.DefaultCellStyle = dataGridViewCellStyle8;
             this.gridPrivates.Location = new System.Drawing.Point(119, 6);
             this.gridPrivates.Name = "gridPrivates";
-            this.gridPrivates.Size = new System.Drawing.Size(1160, 680);
+            this.gridPrivates.Size = new System.Drawing.Size(1269, 828);
             this.gridPrivates.TabIndex = 0;
             this.gridPrivates.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPrivates_CellMouseDoubleClick);
             this.gridPrivates.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.privateGrid_DataBindingComplete);
@@ -460,7 +461,7 @@
             this.tabCoachPay.Location = new System.Drawing.Point(4, 32);
             this.tabCoachPay.Name = "tabCoachPay";
             this.tabCoachPay.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCoachPay.Size = new System.Drawing.Size(1285, 692);
+            this.tabCoachPay.Size = new System.Drawing.Size(1394, 840);
             this.tabCoachPay.TabIndex = 5;
             this.tabCoachPay.Text = "Coach Pay";
             this.tabCoachPay.UseVisualStyleBackColor = true;
@@ -500,7 +501,7 @@
             this.gridCoachPay.DefaultCellStyle = dataGridViewCellStyle10;
             this.gridCoachPay.Location = new System.Drawing.Point(119, 6);
             this.gridCoachPay.Name = "gridCoachPay";
-            this.gridCoachPay.Size = new System.Drawing.Size(1160, 680);
+            this.gridCoachPay.Size = new System.Drawing.Size(1269, 828);
             this.gridCoachPay.TabIndex = 0;
             this.gridCoachPay.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridCoachPay_CellMouseDoubleClick);
             // 
@@ -830,6 +831,7 @@
             // 
             // tabMembersResume
             // 
+            this.tabMembersResume.Controls.Add(this.cartesianChart2);
             this.tabMembersResume.Controls.Add(this.pieChart1);
             this.tabMembersResume.Controls.Add(this.txtBlack);
             this.tabMembersResume.Controls.Add(this.txtBrown);
@@ -846,7 +848,7 @@
             this.tabMembersResume.Location = new System.Drawing.Point(4, 32);
             this.tabMembersResume.Name = "tabMembersResume";
             this.tabMembersResume.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMembersResume.Size = new System.Drawing.Size(1285, 692);
+            this.tabMembersResume.Size = new System.Drawing.Size(1394, 840);
             this.tabMembersResume.TabIndex = 6;
             this.tabMembersResume.Text = "Members Resume";
             this.tabMembersResume.UseVisualStyleBackColor = true;
@@ -974,6 +976,14 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
+            // cartesianChart2
+            // 
+            this.cartesianChart2.Location = new System.Drawing.Point(19, 321);
+            this.cartesianChart2.Name = "cartesianChart2";
+            this.cartesianChart2.Size = new System.Drawing.Size(1334, 434);
+            this.cartesianChart2.TabIndex = 38;
+            this.cartesianChart2.Text = "cartesianChart2";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1449, 900);
@@ -1074,6 +1084,7 @@
         private System.Windows.Forms.TreeView trMoney;
         private LiveCharts.WinForms.PieChart pieChart1;
         private LiveCharts.WinForms.CartesianChart cartesianChart1;
+        private LiveCharts.WinForms.CartesianChart cartesianChart2;
     }
 }
 

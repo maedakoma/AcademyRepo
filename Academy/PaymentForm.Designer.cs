@@ -134,8 +134,9 @@
             this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbType.FormattingEnabled = true;
             this.cbType.Items.AddRange(new object[] {
+            "Cash",
             "Check",
-            "Cash"});
+            "Transfert"});
             this.cbType.Location = new System.Drawing.Point(73, 16);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(121, 21);
@@ -168,6 +169,7 @@
             this.cbBank.Name = "cbBank";
             this.cbBank.Size = new System.Drawing.Size(121, 21);
             this.cbBank.TabIndex = 15;
+            this.cbBank.SelectedValueChanged += new System.EventHandler(this.cbBank_SelectedValueChanged);
             // 
             // lblBank
             // 

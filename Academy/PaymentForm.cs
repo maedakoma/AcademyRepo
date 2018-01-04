@@ -42,7 +42,7 @@ namespace Academy
             {
                 currentPayment = new Payment();
                 txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
-                cbType.SelectedIndex = 0;
+                cbType.SelectedItem = "Check";
                 cbBank.SelectedIndex = 0;
             }
         }
@@ -52,9 +52,9 @@ namespace Academy
             currentPayment.Amount = Convert.ToInt32(txtAmount.Text);
             currentPayment.Debt = Convert.ToInt32(Convert.ToDouble(txtDebt.Text));
             currentPayment.Name = txtName.Text;
-            currentPayment.Type = cbType.Text;
+            currentPayment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), cbType.Text, true);
             currentPayment.ReceptionDate = dateTimePickerReception.Value;
-            currentPayment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), cbBank.Text, true);  ;
+            currentPayment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), cbBank.Text, true);
             currentPayment.DepotDate = DateTimePickerBank.Value;
             if (currentPayment.ID == 0)
             {
@@ -69,7 +69,7 @@ namespace Academy
             int result;
             if (currentPayment.ID == 0)
             {
-                if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedIndex != 1)
+                if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedItem.ToString() != "Cash" )
                 {
                     txtDebt.Text = (0.6 * result).ToString();
                 }
@@ -78,6 +78,11 @@ namespace Academy
                     txtDebt.Text = "0";
                 }
             }
+        }
+
+        private void cbBank_SelectedValueChanged(object sender, EventArgs e)
+        {
+            DateTimePickerBank.Value = DateTime.Now;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Academy
                 DataRow row = Payments.NewRow();
                 row["ID"] = pay.ID;
                 row["Amount"] = pay.Amount;
-                row["Type"] = pay.Type;
+                row["Type"] = pay.Type.ToString();
                 row["Name"] = pay.Name;
                 row["Debt"] = pay.Debt;
                 row["ReceptionDate"] = pay.ReceptionDate;

@@ -101,15 +101,18 @@ namespace Academy
             int amounttemp = 0;
             foreach(Payment pay in payments)
             {
-                if(amounttemp!=0 && pay.ReceptionDate.Month != datetemp.Month)
+                //On n'affiche pas le mois courant car incomplet
+                if (pay.ReceptionDate.Month != DateTime.Now.Month)
                 {
-                    //on est sur un nouveau paiement on ajoute le précedent:
-                    cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
-                    amounttemp = 0;
+                    if (amounttemp != 0 && pay.ReceptionDate.Month != datetemp.Month)
+                    {
+                        //on est sur un nouveau paiement on ajoute le précedent:
+                        cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                        amounttemp = 0;
+                    }
+                    datetemp = pay.ReceptionDate;
+                    amounttemp += (pay.Amount - pay.Debt);
                 }
-                datetemp = pay.ReceptionDate;
-                amounttemp += (pay.Amount - pay.Debt);
-                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
             }
             cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
@@ -127,7 +130,6 @@ namespace Academy
                 }
                 datetemp = seminar.Date;
                 amounttemp += (seminar.Amount - seminar.Debt);
-                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
             }
             cartesianChart1.Series[1].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
@@ -137,15 +139,18 @@ namespace Academy
             amounttemp = 0;
             foreach (Private priv in privates)
             {
-                if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
+                //On n'affiche pas le mois courant car incomplet
+                if (priv.Date.Month != DateTime.Now.Month)
                 {
-                    //on est sur un nouveau paiement on ajoute le précedent:
-                    cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
-                    amounttemp = 0;
+                    if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
+                    {
+                        //on est sur un nouveau paiement on ajoute le précedent:
+                        cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                        amounttemp = 0;
+                    }
+                    datetemp = priv.Date;
+                    amounttemp += (priv.Amount);
                 }
-                datetemp = priv.Date;
-                amounttemp += (priv.Amount);
-                //cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = pay.ReceptionDate, Value = (pay.Amount-pay.Debt) });
             }
             cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
@@ -241,6 +246,50 @@ namespace Academy
 
             pieChart1.LegendLocation = LegendLocation.Bottom;
 
+
+            var dayConfig = Mappers.Xy<DateModel>()
+                                  .X(dateModel => dateModel.DateTime.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
+                                  .Y(dateModel => dateModel.Value);
+
+
+            cartesianChart2.Series = new SeriesCollection(dayConfig)
+            {
+                new LineSeries
+                {
+                    Title = "Active students", Values = new ChartValues<DateModel>{},
+                    Fill = System.Windows.Media.Brushes.Transparent
+                }
+            };
+
+            List<Metric> activeStudents = manager.getMetrics(manager.activeStudentsMetric);
+            //aggregation des montants
+            foreach (Metric metric in activeStudents)
+            {
+                //on est sur un nouveau paiement on ajoute le précedent:
+                cartesianChart2.Series[0].Values.Add(new DateModel { DateTime = metric.Date, Value = metric.Value });
+            }
+            
+            double minV = activeStudents[0].Date.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = activeStudents[activeStudents.Count-1].Date.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            cartesianChart2.AxisX.Clear();
+            cartesianChart2.AxisX.Add(new Axis
+            {
+                LabelFormatter = value => new DateTime((long)(value * TimeSpan.FromDays(1).Ticks * 30.44)).ToString("M"),
+                MinValue = minV,
+                MaxValue = maxV,
+                Separator = new Separator
+                {
+                    Step = (maxV - minV) / 12
+                }
+            });
+            cartesianChart2.AxisY.Clear();
+            cartesianChart2.AxisY.Add(new Axis
+            {
+                Title = "Nombre",
+                MinValue = 130
+            });
+
+            cartesianChart2.LegendLocation = LegendLocation.Right;
         }
 
         public void FillMembersGrid(int rowIndex = 0, bool onlyActive = true)

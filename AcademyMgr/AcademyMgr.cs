@@ -33,7 +33,7 @@ namespace AcademyMgr
             Metric metric = new Metric();
             metric.Name = metricName;
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date limit 1";
+            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date desc, id desc limit 1";
             cmd.Parameters.AddWithValue("?name", metricName);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
@@ -196,7 +196,11 @@ namespace AcademyMgr
                     payment.ID = (int)reader["paymentID"];
                     payment.Amount = (int)reader["amount"];
                     payment.Debt = (int)reader["debt"];
-                    payment.Type = reader["type"].ToString();
+                    String sType = reader["type"].ToString();
+                    if (sType != String.Empty)
+                    {
+                        payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                    }
                     payment.Name = reader["name"].ToString();
                     payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
                     String sBank = reader["bank"].ToString();
@@ -252,7 +256,11 @@ namespace AcademyMgr
                         payment.Amount = (int)reader["amount"];
                         payment.Debt = (int)reader["debt"];
                         payment.Name = reader["name"].ToString();
-                        payment.Type = reader["type"].ToString();
+                        String sType = reader["type"].ToString();
+                        if (sType != String.Empty)
+                        {
+                            payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                        }
                         payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
                         String sBank = reader["bank"].ToString();
                         if (sBank != String.Empty)
@@ -279,7 +287,7 @@ namespace AcademyMgr
 
             if (bydepot)
             {
-                cmd.CommandText = "SELECT * FROM PAYMENTS WHERE Bank <>'None' ORDER BY depotdate, name";
+                cmd.CommandText = "SELECT * FROM PAYMENTS WHERE Bank<>'None' and type ='Check' ORDER BY depotdate, name";
             }
             else
             {
@@ -293,7 +301,11 @@ namespace AcademyMgr
                     payment.ID = (int)reader["ID"];
                     payment.Amount = (int)reader["amount"];
                     payment.Debt = (int)reader["debt"];
-                    payment.Type = reader["type"].ToString();
+                    String sType = reader["type"].ToString();
+                    if (sType != String.Empty)
+                    {
+                        payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                    }
                     payment.Name = reader["name"].ToString();
                     payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
                     String sBank = reader["bank"].ToString();
@@ -421,7 +433,7 @@ namespace AcademyMgr
                 //On verifie que tout a bien été encaissé:
                 foreach (Payment pay in member.Payments)
                 {
-                    if ((pay.Type == "check") && (pay.Bank == Payment.bankEnum.None))
+                    if ((pay.Type == Payment.typeEnum.Check) && (pay.Bank == Payment.bankEnum.None))
                     {
                         bNotpaid = true;
                         break;
@@ -478,7 +490,7 @@ namespace AcademyMgr
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
                 comm.Parameters.AddWithValue("?amount", pay.Amount);
-                comm.Parameters.AddWithValue("?type", pay.Type);
+                comm.Parameters.AddWithValue("?type", pay.Type.ToString());
                 comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
                 comm.Parameters.AddWithValue("?name", pay.Name);
                 comm.Parameters.AddWithValue("?debt", pay.Debt);

@@ -15,9 +15,16 @@ namespace AcademyMgr
             Perso = 2
         }
 
+        public enum typeEnum
+        {
+            Cash = 0,
+            Check = 1,
+            Transfert = 2
+        }
+
         private int _ID;
         private int _amount;
-        private string _type;
+        private typeEnum _type;
         private string _name;
         private int _debt;
         private bankEnum _bank;
@@ -29,7 +36,7 @@ namespace AcademyMgr
             get { return this._ID; }
             set { _ID = value; }
         }
-        public string Type
+        public typeEnum Type
         {
             get { return this._type; }
             set { _type = value; }

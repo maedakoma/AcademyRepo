@@ -25,6 +25,7 @@ namespace Academy
             cbBelt.SelectedIndex = 0;
             cbGender.SelectedIndex = 0;
             chkActive.Checked = true;
+            dateEnd.Value = DateTime.Now.AddYears(1);
         }
         public void Populate(Member member, int index)
         {
@@ -162,6 +163,18 @@ namespace Academy
         private void btnGo_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(txtFacebook.Text);
+        }
+
+        private void payGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            foreach (DataGridViewRow row in payGrid.Rows)
+            {
+                string sBank = Convert.ToString(row.Cells[6].Value);
+                if (sBank != "None")
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+            }
         }
     }
 }

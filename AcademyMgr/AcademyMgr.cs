@@ -21,7 +21,7 @@ namespace AcademyMgr
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
         //public string connectionString = "server=localhost;user id=admin;password=admin;database=academy";
-        public string connectionString = "server=jjbcercle.fr;user id=baugm_thibaut;password=iimg4jek;database=baugma143158com32659_cercle_academy";
+        public string connectionString = "server=35.205.127.92;user id=root;password=iimg4jek;database=cercle";
         public void Initialize()
         {
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);

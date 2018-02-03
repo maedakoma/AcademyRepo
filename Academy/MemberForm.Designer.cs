@@ -130,6 +130,7 @@
             this.payGrid.Size = new System.Drawing.Size(680, 184);
             this.payGrid.TabIndex = 10;
             this.payGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.payGrid_CellMouseDoubleClick);
+            this.payGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.payGrid_DataBindingComplete);
             // 
             // btnAddPayment
             // 

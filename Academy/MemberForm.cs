@@ -170,7 +170,8 @@ namespace Academy
             foreach (DataGridViewRow row in payGrid.Rows)
             {
                 string sBank = Convert.ToString(row.Cells[6].Value);
-                if (sBank != "None")
+                string sType = Convert.ToString(row.Cells[2].Value);
+                if (sType != "Check" || sBank != "None")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightGreen;
                 }

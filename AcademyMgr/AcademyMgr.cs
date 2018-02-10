@@ -172,7 +172,10 @@ namespace AcademyMgr
 
             MySqlCommand cmd = dbConn.CreateCommand();
 
-            cmd.CommandText = "SELECT *, P.ID as paymentID from MEMBERS M left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID left outer join PAYMENTS P on P.ID = MP.PaymentID";
+            cmd.CommandText = "SELECT *, P.ID as paymentID, MS.Active as active from MEMBERS M " +
+                                "inner join MEMBERS_STATUS MS on MS.MemberID = M.ID AND MS.Current=1 " + 
+                                "left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID " +
+                                "left outer join PAYMENTS P on P.ID = MP.PaymentID";
             if (coach!= null)
             {
                 cmd.CommandText += " WHERE M.coach=?coach";
@@ -327,14 +330,14 @@ namespace AcademyMgr
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1";
+            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS where current = 1 and active=1";
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }
         public int getActiveStudentsCount(Member.beltEnum belt)
         {
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT count(*) from MEMBERS where active=1 and belt=?belt";
+            cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and belt=?belt";
             cmd.Parameters.AddWithValue("?belt", belt.ToString());
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
@@ -393,14 +396,14 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, active, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?active, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, internal, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?internal, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
             comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("?child", member.Child);
-            comm.Parameters.AddWithValue("?active", member.Active);
+            comm.Parameters.AddWithValue("?internal", member.Internal);
             comm.Parameters.AddWithValue("?alert", member.Alert);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
@@ -421,7 +424,7 @@ namespace AcademyMgr
             reader.Close();
             //dbConn.Open();
             member.ID = id;
-
+            InsertStatus(member);
             InsertPayments(member);
             return true;
         }
@@ -446,7 +449,7 @@ namespace AcademyMgr
             }
 
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, active=?active, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -454,7 +457,7 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("?child", member.Child);
             comm.Parameters.AddWithValue("?alert", member.Alert);
-            comm.Parameters.AddWithValue("?active", member.Active);
+            comm.Parameters.AddWithValue("?internal", member.Internal);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
             comm.Parameters.AddWithValue("?mail", member.Mail);
@@ -468,16 +471,73 @@ namespace AcademyMgr
             DeletePayments(member.ID);
             InsertPayments(member);
 
+            //On met à jour le status si il a changé
+            UpdateStatus(member);
+
             return true;
         }
         public bool DeleteMember(int memberID)
         {
             //On delete d'abord les paiements associés:
             DeletePayments(memberID);
+            //On delete son status:
+            DeleteStatus(memberID);
             //On delete le member
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM MEMBERS WHERE ID=?ID";
             comm.Parameters.AddWithValue("?ID", memberID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
+
+        public bool InsertStatus(Member member)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE MEMBERS_STATUS SET Current = 0 WHERE MemberID= ?MemberID";
+            comm.Parameters.AddWithValue("?MemberID", member.ID);
+            comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "INSERT INTO MEMBERS_STATUS(MemberID, Active, Date, Current ) VALUES(?MemberID, ?Active, ?Date, ?Current)";
+            comm.Parameters.AddWithValue("?MemberID", member.ID);
+            comm.Parameters.AddWithValue("?active", member.Active);
+            comm.Parameters.AddWithValue("?Date", DateTime.Now);
+            comm.Parameters.AddWithValue("?current", 1);
+            comm.ExecuteNonQuery();
+            return true;
+        }
+        public bool UpdateStatus(Member member)
+        {
+            //le status a t'il changé?
+            MySqlCommand cmd = dbConn.CreateCommand();
+            //dbConn.Open();
+            cmd.CommandText = "SELECT Active from MEMBERS_STATUS where memberID=?memberID and current = 1";
+            cmd.Parameters.AddWithValue("?MemberID", member.ID);
+            bool nCurrentActive = Convert.ToBoolean(cmd.ExecuteScalar());
+
+            if (nCurrentActive != member.Active)
+            {
+                //Si oui:
+                MySqlCommand comm = dbConn.CreateCommand();
+                comm.CommandText = "UPDATE MEMBERS_STATUS SET Current = 0 WHERE MemberID=?MemberID";
+                comm.Parameters.AddWithValue("?MemberID", member.ID);
+                comm.ExecuteNonQuery();
+
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "INSERT INTO MEMBERS_STATUS(MemberID, Active, Date, Current ) VALUES(?MemberID, ?Active, ?Date, ?Current)";
+                comm.Parameters.AddWithValue("?MemberID", member.ID);
+                comm.Parameters.AddWithValue("?active", member.Active);
+                comm.Parameters.AddWithValue("?Date", DateTime.Now);
+                comm.Parameters.AddWithValue("?current", 1);
+                comm.ExecuteNonQuery();
+            }
+            return true;
+        }
+        public bool DeleteStatus(int memberID)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM MEMBERS_STATUS WHERE MemberID=?MemberID";
+            comm.Parameters.AddWithValue("?MemberID", memberID);
             comm.ExecuteNonQuery();
             return true;
         }

@@ -186,7 +186,8 @@ namespace AcademyMgr
                 }
                 cmd.Parameters.AddWithValue("?coach", nCoach);
             }
-                cmd.CommandText += " ORDER BY lastname";
+
+            cmd.CommandText += " ORDER BY lastname";
             //dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             //dbConn.Close();
@@ -245,7 +246,9 @@ namespace AcademyMgr
                     }
                     mem.Child = Convert.ToBoolean(reader["Child"]);
                     mem.Alert = Convert.ToBoolean(reader["Alert"]);
+                    mem.FullYear = Convert.ToBoolean(reader["FullYear"]);
                     mem.Active = Convert.ToBoolean(reader["active"]);
+                    mem.Internal = Convert.ToBoolean(reader["internal"]);
                     mem.Comment = reader["comment"].ToString();
                     mem.Job = reader["job"].ToString();
                     mem.Mail = reader["mail"].ToString();
@@ -326,11 +329,33 @@ namespace AcademyMgr
             return payments;
         }
 
+        public int getNewStudentsCount(DateTime sinceDate)
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            //dbConn.Open();
+            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and MS.Date>?date and M.internal=?internal";
+            cmd.Parameters.AddWithValue("?date", sinceDate);
+            cmd.Parameters.AddWithValue("?internal", 1);
+            int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nMemberCount;
+        }
+        public int getLostStudentsCount(DateTime sinceDate)
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            //dbConn.Open();
+            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=0 and MS.Date>?date and M.internal=?internal";
+            cmd.Parameters.AddWithValue("?date", sinceDate);
+            cmd.Parameters.AddWithValue("?internal", 1);
+            int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nMemberCount;
+        }
+
         public int getActiveStudentsCount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS where current = 1 and active=1";
+            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and M.internal=?internal";
+            cmd.Parameters.AddWithValue("?internal", 1);
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }
@@ -396,14 +421,16 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, belt, gender, internal, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?belt, ?gender, ?internal, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
-            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
+            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
+            comm.Parameters.AddWithValue("?creationdate", DateTime.Now);
             comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("?child", member.Child);
             comm.Parameters.AddWithValue("?internal", member.Internal);
+            comm.Parameters.AddWithValue("?fullyear", member.FullYear);
             comm.Parameters.AddWithValue("?alert", member.Alert);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);
@@ -449,14 +476,15 @@ namespace AcademyMgr
             }
 
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
-            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname));
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
             comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
             comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
             comm.Parameters.AddWithValue("?child", member.Child);
             comm.Parameters.AddWithValue("?alert", member.Alert);
+            comm.Parameters.AddWithValue("?fullyear", member.FullYear);
             comm.Parameters.AddWithValue("?internal", member.Internal);
             comm.Parameters.AddWithValue("?comment", member.Comment);
             comm.Parameters.AddWithValue("?job", member.Job);

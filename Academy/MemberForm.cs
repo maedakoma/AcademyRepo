@@ -25,6 +25,7 @@ namespace Academy
             cbBelt.SelectedIndex = 0;
             cbGender.SelectedIndex = 0;
             chkActive.Checked = true;
+            chkInternal.Checked = true;
             dateEnd.Value = DateTime.Now.AddYears(1);
         }
         public void Populate(Member member, int index)
@@ -38,6 +39,8 @@ namespace Academy
             cbGender.Text = member.Gender.ToString();
             chkChild.Checked = member.Child;
             chkAlert.Checked = member.Alert;
+            chkInternal.Checked = member.Internal;
+            chkFullYear.Checked = member.FullYear;
             chkActive.Checked = member.Active;
             txtComment.Text = member.Comment;
             txtJob.Text = member.Job;
@@ -136,7 +139,9 @@ namespace Academy
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
             currentMember.Child = chkChild.Checked;
             currentMember.Active = chkActive.Checked;
+            currentMember.Internal = chkInternal.Checked;
             currentMember.Alert = chkAlert.Checked;
+            currentMember.FullYear = chkFullYear.Checked;
             currentMember.Comment = txtComment.Text;
             currentMember.Job = txtJob.Text;
             currentMember.Mail = txtMail.Text;

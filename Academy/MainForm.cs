@@ -187,6 +187,9 @@ namespace Academy
             int nPurple = manager.getActiveStudentsCount(Member.beltEnum.Purple);
             int nBrown = manager.getActiveStudentsCount(Member.beltEnum.Brown);
             int nBlack = manager.getActiveStudentsCount(Member.beltEnum.Black);
+            int nNewStudents = manager.getNewStudentsCount(new DateTime(2018,1,1));
+            int nLostStudents = manager.getLostStudentsCount(new DateTime(2018, 1, 1));
+
 
             txtMembersCount.Text = nTotal.ToString();
             txtWhite.Text = nWhite.ToString() + " (" + (((double)nWhite/ (double)nTotal)).ToString("P", CultureInfo.InvariantCulture)+")";
@@ -194,6 +197,8 @@ namespace Academy
             txtPurple.Text = nPurple.ToString() + " (" + (((double)nPurple / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+            txtNewStudents.Text = nNewStudents.ToString();
+            txtLostStudents.Text = nLostStudents.ToString();
 
             Func<ChartPoint, string> labelPoint = chartPoint =>
             string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
@@ -292,8 +297,10 @@ namespace Academy
             cartesianChart2.LegendLocation = LegendLocation.Right;
         }
 
-        public void FillMembersGrid(int rowIndex = 0, bool onlyActive = true)
+        public void FillMembersGrid(int rowIndex = 0)
         {
+            bool onlyActive = !chkInactive.Checked;
+            bool onlyInternal = !chkExternal.Checked;
             members = manager.getMembers(null);
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
@@ -312,6 +319,7 @@ namespace Academy
             DataColumn c9 = new DataColumn("debt");
             DataColumn c10 = new DataColumn("comment");
             DataColumn c11 = new DataColumn("membershipOK");
+            DataColumn c12 = new DataColumn("fullyear");
 
 
             //Add the Created Columns to the Datatable
@@ -327,10 +335,11 @@ namespace Academy
             People.Columns.Add(c9);
             People.Columns.Add(c10);
             People.Columns.Add(c11);
+            People.Columns.Add(c12);
 
             foreach (Member mem in members)
             {
-                if (!mem.Active && onlyActive)
+                if ((!mem.Active && onlyActive) || (!mem.Internal && onlyInternal))
                 {
                     continue;
                 }
@@ -343,6 +352,7 @@ namespace Academy
                 row["gender"] = mem.Gender;
                 row["child"] = mem.Child;
                 row["alert"] = mem.Alert;
+                row["fullyear"] = mem.FullYear;
                 int amount = 0;
                 int debt = 0;
                 foreach (Payment pay in mem.Payments)
@@ -384,7 +394,7 @@ namespace Academy
             mainGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             mainGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             mainGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
+            lblLines.Text = mainGrid.RowCount.ToString() +  " lignes affichées";
         }
         public void FillMoneyGrid(bool byDepot = false )
         {
@@ -680,15 +690,21 @@ namespace Academy
             foreach (DataGridViewRow row in mainGrid.Rows)
             {
                 bool bMembershipOK = Convert.ToBoolean(row.Cells[11].Value);
-                if (!bMembershipOK)
+                bool bFullyear = Convert.ToBoolean(row.Cells[12].Value);
+                bool bAlert = Convert.ToBoolean(row.Cells[7].Value);
+                if (!bFullyear)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Red;
+                    row.DefaultCellStyle.BackColor = Color.Coral;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
-                bool bAlert = Convert.ToBoolean(row.Cells[7].Value);
                 if (bAlert)
                 {
                     row.DefaultCellStyle.BackColor = Color.Orange;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+                if (!bMembershipOK)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
             }
@@ -788,14 +804,12 @@ namespace Academy
 
         private void chkInactive_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkInactive.Checked == true)
-            {
-                FillMembersGrid(0,false);
-            }
-            else
-            {
-                FillMembersGrid(0, true);
-            }
+            FillMembersGrid();
+        }
+
+        private void chkExternal_CheckedChanged(object sender, EventArgs e)
+        {
+            FillMembersGrid();
         }
 
         private void chkDepot_CheckedChanged(object sender, EventArgs e)
@@ -809,6 +823,8 @@ namespace Academy
                 FillMoneyGrid(false);
             }
         }
+
+        
     }
 
     public class DateModel

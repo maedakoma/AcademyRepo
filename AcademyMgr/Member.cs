@@ -33,6 +33,7 @@ namespace AcademyMgr
         private Boolean _child;
         private Boolean _alert;
         private Boolean _active;
+        private Boolean _fullyear;
         private Boolean _internal;
         private Boolean _membershipOK = true;
         private string _comment;
@@ -87,6 +88,11 @@ namespace AcademyMgr
         {
             get { return this._alert; }
             set { _alert = value; }
+        }
+        public Boolean FullYear
+        {
+            get { return this._fullyear; }
+            set { _fullyear = value; }
         }
         public Boolean Active
         {

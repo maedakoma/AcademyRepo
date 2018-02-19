@@ -59,6 +59,8 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.btnGo = new System.Windows.Forms.Button();
+            this.chkFullYear = new System.Windows.Forms.CheckBox();
+            this.chkInternal = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -340,11 +342,33 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
+            // chkFullYear
+            // 
+            this.chkFullYear.AutoSize = true;
+            this.chkFullYear.Location = new System.Drawing.Point(130, 386);
+            this.chkFullYear.Name = "chkFullYear";
+            this.chkFullYear.Size = new System.Drawing.Size(64, 17);
+            this.chkFullYear.TabIndex = 34;
+            this.chkFullYear.Text = "FullYear";
+            this.chkFullYear.UseVisualStyleBackColor = true;
+            // 
+            // chkInternal
+            // 
+            this.chkInternal.AutoSize = true;
+            this.chkInternal.Location = new System.Drawing.Point(346, 97);
+            this.chkInternal.Name = "chkInternal";
+            this.chkInternal.Size = new System.Drawing.Size(61, 17);
+            this.chkInternal.TabIndex = 35;
+            this.chkInternal.Text = "Internal";
+            this.chkInternal.UseVisualStyleBackColor = true;
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 680);
+            this.Controls.Add(this.chkInternal);
+            this.Controls.Add(this.chkFullYear);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.txtAddress);
@@ -418,5 +442,7 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.CheckBox chkFullYear;
+        private System.Windows.Forms.CheckBox chkInternal;
     }
 }

@@ -41,6 +41,7 @@ namespace Academy
             chkAlert.Checked = member.Alert;
             chkInternal.Checked = member.Internal;
             chkFullYear.Checked = member.FullYear;
+            chkCompetitor.Checked = member.Competitor;
             chkActive.Checked = member.Active;
             txtComment.Text = member.Comment;
             txtJob.Text = member.Job;
@@ -142,6 +143,7 @@ namespace Academy
             currentMember.Internal = chkInternal.Checked;
             currentMember.Alert = chkAlert.Checked;
             currentMember.FullYear = chkFullYear.Checked;
+            currentMember.Competitor = chkCompetitor.Checked;
             currentMember.Comment = txtComment.Text;
             currentMember.Job = txtJob.Text;
             currentMember.Mail = txtMail.Text;

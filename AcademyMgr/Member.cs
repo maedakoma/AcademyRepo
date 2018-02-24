@@ -26,6 +26,7 @@ namespace AcademyMgr
         private int _ID;
         private string _firstname;
         private string _lastname;
+        private DateTime _creationdate;
         private DateTime _enddate;
         private genderEnum _gender;
         private beltEnum _belt;
@@ -34,6 +35,7 @@ namespace AcademyMgr
         private Boolean _alert;
         private Boolean _active;
         private Boolean _fullyear;
+        private Boolean _competitor;
         private Boolean _internal;
         private Boolean _membershipOK = true;
         private string _comment;
@@ -64,6 +66,11 @@ namespace AcademyMgr
             get { return this._lastname; }
             set { _lastname = value; }
         }
+        public DateTime Creationdate
+        {
+            get { return this._creationdate; }
+            set { _creationdate = value; }
+        }
         public DateTime Enddate
         {
             get { return this._enddate; }
@@ -93,6 +100,11 @@ namespace AcademyMgr
         {
             get { return this._fullyear; }
             set { _fullyear = value; }
+        }
+        public Boolean Competitor
+        {
+            get { return this._competitor; }
+            set { _competitor = value; }
         }
         public Boolean Active
         {

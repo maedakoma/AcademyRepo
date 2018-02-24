@@ -39,6 +39,8 @@
             this.lblDone = new System.Windows.Forms.Label();
             this.txtDone = new System.Windows.Forms.TextBox();
             this.cbMember = new System.Windows.Forms.ComboBox();
+            this.txtDescription = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblName
@@ -68,7 +70,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(17, 137);
+            this.btnOK.Location = new System.Drawing.Point(17, 199);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -132,11 +134,29 @@
             this.cbMember.Size = new System.Drawing.Size(121, 21);
             this.cbMember.TabIndex = 24;
             // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(80, 127);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(407, 20);
+            this.txtDescription.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 134);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Description";
+            // 
             // PrivateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 184);
+            this.ClientSize = new System.Drawing.Size(502, 234);
+            this.Controls.Add(this.txtDescription);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.cbMember);
             this.Controls.Add(this.txtDone);
             this.Controls.Add(this.lblDone);
@@ -168,5 +188,7 @@
         private System.Windows.Forms.Label lblDone;
         private System.Windows.Forms.TextBox txtDone;
         private System.Windows.Forms.ComboBox cbMember;
+        private System.Windows.Forms.TextBox txtDescription;
+        private System.Windows.Forms.Label label1;
     }
 }

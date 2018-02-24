@@ -19,6 +19,7 @@ namespace Academy
         List<Private> privates;
         List<CoachPay> pays;
         List<Refund> refunds;
+        List<Seminar> seminars;
         AcademyMgr.AcademyMgr manager;
         public MainForm()
         {
@@ -116,7 +117,7 @@ namespace Academy
             }
             cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
-            List<Seminar> seminars = manager.getSeminars();
+            seminars = manager.getSeminars();
             //aggregation des montants
             datetemp = DateTime.MinValue;
             amounttemp = 0;
@@ -187,6 +188,7 @@ namespace Academy
             int nPurple = manager.getActiveStudentsCount(Member.beltEnum.Purple);
             int nBrown = manager.getActiveStudentsCount(Member.beltEnum.Brown);
             int nBlack = manager.getActiveStudentsCount(Member.beltEnum.Black);
+            int nCompetitors = manager.getActiveStudentsCompetitorCount();
             int nNewStudents = manager.getNewStudentsCount(new DateTime(2018,1,1));
             int nLostStudents = manager.getLostStudentsCount(new DateTime(2018, 1, 1));
 
@@ -197,6 +199,7 @@ namespace Academy
             txtPurple.Text = nPurple.ToString() + " (" + (((double)nPurple / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
+            txtCompetitor.Text = nCompetitors.ToString() + " (" + (((double)nCompetitors / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtNewStudents.Text = nNewStudents.ToString();
             txtLostStudents.Text = nLostStudents.ToString();
 
@@ -306,21 +309,24 @@ namespace Academy
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable
             DataColumn c0 = new DataColumn("ID");
-            DataColumn c1 = new DataColumn("lastname");
-            DataColumn c2 = new DataColumn("firstname");
-            DataColumn c3 = new DataColumn("enddate");
-            DataColumn c4 = new DataColumn("belt");
-            DataColumn c5 = new DataColumn("gender");
-            DataColumn c6 = new DataColumn("child");
-            c6.DataType = typeof(bool);
-            DataColumn c7 = new DataColumn("alert");
-            c7.DataType = typeof(bool);
-            DataColumn c8 = new DataColumn("amount");
-            DataColumn c9 = new DataColumn("debt");
-            DataColumn c10 = new DataColumn("comment");
-            DataColumn c11 = new DataColumn("membershipOK");
-            DataColumn c12 = new DataColumn("fullyear");
-
+            DataColumn c1 = new DataColumn("alert");
+            DataColumn c2 = new DataColumn("membershipOK");
+            DataColumn c3 = new DataColumn("fullyear");
+            DataColumn c4 = new DataColumn("lastname");
+            DataColumn c5 = new DataColumn("firstname");
+            DataColumn c6 = new DataColumn("creationdate");
+            c6.DataType = typeof(DateTime);
+            DataColumn c7 = new DataColumn("enddate");
+            c7.DataType = typeof(DateTime);
+            DataColumn c8 = new DataColumn("belt");
+            DataColumn c9 = new DataColumn("gender");
+            DataColumn c10 = new DataColumn("child");
+            c10.DataType = typeof(bool);
+            DataColumn c11 = new DataColumn("competitor");
+            c11.DataType = typeof(bool);
+            DataColumn c12 = new DataColumn("amount");
+            DataColumn c13 = new DataColumn("debt");
+            DataColumn c14 = new DataColumn("comment");
 
             //Add the Created Columns to the Datatable
             People.Columns.Add(c0);
@@ -336,6 +342,8 @@ namespace Academy
             People.Columns.Add(c10);
             People.Columns.Add(c11);
             People.Columns.Add(c12);
+            People.Columns.Add(c13);
+            People.Columns.Add(c14);
 
             foreach (Member mem in members)
             {
@@ -347,7 +355,8 @@ namespace Academy
                 row["ID"] = mem.ID;
                 row["lastname"] = mem.Lastname;
                 row["firstname"] = mem.Firstname;
-                row["enddate"] = mem.Enddate.ToString("MMMM yy");
+                row["creationdate"] = mem.Creationdate;
+                row["enddate"] = mem.Enddate;
                 row["belt"] = mem.Belt;
                 row["gender"] = mem.Gender;
                 row["child"] = mem.Child;
@@ -364,23 +373,24 @@ namespace Academy
                 row["debt"] = debt;
                 row["comment"] = mem.Comment;
                 row["membershipOK"] = mem.MembershipOK;
+                row["competitor"] = mem.Competitor;
                 People.Rows.Add(row);
             }
             mainGrid.DataSource = People;
             mainGrid.Columns[0].Visible = false;
-            mainGrid.Columns[5].Visible = false;
-            mainGrid.Columns[6].Visible = false;
-            mainGrid.Columns[7].Visible = false;
-            mainGrid.Columns[11].Visible = false;
+            mainGrid.Columns[1].Visible = false;
+            mainGrid.Columns[2].Visible = false;
+            mainGrid.Columns[3].Visible = false;
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainGrid.AllowUserToAddRows = false;
-            mainGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            mainGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            mainGrid.Columns[mainGrid.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             mainGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             mainGrid.ReadOnly = true;
             if (rowIndex != 0)
             {
-                mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[1];
+                mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[10];
                 mainGrid.Rows[rowIndex].Selected = true;
             }
 
@@ -430,7 +440,7 @@ namespace Academy
         {
             //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
             //manager.Open();
-            List<Seminar> seminars = manager.getSeminars();
+            seminars = manager.getSeminars();
             //Create a New DataTable to store the Data
             DataTable Seminar = new DataTable("Seminar");
             //Create the Columns in the DataTable
@@ -497,6 +507,7 @@ namespace Academy
             c3.DataType = typeof(DateTime);
             DataColumn c4 = new DataColumn("bookedLessons");
             DataColumn c5 = new DataColumn("doneLessons");
+            DataColumn c6 = new DataColumn("description");
 
 
             //Add the Created Columns to the Datatable
@@ -506,6 +517,7 @@ namespace Academy
             Private.Columns.Add(c3);
             Private.Columns.Add(c4);
             Private.Columns.Add(c5);
+            Private.Columns.Add(c6);
 
             foreach (Private priv in privates)
             {
@@ -516,6 +528,7 @@ namespace Academy
                 row["date"] = priv.Date;
                 row["bookedLessons"] = priv.BookedLessons;
                 row["doneLessons"] = priv.DoneLessons;
+                row["description"] = priv.Description;
                 Private.Rows.Add(row);
             }
             gridPrivates.DataSource = Private;
@@ -523,7 +536,8 @@ namespace Academy
             gridPrivates.RowHeadersVisible = false;
             gridPrivates.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridPrivates.AllowUserToAddRows = false;
-            gridPrivates.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridPrivates.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            gridPrivates.Columns[gridPrivates.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             gridPrivates.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridPrivates.ReadOnly = true;
             if (rowIndex != 0)
@@ -689,9 +703,9 @@ namespace Academy
         {
             foreach (DataGridViewRow row in mainGrid.Rows)
             {
-                bool bMembershipOK = Convert.ToBoolean(row.Cells[11].Value);
-                bool bFullyear = Convert.ToBoolean(row.Cells[12].Value);
-                bool bAlert = Convert.ToBoolean(row.Cells[7].Value);
+                bool bAlert = Convert.ToBoolean(row.Cells[1].Value);
+                bool bMembershipOK = Convert.ToBoolean(row.Cells[2].Value);
+                bool bFullyear = Convert.ToBoolean(row.Cells[3].Value);
                 if (!bFullyear)
                 {
                     row.DefaultCellStyle.BackColor = Color.Coral;
@@ -824,7 +838,23 @@ namespace Academy
             }
         }
 
-        
+        private void btnAddSeminar_Click(object sender, EventArgs e)
+        {
+            SeminarForm sf = new SeminarForm(this, manager);
+            sf.Show();
+        }
+
+        private void gridSeminars_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                SeminarForm sf = new SeminarForm(this, manager);
+                sf.Show();
+                int currentSeminarID = Convert.ToInt32(gridSeminars.Rows[e.RowIndex].Cells[0].Value);
+                Seminar seminar = seminars.Where(x => x.ID == currentSeminarID).ToList<Seminar>()[0];
+                sf.Populate(seminar, e.RowIndex);
+            }
+        }
     }
 
     public class DateModel

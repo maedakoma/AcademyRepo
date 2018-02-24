@@ -35,6 +35,7 @@ namespace Academy
             cbMember.SelectedIndex = cbMember.FindStringExact(privateLesson.member.Lastname);
             txtAmount.Text = privateLesson.Amount.ToString();
             txtBooked.Text = privateLesson.BookedLessons.ToString();
+            txtDescription.Text = privateLesson.Description;
             txtDone.Text = privateLesson.DoneLessons.ToString();
             if (privateLesson.Date != DateTime.MinValue)
             {
@@ -48,6 +49,7 @@ namespace Academy
             currentPrivate.Amount = Convert.ToInt32(txtAmount.Text);
             currentPrivate.BookedLessons = Convert.ToInt32(txtBooked.Text);
             currentPrivate.DoneLessons = Convert.ToInt32(txtDone.Text);
+            currentPrivate.Description = txtDescription.Text;
             currentPrivate.Date = date.Value;
             if (currentPrivate.ID == 0)
             {

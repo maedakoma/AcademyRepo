@@ -161,6 +161,7 @@ namespace AcademyMgr
                 priv.Date = Convert.ToDateTime(reader["Date"]);
                 priv.BookedLessons = (int)reader["bookedLessons"];
                 priv.DoneLessons = (int)reader["doneLessons"];
+                priv.Description = reader["description"].ToString();
                 privates.Add(priv);
             }
             reader.Close();
@@ -224,6 +225,10 @@ namespace AcademyMgr
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
+                    if (reader["creationdate"] != DBNull.Value)
+                    {
+                        mem.Creationdate = Convert.ToDateTime(reader["creationdate"]);
+                    }
                     if (reader["enddate"] != DBNull.Value)
                     {
                         mem.Enddate = Convert.ToDateTime(reader["enddate"]);
@@ -247,6 +252,7 @@ namespace AcademyMgr
                     mem.Child = Convert.ToBoolean(reader["Child"]);
                     mem.Alert = Convert.ToBoolean(reader["Alert"]);
                     mem.FullYear = Convert.ToBoolean(reader["FullYear"]);
+                    mem.Competitor = Convert.ToBoolean(reader["Competitor"]);
                     mem.Active = Convert.ToBoolean(reader["active"]);
                     mem.Internal = Convert.ToBoolean(reader["internal"]);
                     mem.Comment = reader["comment"].ToString();
@@ -367,6 +373,14 @@ namespace AcademyMgr
             int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
             return nMemberCount;
         }
+        public int getActiveStudentsCompetitorCount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and competitor=?competitor";
+            cmd.Parameters.AddWithValue("?competitor", true);
+            int nMemberCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return nMemberCount;
+        }
         public int getLicencesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
@@ -421,7 +435,7 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach)";
+            comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor)";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -439,6 +453,8 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?address", member.Address);
             comm.Parameters.AddWithValue("?facebook", member.Facebook);
             comm.Parameters.AddWithValue("?coach", 0);
+            comm.Parameters.AddWithValue("?competitor", member.Competitor);
+
 
             comm.ExecuteNonQuery();
 
@@ -476,7 +492,7 @@ namespace AcademyMgr
             }
 
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook WHERE ID=?ID";
+            comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor WHERE ID=?ID";
             comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
             comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
             comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -492,6 +508,7 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?phone", member.Phone);
             comm.Parameters.AddWithValue("?address", member.Address);
             comm.Parameters.AddWithValue("?facebook", member.Facebook);
+            comm.Parameters.AddWithValue("?competitor", member.Competitor);
             comm.Parameters.AddWithValue("?ID", member.ID);
             comm.ExecuteNonQuery();
 
@@ -525,6 +542,10 @@ namespace AcademyMgr
             comm.Parameters.AddWithValue("?MemberID", member.ID);
             comm.ExecuteNonQuery();
 
+            if (!member.Internal)
+            {
+                member.Active = false;
+            }
             comm = dbConn.CreateCommand();
             comm.CommandText = "INSERT INTO MEMBERS_STATUS(MemberID, Active, Date, Current ) VALUES(?MemberID, ?Active, ?Date, ?Current)";
             comm.Parameters.AddWithValue("?MemberID", member.ID);
@@ -536,6 +557,10 @@ namespace AcademyMgr
         }
         public bool UpdateStatus(Member member)
         {
+            if (!member.Internal)
+            {
+                member.Active = false;
+            }
             //le status a t'il changé?
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
@@ -621,12 +646,13 @@ namespace AcademyMgr
         {
             MySqlCommand comm = dbConn.CreateCommand();
             comm.Prepare();
-            comm.CommandText = "INSERT INTO PRIVATES(memberID, amount, date, bookedLessons, donelessons) VALUES(?memberID, ?amount, ?date, ?bookedLessons, ?donelessons)";
+            comm.CommandText = "INSERT INTO PRIVATES(memberID, amount, date, bookedLessons, donelessons, description) VALUES(?memberID, ?amount, ?date, ?bookedLessons, ?donelessons, ?description)";
             comm.Parameters.AddWithValue("?memberID", priv.member.ID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
             comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
+            comm.Parameters.AddWithValue("?description", priv.Description);
 
             comm.ExecuteNonQuery();
 
@@ -644,12 +670,13 @@ namespace AcademyMgr
         public bool UpdatePrivate(Private priv)
         {
             MySqlCommand comm = dbConn.CreateCommand();
-            comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons WHERE ID=?ID";
+            comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons, description=?description WHERE ID=?ID";
             comm.Parameters.AddWithValue("?memberID", priv.member.ID);
             comm.Parameters.AddWithValue("?date", priv.Date);
             comm.Parameters.AddWithValue("?amount", priv.Amount);
             comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
             comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
+            comm.Parameters.AddWithValue("?description", priv.Description);
             comm.Parameters.AddWithValue("?ID", priv.ID);
             comm.ExecuteNonQuery();
 
@@ -661,6 +688,58 @@ namespace AcademyMgr
             MySqlCommand comm = dbConn.CreateCommand();
             comm.CommandText = "DELETE FROM PRIVATES WHERE ID=?ID";
             comm.Parameters.AddWithValue("?ID", privID);
+            comm.ExecuteNonQuery();
+            return true;
+        }
+
+        public bool InsertSeminar(Seminar seminar)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.Prepare();
+            comm.CommandText = "INSERT INTO SEMINARS(theme, date, webMembers, LocalMembers, Amount, Debt, Comment) VALUES(?theme, ?date, ?webMembers, ?LocalMembers, ?Amount, ?Debt, ?Comment)";
+            comm.Parameters.AddWithValue("?theme", seminar.Theme);
+            comm.Parameters.AddWithValue("?date", seminar.Date);
+            comm.Parameters.AddWithValue("?webmembers", seminar.WebMembers);
+            comm.Parameters.AddWithValue("?localmembers", seminar.LocalMembers);
+            comm.Parameters.AddWithValue("?amount", seminar.Amount);
+            comm.Parameters.AddWithValue("?debt", seminar.Debt);
+            comm.Parameters.AddWithValue("?comment", seminar.Comment);
+
+            comm.ExecuteNonQuery();
+
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "SELECT LAST_INSERT_ID();";
+            MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+            int id = 0;
+            reader.Read();
+            id = Convert.ToInt32(reader[0]);
+            reader.Close();
+            //dbConn.Open();
+            seminar.ID = id;
+            return true;
+        }
+        public bool UpdateSeminar(Seminar seminar)
+        {
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "UPDATE SEMINARS SET theme=?theme, date=?date, webMembers=?webMembers, LocalMembers=?LocalMembers, Amount=?Amount, Debt=?Debt, Comment=?Comment WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?theme", seminar.Theme);
+            comm.Parameters.AddWithValue("?date", seminar.Date);
+            comm.Parameters.AddWithValue("?webmembers", seminar.WebMembers);
+            comm.Parameters.AddWithValue("?localmembers", seminar.LocalMembers);
+            comm.Parameters.AddWithValue("?amount", seminar.Amount);
+            comm.Parameters.AddWithValue("?debt", seminar.Debt);
+            comm.Parameters.AddWithValue("?comment", seminar.Comment);
+            comm.Parameters.AddWithValue("?ID", seminar.ID);
+            comm.ExecuteNonQuery();
+
+            return true;
+        }
+        public bool DeleteSeminar(int seminarID)
+        {
+            //On delete le virement
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM SEMINARS WHERE ID=?ID";
+            comm.Parameters.AddWithValue("?ID", seminarID);
             comm.ExecuteNonQuery();
             return true;
         }

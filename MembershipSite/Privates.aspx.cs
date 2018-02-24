@@ -44,6 +44,7 @@ namespace MembershipSite
             DataColumn c3 = new DataColumn("amount");
             DataColumn c4 = new DataColumn("booked");
             DataColumn c5 = new DataColumn("done");
+            DataColumn c6 = new DataColumn("description");
 
 
             //Add the Created Columns to the Datatable
@@ -53,7 +54,8 @@ namespace MembershipSite
             Privates.Columns.Add(c3);
             Privates.Columns.Add(c4);
             Privates.Columns.Add(c5);
-            
+            Privates.Columns.Add(c6);
+
 
             foreach (Private prv in privates)
             {
@@ -64,6 +66,7 @@ namespace MembershipSite
                 row["amount"] = prv.Amount;
                 row["booked"] = prv.BookedLessons;
                 row["done"] = prv.DoneLessons;
+                row["description"] = prv.Description;
                 Privates.Rows.Add(row);
             }
             GridPrivates.DataSource = Privates;

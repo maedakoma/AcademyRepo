@@ -15,6 +15,7 @@ namespace AcademyMgr
         private DateTime _date;
         private int _bookedLessons;
         private int _doneLessons;
+        private string _descritpion;
 
         public int ID
         {
@@ -40,6 +41,11 @@ namespace AcademyMgr
         {
             get { return this._bookedLessons; }
             set { _bookedLessons = value; }
+        }
+        public string Description
+        {
+            get { return this._descritpion; }
+            set { _descritpion = value; }
         }
         public int DoneLessons
         {

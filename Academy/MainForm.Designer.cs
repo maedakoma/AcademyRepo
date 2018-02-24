@@ -48,6 +48,8 @@
             this.lblStillDebt = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMembers = new System.Windows.Forms.TabPage();
+            this.lblLines = new System.Windows.Forms.Label();
+            this.chkExternal = new System.Windows.Forms.CheckBox();
             this.chkInactive = new System.Windows.Forms.CheckBox();
             this.tabMoney = new System.Windows.Forms.TabPage();
             this.trMoney = new System.Windows.Forms.TreeView();
@@ -57,6 +59,7 @@
             this.btnDelRefund = new System.Windows.Forms.Button();
             this.gridRefunds = new System.Windows.Forms.DataGridView();
             this.tabSeminars = new System.Windows.Forms.TabPage();
+            this.btnAddSeminar = new System.Windows.Forms.Button();
             this.gridSeminars = new System.Windows.Forms.DataGridView();
             this.tabPrivates = new System.Windows.Forms.TabPage();
             this.btnAddPrivate = new System.Windows.Forms.Button();
@@ -112,8 +115,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
-            this.chkExternal = new System.Windows.Forms.CheckBox();
-            this.lblLines = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtCompetitor = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -267,6 +270,26 @@
             this.tabMembers.UseVisualStyleBackColor = true;
             this.tabMembers.Enter += new System.EventHandler(this.tabMembers_Enter);
             // 
+            // lblLines
+            // 
+            this.lblLines.AutoSize = true;
+            this.lblLines.Location = new System.Drawing.Point(6, 119);
+            this.lblLines.Name = "lblLines";
+            this.lblLines.Size = new System.Drawing.Size(34, 13);
+            this.lblLines.TabIndex = 6;
+            this.lblLines.Text = "lignes";
+            // 
+            // chkExternal
+            // 
+            this.chkExternal.AutoSize = true;
+            this.chkExternal.Location = new System.Drawing.Point(7, 88);
+            this.chkExternal.Name = "chkExternal";
+            this.chkExternal.Size = new System.Drawing.Size(94, 17);
+            this.chkExternal.TabIndex = 5;
+            this.chkExternal.Text = "Show External";
+            this.chkExternal.UseVisualStyleBackColor = true;
+            this.chkExternal.CheckedChanged += new System.EventHandler(this.chkExternal_CheckedChanged);
+            // 
             // chkInactive
             // 
             this.chkInactive.AutoSize = true;
@@ -373,6 +396,7 @@
             // 
             // tabSeminars
             // 
+            this.tabSeminars.Controls.Add(this.btnAddSeminar);
             this.tabSeminars.Controls.Add(this.gridSeminars);
             this.tabSeminars.Location = new System.Drawing.Point(4, 32);
             this.tabSeminars.Name = "tabSeminars";
@@ -382,6 +406,16 @@
             this.tabSeminars.Text = "Seminars";
             this.tabSeminars.UseVisualStyleBackColor = true;
             this.tabSeminars.Enter += new System.EventHandler(this.tabSeminars_Enter);
+            // 
+            // btnAddSeminar
+            // 
+            this.btnAddSeminar.Location = new System.Drawing.Point(6, 6);
+            this.btnAddSeminar.Name = "btnAddSeminar";
+            this.btnAddSeminar.Size = new System.Drawing.Size(106, 23);
+            this.btnAddSeminar.TabIndex = 2;
+            this.btnAddSeminar.Text = "Add seminar";
+            this.btnAddSeminar.UseVisualStyleBackColor = true;
+            this.btnAddSeminar.Click += new System.EventHandler(this.btnAddSeminar_Click);
             // 
             // gridSeminars
             // 
@@ -409,6 +443,7 @@
             this.gridSeminars.Name = "gridSeminars";
             this.gridSeminars.Size = new System.Drawing.Size(1271, 828);
             this.gridSeminars.TabIndex = 0;
+            this.gridSeminars.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridSeminars_CellMouseDoubleClick);
             // 
             // tabPrivates
             // 
@@ -839,6 +874,8 @@
             // 
             // tabMembersResume
             // 
+            this.tabMembersResume.Controls.Add(this.txtCompetitor);
+            this.tabMembersResume.Controls.Add(this.label18);
             this.tabMembersResume.Controls.Add(this.txtLostStudents);
             this.tabMembersResume.Controls.Add(this.txtNewStudents);
             this.tabMembersResume.Controls.Add(this.label17);
@@ -906,7 +943,7 @@
             // 
             // cartesianChart2
             // 
-            this.cartesianChart2.Location = new System.Drawing.Point(19, 321);
+            this.cartesianChart2.Location = new System.Drawing.Point(19, 387);
             this.cartesianChart2.Name = "cartesianChart2";
             this.cartesianChart2.Size = new System.Drawing.Size(1334, 434);
             this.cartesianChart2.TabIndex = 38;
@@ -1034,25 +1071,24 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
-            // chkExternal
+            // label18
             // 
-            this.chkExternal.AutoSize = true;
-            this.chkExternal.Location = new System.Drawing.Point(7, 88);
-            this.chkExternal.Name = "chkExternal";
-            this.chkExternal.Size = new System.Drawing.Size(94, 17);
-            this.chkExternal.TabIndex = 5;
-            this.chkExternal.Text = "Show External";
-            this.chkExternal.UseVisualStyleBackColor = true;
-            this.chkExternal.CheckedChanged += new System.EventHandler(this.chkExternal_CheckedChanged);
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(20, 327);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(126, 24);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Competiteurs:";
             // 
-            // lblLines
+            // txtCompetitor
             // 
-            this.lblLines.AutoSize = true;
-            this.lblLines.Location = new System.Drawing.Point(6, 119);
-            this.lblLines.Name = "lblLines";
-            this.lblLines.Size = new System.Drawing.Size(34, 13);
-            this.lblLines.TabIndex = 6;
-            this.lblLines.Text = "lignes";
+            this.txtCompetitor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCompetitor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCompetitor.Location = new System.Drawing.Point(235, 327);
+            this.txtCompetitor.Name = "txtCompetitor";
+            this.txtCompetitor.Size = new System.Drawing.Size(142, 22);
+            this.txtCompetitor.TabIndex = 44;
             // 
             // MainForm
             // 
@@ -1161,6 +1197,9 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.CheckBox chkExternal;
         private System.Windows.Forms.Label lblLines;
+        private System.Windows.Forms.Button btnAddSeminar;
+        private System.Windows.Forms.TextBox txtCompetitor;
+        private System.Windows.Forms.Label label18;
     }
 }
 

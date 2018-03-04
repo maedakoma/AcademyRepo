@@ -12,7 +12,8 @@ namespace AcademyMgr
         {
             None = 0,
             Academy = 1,
-            Perso = 2
+            Perso = 2,
+            Coach = 3
         }
 
         public enum typeEnum

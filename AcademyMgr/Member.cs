@@ -36,6 +36,7 @@ namespace AcademyMgr
         private Boolean _active;
         private Boolean _fullyear;
         private Boolean _competitor;
+        private Boolean _coach;
         private Boolean _internal;
         private Boolean _membershipOK = true;
         private string _comment;
@@ -105,6 +106,11 @@ namespace AcademyMgr
         {
             get { return this._competitor; }
             set { _competitor = value; }
+        }
+        public Boolean Coach
+        {
+            get { return this._coach; }
+            set { _coach = value; }
         }
         public Boolean Active
         {

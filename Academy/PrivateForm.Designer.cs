@@ -70,7 +70,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(17, 199);
+            this.btnOK.Location = new System.Drawing.Point(17, 331);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -137,8 +137,9 @@
             // txtDescription
             // 
             this.txtDescription.Location = new System.Drawing.Point(80, 127);
+            this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(407, 20);
+            this.txtDescription.Size = new System.Drawing.Size(407, 198);
             this.txtDescription.TabIndex = 26;
             // 
             // label1
@@ -154,7 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 234);
+            this.ClientSize = new System.Drawing.Size(502, 385);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbMember);

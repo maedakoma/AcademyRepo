@@ -62,6 +62,7 @@
             this.chkFullYear = new System.Windows.Forms.CheckBox();
             this.chkInternal = new System.Windows.Forms.CheckBox();
             this.chkCompetitor = new System.Windows.Forms.CheckBox();
+            this.chkCoach = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -373,11 +374,22 @@
             this.chkCompetitor.Text = "Competitor";
             this.chkCompetitor.UseVisualStyleBackColor = true;
             // 
+            // chkCoach
+            // 
+            this.chkCoach.AutoSize = true;
+            this.chkCoach.Location = new System.Drawing.Point(489, 97);
+            this.chkCoach.Name = "chkCoach";
+            this.chkCoach.Size = new System.Drawing.Size(57, 17);
+            this.chkCoach.TabIndex = 37;
+            this.chkCoach.Text = "Coach";
+            this.chkCoach.UseVisualStyleBackColor = true;
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 680);
+            this.Controls.Add(this.chkCoach);
             this.Controls.Add(this.chkCompetitor);
             this.Controls.Add(this.chkInternal);
             this.Controls.Add(this.chkFullYear);
@@ -457,5 +469,6 @@
         private System.Windows.Forms.CheckBox chkFullYear;
         private System.Windows.Forms.CheckBox chkInternal;
         private System.Windows.Forms.CheckBox chkCompetitor;
+        private System.Windows.Forms.CheckBox chkCoach;
     }
 }

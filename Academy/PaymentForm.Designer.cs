@@ -164,7 +164,8 @@
             this.cbBank.Items.AddRange(new object[] {
             "None",
             "Academy",
-            "Perso"});
+            "Perso",
+            "Coach"});
             this.cbBank.Location = new System.Drawing.Point(73, 223);
             this.cbBank.Name = "cbBank";
             this.cbBank.Size = new System.Drawing.Size(121, 21);

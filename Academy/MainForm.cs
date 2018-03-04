@@ -270,6 +270,10 @@ namespace Academy
             };
 
             List<Metric> activeStudents = manager.getMetrics(manager.activeStudentsMetric);
+            if (activeStudents.Count == 0)
+            {
+                return;
+            }
             //aggregation des montants
             foreach (Metric metric in activeStudents)
             {
@@ -393,6 +397,10 @@ namespace Academy
                 mainGrid.CurrentCell = mainGrid.Rows[rowIndex].Cells[10];
                 mainGrid.Rows[rowIndex].Selected = true;
             }
+            else
+            {
+                mainGrid.CurrentCell = null;
+            }
 
             mainGrid.BorderStyle = BorderStyle.Fixed3D;
             mainGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
@@ -406,34 +414,59 @@ namespace Academy
             mainGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             lblLines.Text = mainGrid.RowCount.ToString() +  " lignes affichées";
         }
-        public void FillMoneyGrid(bool byDepot = false )
+        public void FillMoneyGrid()
         {
-            List<Payment> pays = manager.getPayments(byDepot);
-            trMoney.Nodes.Clear();
-            trMoney.BeginUpdate();
+
+            // Arbres des montants reçus
+            List<Payment> pays = manager.getPayments(false);
+            trMoneyReceived.Nodes.Clear();
+            trMoneyReceived.BeginUpdate();
             foreach (Payment pay in pays)
             {
-                string date = "";
-                if (byDepot)
+                string date = pay.ReceptionDate.ToShortDateString();
+                if (!trMoneyReceived.Nodes.ContainsKey(date))
                 {
-                    date = pay.DepotDate.ToShortDateString();
+                    trMoneyReceived.Nodes.Add(date, date);
                 }
-                else
+                if (!trMoneyReceived.Nodes[date].Nodes.ContainsKey(pay.Name))
                 {
-                    date = pay.ReceptionDate.ToShortDateString();
-                }
-                if (!trMoney.Nodes.ContainsKey(date))
-                {
-                    trMoney.Nodes.Add(date, date);
-                }
-                if (!trMoney.Nodes[date].Nodes.ContainsKey(pay.Name))
-                {
-                    trMoney.Nodes[date].Nodes.Add(pay.Name, pay.Name);
+                    trMoneyReceived.Nodes[date].Nodes.Add(pay.Name, pay.Name);
                 }
 
-                trMoney.Nodes[date].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
+                trMoneyReceived.Nodes[date].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
             }
-            trMoney.EndUpdate();
+            trMoneyReceived.EndUpdate();
+
+            // Arbres des cheques déposés
+            pays = manager.getPayments(true);
+            trMoneyDepot.Nodes.Clear();
+            trMoneyDepot.BeginUpdate();
+            int nAmount = 0;
+            foreach (Payment pay in pays)
+            {
+                string date = pay.DepotDate.ToShortDateString();
+                if (!trMoneyDepot.Nodes.ContainsKey(date))
+                {
+                    trMoneyDepot.Nodes.Add(date, date);
+                }
+                if (!trMoneyDepot.Nodes[date].Nodes.ContainsKey(pay.Bank.ToString()))
+                {
+                    trMoneyDepot.Nodes[date].Nodes.Add(pay.Bank.ToString(), pay.Bank.ToString());
+                    nAmount = 0;
+                }
+                nAmount = nAmount + pay.Amount;
+
+                if (!trMoneyDepot.Nodes[date].Nodes[pay.Bank.ToString()].Nodes.ContainsKey(pay.Name))
+                {
+                    trMoneyDepot.Nodes[date].Nodes[pay.Bank.ToString()].Nodes.Add(pay.Name, pay.Name + " - " + pay.Amount.ToString());
+                }
+                //trMoneyDepot.Nodes[date].Nodes[pay.Bank.ToString()].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
+                if (nAmount != 0)
+                {
+                    trMoneyDepot.Nodes[date].Nodes[pay.Bank.ToString()].Text = pay.Bank.ToString() + " ( " + nAmount.ToString() + " E )";
+                }
+            }
+            trMoneyDepot.EndUpdate();
 
         }
         public void FillSeminarsGrid(int rowIndex = 0)
@@ -491,6 +524,10 @@ namespace Academy
                 gridSeminars.CurrentCell = gridSeminars.Rows[rowIndex].Cells[1];
                 gridSeminars.Rows[rowIndex].Selected = true;
             }
+            else
+            {
+                gridSeminars.CurrentCell = null;
+            }
         }
         public void FillPrivatesGrid(int rowIndex = 0)
         {
@@ -545,6 +582,10 @@ namespace Academy
                 gridPrivates.CurrentCell = gridPrivates.Rows[rowIndex].Cells[1];
                 gridPrivates.Rows[rowIndex].Selected = true;
             }
+            else
+            {
+                gridPrivates.CurrentCell = null;
+            }
         }
         public void FillRefundsGrid(int rowIndex = 0)
         {
@@ -592,6 +633,10 @@ namespace Academy
             {
                 gridRefunds.CurrentCell = gridRefunds.Rows[rowIndex].Cells[1];
                 gridRefunds.Rows[rowIndex].Selected = true;
+            }
+            else
+            {
+                gridRefunds.CurrentCell = null;
             }
         }
         public void FillCoachPayGrid(int rowIndex = 0)
@@ -648,6 +693,10 @@ namespace Academy
             {
                 gridCoachPay.CurrentCell = gridCoachPay.Rows[rowIndex].Cells[1];
                 gridCoachPay.Rows[rowIndex].Selected = true;
+            }
+            else
+            {
+                gridCoachPay.CurrentCell = null;
             }
         }
 
@@ -828,14 +877,7 @@ namespace Academy
 
         private void chkDepot_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkDepot.Checked == true)
-            {
-                FillMoneyGrid(true);
-            }
-            else
-            {
-                FillMoneyGrid(false);
-            }
+            FillMoneyGrid();
         }
 
         private void btnAddSeminar_Click(object sender, EventArgs e)

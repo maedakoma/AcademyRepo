@@ -52,8 +52,7 @@
             this.chkExternal = new System.Windows.Forms.CheckBox();
             this.chkInactive = new System.Windows.Forms.CheckBox();
             this.tabMoney = new System.Windows.Forms.TabPage();
-            this.trMoney = new System.Windows.Forms.TreeView();
-            this.chkDepot = new System.Windows.Forms.CheckBox();
+            this.trMoneyReceived = new System.Windows.Forms.TreeView();
             this.tabRefunds = new System.Windows.Forms.TabPage();
             this.btnAddRefund = new System.Windows.Forms.Button();
             this.btnDelRefund = new System.Windows.Forms.Button();
@@ -97,6 +96,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMembersResume = new System.Windows.Forms.TabPage();
+            this.txtCompetitor = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.txtLostStudents = new System.Windows.Forms.TextBox();
             this.txtNewStudents = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -115,8 +116,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtCompetitor = new System.Windows.Forms.TextBox();
+            this.trMoneyDepot = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -303,8 +303,8 @@
             // 
             // tabMoney
             // 
-            this.tabMoney.Controls.Add(this.trMoney);
-            this.tabMoney.Controls.Add(this.chkDepot);
+            this.tabMoney.Controls.Add(this.trMoneyDepot);
+            this.tabMoney.Controls.Add(this.trMoneyReceived);
             this.tabMoney.Location = new System.Drawing.Point(4, 32);
             this.tabMoney.Name = "tabMoney";
             this.tabMoney.Padding = new System.Windows.Forms.Padding(3);
@@ -314,23 +314,12 @@
             this.tabMoney.UseVisualStyleBackColor = true;
             this.tabMoney.Enter += new System.EventHandler(this.tabMoney_Enter);
             // 
-            // trMoney
+            // trMoneyReceived
             // 
-            this.trMoney.Location = new System.Drawing.Point(107, 16);
-            this.trMoney.Name = "trMoney";
-            this.trMoney.Size = new System.Drawing.Size(1163, 657);
-            this.trMoney.TabIndex = 3;
-            // 
-            // chkDepot
-            // 
-            this.chkDepot.AutoSize = true;
-            this.chkDepot.Location = new System.Drawing.Point(7, 16);
-            this.chkDepot.Name = "chkDepot";
-            this.chkDepot.Size = new System.Drawing.Size(70, 17);
-            this.chkDepot.TabIndex = 2;
-            this.chkDepot.Text = "By Depot";
-            this.chkDepot.UseVisualStyleBackColor = true;
-            this.chkDepot.CheckedChanged += new System.EventHandler(this.chkDepot_CheckedChanged);
+            this.trMoneyReceived.Location = new System.Drawing.Point(6, 17);
+            this.trMoneyReceived.Name = "trMoneyReceived";
+            this.trMoneyReceived.Size = new System.Drawing.Size(663, 657);
+            this.trMoneyReceived.TabIndex = 3;
             // 
             // tabRefunds
             // 
@@ -903,6 +892,25 @@
             this.tabMembersResume.UseVisualStyleBackColor = true;
             this.tabMembersResume.Enter += new System.EventHandler(this.tabMembersResume_Enter);
             // 
+            // txtCompetitor
+            // 
+            this.txtCompetitor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCompetitor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCompetitor.Location = new System.Drawing.Point(235, 327);
+            this.txtCompetitor.Name = "txtCompetitor";
+            this.txtCompetitor.Size = new System.Drawing.Size(142, 22);
+            this.txtCompetitor.TabIndex = 44;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(20, 327);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(126, 24);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Competiteurs:";
+            // 
             // txtLostStudents
             // 
             this.txtLostStudents.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -1071,24 +1079,12 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
-            // label18
+            // trMoneyDepot
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(20, 327);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(126, 24);
-            this.label18.TabIndex = 43;
-            this.label18.Text = "Competiteurs:";
-            // 
-            // txtCompetitor
-            // 
-            this.txtCompetitor.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCompetitor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCompetitor.Location = new System.Drawing.Point(235, 327);
-            this.txtCompetitor.Name = "txtCompetitor";
-            this.txtCompetitor.Size = new System.Drawing.Size(142, 22);
-            this.txtCompetitor.TabIndex = 44;
+            this.trMoneyDepot.Location = new System.Drawing.Point(712, 17);
+            this.trMoneyDepot.Name = "trMoneyDepot";
+            this.trMoneyDepot.Size = new System.Drawing.Size(676, 657);
+            this.trMoneyDepot.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -1102,7 +1098,6 @@
             this.tabMembers.ResumeLayout(false);
             this.tabMembers.PerformLayout();
             this.tabMoney.ResumeLayout(false);
-            this.tabMoney.PerformLayout();
             this.tabRefunds.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridRefunds)).EndInit();
             this.tabSeminars.ResumeLayout(false);
@@ -1186,8 +1181,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabPage tabMoney;
-        private System.Windows.Forms.CheckBox chkDepot;
-        private System.Windows.Forms.TreeView trMoney;
+        private System.Windows.Forms.TreeView trMoneyReceived;
         private LiveCharts.WinForms.PieChart pieChart1;
         private LiveCharts.WinForms.CartesianChart cartesianChart1;
         private LiveCharts.WinForms.CartesianChart cartesianChart2;
@@ -1200,6 +1194,7 @@
         private System.Windows.Forms.Button btnAddSeminar;
         private System.Windows.Forms.TextBox txtCompetitor;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TreeView trMoneyDepot;
     }
 }
 

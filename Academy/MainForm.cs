@@ -269,20 +269,26 @@ namespace Academy
                 }
             };
 
-            List<Metric> activeStudents = manager.getMetrics(manager.activeStudentsMetric);
-            if (activeStudents.Count == 0)
+            List<DateTime> dates = manager.getMembersHistoriesDates();
+            List<Member> students;
+            int minVal = 100000;
+            int maxVal = 0;
+            foreach (DateTime date in dates)
             {
-                return;
+                students = manager.getMembersHistories(date);
+                if (minVal > students.Count)
+                {
+                    minVal = students.Count;
+                }
+                if (maxVal < students.Count)
+                {
+                    maxVal = students.Count;
+                }
+                cartesianChart2.Series[0].Values.Add(new DateModel { DateTime = date, Value = students.Count });
             }
-            //aggregation des montants
-            foreach (Metric metric in activeStudents)
-            {
-                //on est sur un nouveau paiement on ajoute le précedent:
-                cartesianChart2.Series[0].Values.Add(new DateModel { DateTime = metric.Date, Value = metric.Value });
-            }
-            
-            double minV = activeStudents[0].Date.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
-            double maxV = activeStudents[activeStudents.Count-1].Date.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+
+            double minV = dates[0].Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = dates[dates.Count - 1].Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
             cartesianChart2.AxisX.Clear();
             cartesianChart2.AxisX.Add(new Axis
             {
@@ -298,7 +304,8 @@ namespace Academy
             cartesianChart2.AxisY.Add(new Axis
             {
                 Title = "Nombre",
-                MinValue = 130
+                MinValue = minVal,
+                MaxValue = maxVal
             });
 
             cartesianChart2.LegendLocation = LegendLocation.Right;
@@ -308,7 +315,7 @@ namespace Academy
         {
             bool onlyActive = !chkInactive.Checked;
             bool onlyInternal = !chkExternal.Checked;
-            members = manager.getMembers(null);
+            members = manager.getMembers();
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
             //Create the Columns in the DataTable

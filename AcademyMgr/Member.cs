@@ -46,8 +46,6 @@ namespace AcademyMgr
         private string _address;
         private string _facebook;
 
-
-
         public int ID
         {
             get { return this._ID; }

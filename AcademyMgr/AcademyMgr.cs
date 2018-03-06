@@ -26,45 +26,6 @@ namespace AcademyMgr
         {
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
-            InsertMetrics();
-        }
-        public Metric getLastMetric(string metricName)
-        {
-            Metric metric = new Metric();
-            metric.Name = metricName;
-            MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date desc, id desc limit 1";
-            cmd.Parameters.AddWithValue("?name", metricName);
-            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
-            {
-                reader.Read();
-                metric.ID = (int)reader["ID"];
-                metric.Value = (int)reader["value"];
-                metric.Date = Convert.ToDateTime(reader["Date"]);
-            }
-            reader.Close();
-            return metric;
-        }
-        public List<Metric> getMetrics(string metricName)
-        {
-            List<Metric> metrics = new List<Metric>();
-
-            MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from METRICS WHERE name=?name order by date";
-            cmd.Parameters.AddWithValue("?name", metricName);
-            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Metric metric = new Metric();
-                metric.ID = (int)reader["ID"];
-                metric.Name = reader["name"].ToString();
-                metric.Value = (int)reader["value"];
-                metric.Date = Convert.ToDateTime(reader["Date"]);
-                metrics.Add(metric);
-            }
-            reader.Close();
-            return metrics;
         }
         public List<Refund> getRefunds()
         {
@@ -167,7 +128,7 @@ namespace AcademyMgr
             reader.Close();
             return privates;
         }
-        public List<Member> getMembers(bool? coach = false)
+        public List<Member> getMembers(bool? coach = null)
         {
             List<Member> members = new List<Member>();
 
@@ -288,6 +249,80 @@ namespace AcademyMgr
                     }
                     members.Add(mem);
                 }
+            }
+            reader.Close();
+            return members;
+        }
+        public List<DateTime> getMembersHistoriesDates()
+        {
+            List<DateTime> dates = new List<DateTime>();
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT distinct date from MEMBERS_STATUS order by date";
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                dates.Add(Convert.ToDateTime(reader["date"]));
+            }
+            reader.Close();
+            return dates;
+        }
+
+        public List<Member> getMembersHistories(DateTime date, bool? coach = null)
+        {
+            List<Member> members = new List<Member>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+
+            cmd.CommandText = "SELECT *, MS.Active as active from MEMBERS M " +
+                                "inner join MEMBERS_STATUS MS on MS.MemberID = M.ID WHERE Internal=1 ";
+
+            if (coach != null)
+            {
+                cmd.CommandText += " AND M.coach=?coach";
+                int nCoach = 0;
+                if (coach == true)
+                {
+                    nCoach = 1;
+                }
+                cmd.Parameters.AddWithValue("?coach", nCoach);
+            }
+
+            cmd.CommandText += " order by lastname, firstname, MS.Date DESC";
+            //dbConn.Open();
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            //dbConn.Close();
+            Member mem = new Member();
+            bool added = false;
+            while (reader.Read())
+            {
+                if (Convert.ToDateTime(reader["date"]) > date)
+                {
+                    continue;
+                }
+                if ((mem.Firstname == reader["firstname"].ToString()) && (mem.Lastname == reader["lastname"].ToString()))
+                {
+                    if (added)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    added = false;
+                }
+                mem = new Member();
+                mem.ID = (int)reader["ID"];
+                mem.Firstname = reader["firstname"].ToString();
+                mem.Lastname = reader["lastname"].ToString();
+                if (Convert.ToBoolean(reader["active"]) == false)
+                {
+                    added = true;
+                    continue;
+                }
+                mem.Active = Convert.ToBoolean(reader["active"]);
+                members.Add(mem);
+                added = true;
             }
             reader.Close();
             return members;
@@ -535,7 +570,7 @@ namespace AcademyMgr
                 InsertPayments(member);
                 transaction.Commit();
             }
-            catch 
+            catch
             {
                 transaction.Rollback();
                 throw;
@@ -682,48 +717,48 @@ namespace AcademyMgr
 
         private void InsertPayments(Member member)
         {
-            
-                MySqlCommand comm;
-                foreach (Payment pay in member.Payments)
-                {
-                    comm = dbConn.CreateCommand();
-                    comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
-                    comm.Parameters.AddWithValue("?amount", pay.Amount);
-                    comm.Parameters.AddWithValue("?type", pay.Type.ToString());
-                    comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
-                    comm.Parameters.AddWithValue("?name", pay.Name);
-                    comm.Parameters.AddWithValue("?debt", pay.Debt);
-                    comm.Parameters.AddWithValue("?Bank", pay.Bank.ToString());
-                    comm.Parameters.AddWithValue("?DepotDate", pay.DepotDate);
-                    comm.ExecuteNonQuery();
 
-                    comm = dbConn.CreateCommand();
-                    comm.CommandText = "SELECT LAST_INSERT_ID();";
-                    MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
-                    int id = 0;
-                    reader.Read();
-                    id = Convert.ToInt32(reader[0]);
-                    reader.Close();
-                    //dbConn.Open();
+            MySqlCommand comm;
+            foreach (Payment pay in member.Payments)
+            {
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
+                comm.Parameters.AddWithValue("?amount", pay.Amount);
+                comm.Parameters.AddWithValue("?type", pay.Type.ToString());
+                comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
+                comm.Parameters.AddWithValue("?name", pay.Name);
+                comm.Parameters.AddWithValue("?debt", pay.Debt);
+                comm.Parameters.AddWithValue("?Bank", pay.Bank.ToString());
+                comm.Parameters.AddWithValue("?DepotDate", pay.DepotDate);
+                comm.ExecuteNonQuery();
 
-                    comm = dbConn.CreateCommand();
-                    comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(?MemberID, ?PaymentID)";
-                    comm.Parameters.AddWithValue("?MemberID", member.ID);
-                    comm.Parameters.AddWithValue("?PaymentID", id);
-                    comm.ExecuteNonQuery();
-                }
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "SELECT LAST_INSERT_ID();";
+                MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
+                int id = 0;
+                reader.Read();
+                id = Convert.ToInt32(reader[0]);
+                reader.Close();
+                //dbConn.Open();
+
+                comm = dbConn.CreateCommand();
+                comm.CommandText = "INSERT INTO MEMBERS_PAYMENTS(MemberID, PaymentID) VALUES(?MemberID, ?PaymentID)";
+                comm.Parameters.AddWithValue("?MemberID", member.ID);
+                comm.Parameters.AddWithValue("?PaymentID", id);
+                comm.ExecuteNonQuery();
+            }
         }
         private void DeletePayments(int memberID)
         {
-                MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=?MemberID";
-                comm.Parameters.AddWithValue("?MemberID", memberID);
-                comm.ExecuteNonQuery();
+            MySqlCommand comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE FROM MEMBERS_PAYMENTS WHERE MemberID=?MemberID";
+            comm.Parameters.AddWithValue("?MemberID", memberID);
+            comm.ExecuteNonQuery();
 
-                //on supprime tous les paiements non liés a un membre
-                comm = dbConn.CreateCommand();
-                comm.CommandText = "DELETE P FROM PAYMENTS AS P WHERE P.ID NOT IN (SELECT PaymentID from MEMBERS_PAYMENTS)";
-                comm.ExecuteNonQuery();
+            //on supprime tous les paiements non liés a un membre
+            comm = dbConn.CreateCommand();
+            comm.CommandText = "DELETE P FROM PAYMENTS AS P WHERE P.ID NOT IN (SELECT PaymentID from MEMBERS_PAYMENTS)";
+            comm.ExecuteNonQuery();
         }
 
         public void InsertPrivate(Private priv)
@@ -1010,67 +1045,5 @@ namespace AcademyMgr
             }
         }
 
-        public void InsertMetrics()
-        {
-            MySqlTransaction transaction = dbConn.BeginTransaction();
-            try
-            {
-                List<KeyValuePair<Metric, int>> listMetric = new List<KeyValuePair<Metric, int>>();
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeStudentsMetric), getActiveStudentsCount()));
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeWhiteStudentsMetric), getActiveStudentsCount(Member.beltEnum.White)));
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBlueStudentsMetric), getActiveStudentsCount(Member.beltEnum.Blue)));
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activePurpleStudentsMetric), getActiveStudentsCount(Member.beltEnum.Purple)));
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBrownStudentsMetric), getActiveStudentsCount(Member.beltEnum.Brown)));
-                listMetric.Add(new KeyValuePair<Metric, int>(getLastMetric(activeBlackStudentsMetric), getActiveStudentsCount(Member.beltEnum.Black)));
-
-                foreach (KeyValuePair<Metric, int> kv in listMetric)
-                {
-                    if (kv.Key == null || kv.Key.Value != kv.Value)
-                    {
-                        Metric metric = new Metric();
-                        metric.Name = kv.Key.Name;
-                        metric.Value = kv.Value;
-                        metric.Date = DateTime.Now;
-                        InsertMetric(metric);
-                    }
-                }
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-        }
-        public void InsertMetric(Metric metric)
-        {
-            MySqlTransaction transaction = dbConn.BeginTransaction();
-            try
-            {
-                MySqlCommand comm = dbConn.CreateCommand();
-                comm.Prepare();
-                comm.CommandText = "INSERT INTO METRICS(name, value, date) VALUES(?name, ?value, ?date)";
-                comm.Parameters.AddWithValue("?name", metric.Name);
-                comm.Parameters.AddWithValue("?value", metric.Value);
-                comm.Parameters.AddWithValue("?date", metric.Date);
-
-                comm.ExecuteNonQuery();
-
-                comm = dbConn.CreateCommand();
-                comm.CommandText = "SELECT LAST_INSERT_ID();";
-                MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
-                int id = 0;
-                reader.Read();
-                id = Convert.ToInt32(reader[0]);
-                reader.Close();
-                metric.ID = id;
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-        }
     }
 }

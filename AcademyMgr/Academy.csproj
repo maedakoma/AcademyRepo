@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcademyMgr.cs" />
-    <Compile Include="Metric.cs" />
     <Compile Include="Private.cs" />
     <Compile Include="CoachPay.cs" />
     <Compile Include="Seminar.cs" />

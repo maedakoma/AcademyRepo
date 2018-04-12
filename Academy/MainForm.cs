@@ -189,8 +189,8 @@ namespace Academy
             int nBrown = manager.getActiveStudentsCount(Member.beltEnum.Brown);
             int nBlack = manager.getActiveStudentsCount(Member.beltEnum.Black);
             int nCompetitors = manager.getActiveStudentsCompetitorCount();
-            int nNewStudents = manager.getNewStudentsCount(new DateTime(2018,1,1));
-            int nLostStudents = manager.getLostStudentsCount(new DateTime(2018, 1, 1));
+            int nNewStudents = manager.getNewStudents(dateTimeRef.Value).Count;
+            int nLostStudents = manager.getLostStudents(dateTimeRef.Value).Count;
 
 
             txtMembersCount.Text = nTotal.ToString();
@@ -903,6 +903,14 @@ namespace Academy
                 Seminar seminar = seminars.Where(x => x.ID == currentSeminarID).ToList<Seminar>()[0];
                 sf.Populate(seminar, e.RowIndex);
             }
+        }
+
+        private void dateTimeRef_ValueChanged(object sender, EventArgs e)
+        {
+            int nNewStudents = manager.getNewStudents(dateTimeRef.Value).Count;
+            int nLostStudents = manager.getLostStudents(dateTimeRef.Value).Count;
+            txtNewStudents.Text = nNewStudents.ToString();
+            txtLostStudents.Text = nLostStudents.ToString();
         }
     }
 

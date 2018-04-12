@@ -371,35 +371,37 @@ namespace AcademyMgr
             return payments;
         }
 
-        public int getNewStudentsCount(DateTime sinceDate)
+        public List<String> getNewStudents(DateTime sinceDate)
         {
+            List<String> newStudents = new List<string>();
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and MS.Date>?date and M.internal=?internal";
+            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and MS.Date>?date and M.internal=?internal";
             cmd.Parameters.AddWithValue("?date", sinceDate);
             cmd.Parameters.AddWithValue("?internal", 1);
-            object result = cmd.ExecuteScalar();
-            int nAmount = 0;
-            if (result != DBNull.Value)
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                newStudents.Add(reader["FirstName"].ToString() + " " + reader["LastName"].ToString());
             }
-            return nAmount;
+            reader.Close();
+            return newStudents;
         }
-        public int getLostStudentsCount(DateTime sinceDate)
+        public List<String> getLostStudents(DateTime sinceDate)
         {
+            List<String> lostStudents = new List<string>();
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=0 and MS.Date>?date and M.internal=?internal";
+            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and M.fullyear=1 and MS.active=0 and MS.Date>?date and M.internal=?internal";
             cmd.Parameters.AddWithValue("?date", sinceDate);
             cmd.Parameters.AddWithValue("?internal", 1);
-            object result = cmd.ExecuteScalar();
-            int nAmount = 0;
-            if (result != DBNull.Value)
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                lostStudents.Add(reader["FirstName"].ToString() + " " + reader["LastName"].ToString());
             }
-            return nAmount;
+            reader.Close();
+            return lostStudents;
         }
 
         public int getActiveStudentsCount()

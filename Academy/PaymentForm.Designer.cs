@@ -136,7 +136,8 @@
             this.cbType.Items.AddRange(new object[] {
             "Cash",
             "Check",
-            "Transfert"});
+            "Transfert",
+            "Prelev"});
             this.cbType.Location = new System.Drawing.Point(73, 16);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(121, 21);

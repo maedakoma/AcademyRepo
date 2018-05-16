@@ -34,6 +34,7 @@ namespace AcademyMgr
         private Boolean _child;
         private Boolean _alert;
         private Boolean _active;
+        private Boolean _prelev;
         private Boolean _fullyear;
         private Boolean _competitor;
         private Boolean _coach;
@@ -114,6 +115,11 @@ namespace AcademyMgr
         {
             get { return this._active; }
             set { _active = value; }
+        }
+        public Boolean Prelev
+        {
+            get { return this._prelev; }
+            set { _prelev = value; }
         }
         public Boolean Internal
         {

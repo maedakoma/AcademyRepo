@@ -20,12 +20,64 @@ namespace AcademyMgr
         public string activeBrownStudentsMetric = "activeBrownStudents";
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
-        //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=gokudo";
-        public string connectionString = "server=35.205.127.92;user id=root;password=iimg4jek;database=cercle";
+        public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
+        //public string connectionString = "server=35.205.127.92;user id=root;password=iimg4jek;database=cercle";
+
         public void Initialize()
         {
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
+            //On verifie si il y a eu des prevelements a prendre en compte:
+            DateTime lastConnectionDate = getLastConnectionDate();
+            //Combien de fois on a passé le 5 du mois et pour chaque fois on ajoute un paiement
+            //On part de la last connection date on increment le jour et à chaque 5 du mois, on ajoute les prelevements:
+            while(lastConnectionDate<= DateTime.Now)
+            {
+                if (lastConnectionDate.Day == 5)
+                {
+                    //Ajout des prelevements pour les personnes concernées:
+                    List<Member> members =  getMembers(null, true);
+                    foreach(Member member in members)
+                    {
+                        Payment pay = new Payment();
+                        pay.Amount = (42*99)/100;
+                        pay.Debt = Convert.ToInt32(0.6 * pay.Amount);
+                        pay.Name = member.Firstname + " " + member.Lastname;
+                        pay.Type = Payment.typeEnum.Prelev;
+                        pay.ReceptionDate = lastConnectionDate;
+                        pay.Bank = Payment.bankEnum.Academy;
+                        pay.DepotDate = lastConnectionDate;
+                        member.Payments.Add(pay);
+                        UpdateMember(member);
+                    }
+                }
+
+                lastConnectionDate = lastConnectionDate.AddDays(1);
+            }
+            //On met à jour la date de connection:
+            updateLastConnectionDate();
+        }
+
+        public DateTime getLastConnectionDate()
+        {
+            DateTime date = DateTime.Now;
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT * from SETTINGS WHERE keysettings=?key";
+            cmd.Parameters.AddWithValue("key", "LastConnectDate");
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            date = Convert.ToDateTime(reader["Value"]);
+            reader.Close();
+            return date;
+        }
+        public void updateLastConnectionDate()
+        {
+            DateTime date = DateTime.Now;
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "UPDATE SETTINGS SET Value=?value where keysettings=?key";
+            cmd.Parameters.AddWithValue("key", "LastConnectDate");
+            cmd.Parameters.AddWithValue("value", DateTime.Now.ToString());
+            cmd.ExecuteNonQuery();
         }
         public List<Refund> getRefunds()
         {
@@ -128,7 +180,7 @@ namespace AcademyMgr
             reader.Close();
             return privates;
         }
-        public List<Member> getMembers(bool? coach = null)
+        public List<Member> getMembers(bool? coach = null, bool? prelev = null)
         {
             List<Member> members = new List<Member>();
 
@@ -147,6 +199,16 @@ namespace AcademyMgr
                     nCoach = 1;
                 }
                 cmd.Parameters.AddWithValue("?coach", nCoach);
+            }
+            if (prelev != null)
+            {
+                cmd.CommandText += " WHERE M.prelev=?prelev";
+                int nPrelev = 0;
+                if (prelev == true)
+                {
+                    nPrelev = 1;
+                }
+                cmd.Parameters.AddWithValue("?prelev", nPrelev);
             }
 
             cmd.CommandText += " ORDER BY lastname";
@@ -186,19 +248,10 @@ namespace AcademyMgr
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
+                    mem.Prelev = Convert.ToBoolean(reader["Prelev"]);
                     if (reader["creationdate"] != DBNull.Value)
                     {
                         mem.Creationdate = Convert.ToDateTime(reader["creationdate"]);
-                    }
-                    if (reader["enddate"] != DBNull.Value)
-                    {
-                        mem.Enddate = Convert.ToDateTime(reader["enddate"]);
-                        //int result = DateTime.Compare(DateTime.Now, mem.Enddate);
-                        int daydiff = (int)(DateTime.Now - mem.Enddate).TotalDays;
-                        if (daydiff > 30)
-                        {
-                            mem.MembershipOK = false;
-                        }
                     }
                     String sBelt = reader["belt"].ToString();
                     if (sBelt != String.Empty)
@@ -223,6 +276,16 @@ namespace AcademyMgr
                     mem.Phone = reader["phone"].ToString();
                     mem.Address = reader["address"].ToString();
                     mem.Facebook = reader["facebook"].ToString();
+                    if (reader["enddate"] != DBNull.Value && mem.Prelev == false)
+                    {
+                        mem.Enddate = Convert.ToDateTime(reader["enddate"]);
+                        //int result = DateTime.Compare(DateTime.Now, mem.Enddate);
+                        int daydiff = (int)(DateTime.Now - mem.Enddate).TotalDays;
+                        if (daydiff > 10)
+                        {
+                            mem.MembershipOK = false;
+                        }
+                    }
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)
                     {
@@ -536,7 +599,7 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor)";
+                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, prelev, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?prelev, ?competitor)";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -554,6 +617,7 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?address", member.Address);
                 comm.Parameters.AddWithValue("?facebook", member.Facebook);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
+                comm.Parameters.AddWithValue("?prelev", member.Prelev);
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
 
 
@@ -602,7 +666,7 @@ namespace AcademyMgr
                 }
 
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach WHERE ID=?ID";
+                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, prelev=?prelev WHERE ID=?ID";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -620,6 +684,7 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?facebook", member.Facebook);
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
+                comm.Parameters.AddWithValue("?prelev", member.Prelev);
                 comm.Parameters.AddWithValue("?ID", member.ID);
                 comm.ExecuteNonQuery();
 

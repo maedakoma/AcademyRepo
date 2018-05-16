@@ -20,7 +20,8 @@ namespace AcademyMgr
         {
             Cash = 0,
             Check = 1,
-            Transfert = 2
+            Transfert = 2,
+            Prelev = 3
         }
 
         private int _ID;

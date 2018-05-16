@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- Hôte :                        35.205.127.92
--- Version du serveur:           5.7.14-google-log - (Google)
--- SE du serveur:                Linux
+-- Hôte :                        127.0.0.1
+-- Version du serveur:           5.7.21-log - MySQL Community Server (GPL)
+-- SE du serveur:                Win64
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
@@ -17,9 +17,9 @@ DROP DATABASE IF EXISTS `cercle`;
 CREATE DATABASE IF NOT EXISTS `cercle` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `cercle`;
 
--- Export de la structure de la table cercle. COACHSPAYMENTS
-DROP TABLE IF EXISTS `COACHSPAYMENTS`;
-CREATE TABLE IF NOT EXISTS `COACHSPAYMENTS` (
+-- Export de la structure de la table cercle. coachspayments
+DROP TABLE IF EXISTS `coachspayments`;
+CREATE TABLE IF NOT EXISTS `coachspayments` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `MemberID` int(11) NOT NULL,
   `Month` varchar(200) DEFAULT NULL,
@@ -30,13 +30,13 @@ CREATE TABLE IF NOT EXISTS `COACHSPAYMENTS` (
   `Comment` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_MEMBER` (`MemberID`),
-  CONSTRAINT `FK_MEMBER` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_MEMBER` FOREIGN KEY (`MemberID`) REFERENCES `members` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.COACHSPAYMENTS : ~24 rows (environ)
-DELETE FROM `COACHSPAYMENTS`;
-/*!40000 ALTER TABLE `COACHSPAYMENTS` DISABLE KEYS */;
-INSERT INTO `COACHSPAYMENTS` (`ID`, `MemberID`, `Month`, `Lessons`, `Pay`, `Amount`, `Date`, `Comment`) VALUES
+-- Export de données de la table cercle.coachspayments : ~27 rows (environ)
+DELETE FROM `coachspayments`;
+/*!40000 ALTER TABLE `coachspayments` DISABLE KEYS */;
+INSERT INTO `coachspayments` (`ID`, `MemberID`, `Month`, `Lessons`, `Pay`, `Amount`, `Date`, `Comment`) VALUES
 	(1, 130, 'Septembre', 4, 25, 100, '2017-10-11', NULL),
 	(2, 129, 'Septembre', 11, 25, 275, '2017-10-01', NULL),
 	(3, 131, 'Septembre', 3, 30, 90, '2017-10-20', NULL),
@@ -60,30 +60,36 @@ INSERT INTO `COACHSPAYMENTS` (`ID`, `MemberID`, `Month`, `Lessons`, `Pay`, `Amou
 	(21, 131, 'Fevrier', 3, 30, 90, '2018-03-10', NULL),
 	(22, 132, 'Fevrier', 2, 25, 50, '2018-03-12', NULL),
 	(23, 130, 'Mars', 3, 25, 75, '2018-04-10', NULL),
-	(24, 129, 'Mars', 9, 25, 225, '2018-04-10', NULL);
-/*!40000 ALTER TABLE `COACHSPAYMENTS` ENABLE KEYS */;
+	(24, 129, 'Mars', 9, 25, 225, '2018-04-10', NULL),
+	(25, 131, 'Mars', 3, 30, 90, '2018-04-12', NULL),
+	(26, 132, 'Mars', 7, 25, 175, '2018-04-17', NULL),
+	(27, 132, 'Avril', 6, 25, 150, '2018-05-09', NULL),
+	(28, 129, 'Avril', 3, 25, 75, '2018-05-10', NULL),
+	(29, 131, 'Avril', 4, 30, 120, '2018-05-11', NULL),
+	(30, 130, 'Avril', 6, 25, 150, '2018-05-15', NULL);
+/*!40000 ALTER TABLE `coachspayments` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. DOJO
-DROP TABLE IF EXISTS `DOJO`;
-CREATE TABLE IF NOT EXISTS `DOJO` (
+-- Export de la structure de la table cercle. dojo
+DROP TABLE IF EXISTS `dojo`;
+CREATE TABLE IF NOT EXISTS `dojo` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(20) NOT NULL,
   `Surface` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.DOJO : ~3 rows (environ)
-DELETE FROM `DOJO`;
-/*!40000 ALTER TABLE `DOJO` DISABLE KEYS */;
-INSERT INTO `DOJO` (`ID`, `Name`, `Surface`) VALUES
+-- Export de données de la table cercle.dojo : ~3 rows (environ)
+DELETE FROM `dojo`;
+/*!40000 ALTER TABLE `dojo` DISABLE KEYS */;
+INSERT INTO `dojo` (`ID`, `Name`, `Surface`) VALUES
 	(1, 'Petite Salle du bas', 30),
 	(2, 'Principale', 80),
 	(3, 'Salle du haut', 50);
-/*!40000 ALTER TABLE `DOJO` ENABLE KEYS */;
+/*!40000 ALTER TABLE `dojo` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. MEMBERS
-DROP TABLE IF EXISTS `MEMBERS`;
-CREATE TABLE IF NOT EXISTS `MEMBERS` (
+-- Export de la structure de la table cercle. members
+DROP TABLE IF EXISTS `members`;
+CREATE TABLE IF NOT EXISTS `members` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Firstname` varchar(200) NOT NULL,
   `Lastname` varchar(200) NOT NULL,
@@ -103,201 +109,202 @@ CREATE TABLE IF NOT EXISTS `MEMBERS` (
   `Internal` tinyint(4) NOT NULL,
   `Coach` tinyint(4) NOT NULL,
   `Competitor` tinyint(4) NOT NULL,
+  `Prelev` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `uq_MEMBERS` (`Firstname`,`Lastname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.MEMBERS : ~169 rows (environ)
-DELETE FROM `MEMBERS`;
-/*!40000 ALTER TABLE `MEMBERS` DISABLE KEYS */;
-INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`, `Belt`, `Gender`, `Comment`, `Job`, `Mail`, `Phone`, `Address`, `Facebook`, `Child`, `Alert`, `FullYear`, `Internal`, `Coach`, `Competitor`) VALUES
-	(1, 'David', 'GAUTHIER', '2018-09-12', '2017-09-14', 'purple', 'M', '', 'prof d\'EPS', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(2, 'Raphael', 'ARIE', '2018-10-05', '2017-09-05', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(3, 'Zacharie', 'ATTALI', '2018-10-17', '2017-10-17', 'white', 'M', 'Vient de débuter', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(4, 'Eddy', 'BARCLAY', '2018-09-12', '2017-09-18', 'white', 'M', 'En attente de 2 cheques que j\'ai donné à Kelly -> Récupérés le 09/11/2017 -> anciens cheques déchirés le 19/12', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(6, 'Frederique', 'BARDEY', '2018-09-26', '2017-10-02', 'white', 'M', 'référencé en remy au cercle?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(7, 'John', 'BARFF', '2017-10-05', '2017-09-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0),
-	(8, 'Didier', 'BARRAUD', '2018-09-15', '2017-09-15', 'black', 'M', 'Son fils est aussi inscrit mais on lui a fait cadeau du paiement', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(9, 'Lionel', 'BENICHOU', '2018-09-28', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0),
-	(10, 'Sebastien', 'BIDAULT', '2018-09-11', '2017-09-12', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(11, 'Farid', 'BOUHAZEM', '2018-09-12', '2017-05-10', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(12, 'Julien', 'BOURGEOIS', '2018-09-15', '2017-09-15', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(13, 'Gauthier', 'BRYSBAERT', '2018-09-11', '2017-06-01', 'white', 'M', '', 'Scientist à polytechnique apparement', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(15, 'Sacha', 'BUKASSA', '2017-10-29', '2017-09-14', 'white', 'M', 'A demandé le remboursement....Puis se l\'est fait remboursé, je lui ai rendu un cheque', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0),
-	(16, 'Corentin', 'CAHEN', '2018-10-04', '2017-10-05', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(17, 'Sarah', 'CASSESE', '2018-09-25', '2017-09-25', 'blue', 'F', '', '', '', '', '', '', 1, 0, 1, 1, 0, 1),
-	(18, 'Thomas', 'CASTAN', '2018-09-25', '2017-09-25', 'white', 'M', 'Collèque de sylvain', 'Dans le service/evenementiel', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(19, 'Pierre', 'CHAMBON', '2018-09-26', '2017-10-05', 'white', 'M', '2 disciplines j\'imagine?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(20, 'Bagdad', 'CHECKRI', '2018-09-04', '2017-09-05', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(21, 'Adrien', 'CHEMINET', '2018-09-20', '2017-09-25', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(22, 'Cléo', 'CHIMKIEVITCH', '2018-09-14', '2017-09-14', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0),
-	(23, 'Aime', 'CONTI', '2018-10-10', '2017-10-10', 'black', 'M', 'potentielemnt interessé par des cours particuliers', 'Dans les assurances', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(24, 'Ricardo', 'RIBEIRO', '2017-11-04', '2017-05-10', 'white', 'M', 'blessé au genou le 3/11. Redonne les cheques ou pas?', 'cuisinier', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(25, 'Olivier', 'DAURARIO', '2018-10-10', '2017-09-28', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(26, 'Christian', 'DEGUIS', '2018-09-05', '2017-09-05', 'white', 'M', 'C\'est quoi ce taro? enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(27, 'Mamadou?', 'DJOULFAYAN', '2018-10-16', '2017-10-20', 'white', 'M', 'Rapport avec Mamadou konate? Prenom sebastien sur cfjjb!!', '', '', '', '', '', 0, 1, 1, 1, 0, 0),
-	(28, 'Fabien', 'DORE', '2018-09-04', '2017-09-07', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(29, 'Raphael', 'DOS SANTOS', '2018-11-09', '2017-09-05', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(31, 'Eric', 'DRIKES', '2018-09-04', '2017-09-14', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(32, 'Mickael', 'FERREIRA', '2018-09-12', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(33, 'Brice', 'FIGARO', '2018-10-04', '2017-10-05', 'purple', 'M', '900 au cercle et 80 chez moi???', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(34, 'Marc antoine', 'FIGHIERA', '2018-09-08', '2017-09-12', 'blue', 'M', '', 'graphiste je crois', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(36, 'Florian', 'FONTRIER', '2018-09-15', '2017-09-15', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(37, 'Jean Paul', 'FOURNET', '2018-09-26', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(38, 'Simon', 'FRANQUET', '2018-09-12', '2017-07-11', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(39, 'Bayle', 'GAO', '2018-10-04', '2017-09-25', 'purple', 'M', '', 'ingenieur robotique', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(42, 'Julien', 'GAZAVE', '2018-12-09', '2017-09-28', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(43, 'Yoann', 'GOLESTIN', '2018-03-11', '2017-09-07', 'white', 'M', 'avait donné 5 cheques de 100. S\'est blessé au ligament du coup j\'ai déchiré les 2 derniers cheques et je l\'ai remboursé de 175 E.', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(44, 'Matias', 'GOURDON', '2018-07-01', '2017-07-18', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(45, 'Raphael', 'GRESSIN', '2018-10-05', '2017-10-05', 'white', 'M', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0),
-	(46, 'Jules', 'GRUBO', '2018-10-12', '2017-10-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(47, 'Olivier', 'HASSID', '2018-09-20', '2017-09-21', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0),
-	(48, 'Dominique', 'JACQUES', '2018-10-10', '2017-10-05', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(49, 'Sylvain', 'JOLIY', '2018-09-11', '2017-09-12', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(50, 'Nabil', 'KADID', '2018-10-04', '2017-10-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(51, 'Olivier', 'KAZ', '2017-11-20', '2017-10-20', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(52, 'Artyom', 'KORMESHOV', '2018-09-20', '2017-06-08', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(53, 'Vincent', 'LACERENZA', '2018-09-20', '2017-09-25', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(54, 'Cedric', 'LE FRANC', '2019-03-06', '2017-09-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(55, 'Jonas', 'LEBLANC', '2018-11-04', '2017-09-18', 'white', 'M', '2 disciplines', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(56, 'Yohann', 'LES ENFANT', '2018-09-01', '2017-09-07', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(57, 'Gregory', 'LETELLIER', '2018-09-26', '2017-09-27', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(58, 'Anne', 'LETESSIER', '2018-09-04', '2017-09-18', 'white', 'F', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0),
-	(59, 'Thomas', 'MACHADO', '2018-09-04', '2017-09-07', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(61, 'Charles', 'MACQUART MOULIN', '2018-10-10', '2017-09-28', 'white', 'M', 'Blessé pour le mois de novembre, pb aux cotes, s\'entraine surtout les matins', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(62, 'Yann', 'MALARD', '2018-09-12', '2017-09-18', 'purple', 'M', '', 'notaire', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(63, 'Marco', 'MARZILLI', '2018-09-20', '2017-09-19', 'brown', 'M', '', 'gérant de restos', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(64, 'Didier', 'MAUS', '2018-10-15', '2017-10-16', 'purple', 'M', '', 'Policier je crois', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(65, 'Franck', 'NGUYEN', '2018-09-07', '2017-09-07', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(66, 'Stephane', 'NGUYEN', '2018-07-11', '2017-07-11', 'blue', 'M', 'Veut faire la compet ibjjf je crois, en attente de licence', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(67, 'Nicolas', 'NZAMBA', '2018-09-28', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(68, 'Noel', 'ONIZKO', '2017-10-14', '2017-09-14', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(69, 'Alban', 'OUAHAB', '2018-09-20', '2017-09-25', 'blue', 'M', '', 'étudiant / recherche commerce?', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(70, 'Samuel', 'PELLET', '2018-09-21', '2017-09-21', 'white', 'M', 'C\'est quoi son abonnement? enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(73, 'Emmanuel', 'PEREIRA VIEIRA', '2018-09-21', '2017-09-21', 'white', 'M', '', 'livreur dans les librairies', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(74, 'Celine', 'PERREARD', '2018-09-14', '2017-09-14', 'white', 'F', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(75, 'Jeremy', 'PICOSTE', '2018-10-10', '2017-10-16', 'black', 'M', 'tarif réduit du cercle', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(76, 'Mirjana', 'POLJAKOVIC', '2018-10-04', '2017-10-05', 'white', 'M', 'Qui est ce derrière??', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(77, 'François David', 'PUCHEU LASHORES', '2018-09-20', '2017-09-25', 'purple', 'M', '', 'Dans le pétrole?', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(78, 'Vincent', 'PUYDOYEUX', '2018-10-16', '2017-10-20', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(79, 'Djamel', 'SAHRAOUI', '2018-09-20', '2017-09-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(80, 'Mehdi', 'SAIDI', '2018-09-20', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(81, 'Nelson', 'SILVA', '2018-09-11', '2017-09-14', 'white', 'M', 'brown belt?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(82, 'Andrei', 'STRUTGNSHGG', '2017-10-14', '2017-09-14', 'white', 'M', 'C\'est quoi son abo a 250 ?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(83, 'Sylvain', 'TARIN', '2018-10-10', '2017-10-05', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(84, 'Vincent', 'TERRONI', '2018-09-21', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0),
-	(85, 'Adrien', 'TIREL', '2018-10-20', '2017-10-20', 'white', 'M', 'A demandé pour des CP', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(86, 'Christophe', 'TROEL', '2018-09-15', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(87, 'Alexis', 'TRUJILLO', '2018-09-20', '2017-10-02', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(88, 'Arthur', 'TSIMI', '2018-09-12', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(89, 'Yohan', 'VERGNE', '2018-09-08', '2017-09-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(90, 'Guillaume', 'VIGNE', '2018-10-04', '2017-10-16', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(91, 'Paul-François', 'YGORRA', '2018-09-20', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(92, 'Nissim', 'ZERBIB', '2018-09-15', '2017-09-18', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(99, 'Neo', 'ALZIEU', '2018-09-19', '2017-09-19', 'white', 'M', 'C\'est quoi son abo? un enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(100, 'Frederique', 'AMBROISE', '2018-06-01', '2017-06-28', 'white', 'M', 'Grand martiniquais, inscrit a 2 disciplines, vient de l\'hapkido', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(101, 'Jean-Marc', 'BLOMBOU', '2018-06-08', '2017-06-08', 'blue', 'M', 'A repris ses derniers cheques et doit en rendre 2 autres... A priori c\'est bon j\'ai recup le reste en cash', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(102, 'Amandine', 'BOUVAT', '2018-05-10', '2017-05-10', 'white', 'F', 'C\'est qui elle? vielle métisse ceinture bleue?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(103, 'Manuel', 'BRUN', '2018-05-10', '2017-05-10', 'white', 'M', 'C\'est quoi son abo? enfant', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(104, 'Aurianne', 'CHARMET', '2017-06-04', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(105, 'Daniel', 'CURVAT', '2018-06-05', '2017-07-11', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(106, 'Jerome', 'DIVAC', '2018-05-10', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(107, 'Jorge', 'DO PINHAL', '2018-05-04', '2017-07-18', 'blue', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(108, 'Gwenael', 'HUET', '2019-03-06', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(109, 'Guillaume', 'LE MAUT', '2018-06-01', '2017-06-01', 'white', 'M', 'Enfant?', '', '', '', '', '', 1, 0, 1, 1, 0, 0),
-	(110, 'Kevin', 'MALGERARD', '2018-06-01', '2017-05-10', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(111, 'Joan', 'MESINELE', '2018-05-10', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(112, 'Moustakima', 'HASSANI', '2018-06-04', '2017-06-01', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(113, 'Samuel', 'OLIVIER', '2018-06-01', '2017-06-01', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(114, 'David', 'THOMAS', '2017-07-01', '2017-06-01', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(115, 'Moussa', 'TIMERA', '2018-05-04', '2017-05-10', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(116, 'Alexandre', 'WALLOIS', '2018-04-04', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(120, 'Simon', 'THULEAU', '2018-11-09', '2017-11-09', 'white', 'M', 'Cheque de 500 puis remboursement en cours de 290E. Ca revient a un paiement de 210E..... Pkoi ce remboursement? inactif??', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(121, 'Thomas', 'BISSON', '2018-11-09', '2017-11-09', 'white', 'M', 'Je connais un Franck plutot, beau fils de philou? Il faudra metttre ça au clair un jour. Doit bien y avoir 2 bisson..', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(122, 'Sofien', 'ZAMITTI', '2017-12-09', '2017-11-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(123, 'Alessandro', 'ZANNI', '2018-11-09', '2017-11-09', 'brown', 'M', 'C\'est quoi sa 2eme discipline à lui?', 'informaticien dans la sécurité', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(124, 'Hichem', 'ARFAOUI', '2018-11-09', '2017-11-09', 'white', 'M', 'C\'est quoi ça comme taro 350 en cheque? 2 disciplines j\'imagine', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(125, 'Olivier', 'ROINEL', '2018-11-09', '2017-11-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(126, 'Martin', 'CZABADAJ', '2018-11-09', '2017-11-09', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(127, 'Denis', 'DAVIDKOV', '2017-12-09', '2017-11-09', 'white', 'M', 'Pourquoi j\'ai reçu ce montant et pas 30 E?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(128, 'Thibaut', 'OLIVIER', '2019-12-11', '2017-05-01', 'black', 'M', 'Moi', 'Jiu-Jitsu headcoach', 'thibautolivier77@gmail.com', '0675403464', '44 rue faidherbe 78800 HOUILLES', 'https://www.facebook.com/thibautolivier77', 0, 0, 1, 1, 1, 0),
-	(129, 'François', 'MOLESLAS', '2020-11-11', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 1),
-	(130, 'Stéphane', 'HENNEQUIN', '2020-11-11', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 1),
-	(131, 'Etienne', 'GREGOIRE', '2019-12-01', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 0),
-	(132, 'Matthieu', 'DELALANDRE', '2019-12-11', '2017-05-01', 'black', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 1, 0),
-	(136, 'Jean-Baptiste', 'QUINQUENEL', '2018-11-15', '2017-11-15', 'white', 'M', '2 disciplines j\'imagine', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(137, 'Julien', 'FARAUT', '2018-11-15', '2017-11-15', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(138, 'Michel-Ange', 'MATOUBA', '2018-11-15', '2017-11-15', 'white', 'M', 'Enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(139, 'Akhmed', 'SALAMOV', '2018-09-18', '2017-12-18', 'blue', 'M', 'Son reste de  paiement (250) a été récupéré par la boxe. !!! Dernier cheque refusé!!!', '', '', '', '', '', 0, 1, 1, 1, 0, 1),
-	(142, 'Sylvain', 'DESHORS', '2018-05-01', '2017-12-19', 'white', 'M', 'Prend des CP', 'Chez veolia', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(143, 'Brice', 'DONADELLI', '2017-11-20', '2017-05-01', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0),
-	(144, 'Marco', 'GONCALVES', '2017-11-20', '2017-05-01', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0),
-	(145, 'Clara', 'CABRERIZO', '2017-11-20', '2017-05-01', 'white', 'F', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0),
-	(146, 'Nicolas', 'DUVAUCHELLE', '2018-11-21', '2017-11-21', 'white', 'M', '', 'Acteur', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(147, 'Sebastien', 'LOPES', '2018-11-21', '2017-11-21', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(148, 'Denis', 'CEOLIN', '2018-11-30', '2017-11-30', 'blue', 'M', '', 'Chercheur en chimie', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(149, 'Yohann', 'LY', '2018-11-30', '2017-11-30', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(150, 'Thibaud', 'DENINGER', '2018-11-30', '2017-11-30', 'blue', 'M', '', 'Policier', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(152, 'Nicolas', 'MALARD', '2018-11-30', '2017-11-30', 'white', 'M', 'Frere de Yann la ceinture violette', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0),
-	(153, 'David', 'DONNINI', '2018-11-30', '2017-11-30', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(154, 'Juan', 'NERINA', '2018-11-30', '2017-11-30', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(155, 'Roméo', 'YOMBOU', '2018-08-31', '2017-12-04', 'blue', 'M', 'Seulement le libre, !! non déclaré !! Comment le faire figurer.....????? Mettre en cours part??', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(156, 'Hennaddig', 'HORSKYY', '2018-08-01', '2017-12-07', 'white', 'M', 'ukrainien prof dans sa tete, javais négocié 250E jusqu\'a aout, il a payé que 65 (125) pour l\'instant..', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(157, 'Dominique', 'BOYER', '2018-12-07', '2017-12-07', 'white', 'M', 'aikidoka avec une sceance par semaine', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(158, 'Zou', 'THIEN DU CHABERT', '2018-12-07', '2017-12-07', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(159, 'Roy', 'HARRIS', '2018-12-07', '2017-12-07', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(160, 'Hernan', 'VASQUEZ MORA', '2018-12-07', '2017-12-07', 'black', 'M', '', 'policier', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(162, 'David', 'ANKRI', '2019-04-25', '2017-12-12', 'brown', 'M', 'Juif integriste', 'Vendeur de cuir', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(163, 'Matthieu', 'LHOSPITALIER', '2018-03-08', '2017-12-19', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0),
-	(164, 'Aissa', 'EDDAMI', '2018-12-19', '2017-12-19', 'white', 'M', 'pote de bagdad', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(165, 'Lothaire', 'EPEE', '2018-12-19', '2017-12-19', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(166, 'Dioumé', 'SANGARÉ', '2018-12-28', '2017-12-28', 'brown', 'M', 'club d\'origine le maccabi', 'finance?', '', '', '', 'https://www.facebook.com/dioum.sangare', 0, 0, 1, 1, 0, 1),
-	(167, 'Farid', 'NAÏR', '2018-03-03', '2018-01-03', 'purple', 'M', 'reste 200 à payer, tarif de 300 négocié car eleve au carreau aussi', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(168, 'Francis', 'KRAUSE', '2019-01-04', '2018-01-04', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(169, 'Stephane', 'CREANTOR', '2018-07-08', '2018-01-08', 'purple', 'M', 'grand martiniquais', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(170, 'Sully', 'CHANTEUR', '2019-01-08', '2018-01-08', 'white', 'M', 'Cours du matin', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(171, 'Raphael', 'GRELLET', '2019-01-09', '2018-01-09', 'white', 'M', '!!!! Cheque posé le 3, refusé le 8 mars 2018, annulé le 14 !!!! retente le 3/4, encore refusé le 6/04', '', '', '', '', '', 0, 1, 1, 1, 0, 0),
-	(172, 'Kamal', 'YDIR', '2019-01-01', '2018-01-09', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(173, 'Malik', 'N\'DIAW', '2019-01-09', '2018-01-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(174, 'Rachel', 'LOKIEC', '2019-01-24', '2018-01-24', 'white', 'M', 'Je ne connais pas le nom de l\'enfant derrière', '', '', '', '', '', 1, 0, 1, 1, 0, 0),
-	(175, 'Michel', 'GUELDRY', '2019-01-24', '2018-01-24', 'blue', 'M', 'Vient surtout le matin, pkoi 600', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(176, 'Mike', 'LATKA', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(177, 'Herve', 'GAILLARD', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(178, 'Frederic', 'CARPENTIER', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(179, 'Sebastien', 'BOTTEY', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(180, 'Damien', 'LAHMI', '2019-01-25', '2018-01-25', 'blue', 'M', 'Bleu??', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(181, 'Ahmed', 'ALLA', '2019-02-08', '2018-02-08', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(182, 'Tiziano', 'PEDINIELLI', '2019-02-08', '2018-02-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(183, 'Sidney', 'CHAWATY', '2019-02-08', '2018-02-08', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(184, 'Charles-Edouard', 'DI GIAMPIETRO', '2019-02-08', '2018-02-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0),
-	(186, 'David', 'ARGIRAKIS', '2019-02-10', '2018-02-10', 'black', 'M', '', 'pilote de ligne', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(187, 'Abdelkrim', 'AMROUCHE', '2019-02-11', '2018-02-11', 'black', 'M', '', '', '', '', '', 'https://www.facebook.com/jakarim.gracie', 0, 0, 1, 1, 0, 0),
-	(188, 'Sélim', 'BEN CHEIKH', '2019-02-19', '2018-02-19', 'blue', 'M', '', '', '', '', '', '', 0, 0, 0, 0, 0, 0),
-	(189, 'Lionel', 'MESCAM', '2019-02-22', '2018-02-22', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(190, 'Luc', 'DESCAMPS', '2018-03-24', '2018-02-24', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0),
-	(191, 'Sebastien', 'LECOQ', '2021-01-24', '2018-02-24', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1),
-	(192, 'Louis', 'BLECH-SEMIN', '2019-03-06', '2018-03-06', 'white', 'M', '2 discipline avec MMA', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(193, 'Kamel', 'CHAOUCHE', '2019-03-06', '2018-03-06', 'white', 'M', 'algerien', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(194, 'Roméo', 'WAGNER', '2019-03-12', '2018-03-12', 'white', 'M', '', 'jeune éducateur kim noire sympa', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(195, 'Adams', 'SOULAIMANA', '2019-03-12', '2018-03-12', 'white', 'M', '2 disciplines j\'imagine', '', '', '', '', '', 0, 0, 1, 1, 0, 0),
-	(196, 'Romain', 'VILLA', '2019-03-22', '2018-03-22', 'purple', 'M', '2 disciplines', '', '', '', '', '', 0, 0, 1, 1, 0, 0);
-/*!40000 ALTER TABLE `MEMBERS` ENABLE KEYS */;
+-- Export de données de la table cercle.members : ~170 rows (environ)
+DELETE FROM `members`;
+/*!40000 ALTER TABLE `members` DISABLE KEYS */;
+INSERT INTO `members` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`, `Belt`, `Gender`, `Comment`, `Job`, `Mail`, `Phone`, `Address`, `Facebook`, `Child`, `Alert`, `FullYear`, `Internal`, `Coach`, `Competitor`, `Prelev`) VALUES
+	(1, 'David', 'GAUTHIER', '2018-09-12', '2017-09-14', 'purple', 'M', '', 'prof d\'EPS', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(2, 'Raphael', 'ARIE', '2018-10-05', '2017-09-05', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(3, 'Zacharie', 'ATTALI', '2018-10-17', '2017-10-17', 'white', 'M', 'Vient de débuter', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(4, 'Eddy', 'BARCLAY', '2018-09-12', '2017-09-18', 'white', 'M', 'En attente de 2 cheques que j\'ai donné à Kelly -> Récupérés le 09/11/2017 -> anciens cheques déchirés le 19/12', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(6, 'Frederique', 'BARDEY', '2018-09-26', '2017-10-02', 'white', 'M', 'référencé en remy au cercle?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(7, 'John', 'BARFF', '2017-10-05', '2017-09-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0, 0),
+	(8, 'Didier', 'BARRAUD', '2018-09-15', '2017-09-15', 'black', 'M', 'Son fils est aussi inscrit mais on lui a fait cadeau du paiement', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(9, 'Lionel', 'BENICHOU', '2018-09-28', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 0),
+	(10, 'Sebastien', 'BIDAULT', '2018-09-11', '2017-09-12', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(11, 'Farid', 'BOUHAZEM', '2018-09-12', '2017-05-10', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(12, 'Julien', 'BOURGEOIS', '2018-09-15', '2017-09-15', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(13, 'Gauthier', 'BRYSBAERT', '2018-09-11', '2017-06-01', 'white', 'M', '', 'Scientist à polytechnique apparement', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(15, 'Sacha', 'BUKASSA', '2017-10-29', '2017-09-14', 'white', 'M', 'A demandé le remboursement....Puis se l\'est fait remboursé, je lui ai rendu un cheque', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 0),
+	(16, 'Corentin', 'CAHEN', '2018-10-04', '2017-10-05', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(17, 'Sarah', 'CASSESE', '2018-09-25', '2017-09-25', 'blue', 'F', '', '', '', '', '', '', 1, 0, 1, 1, 0, 1, 0),
+	(18, 'Thomas', 'CASTAN', '2018-09-25', '2017-09-25', 'white', 'M', 'Collèque de sylvain', 'Dans le service/evenementiel', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(19, 'Pierre', 'CHAMBON', '2018-09-26', '2017-10-05', 'white', 'M', '2 disciplines j\'imagine?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(20, 'Bagdad', 'CHECKRI', '2018-09-04', '2017-09-05', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(21, 'Adrien', 'CHEMINET', '2018-09-20', '2017-09-25', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(22, 'Cléo', 'CHIMKIEVITCH', '2018-09-14', '2017-09-14', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0),
+	(23, 'Aime', 'CONTI', '2018-10-10', '2017-10-10', 'black', 'M', 'potentielemnt interessé par des cours particuliers', 'Dans les assurances', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(24, 'Ricardo', 'RIBEIRO', '2017-11-04', '2017-05-10', 'white', 'M', 'blessé au genou le 3/11. Redonne les cheques ou pas?', 'cuisinier', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(25, 'Olivier', 'DAURARIO', '2018-10-10', '2017-09-28', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(26, 'Christian', 'DEGUIS', '2018-09-05', '2017-09-05', 'white', 'M', 'C\'est quoi ce taro? enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(27, 'Mamadou?', 'DJOULFAYAN', '2018-10-16', '2017-10-20', 'white', 'M', 'Rapport avec Mamadou konate? Prenom sebastien sur cfjjb!!', '', '', '', '', '', 0, 1, 1, 1, 0, 0, 0),
+	(28, 'Fabien', 'DORE', '2018-09-04', '2017-09-07', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(29, 'Raphael', 'DOS SANTOS', '2018-11-09', '2017-09-05', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(31, 'Eric', 'DRIKES', '2018-09-04', '2017-09-14', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(32, 'Mickael', 'FERREIRA', '2018-09-12', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(33, 'Brice', 'FIGARO', '2018-10-04', '2017-10-05', 'purple', 'M', '900 au cercle et 80 chez moi???', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(34, 'Marc antoine', 'FIGHIERA', '2018-09-08', '2017-09-12', 'blue', 'M', '', 'graphiste je crois', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(36, 'Florian', 'FONTRIER', '2018-09-15', '2017-09-15', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(37, 'Jean Paul', 'FOURNET', '2018-09-26', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(38, 'Simon', 'FRANQUET', '2018-09-12', '2017-07-11', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(39, 'Bayle', 'GAO', '2018-10-04', '2017-09-25', 'purple', 'M', '', 'ingenieur robotique', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(42, 'Julien', 'GAZAVE', '2018-12-09', '2017-09-28', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(43, 'Yoann', 'GOLESTIN', '2018-03-11', '2017-09-07', 'white', 'M', 'avait donné 5 cheques de 100. S\'est blessé au ligament du coup j\'ai déchiré les 2 derniers cheques et je l\'ai remboursé de 175 E.', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(44, 'Matias', 'GOURDON', '2018-07-01', '2017-07-18', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(45, 'Raphael', 'GRESSIN', '2018-10-05', '2017-10-05', 'white', 'M', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 0),
+	(46, 'Jules', 'GRUBO', '2018-10-12', '2017-10-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(47, 'Olivier', 'HASSID', '2018-09-20', '2017-09-21', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0),
+	(48, 'Dominique', 'JACQUES', '2018-10-10', '2017-10-05', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(49, 'Sylvain', 'JOLIY', '2018-09-11', '2017-09-12', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(50, 'Nabil', 'KADID', '2018-10-04', '2017-10-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(51, 'Olivier', 'KAZ', '2017-11-20', '2017-10-20', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(52, 'Artyom', 'KORMESHOV', '2018-09-20', '2017-06-08', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(53, 'Vincent', 'LACERENZA', '2018-09-20', '2017-09-25', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(54, 'Cedric', 'LE FRANC', '2019-03-06', '2017-09-05', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(55, 'Jonas', 'LEBLANC', '2018-11-04', '2017-09-18', 'white', 'M', '2 disciplines', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(56, 'Yohann', 'LES ENFANT', '2018-09-01', '2017-09-07', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(57, 'Gregory', 'LETELLIER', '2018-09-26', '2017-09-27', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(58, 'Anne', 'LETESSIER', '2018-09-04', '2017-09-18', 'white', 'F', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 0),
+	(59, 'Thomas', 'MACHADO', '2018-09-04', '2017-09-07', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(61, 'Charles', 'MACQUART MOULIN', '2018-10-10', '2017-09-28', 'white', 'M', 'Blessé pour le mois de novembre, pb aux cotes, s\'entraine surtout les matins', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(62, 'Yann', 'MALARD', '2018-09-12', '2017-09-18', 'purple', 'M', '', 'notaire', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(63, 'Marco', 'MARZILLI', '2018-09-20', '2017-09-19', 'brown', 'M', '', 'gérant de restos', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(64, 'Didier', 'MAUS', '2018-10-15', '2017-10-16', 'purple', 'M', '', 'Policier je crois', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(65, 'Franck', 'NGUYEN', '2018-09-07', '2017-09-07', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(66, 'Stephane', 'NGUYEN', '2018-07-11', '2017-07-11', 'blue', 'M', 'Veut faire la compet ibjjf je crois, en attente de licence', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(67, 'Nicolas', 'NZAMBA', '2018-09-28', '2017-09-28', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(68, 'Noel', 'ONIZKO', '2017-10-14', '2017-09-14', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(69, 'Alban', 'OUAHAB', '2018-09-20', '2017-09-25', 'blue', 'M', '', 'étudiant / recherche commerce?', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(70, 'Samuel', 'PELLET', '2018-09-21', '2017-09-21', 'white', 'M', 'C\'est quoi son abonnement? enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(73, 'Emmanuel', 'PEREIRA VIEIRA', '2018-09-21', '2017-09-21', 'white', 'M', '', 'livreur dans les librairies', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(74, 'Celine', 'PERREARD', '2018-09-14', '2017-09-14', 'white', 'F', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(75, 'Jeremy', 'PICOSTE', '2018-10-10', '2017-10-16', 'black', 'M', 'tarif réduit du cercle', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(76, 'Mirjana', 'POLJAKOVIC', '2018-10-04', '2017-10-05', 'white', 'M', 'Qui est ce derrière??', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(77, 'François David', 'PUCHEU LASHORES', '2018-09-20', '2017-09-25', 'purple', 'M', '', 'Dans le pétrole?', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(78, 'Vincent', 'PUYDOYEUX', '2018-10-16', '2017-10-20', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(79, 'Djamel', 'SAHRAOUI', '2018-09-20', '2017-09-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(80, 'Mehdi', 'SAIDI', '2018-09-20', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(81, 'Nelson', 'SILVA', '2018-09-11', '2017-09-14', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(82, 'Andrei', 'STRUTGNSHGG', '2017-10-14', '2017-09-14', 'white', 'M', 'C\'est quoi son abo a 250 ?', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(83, 'Sylvain', 'TARIN', '2018-10-10', '2017-10-05', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(84, 'Vincent', 'TERRONI', '2018-09-21', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 0),
+	(85, 'Adrien', 'TIREL', '2018-10-20', '2017-10-20', 'white', 'M', 'A demandé pour des CP', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(86, 'Christophe', 'TROEL', '2018-09-15', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(87, 'Alexis', 'TRUJILLO', '2018-09-20', '2017-10-02', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(88, 'Arthur', 'TSIMI', '2018-09-12', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(89, 'Yohan', 'VERGNE', '2018-09-08', '2017-09-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(90, 'Guillaume', 'VIGNE', '2018-10-04', '2017-10-16', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(91, 'Paul-François', 'YGORRA', '2018-09-20', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(92, 'Nissim', 'ZERBIB', '2018-09-15', '2017-09-18', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(99, 'Neo', 'ALZIEU', '2018-09-19', '2017-09-19', 'white', 'M', 'C\'est quoi son abo? un enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(100, 'Frederique', 'AMBROISE', '2018-06-01', '2017-06-28', 'white', 'M', 'Grand martiniquais, inscrit a 2 disciplines, vient de l\'hapkido', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(101, 'Jean-Marc', 'BLOMBOU', '2018-06-08', '2017-06-08', 'blue', 'M', 'A repris ses derniers cheques et doit en rendre 2 autres... A priori c\'est bon j\'ai recup le reste en cash', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(102, 'Amandine', 'BOUVAT', '2018-05-10', '2017-05-10', 'white', 'F', 'C\'est qui elle? vielle métisse ceinture bleue?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(103, 'Manuel', 'BRUN', '2018-05-10', '2017-05-10', 'white', 'M', 'C\'est quoi son abo? enfant', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(104, 'Aurianne', 'CHARMET', '2017-06-04', '2017-05-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(105, 'Daniel', 'CURVAT', '2018-06-05', '2017-07-11', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(106, 'Jerome', 'DIVAC', '2018-05-10', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(107, 'Jorge', 'DO PINHAL', '2018-07-18', '2017-07-18', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(108, 'Gwenael', 'HUET', '2019-03-06', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(109, 'Guillaume', 'LE MAUT', '2018-06-01', '2017-06-01', 'white', 'M', 'Enfant?', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0),
+	(110, 'Kevin', 'MALGERARD', '2019-05-16', '2017-05-10', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 1),
+	(111, 'Joan', 'MESINELE', '2018-05-10', '2017-05-10', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(112, 'Moustakima', 'HASSANI', '2018-06-04', '2017-06-01', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(113, 'Samuel', 'OLIVIER', '2018-06-01', '2017-06-01', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(114, 'David', 'THOMAS', '2017-07-01', '2017-06-01', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(115, 'Moussa', 'TIMERA', '2018-05-10', '2017-05-10', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(116, 'Alexandre', 'WALLOIS', '2018-05-10', '2017-05-10', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(120, 'Simon', 'THULEAU', '2018-11-09', '2017-11-09', 'white', 'M', 'Cheque de 500 puis remboursement en cours de 290E. Ca revient a un paiement de 210E..... Pkoi ce remboursement? inactif??', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(121, 'Thomas', 'BISSON', '2018-11-09', '2017-11-09', 'white', 'M', 'Je connais un Franck plutot, beau fils de philou? Il faudra metttre ça au clair un jour. Doit bien y avoir 2 bisson..', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(122, 'Sofien', 'ZAMITTI', '2017-12-09', '2017-11-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(123, 'Alessandro', 'ZANNI', '2018-11-09', '2017-11-09', 'brown', 'M', 'C\'est quoi sa 2eme discipline à lui?', 'informaticien dans la sécurité', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(124, 'Hichem', 'ARFAOUI', '2018-11-09', '2017-11-09', 'white', 'M', 'C\'est quoi ça comme taro 350 en cheque? 2 disciplines j\'imagine', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(125, 'Olivier', 'ROINEL', '2018-11-09', '2017-11-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(126, 'Martin', 'CZABADAJ', '2018-11-09', '2017-11-09', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(127, 'Denis', 'DAVIDKOV', '2017-12-09', '2017-11-09', 'white', 'M', 'Pourquoi j\'ai reçu ce montant et pas 30 E?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(128, 'Thibaut', 'OLIVIER', '2019-12-11', '2017-05-01', 'black', 'M', 'Moi', 'Jiu-Jitsu headcoach', 'thibautolivier77@gmail.com', '0675403464', '44 rue faidherbe 78800 HOUILLES', 'https://www.facebook.com/thibautolivier77', 0, 0, 1, 1, 1, 0, 0),
+	(129, 'François', 'MOLESLAS', '2020-11-11', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 1, 0),
+	(130, 'Stéphane', 'HENNEQUIN', '2020-11-11', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 1, 0),
+	(131, 'Etienne', 'GREGOIRE', '2019-12-01', '2017-05-01', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 1, 0, 0),
+	(132, 'Matthieu', 'DELALANDRE', '2019-12-11', '2017-05-01', 'black', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 1, 0, 0),
+	(136, 'Jean-Baptiste', 'QUINQUENEL', '2018-11-15', '2017-11-15', 'white', 'M', '2 disciplines j\'imagine', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(137, 'Julien', 'FARAUT', '2018-11-15', '2017-11-15', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(138, 'Michel-Ange', 'MATOUBA', '2018-11-15', '2017-11-15', 'white', 'M', 'Enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(139, 'Akhmed', 'SALAMOV', '2018-09-18', '2017-12-18', 'blue', 'M', 'Son reste de  paiement (250) a été récupéré par la boxe. !!! Dernier cheque refusé!!!', '', '', '', '', '', 0, 1, 1, 1, 0, 1, 0),
+	(142, 'Sylvain', 'DESHORS', '2018-12-19', '2017-12-19', 'white', 'M', 'Prend des CP', 'Chez veolia', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(143, 'Brice', 'DONADELLI', '2017-11-20', '2017-05-01', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 0),
+	(144, 'Marco', 'GONCALVES', '2017-11-20', '2017-05-01', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 0),
+	(145, 'Clara', 'CABRERIZO', '2017-11-20', '2017-05-01', 'white', 'F', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 0),
+	(146, 'Nicolas', 'DUVAUCHELLE', '2018-11-21', '2017-11-21', 'white', 'M', '', 'Acteur', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(147, 'Sebastien', 'LOPES', '2018-11-21', '2017-11-21', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(148, 'Denis', 'CEOLIN', '2018-11-30', '2017-11-30', 'blue', 'M', '', 'Chercheur en chimie', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(149, 'Yohann', 'LY', '2018-11-30', '2017-11-30', 'purple', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(150, 'Thibaud', 'DENINGER', '2018-11-30', '2017-11-30', 'blue', 'M', '', 'Policier', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(152, 'Nicolas', 'MALARD', '2018-11-30', '2017-11-30', 'white', 'M', 'Frere de Yann la ceinture violette', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0),
+	(153, 'David', 'DONNINI', '2018-11-30', '2017-11-30', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(154, 'Juan', 'NERINA', '2018-11-30', '2017-11-30', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(155, 'Roméo', 'YOMBOU', '2018-08-31', '2017-12-04', 'blue', 'M', 'Seulement le libre, !! non déclaré !! Comment le faire figurer.....????? Mettre en cours part??', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(156, 'Hennaddig', 'HORSKYY', '2018-08-01', '2017-12-07', 'white', 'M', 'ukrainien prof dans sa tete, javais négocié 250E jusqu\'a aout, il a payé que 65 (125) pour l\'instant..', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(157, 'Dominique', 'BOYER', '2018-12-07', '2017-12-07', 'white', 'M', 'aikidoka avec une sceance par semaine', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(158, 'Zou', 'THIEN DU CHABERT', '2018-12-07', '2017-12-07', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(159, 'Roy', 'HARRIS', '2018-12-07', '2017-12-07', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(160, 'Hernan', 'VASQUEZ MORA', '2018-12-07', '2017-12-07', 'black', 'M', '', 'policier', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(162, 'David', 'ANKRI', '2019-04-25', '2017-12-12', 'brown', 'M', 'Juif integriste', 'Vendeur de cuir', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(163, 'Matthieu', 'LHOSPITALIER', '2018-03-08', '2017-12-19', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0, 0),
+	(164, 'Aissa', 'EDDAMI', '2018-12-19', '2017-12-19', 'white', 'M', 'pote de bagdad', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(165, 'Lothaire', 'EPEE', '2018-12-19', '2017-12-19', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(166, 'Dioumé', 'SANGARÉ', '2018-12-28', '2017-12-28', 'brown', 'M', 'club d\'origine le maccabi', 'finance?', '', '', '', 'https://www.facebook.com/dioum.sangare', 0, 0, 1, 1, 0, 1, 0),
+	(167, 'Farid', 'NAÏR', '2018-03-03', '2018-01-03', 'purple', 'M', 'reste 200 à payer, tarif de 300 négocié car eleve au carreau aussi', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 1),
+	(168, 'Francis', 'KRAUSE', '2019-01-04', '2018-01-04', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(169, 'Stephane', 'CREANTOR', '2018-07-08', '2018-01-08', 'purple', 'M', 'grand martiniquais', '', '', '', '', 'https://www.facebook.com/stephane.guadyguady', 0, 0, 1, 1, 0, 0, 0),
+	(170, 'Sully', 'CHANTEUR', '2019-01-08', '2018-01-08', 'white', 'M', 'Cours du matin', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(171, 'Raphael', 'GRELLET', '2019-01-09', '2018-01-09', 'white', 'M', '!!!! Cheque posé le 3, refusé le 8 mars 2018, annulé le 14 !!!! retente le 3/4, encore refusé le 6/04', '', '', '', '', '', 0, 1, 1, 1, 0, 0, 0),
+	(172, 'Kamal', 'YDIR', '2019-01-01', '2018-01-09', 'brown', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(173, 'Malik', 'N\'DIAW', '2019-01-09', '2018-01-09', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(174, 'Rachel', 'LOKIEC', '2019-01-24', '2018-01-24', 'white', 'M', 'Je ne connais pas le nom de l\'enfant derrière', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0),
+	(175, 'Michel', 'GUELDRY', '2019-01-24', '2018-01-24', 'blue', 'M', 'Vient surtout le matin, pkoi 600', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(176, 'Mike', 'LATKA', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(177, 'Herve', 'GAILLARD', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(178, 'Frederic', 'CARPENTIER', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(179, 'Sebastien', 'BOTTEY', '2019-01-25', '2018-01-25', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(180, 'Damien', 'LAHMI', '2019-01-25', '2018-01-25', 'blue', 'M', 'Bleu??', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(181, 'Ahmed', 'ALLA', '2019-02-08', '2018-02-08', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(182, 'Tiziano', 'PEDINIELLI', '2019-02-08', '2018-02-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(183, 'Sidney', 'CHAWATY', '2019-02-08', '2018-02-08', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(184, 'Charles-Edouard', 'DI GIAMPIETRO', '2019-02-08', '2018-02-08', 'blue', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0, 0),
+	(186, 'David', 'ARGIRAKIS', '2019-02-10', '2018-02-10', 'black', 'M', '', 'pilote de ligne', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(187, 'Abdelkrim', 'AMROUCHE', '2019-02-11', '2018-02-11', 'black', 'M', '', '', '', '', '', 'https://www.facebook.com/jakarim.gracie', 0, 0, 1, 1, 0, 0, 0),
+	(188, 'Sélim', 'BEN CHEIKH', '2019-02-19', '2018-02-19', 'blue', 'M', '', '', '', '', '', '', 0, 0, 0, 0, 0, 0, 0),
+	(189, 'Lionel', 'MESCAM', '2019-02-22', '2018-02-22', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(190, 'Luc', 'DESCAMPS', '2018-03-24', '2018-02-24', 'white', 'M', '', '', '', '', '', '', 0, 0, 0, 1, 0, 0, 0),
+	(191, 'Sebastien', 'LECOQ', '2021-01-24', '2018-02-24', 'black', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0),
+	(192, 'Louis', 'BLECH-SEMIN', '2019-03-06', '2018-03-06', 'white', 'M', '2 discipline avec MMA', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(193, 'Kamel', 'CHAOUCHE', '2019-03-06', '2018-03-06', 'white', 'M', 'algerien', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(194, 'Roméo', 'WAGNER', '2019-03-12', '2018-03-12', 'white', 'M', '', 'jeune éducateur kim noire sympa', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(195, 'Adams', 'SOULAIMANA', '2019-03-12', '2018-03-12', 'white', 'M', '2 disciplines j\'imagine', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0),
+	(196, 'Romain', 'VILLA', '2019-03-22', '2018-03-22', 'purple', 'M', '2 disciplines', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0);
+/*!40000 ALTER TABLE `members` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. MEMBERS_PAYMENTS
-DROP TABLE IF EXISTS `MEMBERS_PAYMENTS`;
-CREATE TABLE IF NOT EXISTS `MEMBERS_PAYMENTS` (
+-- Export de la structure de la table cercle. members_payments
+DROP TABLE IF EXISTS `members_payments`;
+CREATE TABLE IF NOT EXISTS `members_payments` (
   `MemberID` int(11) NOT NULL,
   `PaymentID` int(11) NOT NULL,
   PRIMARY KEY (`MemberID`,`PaymentID`),
   KEY `FKPayment` (`PaymentID`),
-  CONSTRAINT `FKMember` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`),
-  CONSTRAINT `FKPayment` FOREIGN KEY (`PaymentID`) REFERENCES `PAYMENTS` (`ID`)
+  CONSTRAINT `FKMember` FOREIGN KEY (`MemberID`) REFERENCES `members` (`ID`),
+  CONSTRAINT `FKPayment` FOREIGN KEY (`PaymentID`) REFERENCES `payments` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.MEMBERS_PAYMENTS : ~337 rows (environ)
-DELETE FROM `MEMBERS_PAYMENTS`;
-/*!40000 ALTER TABLE `MEMBERS_PAYMENTS` DISABLE KEYS */;
-INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
+-- Export de données de la table cercle.members_payments : ~337 rows (environ)
+DELETE FROM `members_payments`;
+/*!40000 ALTER TABLE `members_payments` DISABLE KEYS */;
+INSERT INTO `members_payments` (`MemberID`, `PaymentID`) VALUES
 	(45, 684),
 	(16, 789),
 	(19, 793),
@@ -315,17 +322,11 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(56, 858),
 	(57, 859),
 	(58, 860),
-	(111, 871),
-	(111, 872),
-	(111, 873),
-	(111, 874),
-	(111, 875),
 	(65, 877),
 	(80, 915),
 	(83, 920),
 	(87, 931),
 	(88, 932),
-	(116, 939),
 	(9, 955),
 	(78, 971),
 	(46, 982),
@@ -340,9 +341,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(37, 1025),
 	(32, 1028),
 	(32, 1029),
-	(81, 1056),
-	(81, 1057),
-	(81, 1058),
 	(114, 1068),
 	(15, 1078),
 	(15, 1079),
@@ -355,7 +353,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(18, 1176),
 	(18, 1177),
 	(23, 1178),
-	(107, 1181),
 	(62, 1196),
 	(62, 1197),
 	(62, 1198),
@@ -397,7 +394,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(55, 1444),
 	(125, 1476),
 	(125, 1477),
-	(142, 1478),
 	(74, 1479),
 	(74, 1480),
 	(74, 1481),
@@ -435,9 +431,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(85, 1731),
 	(85, 1732),
 	(85, 1733),
-	(183, 1752),
-	(183, 1753),
-	(183, 1754),
 	(127, 1758),
 	(51, 1759),
 	(122, 1764),
@@ -452,7 +445,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(11, 1808),
 	(11, 1809),
 	(11, 1810),
-	(115, 1830),
 	(7, 1836),
 	(70, 1844),
 	(70, 1845),
@@ -461,7 +453,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(99, 1855),
 	(103, 1856),
 	(76, 1859),
-	(190, 1861),
 	(2, 1862),
 	(2, 1863),
 	(17, 1864),
@@ -492,8 +483,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(73, 1892),
 	(166, 1895),
 	(89, 1899),
-	(172, 1900),
-	(172, 1901),
 	(174, 1902),
 	(101, 1906),
 	(101, 1907),
@@ -504,9 +493,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(162, 1912),
 	(162, 1913),
 	(148, 1914),
-	(169, 1915),
-	(163, 1917),
-	(163, 1918),
 	(184, 1942),
 	(165, 1943),
 	(165, 1944),
@@ -515,11 +501,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(173, 1947),
 	(123, 1949),
 	(123, 1950),
-	(90, 1960),
-	(90, 1961),
-	(90, 1962),
-	(90, 1963),
-	(90, 1964),
 	(153, 1965),
 	(153, 1966),
 	(153, 1967),
@@ -554,15 +535,7 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(156, 2046),
 	(156, 2047),
 	(156, 2048),
-	(167, 2068),
 	(27, 2069),
-	(110, 2076),
-	(110, 2077),
-	(110, 2078),
-	(181, 2079),
-	(181, 2080),
-	(181, 2081),
-	(181, 2082),
 	(79, 2083),
 	(79, 2084),
 	(79, 2085),
@@ -571,15 +544,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(177, 2088),
 	(177, 2089),
 	(177, 2090),
-	(170, 2091),
-	(170, 2092),
-	(170, 2093),
-	(170, 2094),
-	(175, 2095),
-	(175, 2096),
-	(175, 2097),
-	(175, 2098),
-	(175, 2099),
 	(154, 2100),
 	(154, 2101),
 	(154, 2102),
@@ -589,22 +553,9 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(42, 2106),
 	(42, 2107),
 	(124, 2108),
-	(194, 2109),
-	(194, 2110),
-	(194, 2111),
-	(194, 2112),
 	(192, 2113),
 	(108, 2114),
 	(108, 2115),
-	(54, 2116),
-	(54, 2117),
-	(54, 2118),
-	(54, 2119),
-	(54, 2120),
-	(54, 2121),
-	(54, 2122),
-	(54, 2123),
-	(54, 2124),
 	(91, 2125),
 	(91, 2126),
 	(91, 2127),
@@ -614,44 +565,100 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(91, 2131),
 	(91, 2132),
 	(91, 2133),
-	(176, 2134),
-	(176, 2135),
-	(176, 2136),
 	(50, 2137),
 	(50, 2138),
 	(50, 2139),
 	(50, 2140),
-	(195, 2145),
-	(195, 2146),
-	(195, 2147),
 	(196, 2148),
 	(196, 2149),
 	(113, 2150),
 	(113, 2151),
 	(171, 2152),
-	(22, 2157),
-	(22, 2158),
-	(178, 2159),
-	(178, 2160),
-	(178, 2161),
-	(178, 2162);
-/*!40000 ALTER TABLE `MEMBERS_PAYMENTS` ENABLE KEYS */;
+	(169, 2164),
+	(81, 2165),
+	(81, 2166),
+	(81, 2167),
+	(178, 2171),
+	(178, 2172),
+	(178, 2173),
+	(178, 2174),
+	(183, 2175),
+	(183, 2176),
+	(183, 2177),
+	(175, 2178),
+	(175, 2179),
+	(175, 2180),
+	(175, 2181),
+	(175, 2182),
+	(22, 2183),
+	(22, 2184),
+	(194, 2185),
+	(194, 2186),
+	(194, 2187),
+	(194, 2188),
+	(195, 2189),
+	(195, 2190),
+	(195, 2191),
+	(54, 2192),
+	(54, 2193),
+	(54, 2194),
+	(54, 2195),
+	(54, 2196),
+	(54, 2197),
+	(54, 2198),
+	(54, 2199),
+	(54, 2200),
+	(181, 2201),
+	(181, 2202),
+	(181, 2203),
+	(181, 2204),
+	(90, 2205),
+	(90, 2206),
+	(90, 2207),
+	(90, 2208),
+	(90, 2209),
+	(176, 2210),
+	(176, 2211),
+	(176, 2212),
+	(172, 2213),
+	(172, 2214),
+	(170, 2215),
+	(170, 2216),
+	(170, 2217),
+	(170, 2218),
+	(190, 2219),
+	(163, 2220),
+	(163, 2221),
+	(116, 2222),
+	(111, 2223),
+	(111, 2224),
+	(111, 2225),
+	(111, 2226),
+	(111, 2227),
+	(142, 2228),
+	(107, 2229),
+	(115, 2230),
+	(110, 2240),
+	(110, 2241),
+	(110, 2242),
+	(167, 2243);
+/*!40000 ALTER TABLE `members_payments` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. MEMBERS_STATUS
-DROP TABLE IF EXISTS `MEMBERS_STATUS`;
-CREATE TABLE IF NOT EXISTS `MEMBERS_STATUS` (
+-- Export de la structure de la table cercle. members_status
+DROP TABLE IF EXISTS `members_status`;
+CREATE TABLE IF NOT EXISTS `members_status` (
   `MemberID` int(11) DEFAULT NULL,
   `Active` tinyint(4) DEFAULT NULL,
   `Date` date DEFAULT NULL,
   `Current` tinyint(4) DEFAULT NULL,
   KEY `FK_MEMBERS2` (`MemberID`),
-  CONSTRAINT `FK_MEMBERS2` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
+  CONSTRAINT `FK_MEMBERS2` FOREIGN KEY (`MemberID`) REFERENCES `members` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.MEMBERS_STATUS : ~178 rows (environ)
-DELETE FROM `MEMBERS_STATUS`;
-/*!40000 ALTER TABLE `MEMBERS_STATUS` DISABLE KEYS */;
-INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
+-- Export de données de la table cercle.members_status : ~182 rows (environ)
+DELETE FROM `members_status`;
+/*!40000 ALTER TABLE `members_status` DISABLE KEYS */;
+INSERT INTO `members_status` (`MemberID`, `Active`, `Date`, `Current`) VALUES
 	(21, 1, '2017-09-25', 1),
 	(85, 1, '2017-10-20', 1),
 	(181, 1, '2018-02-08', 1),
@@ -746,7 +753,7 @@ INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
 	(126, 1, '2017-11-09', 1),
 	(44, 1, '2017-07-18', 1),
 	(132, 1, '2017-05-01', 1),
-	(163, 1, '2017-12-19', 1),
+	(163, 1, '2017-12-19', 0),
 	(80, 1, '2017-09-21', 1),
 	(175, 1, '2018-01-24', 1),
 	(138, 1, '2017-11-15', 1),
@@ -821,7 +828,7 @@ INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
 	(187, 1, '2018-02-11', 1),
 	(188, 0, '2018-02-19', 1),
 	(189, 1, '2018-02-22', 1),
-	(190, 1, '2018-02-24', 1),
+	(190, 1, '2018-02-24', 0),
 	(191, 1, '2018-02-24', 1),
 	(156, 1, '2018-03-06', 1),
 	(192, 1, '2018-03-06', 1),
@@ -831,27 +838,29 @@ INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
 	(194, 1, '2018-03-12', 1),
 	(195, 1, '2018-03-12', 1),
 	(196, 1, '2018-03-22', 1),
-	(171, 0, '2018-04-06', 1);
-/*!40000 ALTER TABLE `MEMBERS_STATUS` ENABLE KEYS */;
+	(171, 0, '2018-04-06', 1),
+	(190, 0, '2018-05-05', 1),
+	(163, 0, '2018-05-05', 1);
+/*!40000 ALTER TABLE `members_status` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. PAYMENTS
-DROP TABLE IF EXISTS `PAYMENTS`;
-CREATE TABLE IF NOT EXISTS `PAYMENTS` (
+-- Export de la structure de la table cercle. payments
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE IF NOT EXISTS `payments` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Amount` int(11) DEFAULT NULL,
-  `Type` enum('Cash','Check','Transfert') DEFAULT NULL,
+  `Type` enum('Cash','Check','Transfert','Prelev') DEFAULT NULL,
   `ReceptionDate` date DEFAULT NULL,
   `Name` varchar(200) DEFAULT NULL,
   `Debt` int(11) DEFAULT NULL,
   `Bank` enum('None','Academy','Perso','Coach') NOT NULL DEFAULT 'None',
   `DepotDate` date DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2163 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2244 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.PAYMENTS : ~337 rows (environ)
-DELETE FROM `PAYMENTS`;
-/*!40000 ALTER TABLE `PAYMENTS` DISABLE KEYS */;
-INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`, `Bank`, `DepotDate`) VALUES
+-- Export de données de la table cercle.payments : ~337 rows (environ)
+DELETE FROM `payments`;
+/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
+INSERT INTO `payments` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`, `Bank`, `DepotDate`) VALUES
 	(684, 280, 'Check', '2017-10-05', 'Raphael GRESSIN', 168, 'Academy', '2017-10-06'),
 	(789, 500, 'Check', '2017-10-05', 'Corentin CAHEN', 300, 'Academy', '2017-10-06'),
 	(793, 350, 'Check', '2017-10-05', 'Pierre CHAMBON', 210, 'Academy', '2017-10-06'),
@@ -869,17 +878,11 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(858, 450, 'Check', '2017-09-07', 'Yohann LES ENFANT', 270, 'Academy', '2017-09-07'),
 	(859, 500, 'Check', '2017-09-27', 'Gregory LETELLIER', 300, 'Academy', '2017-10-04'),
 	(860, 280, 'Check', '2017-09-18', 'Anne LETESSIER', 168, 'Academy', '2017-09-19'),
-	(871, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-10-04'),
-	(872, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-09-05'),
-	(873, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-08-02'),
-	(874, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-07-05'),
-	(875, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-06-04'),
 	(877, 500, 'Check', '2017-09-07', 'Franck NGUYEN', 300, 'Academy', '2017-09-07'),
 	(915, 200, 'Cash', '2017-09-21', 'Mehdi SAIDI', 0, 'None', '2017-10-26'),
 	(920, 200, 'Cash', '2017-10-05', 'Sylvain TARIN', 0, 'None', '2017-10-26'),
 	(931, 380, 'Check', '2017-10-02', 'Alexis TRUJILLO', 228, 'Academy', '2017-10-04'),
 	(932, 350, 'Check', '2017-09-21', 'Arthur TSIMI', 210, 'Academy', '2017-10-04'),
-	(939, 500, 'Check', '2017-05-10', 'Alexandre WALLOIS', 300, 'Academy', '2017-05-11'),
 	(955, 280, 'Check', '2017-09-28', 'Lionel BENICHOU', 168, 'Academy', '2017-10-04'),
 	(971, 500, 'Check', '2017-10-20', 'Vincent PUYDOYEUX', 300, 'Academy', '2017-11-04'),
 	(982, 500, 'Check', '2017-10-10', 'Jules GRUBO', 300, 'Academy', '2017-11-04'),
@@ -894,9 +897,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1025, 250, 'Check', '2017-09-28', 'Jean Paul FOURNET', 150, 'Academy', '2017-11-04'),
 	(1028, 250, 'Check', '2017-09-21', 'Mickael FERREIRA', 150, 'Academy', '2017-10-04'),
 	(1029, 250, 'Check', '2017-09-21', 'Mickael FERREIRA', 150, 'Academy', '2017-11-04'),
-	(1056, 200, 'Check', '2017-09-14', 'Nelson SILVA', 120, 'Academy', '2017-11-04'),
-	(1057, 150, 'Check', '2017-09-14', 'Nelson SILVA', 90, 'Academy', '2017-10-04'),
-	(1058, 150, 'Check', '2017-09-14', 'Nelson SILVA', 90, 'Academy', '2017-09-15'),
 	(1068, 50, 'Cash', '2017-06-01', 'David THOMAS', 30, 'None', '2017-10-26'),
 	(1078, 56, 'Check', '2017-09-14', 'Fabrice BUKASSA', 34, 'Academy', '2017-10-04'),
 	(1079, 56, 'Check', '2017-09-14', 'Fabrice BUKASSA', 34, 'Academy', '2017-11-04'),
@@ -909,7 +909,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1176, 210, 'Check', '2017-11-09', 'Thomas CASTAN', 126, 'Academy', '2017-11-10'),
 	(1177, 210, 'Check', '2017-11-09', 'Thomas CASTAN', 126, 'Academy', '2017-11-10'),
 	(1178, 250, 'Check', '2017-10-10', 'Aime CONTI', 0, 'Academy', '2017-11-04'),
-	(1181, 500, 'Check', '2017-07-18', 'Jorge DO PINHAL', 300, 'Academy', '2017-08-02'),
 	(1196, 200, 'Check', '2017-09-18', 'Yann MALARD', 120, 'Academy', '2017-09-19'),
 	(1197, 150, 'Check', '2017-09-18', 'Yann MALARD', 90, 'Academy', '2017-10-04'),
 	(1198, 150, 'Check', '2017-09-18', 'Yann MALARD', 90, 'Academy', '2017-11-04'),
@@ -951,7 +950,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1444, 100, 'Cash', '2017-09-18', 'Jonas LEBLANC', 0, 'None', '2017-10-26'),
 	(1476, 250, 'Check', '2017-11-09', 'Olivier ROINEL', 150, 'Perso', '2018-01-03'),
 	(1477, 250, 'Check', '2017-11-09', 'Olivier ROINEL', 150, 'Academy', '2017-11-10'),
-	(1478, 500, 'Check', '2017-12-19', 'Sylvain DESHORS', 300, 'Perso', '2018-01-03'),
 	(1479, 80, 'Check', '2017-09-14', 'Celine PERREARD', 48, 'Academy', '2017-09-15'),
 	(1480, 220, 'Check', '2017-11-30', 'Celine PERREARD', 132, 'Academy', '2017-12-04'),
 	(1481, 200, 'Check', '2017-11-30', 'Celine PERREARD', 120, 'Perso', '2018-01-03'),
@@ -989,9 +987,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1731, 140, 'Check', '2017-12-07', 'Adrien TIREL', 84, 'Academy', '2017-12-07'),
 	(1732, 140, 'Check', '2017-12-07', 'Adrien TIREL', 84, 'Academy', '2018-01-03'),
 	(1733, 140, 'Check', '2017-12-07', 'Adrien TIREL', 84, 'Academy', '2018-02-05'),
-	(1752, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'None', '2018-02-08'),
-	(1753, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'None', '2018-02-08'),
-	(1754, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'None', '2018-02-08'),
 	(1758, 70, 'Cash', '2017-11-09', 'Denis DAVIDKOV', 0, 'None', '2017-11-09'),
 	(1759, 30, 'Cash', '2017-10-20', 'Olivier KAZ', 0, 'None', '2017-10-26'),
 	(1764, 80, 'Check', '2017-11-09', 'Sofien ZAMITTI', 48, 'Academy', '2017-11-10'),
@@ -1006,7 +1001,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1808, 55, 'Check', '2017-05-10', 'Farid BOUHAZEM', 33, 'Academy', '2017-08-02'),
 	(1809, 55, 'Check', '2017-05-10', 'Farid BOUHAZEM', 33, 'Academy', '2017-07-07'),
 	(1810, 55, 'Check', '2017-05-10', 'Farid BOUHAZEM', 33, 'Academy', '2017-06-04'),
-	(1830, 500, 'Check', '2017-05-10', 'Moussa TIMERA', 300, 'Academy', '2017-05-11'),
 	(1836, 40, 'Cash', '2017-09-05', 'John BARFF', 0, 'None', '2017-10-26'),
 	(1844, 50, 'Check', '2017-10-16', 'Marc PELLET', 30, 'Academy', '2017-11-04'),
 	(1845, 150, 'Check', '2017-09-21', 'Nathalie VANDERBURG', 90, 'Academy', '2017-10-04'),
@@ -1015,7 +1009,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1855, 120, 'Cash', '2017-09-19', 'Neo ALZIEU', 0, 'None', '2017-10-26'),
 	(1856, 200, 'Check', '2017-05-10', 'Manuel BRUN', 120, 'Academy', '2017-06-04'),
 	(1859, 1100, 'Check', '2017-10-05', 'Mirjana POLJAKOVIC', 700, 'Academy', '2017-10-06'),
-	(1861, 40, 'Cash', '2018-02-23', 'Luc DESCAMPS', 0, 'None', '2018-02-23'),
 	(1862, 40, 'Cash', '2017-09-05', 'Raphael ANI', 0, 'None', '2017-10-26'),
 	(1863, 210, 'Cash', '2017-11-21', 'Raphael ARIE', 0, 'None', '2017-11-21'),
 	(1864, 280, 'Check', '2017-09-25', 'Sarah CASSESE', 168, 'Academy', '2017-10-04'),
@@ -1046,8 +1039,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1892, 100, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60, 'Academy', '2017-10-04'),
 	(1895, 200, 'Cash', '2017-12-28', 'dioumé sangaré', 0, 'None', '2017-12-28'),
 	(1899, 200, 'Cash', '2017-09-08', 'Yohan VERGNE', 0, 'None', '2017-10-26'),
-	(1900, 250, 'Check', '2018-01-09', 'kamal ydir', 150, 'Academy', '2018-02-05'),
-	(1901, 250, 'Check', '2018-01-09', 'kamal ydir', 150, 'None', '2018-01-09'),
 	(1902, 210, 'Check', '2018-01-24', 'rachel lokiec', 126, 'Perso', '2018-02-02'),
 	(1906, 100, 'Check', '2017-06-08', 'Jean-Marc BLOMBOU', 60, 'Academy', '2017-09-05'),
 	(1907, 100, 'Check', '2017-06-08', 'Jean-Marc BLOMBOU', 60, 'Academy', '2017-08-02'),
@@ -1058,9 +1049,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1912, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'Perso', '2018-01-08'),
 	(1913, 140, 'Check', '2017-12-26', 'David ANKRI', 84, 'Perso', '2018-02-07'),
 	(1914, 500, 'Check', '2017-11-30', 'Denis CEOLIN', 300, 'Academy', '2018-02-05'),
-	(1915, 50, 'Cash', '2018-01-08', 'stephane creantor', 0, 'None', '2018-01-08'),
-	(1917, 80, 'Check', '2017-12-19', 'Matthieu LHOSPITALIER', 48, 'Academy', '2018-01-03'),
-	(1918, 80, 'Check', '2018-02-08', 'Matthieu LHOSPITALIER', 48, 'Coach', '2018-02-11'),
 	(1942, 80, 'Check', '2018-02-08', 'charles-edouard di giampietro', 48, 'Academy', '2018-03-03'),
 	(1943, 150, 'Check', '2017-12-19', 'lothaire epee', 90, 'Academy', '2018-03-03'),
 	(1944, 150, 'Check', '2017-12-19', 'lothaire epee', 90, 'Academy', '2018-02-05'),
@@ -1069,11 +1057,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(1947, 250, 'Check', '2018-01-09', 'malik n\'diaw', 150, 'Academy', '2018-03-03'),
 	(1949, 250, 'Check', '2017-11-09', 'Alessandro ZANNI', 150, 'Academy', '2018-03-03'),
 	(1950, 100, 'Cash', '2017-11-09', 'Alessandro ZANNI', 0, 'None', '2017-11-09'),
-	(1960, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2017-11-04'),
-	(1961, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2017-12-04'),
-	(1962, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2018-02-05'),
-	(1963, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2018-03-03'),
-	(1964, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'None', '2017-10-26'),
 	(1965, 125, 'Check', '2017-11-30', 'David DONNINI', 75, 'Academy', '2017-12-04'),
 	(1966, 125, 'Check', '2017-11-30', 'David DONNINI', 75, 'Academy', '2018-01-03'),
 	(1967, 125, 'Check', '2017-11-30', 'David DONNINI', 75, 'Academy', '2018-02-05'),
@@ -1108,15 +1091,7 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2046, 40, 'Cash', '2017-12-07', 'inconnnu HORSKYY', 0, 'None', '2017-12-07'),
 	(2047, 65, 'Cash', '2018-03-06', 'Genedy HORSKYY', 0, 'None', '2018-03-06'),
 	(2048, 65, 'Cash', '2018-03-12', 'Hennaddig HORSKYY', 0, 'None', '2018-03-12'),
-	(2068, 100, 'Transfert', '2018-01-03', 'Farid NAÏR', 60, 'Academy', '2018-01-03'),
 	(2069, 500, 'Check', '2017-10-20', 'Mamadou? DJOULFAYAN', 300, 'Academy', '2017-11-04'),
-	(2076, 80, 'Check', '2017-05-10', 'Kevin MALGERARD', 48, 'Academy', '2017-05-11'),
-	(2077, 80, 'Check', '2017-11-30', 'Jennifer MALGERARD', 48, 'Academy', '2017-12-04'),
-	(2078, 125, 'Check', '2018-03-06', 'Kevin MALGERARD', 75, 'Perso', '2018-03-31'),
-	(2079, 80, 'Check', '2018-02-08', 'ahmed alla', 48, 'Academy', '2018-03-03'),
-	(2080, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'Coach', '2018-03-07'),
-	(2081, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'Perso', '2018-03-31'),
-	(2082, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'None', '2018-03-06'),
 	(2083, 100, 'Check', '2017-09-25', 'Djamel SAHRAOUI', 60, 'None', '2017-10-26'),
 	(2084, 100, 'Check', '2017-09-25', 'Djamel SAHRAOUI', 60, 'Perso', '2018-03-31'),
 	(2085, 100, 'Check', '2017-09-25', 'Djamel SAHRAOUI', 60, 'Perso', '2018-02-01'),
@@ -1125,15 +1100,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2088, 150, 'Check', '2018-01-25', 'herve gaillard', 90, 'Perso', '2018-03-03'),
 	(2089, 100, 'Check', '2018-01-25', 'herve gaillard', 60, 'Perso', '2018-03-31'),
 	(2090, 100, 'Check', '2018-01-25', 'herve gaillard', 60, 'Perso', '2018-02-03'),
-	(2091, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Academy', '2018-02-05'),
-	(2092, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Perso', '2018-03-03'),
-	(2093, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Perso', '2018-03-31'),
-	(2094, 50, 'Check', '2018-01-08', 'sully chanteur', 30, 'None', '2018-01-08'),
-	(2095, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'None', '2018-01-24'),
-	(2096, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'None', '2018-01-24'),
-	(2097, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'Perso', '2018-03-31'),
-	(2098, 150, 'Check', '2018-01-24', 'michel gueldry', 90, 'Perso', '2018-03-03'),
-	(2099, 150, 'Check', '2018-01-24', 'michel gueldry', 90, 'Perso', '2018-02-01'),
 	(2100, 200, 'Check', '2017-11-30', 'Juan NERINA', 120, 'Perso', '2018-02-02'),
 	(2101, 150, 'Check', '2017-11-30', 'Juan NERINA', 90, 'Perso', '2018-03-03'),
 	(2102, 150, 'Check', '2017-11-30', 'Juan NERINA', 90, 'Perso', '2018-03-31'),
@@ -1143,22 +1109,9 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2106, 140, 'Check', '2018-01-09', 'Julien GAZAVE', 84, 'Perso', '2018-03-31'),
 	(2107, 100, 'Check', '2018-01-09', 'Julien GAZAVE', 60, 'Perso', '2018-03-03'),
 	(2108, 350, 'Check', '2017-11-09', 'Hichem ARFAOUI', 210, 'Academy', '2017-11-10'),
-	(2109, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'Academy', '2018-04-03'),
-	(2110, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'None', '2018-03-12'),
-	(2111, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'None', '2018-03-12'),
-	(2112, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'None', '2018-03-12'),
 	(2113, 350, 'Check', '2018-03-06', 'louis blech-semin', 210, 'Academy', '2018-04-03'),
 	(2114, 500, 'Check', '2017-05-10', 'Gwenael HUET', 300, 'Academy', '2017-05-11'),
 	(2115, 500, 'Check', '2018-03-06', 'Gwenael HUET', 300, 'Academy', '2018-04-03'),
-	(2116, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2018-01-03'),
-	(2117, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-12-04'),
-	(2118, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-11-04'),
-	(2119, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-10-04'),
-	(2120, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-09-06'),
-	(2121, 200, 'Check', '2018-03-06', 'Cedric LE FRANC', 120, 'None', '2018-03-06'),
-	(2122, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'Academy', '2018-04-03'),
-	(2123, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'None', '2018-03-06'),
-	(2124, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'None', '2018-03-06'),
 	(2125, 100, 'Check', '2017-09-25', 'Paul-François YGORRA', 60, 'Academy', '2018-04-03'),
 	(2126, 100, 'Check', '2017-09-25', 'Paul-François YGORRA', 60, 'None', '2017-10-26'),
 	(2127, 100, 'Check', '2017-09-25', 'Paul-François YGORRA', 60, 'Academy', '2018-03-03'),
@@ -1168,32 +1121,88 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2131, 50, 'Check', '2017-05-10', 'Paul-François YGORRA', 30, 'Academy', '2017-06-04'),
 	(2132, 60, 'Check', '2017-05-10', 'Paul-François YGORRA', 36, 'Academy', '2017-08-02'),
 	(2133, 60, 'Check', '2017-05-10', 'Paul-François YGORRA', 36, 'Academy', '2017-07-05'),
-	(2134, 150, 'Check', '2018-01-25', 'mike latka', 90, 'Academy', '2018-04-03'),
-	(2135, 200, 'Check', '2018-01-25', 'mike latka', 120, 'None', '2018-01-25'),
-	(2136, 150, 'Check', '2018-01-25', 'mike latka', 90, 'Academy', '2018-03-03'),
 	(2137, 125, 'Check', '2017-10-05', 'Nabil KADID', 75, 'Academy', '2018-04-03'),
 	(2138, 125, 'Check', '2017-10-05', 'Nabil KADID', 75, 'Academy', '2017-12-04'),
 	(2139, 125, 'Check', '2017-10-05', 'Nabil KADID', 75, 'Academy', '2017-11-04'),
 	(2140, 125, 'Check', '2017-10-05', 'Nabil KADID', 75, 'Academy', '2017-10-06'),
-	(2145, 150, 'Check', '2018-03-12', 'adams soulaimana', 90, 'None', '2018-03-12'),
-	(2146, 100, 'Check', '2018-03-12', 'adams soulaimana', 60, 'None', '2018-03-12'),
-	(2147, 100, 'Check', '2018-03-12', 'adams soulaimana', 60, 'Academy', '2018-04-03'),
 	(2148, 200, 'Check', '2018-03-22', 'Romain VILLA', 120, 'None', '2018-03-22'),
 	(2149, 150, 'Check', '2018-03-22', 'Romain VILLA', 90, 'Academy', '2018-04-03'),
 	(2150, 210, 'Check', '2017-06-01', 'Samuel OLIVIER', 126, 'Academy', '2017-07-05'),
 	(2151, 210, 'Check', '2017-06-01', 'Samuel OLIVIER', 126, 'Academy', '2017-06-04'),
 	(2152, 125, 'Check', '2018-01-09', 'raphael grellet', 75, 'Academy', '2018-02-05'),
-	(2157, 150, 'Check', '2017-09-14', 'Cyril CHIMKIEVITCH', 90, 'Academy', '2017-09-15'),
-	(2158, 130, 'Check', '2018-04-10', 'Cyril CHIMKIEVITCH', 78, 'None', '2018-04-10'),
-	(2159, 80, 'Check', '2018-01-25', 'frederic carpentier', 48, 'Academy', '2018-02-05'),
-	(2160, 120, 'Check', '2018-04-10', 'Frederic CARPENTIER', 72, 'None', '2018-04-10'),
-	(2161, 150, 'Check', '2018-04-10', 'Frederic CARPENTIER', 90, 'None', '2018-04-10'),
-	(2162, 150, 'Check', '2018-04-10', 'Frederic CARPENTIER', 90, 'Perso', '2018-04-11');
-/*!40000 ALTER TABLE `PAYMENTS` ENABLE KEYS */;
+	(2164, 50, 'Cash', '2018-01-08', 'stephane creantor', 0, 'None', '2018-01-08'),
+	(2165, 200, 'Check', '2017-09-14', 'Nelson SILVA', 120, 'Academy', '2017-11-04'),
+	(2166, 150, 'Check', '2017-09-14', 'Nelson SILVA', 90, 'Academy', '2017-10-04'),
+	(2167, 150, 'Check', '2017-09-14', 'Nelson SILVA', 90, 'Academy', '2017-09-15'),
+	(2171, 80, 'Check', '2018-01-25', 'frederic carpentier', 48, 'Academy', '2018-02-05'),
+	(2172, 120, 'Check', '2018-04-10', 'Frederic CARPENTIER', 72, 'None', '2018-04-10'),
+	(2173, 150, 'Check', '2018-04-10', 'Frederic CARPENTIER', 90, 'Perso', '2018-05-03'),
+	(2174, 150, 'Check', '2018-04-10', 'Frederic CARPENTIER', 90, 'Perso', '2018-04-11'),
+	(2175, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'Perso', '2018-04-23'),
+	(2176, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'Perso', '2018-05-03'),
+	(2177, 100, 'Check', '2018-02-08', 'dalila Hiba', 60, 'None', '2018-02-08'),
+	(2178, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'None', '2018-01-24'),
+	(2179, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'Perso', '2018-05-03'),
+	(2180, 100, 'Check', '2018-01-24', 'michel gueldry', 60, 'Perso', '2018-03-31'),
+	(2181, 150, 'Check', '2018-01-24', 'michel gueldry', 90, 'Perso', '2018-03-03'),
+	(2182, 150, 'Check', '2018-01-24', 'michel gueldry', 90, 'Perso', '2018-02-01'),
+	(2183, 150, 'Check', '2017-09-14', 'Cyril CHIMKIEVITCH', 90, 'Academy', '2017-09-15'),
+	(2184, 130, 'Check', '2018-04-10', 'Cyril CHIMKIEVITCH', 78, 'Academy', '2018-05-03'),
+	(2185, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'Academy', '2018-04-03'),
+	(2186, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'Academy', '2018-05-03'),
+	(2187, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'None', '2018-03-12'),
+	(2188, 125, 'Check', '2018-03-12', 'Nathalie Page', 75, 'None', '2018-03-12'),
+	(2189, 150, 'Check', '2018-03-12', 'adams soulaimana', 90, 'None', '2018-03-12'),
+	(2190, 100, 'Check', '2018-03-12', 'adams soulaimana', 60, 'Academy', '2018-05-03'),
+	(2191, 100, 'Check', '2018-03-12', 'adams soulaimana', 60, 'Academy', '2018-04-03'),
+	(2192, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2018-01-03'),
+	(2193, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-12-04'),
+	(2194, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-11-04'),
+	(2195, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-10-04'),
+	(2196, 100, 'Check', '2017-09-05', 'Cedric LE FRANC', 60, 'Academy', '2017-09-06'),
+	(2197, 200, 'Check', '2018-03-06', 'Cedric LE FRANC', 120, 'None', '2018-03-06'),
+	(2198, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'Academy', '2018-04-03'),
+	(2199, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'Academy', '2018-05-03'),
+	(2200, 100, 'Check', '2018-03-06', 'Cedric LE FRANC', 60, 'None', '2018-03-06'),
+	(2201, 80, 'Check', '2018-02-08', 'ahmed alla', 48, 'Academy', '2018-03-03'),
+	(2202, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'Coach', '2018-03-07'),
+	(2203, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'Perso', '2018-03-31'),
+	(2204, 140, 'Check', '2018-03-06', 'Ahmed ALLA', 84, 'Academy', '2018-05-03'),
+	(2205, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2017-11-04'),
+	(2206, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2017-12-04'),
+	(2207, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2018-02-05'),
+	(2208, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2018-03-03'),
+	(2209, 100, 'Check', '2017-10-16', 'Guillaume VIGNE', 60, 'Academy', '2018-05-03'),
+	(2210, 150, 'Check', '2018-01-25', 'mike latka', 90, 'Academy', '2018-04-03'),
+	(2211, 200, 'Check', '2018-01-25', 'mike latka', 120, 'Academy', '2018-05-03'),
+	(2212, 150, 'Check', '2018-01-25', 'mike latka', 90, 'Academy', '2018-03-03'),
+	(2213, 250, 'Check', '2018-01-09', 'kamal ydir', 150, 'Academy', '2018-02-05'),
+	(2214, 250, 'Check', '2018-01-09', 'kamal ydir', 150, 'Academy', '2018-05-03'),
+	(2215, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Academy', '2018-02-05'),
+	(2216, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Perso', '2018-03-03'),
+	(2217, 100, 'Check', '2018-01-08', 'sully chanteur', 60, 'Perso', '2018-03-31'),
+	(2218, 50, 'Check', '2018-01-08', 'sully chanteur', 30, 'Academy', '2018-05-03'),
+	(2219, 40, 'Cash', '2018-02-23', 'Luc DESCAMPS', 0, 'None', '2018-02-23'),
+	(2220, 80, 'Check', '2017-12-19', 'Matthieu LHOSPITALIER', 48, 'Academy', '2018-01-03'),
+	(2221, 80, 'Check', '2018-02-08', 'Matthieu LHOSPITALIER', 48, 'Coach', '2018-02-11'),
+	(2222, 500, 'Check', '2017-05-10', 'Alexandre WALLOIS', 300, 'Academy', '2017-05-11'),
+	(2223, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-10-04'),
+	(2224, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-09-05'),
+	(2225, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-08-02'),
+	(2226, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-07-05'),
+	(2227, 100, 'Check', '2017-05-10', 'Joan MESINELE', 60, 'Academy', '2017-06-04'),
+	(2228, 500, 'Check', '2017-12-19', 'Sylvain DESHORS', 300, 'Perso', '2018-01-03'),
+	(2229, 500, 'Check', '2017-07-18', 'Jorge DO PINHAL', 300, 'Academy', '2017-08-02'),
+	(2230, 500, 'Check', '2017-05-10', 'Moussa TIMERA', 300, 'Academy', '2017-05-11'),
+	(2240, 80, 'Check', '2017-05-10', 'Kevin MALGERARD', 48, 'Academy', '2017-05-11'),
+	(2241, 80, 'Check', '2017-11-30', 'Jennifer MALGERARD', 48, 'Academy', '2017-12-04'),
+	(2242, 125, 'Check', '2018-03-06', 'Kevin MALGERARD', 75, 'Perso', '2018-03-31'),
+	(2243, 100, 'Transfert', '2018-01-03', 'Farid NAÏR', 60, 'Academy', '2018-01-03');
+/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. PRIVATES
-DROP TABLE IF EXISTS `PRIVATES`;
-CREATE TABLE IF NOT EXISTS `PRIVATES` (
+-- Export de la structure de la table cercle. privates
+DROP TABLE IF EXISTS `privates`;
+CREATE TABLE IF NOT EXISTS `privates` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `MemberID` int(11) NOT NULL,
   `Amount` int(11) NOT NULL,
@@ -1203,13 +1212,13 @@ CREATE TABLE IF NOT EXISTS `PRIVATES` (
   `Description` text,
   PRIMARY KEY (`ID`),
   KEY `FK_MEMBERS` (`MemberID`),
-  CONSTRAINT `FK_MEMBERS` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_MEMBERS` FOREIGN KEY (`MemberID`) REFERENCES `members` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.PRIVATES : ~15 rows (environ)
-DELETE FROM `PRIVATES`;
-/*!40000 ALTER TABLE `PRIVATES` DISABLE KEYS */;
-INSERT INTO `PRIVATES` (`ID`, `MemberID`, `Amount`, `Date`, `bookedLessons`, `doneLessons`, `Description`) VALUES
+-- Export de données de la table cercle.privates : ~15 rows (environ)
+DELETE FROM `privates`;
+/*!40000 ALTER TABLE `privates` DISABLE KEYS */;
+INSERT INTO `privates` (`ID`, `MemberID`, `Amount`, `Date`, `bookedLessons`, `doneLessons`, `Description`) VALUES
 	(1, 143, 250, '2017-11-20', 5, 4, '3) Passages de worm, defense de berimbolo, defense de leg weave\r\n4) revision defense worm, defense berimbolo, passage lasso'),
 	(2, 144, 200, '2017-11-30', 5, 5, NULL),
 	(3, 142, 60, '2017-10-17', 1, 1, NULL),
@@ -1223,25 +1232,26 @@ INSERT INTO `PRIVATES` (`ID`, `MemberID`, `Amount`, `Date`, `bookedLessons`, `do
 	(11, 188, 30, '2018-02-19', 1, 1, 'Défense sur QG, lasso et single leg'),
 	(12, 145, 60, '2018-02-20', 1, 1, 'Single leg debout, sorties de demi garde flat, controle en monté. sparrings'),
 	(13, 142, 60, '2018-03-08', 1, 1, 'sweep basique en lasso\r\npassage de lasso en sortant la main\r\ntentative de recomposition de garde en roulant sur les épaules\r\ncontrole en monté'),
-	(14, 144, 200, '2018-03-13', 5, 1, '1) Over under, drills'),
-	(15, 44, 250, '2018-04-10', 5, 1, '1) Lasso, recomposition si stack, si passage de garde. Sweep standard, sweep a la tanquinho, revision jugi en monté');
-/*!40000 ALTER TABLE `PRIVATES` ENABLE KEYS */;
+	(14, 144, 200, '2018-03-13', 5, 5, '1) Over under, drills\r\n2) Over under drills et bull dog pass\r\n3) 30/04 questions diverses et variées\r\n4) 03/05 drill over under, crazy dog pass\r\n5) 07/05 drill over under, crazy dog pass'),
+	(15, 44, 250, '2018-04-10', 5, 3, '1) Lasso, recomposition si stack, si passage de garde. Sweep standard, sweep a la tanquinho, revision jugi en monté\r\n2) Lasso revision, bull dog pass, reverse dlr, kiss of the dragon\r\n3) Revision du 2'),
+	(16, 63, 250, '2018-05-11', 5, 1, '1) Details sur passage knee slide, sur crazy dog pass');
+/*!40000 ALTER TABLE `privates` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. REFUNDS
-DROP TABLE IF EXISTS `REFUNDS`;
-CREATE TABLE IF NOT EXISTS `REFUNDS` (
+-- Export de la structure de la table cercle. refunds
+DROP TABLE IF EXISTS `refunds`;
+CREATE TABLE IF NOT EXISTS `refunds` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Label` varchar(200) NOT NULL,
   `Amount` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Comment` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.REFUNDS : ~11 rows (environ)
-DELETE FROM `REFUNDS`;
-/*!40000 ALTER TABLE `REFUNDS` DISABLE KEYS */;
-INSERT INTO `REFUNDS` (`ID`, `Label`, `Amount`, `Date`, `Comment`) VALUES
+-- Export de données de la table cercle.refunds : ~12 rows (environ)
+DELETE FROM `refunds`;
+/*!40000 ALTER TABLE `refunds` DISABLE KEYS */;
+INSERT INTO `refunds` (`ID`, `Label`, `Amount`, `Date`, `Comment`) VALUES
 	(1, 'Pot stage', 75, '2017-06-10', NULL),
 	(2, 'Location', 4625, '2017-08-15', NULL),
 	(3, 'Paiement Etienne Gregoire', 90, '2017-10-16', NULL),
@@ -1252,12 +1262,14 @@ INSERT INTO `REFUNDS` (`ID`, `Label`, `Amount`, `Date`, `Comment`) VALUES
 	(8, 'Location', 10000, '2018-01-30', ''),
 	(9, 'Paiement Etienne Gregoire', 90, '2018-02-16', ''),
 	(10, 'Paiement Etienne Gregoire', 90, '2018-03-10', ''),
-	(11, 'Location', 10000, '2018-03-23', '');
-/*!40000 ALTER TABLE `REFUNDS` ENABLE KEYS */;
+	(11, 'Location', 10000, '2018-03-23', ''),
+	(12, 'Paiement Etienne Gregoire', 90, '2018-04-12', ''),
+	(13, 'Paiement Etienne Gregoire', 120, '2018-05-11', '');
+/*!40000 ALTER TABLE `refunds` ENABLE KEYS */;
 
--- Export de la structure de la table cercle. SEMINARS
-DROP TABLE IF EXISTS `SEMINARS`;
-CREATE TABLE IF NOT EXISTS `SEMINARS` (
+-- Export de la structure de la table cercle. seminars
+DROP TABLE IF EXISTS `seminars`;
+CREATE TABLE IF NOT EXISTS `seminars` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Theme` varchar(200) NOT NULL,
   `Date` date NOT NULL,
@@ -1269,15 +1281,30 @@ CREATE TABLE IF NOT EXISTS `SEMINARS` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Export de données de la table cercle.SEMINARS : ~4 rows (environ)
-DELETE FROM `SEMINARS`;
-/*!40000 ALTER TABLE `SEMINARS` DISABLE KEYS */;
-INSERT INTO `SEMINARS` (`ID`, `Theme`, `Date`, `WebMEMBERS`, `LocalMEMBERS`, `Amount`, `Debt`, `Comment`) VALUES
+-- Export de données de la table cercle.seminars : ~4 rows (environ)
+DELETE FROM `seminars`;
+/*!40000 ALTER TABLE `seminars` DISABLE KEYS */;
+INSERT INTO `seminars` (`ID`, `Theme`, `Date`, `WebMEMBERS`, `LocalMEMBERS`, `Amount`, `Debt`, `Comment`) VALUES
 	(1, 'Spider guard', '2017-06-10', 14, 21, 1000, 200, NULL),
 	(2, 'Basics', '2017-09-10', 23, 31, 1357, 271, NULL),
 	(3, 'Passages de gardes', '2017-12-02', 10, 13, 570, 114, '4 du gkd, 11 du cercle (3 passages ) , 8 ext -> 45% du cercle '),
 	(4, 'Fondamentaux', '2018-02-11', 36, 31, 1696, 339, '34 du cercle (6 passages, tous venus... ), 7 du gkd, 26 ext -> 50% de gens du cercle');
-/*!40000 ALTER TABLE `SEMINARS` ENABLE KEYS */;
+/*!40000 ALTER TABLE `seminars` ENABLE KEYS */;
+
+-- Export de la structure de la table cercle. settings
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `KeySettings` varchar(50) NOT NULL DEFAULT '    ',
+  `Value` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`KeySettings`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Export de données de la table cercle.settings : ~0 rows (environ)
+DELETE FROM `settings`;
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
+INSERT INTO `settings` (`KeySettings`, `Value`) VALUES
+	('LastConnectDate', '16/05/2018 18:03:18');
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

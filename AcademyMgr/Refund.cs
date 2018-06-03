@@ -11,7 +11,7 @@ namespace AcademyMgr
 
         private int _ID;
         private string _label;
-        private int _amount;
+        private decimal _amount;
         private DateTime _date;
         private string _comment;
 
@@ -20,7 +20,7 @@ namespace AcademyMgr
             get { return this._ID; }
             set { _ID = value; }
         }
-        public int Amount
+        public decimal Amount
         {
             get { return this._amount; }
             set { _amount = value; }

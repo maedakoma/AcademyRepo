@@ -45,8 +45,8 @@ namespace Academy
             currentSeminar.Theme = txtTheme.Text;
             currentSeminar.WebMembers = Convert.ToInt32(txtWebMembers.Text);
             currentSeminar.LocalMembers = Convert.ToInt32(txtLocalMembers.Text);
-            currentSeminar.Amount = Convert.ToInt32(txtAmount.Text);
-            currentSeminar.Debt = Convert.ToInt32(txtDebt.Text);
+            currentSeminar.Amount = Convert.ToDecimal(txtAmount.Text);
+            currentSeminar.Debt = Convert.ToDecimal(txtDebt.Text);
             currentSeminar.Comment = txtComment.Text;
             currentSeminar.Date = date.Value;
             if (currentSeminar.ID == 0)

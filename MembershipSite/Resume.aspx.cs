@@ -18,24 +18,24 @@ namespace MembershipSite
             manager.Initialize();
 
             txtMembersCount.Text = manager.getActiveStudentsCount().ToString();
-            int nLicencesAmount = manager.getLicencesAmount();
+            decimal nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
-            int nLicencesDebt = manager.getLicencesDebt();
+            decimal nLicencesDebt = manager.getLicencesDebt();
             txtLicencesDebt.Text = nLicencesDebt.ToString();
             txtLicencesBenef.Text = (nLicencesAmount - nLicencesDebt).ToString();
-            int nPrivatesAmount = manager.getPrivatesAmount();
+            decimal nPrivatesAmount = manager.getPrivatesAmount();
             txtPrivates.Text = nPrivatesAmount.ToString();
-            int nSeminarsAmount = manager.getSeminarsAmount();
+            decimal nSeminarsAmount = manager.getSeminarsAmount();
             txtSeminar.Text = nSeminarsAmount.ToString();
-            int nSeminarsDebt = manager.getSeminarsDebt();
+            decimal nSeminarsDebt = manager.getSeminarsDebt();
             txtSeminarDebt.Text = nSeminarsDebt.ToString();
             txtSeminarBenef.Text = (nSeminarsAmount - nSeminarsDebt).ToString();
-            int nCoachsPaysAmount = manager.getCoachsPaysAmount();
+            decimal nCoachsPaysAmount = manager.getCoachsPaysAmount();
             txtTeacherPays.Text = nCoachsPaysAmount.ToString();
             txtTotalDebt.Text = (nSeminarsDebt + nLicencesDebt).ToString();
             txtPaidDebt.Text = manager.getPaidDebt().ToString();
             txtDebt.Text = (nSeminarsDebt + nLicencesDebt - manager.getPaidDebt()).ToString();
-            int nTotalBenef = nLicencesAmount - nLicencesDebt + nPrivatesAmount + nSeminarsAmount - nSeminarsDebt - nCoachsPaysAmount;
+            decimal nTotalBenef = nLicencesAmount - nLicencesDebt + nPrivatesAmount + nSeminarsAmount - nSeminarsDebt - nCoachsPaysAmount;
             txtTotalBenef.Text = nTotalBenef.ToString();
             //calcul d'un mensuel hypothétique:
             DateTime beginDate = new DateTime(2017, 5, 1);

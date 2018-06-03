@@ -11,7 +11,7 @@ namespace AcademyMgr
 
         private int _ID;
         private Member _member;
-        private int _amount;
+        private decimal _amount;
         private DateTime _date;
         private int _bookedLessons;
         private int _doneLessons;
@@ -27,7 +27,7 @@ namespace AcademyMgr
             get { return this._member; }
             set { _member = value; }
         }
-                public int Amount
+        public decimal Amount
         {
             get { return this._amount; }
             set { _amount = value; }

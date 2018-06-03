@@ -12,7 +12,7 @@ namespace AcademyMgr
         private Member _coach;
         private int _lessons;
         private int _pay;
-        private int _amount;
+        private decimal _amount;
         private DateTime _date;
         private string _comment;
 
@@ -41,7 +41,7 @@ namespace AcademyMgr
             get { return this._pay; }
             set { _pay = value; }
         }
-        public int Amount
+        public decimal Amount
         {
             get { return this._amount; }
             set { _amount = value; }

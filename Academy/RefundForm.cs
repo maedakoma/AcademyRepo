@@ -40,7 +40,7 @@ namespace Academy
         private void btnOK_Click(object sender, EventArgs e)
         {
             currentRefund.Label = txtLabel.Text;
-            currentRefund.Amount = Convert.ToInt32(txtAmount.Text);
+            currentRefund.Amount = Convert.ToDecimal(txtAmount.Text);
             currentRefund.Comment = txtComment.Text;
             currentRefund.Date = date.Value;
             if (currentRefund.ID == 0)

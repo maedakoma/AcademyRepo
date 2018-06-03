@@ -14,8 +14,8 @@ namespace AcademyMgr
         private DateTime _date;
         private int _webMembers;
         private int _localMembers;
-        private int _amount;
-        private int _debt;
+        private decimal _amount;
+        private decimal _debt;
         private string _comment;
 
         public int ID
@@ -43,12 +43,12 @@ namespace AcademyMgr
             get { return this._localMembers; }
             set { _localMembers = value; }
         }
-        public int Amount
+        public decimal Amount
         {
             get { return this._amount; }
             set { _amount = value; }
         }
-        public int Debt
+        public decimal Debt
         {
             get { return this._debt; }
             set { _debt = value; }

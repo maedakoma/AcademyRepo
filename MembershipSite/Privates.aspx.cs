@@ -132,7 +132,7 @@ namespace MembershipSite
             Member member = new Member();
             member.ID = Convert.ToInt32(ddMembers.SelectedValue);
             prv.member = member;
-            prv.Amount = Convert.ToInt32(txtAmount.Text);
+            prv.Amount = Convert.ToDecimal(txtAmount.Text);
             prv.BookedLessons = Convert.ToInt32(txtBooked.Text);
             prv.DoneLessons = Convert.ToInt32(txtDone.Text);
             prv.Date = DateTime.Now;

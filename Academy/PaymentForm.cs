@@ -49,8 +49,8 @@ namespace Academy
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            currentPayment.Amount = Convert.ToInt32(txtAmount.Text);
-            currentPayment.Debt = Convert.ToInt32(Convert.ToDouble(txtDebt.Text));
+            currentPayment.Amount = Convert.ToDecimal(txtAmount.Text);
+            currentPayment.Debt = Convert.ToDecimal(Convert.ToDouble(txtDebt.Text));
             currentPayment.Name = txtName.Text;
             currentPayment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), cbType.Text, true);
             currentPayment.ReceptionDate = dateTimePickerReception.Value;

@@ -46,24 +46,24 @@ namespace Academy
 
         public void FillFinancialResume()
         {
-            int nLicencesAmount = manager.getLicencesAmount();
+            decimal nLicencesAmount = manager.getLicencesAmount();
             txtLicencesAmount.Text = nLicencesAmount.ToString();
-            int nLicencesDebt = manager.getLicencesDebt();
+            decimal nLicencesDebt = manager.getLicencesDebt();
             txtLicencesDebt.Text = nLicencesDebt.ToString();
             txtLicencesBenef.Text = (nLicencesAmount - nLicencesDebt).ToString();
-            int nPrivatesAmount = manager.getPrivatesAmount();
+            decimal nPrivatesAmount = manager.getPrivatesAmount();
             txtPrivates.Text = nPrivatesAmount.ToString();
-            int nSeminarsAmount = manager.getSeminarsAmount();
+            decimal nSeminarsAmount = manager.getSeminarsAmount();
             txtSeminar.Text = nSeminarsAmount.ToString();
-            int nSeminarsDebt = manager.getSeminarsDebt();
+            decimal nSeminarsDebt = manager.getSeminarsDebt();
             txtSeminarDebt.Text = nSeminarsDebt.ToString();
             txtSeminarBenef.Text = (nSeminarsAmount - nSeminarsDebt).ToString();
-            int nCoachsPaysAmount = manager.getCoachsPaysAmount();
+            decimal nCoachsPaysAmount = manager.getCoachsPaysAmount();
             txtTeacherPays.Text = nCoachsPaysAmount.ToString();
             txtTotalDebt.Text = (nSeminarsDebt + nLicencesDebt).ToString();
             txtPaidDebt.Text = manager.getPaidDebt().ToString();
             txtDebt.Text = (nSeminarsDebt + nLicencesDebt - manager.getPaidDebt()).ToString();
-            int nTotalBenef = nLicencesAmount - nLicencesDebt + nPrivatesAmount + nSeminarsAmount - nSeminarsDebt - nCoachsPaysAmount;
+            decimal nTotalBenef = nLicencesAmount - nLicencesDebt + nPrivatesAmount + nSeminarsAmount - nSeminarsDebt - nCoachsPaysAmount;
             txtTotalBenef.Text = nTotalBenef.ToString();
             //calcul d'un mensuel hypothétique:
             DateTime beginDate = new DateTime(2017,5,1);
@@ -75,7 +75,7 @@ namespace Academy
 
             var dayConfig = Mappers.Xy<DateModel>()
                                   .X(dateModel => dateModel.DateTime.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
-                                  .Y(dateModel => dateModel.Value);
+                                  .Y(dateModel => (double) dateModel.Value);
 
 
             cartesianChart1.Series = new SeriesCollection(dayConfig)
@@ -99,7 +99,7 @@ namespace Academy
             List<Payment> payments = manager.getPayments();
             //aggregation des montants
             DateTime datetemp = DateTime.MinValue;
-            int amounttemp = 0;
+            decimal amounttemp = 0;
             foreach(Payment pay in payments)
             {
                 //On n'affiche pas le mois courant car incomplet
@@ -189,9 +189,8 @@ namespace Academy
             int nBrown = manager.getActiveStudentsCount(Member.beltEnum.Brown);
             int nBlack = manager.getActiveStudentsCount(Member.beltEnum.Black);
             int nCompetitors = manager.getActiveStudentsCompetitorCount();
-            int nNewStudents = manager.getNewStudents(dateTimeRef.Value).Count;
-            int nLostStudents = manager.getLostStudents(dateTimeRef.Value).Count;
-
+            List<String> newStudents = manager.getNewStudents(dateTimeRef.Value);
+            List<String> lostStudents = manager.getLostStudents(dateTimeRef.Value);
 
             txtMembersCount.Text = nTotal.ToString();
             txtWhite.Text = nWhite.ToString() + " (" + (((double)nWhite/ (double)nTotal)).ToString("P", CultureInfo.InvariantCulture)+")";
@@ -200,8 +199,18 @@ namespace Academy
             txtBrown.Text = nBrown.ToString() + " (" + (((double)nBrown / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtBlack.Text = nBlack.ToString() + " (" + (((double)nBlack / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
             txtCompetitor.Text = nCompetitors.ToString() + " (" + (((double)nCompetitors / (double)nTotal)).ToString("P", CultureInfo.InvariantCulture) + ")";
-            txtNewStudents.Text = nNewStudents.ToString();
-            txtLostStudents.Text = nLostStudents.ToString();
+            txtNewStudents.Text = newStudents.Count.ToString();
+            listNew.Items.Clear();
+            foreach (String student in newStudents)
+            {
+                listNew.Items.Add(student);
+            }
+            txtLostStudents.Text = lostStudents.Count.ToString();
+            listLost.Items.Clear();
+            foreach (String student in lostStudents)
+            {
+                listLost.Items.Add(student);
+            }
 
             Func<ChartPoint, string> labelPoint = chartPoint =>
             string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
@@ -257,7 +266,7 @@ namespace Academy
 
             var dayConfig = Mappers.Xy<DateModel>()
                                   .X(dateModel => dateModel.DateTime.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
-                                  .Y(dateModel => dateModel.Value);
+                                  .Y(dateModel => (double) dateModel.Value);
 
 
             cartesianChart2.Series = new SeriesCollection(dayConfig)
@@ -373,8 +382,8 @@ namespace Academy
                 row["child"] = mem.Child;
                 row["alert"] = mem.Alert;
                 row["fullyear"] = mem.FullYear;
-                int amount = 0;
-                int debt = 0;
+                decimal amount = 0;
+                decimal debt = 0;
                 foreach (Payment pay in mem.Payments)
                 {
                     amount = amount + pay.Amount;
@@ -448,7 +457,7 @@ namespace Academy
             pays = manager.getPayments(true);
             trMoneyDepot.Nodes.Clear();
             trMoneyDepot.BeginUpdate();
-            int nAmount = 0;
+            decimal nAmount = 0;
             foreach (Payment pay in pays)
             {
                 string date = pay.DepotDate.ToShortDateString();
@@ -907,16 +916,26 @@ namespace Academy
 
         private void dateTimeRef_ValueChanged(object sender, EventArgs e)
         {
-            int nNewStudents = manager.getNewStudents(dateTimeRef.Value).Count;
-            int nLostStudents = manager.getLostStudents(dateTimeRef.Value).Count;
-            txtNewStudents.Text = nNewStudents.ToString();
-            txtLostStudents.Text = nLostStudents.ToString();
+            List<String> newStudents = manager.getNewStudents(dateTimeRef.Value);
+            List<String> lostStudents = manager.getLostStudents(dateTimeRef.Value);
+            txtNewStudents.Text = newStudents.Count.ToString();
+            listNew.Items.Clear();
+            foreach (String student in newStudents)
+            {
+                listNew.Items.Add(student);
+            }
+            txtLostStudents.Text = lostStudents.Count.ToString();
+            listLost.Items.Clear();
+            foreach (String student in lostStudents)
+            {
+                listLost.Items.Add(student);
+            }
         }
     }
 
     public class DateModel
     {
         public System.DateTime DateTime { get; set; }
-        public double Value { get; set; }
+        public decimal Value { get; set; }
     }
 }

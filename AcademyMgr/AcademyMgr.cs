@@ -40,8 +40,8 @@ namespace AcademyMgr
                     foreach(Member member in members)
                     {
                         Payment pay = new Payment();
-                        pay.Amount = (42*99)/100;
-                        pay.Debt = Convert.ToInt32(0.6 * pay.Amount);
+                        pay.Amount = (decimal)(42*99)/100;
+                        pay.Debt = (decimal) 0.6 * pay.Amount;
                         pay.Name = member.Firstname + " " + member.Lastname;
                         pay.Type = Payment.typeEnum.Prelev;
                         pay.ReceptionDate = lastConnectionDate;
@@ -92,7 +92,7 @@ namespace AcademyMgr
                 Refund refund = new Refund();
                 refund.ID = (int)reader["ID"];
                 refund.Label = reader["label"].ToString();
-                refund.Amount = (int)reader["amount"];
+                refund.Amount = (decimal)reader["amount"];
                 refund.Comment = reader["comment"].ToString();
                 refund.Date = Convert.ToDateTime(reader["Date"]);
                 refunds.Add(refund);
@@ -119,7 +119,7 @@ namespace AcademyMgr
                 pay.Coach = coach;
                 pay.Lessons = (int)reader["Lessons"];
                 pay.Pay = (int)reader["Pay"];
-                pay.Amount = (int)reader["Amount"];
+                pay.Amount = (decimal)reader["Amount"];
                 pay.Date = Convert.ToDateTime(reader["Date"]);
                 pay.Comment = reader["comment"].ToString();
                 CoachPays.Add(pay);
@@ -144,8 +144,8 @@ namespace AcademyMgr
                 seminar.Date = Convert.ToDateTime(reader["Date"]);
                 seminar.WebMembers = (int)reader["WebMembers"];
                 seminar.LocalMembers = (int)reader["LocalMembers"];
-                seminar.Amount = (int)reader["amount"];
-                seminar.Debt = (int)reader["Debt"];
+                seminar.Amount = (decimal)reader["amount"];
+                seminar.Debt = (decimal)reader["Debt"];
                 seminar.Comment = reader["comment"].ToString();
 
                 seminars.Add(seminar);
@@ -170,7 +170,7 @@ namespace AcademyMgr
                 member.Firstname = reader["Firstname"].ToString();
                 member.Lastname = reader["Lastname"].ToString();
                 priv.member = member;
-                priv.Amount = (int)reader["amount"];
+                priv.Amount = (decimal)reader["amount"];
                 priv.Date = Convert.ToDateTime(reader["Date"]);
                 priv.BookedLessons = (int)reader["bookedLessons"];
                 priv.DoneLessons = (int)reader["doneLessons"];
@@ -222,8 +222,8 @@ namespace AcademyMgr
                 {
                     Payment payment = new Payment();
                     payment.ID = (int)reader["paymentID"];
-                    payment.Amount = (int)reader["amount"];
-                    payment.Debt = (int)reader["debt"];
+                    payment.Amount = (decimal)reader["amount"];
+                    payment.Debt = (decimal)reader["debt"];
                     String sType = reader["type"].ToString();
                     if (sType != String.Empty)
                     {
@@ -290,8 +290,8 @@ namespace AcademyMgr
                     if (reader["amount"] != DBNull.Value)
                     {
                         payment.ID = (int)reader["paymentID"];
-                        payment.Amount = (int)reader["amount"];
-                        payment.Debt = (int)reader["debt"];
+                        payment.Amount = (decimal) reader["amount"];
+                        payment.Debt = (decimal)reader["debt"];
                         payment.Name = reader["name"].ToString();
                         String sType = reader["type"].ToString();
                         if (sType != String.Empty)
@@ -410,8 +410,8 @@ namespace AcademyMgr
             {
                 Payment payment = new Payment();
                 payment.ID = (int)reader["ID"];
-                payment.Amount = (int)reader["amount"];
-                payment.Debt = (int)reader["debt"];
+                payment.Amount = (decimal)reader["amount"];
+                payment.Debt = (decimal)reader["debt"];
                 String sType = reader["type"].ToString();
                 if (sType != String.Empty)
                 {
@@ -439,9 +439,12 @@ namespace AcademyMgr
             List<String> newStudents = new List<string>();
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and MS.Date>?date and M.internal=?internal";
+            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 " +
+                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and (M.fullyear=?fullyear OR M.Prelev=?Prelev)";
             cmd.Parameters.AddWithValue("?date", sinceDate);
             cmd.Parameters.AddWithValue("?internal", 1);
+            cmd.Parameters.AddWithValue("?fullyear", 1);
+            cmd.Parameters.AddWithValue("?Prelev", 1);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -474,12 +477,12 @@ namespace AcademyMgr
             cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and M.internal=?internal";
             cmd.Parameters.AddWithValue("?internal", 1);
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            int nCount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nCount = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            return nAmount;
+            return nCount;
         }
         public int getActiveStudentsCount(Member.beltEnum belt)
         {
@@ -487,12 +490,12 @@ namespace AcademyMgr
             cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and belt=?belt";
             cmd.Parameters.AddWithValue("?belt", belt.ToString());
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            int nCount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nCount = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            return nAmount;
+            return nCount;
         }
         public int getActiveStudentsCompetitorCount()
         {
@@ -500,94 +503,94 @@ namespace AcademyMgr
             cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and competitor=?competitor";
             cmd.Parameters.AddWithValue("?competitor", true);
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            int nCount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nCount = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            return nAmount;
+            return nCount;
         }
-        public int getLicencesAmount()
+        public decimal getLicencesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(amount) from PAYMENTS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getLicencesDebt()
+        public decimal getLicencesDebt()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(debt) from PAYMENTS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getPrivatesAmount()
+        public decimal getPrivatesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(amount) from PRIVATES";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getSeminarsAmount()
+        public decimal getSeminarsAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(amount) from SEMINARS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getSeminarsDebt()
+        public decimal getSeminarsDebt()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(debt) from SEMINARS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getPaidDebt()
+        public decimal getPaidDebt()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(amount) from REFUNDS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }
-        public int getCoachsPaysAmount()
+        public decimal getCoachsPaysAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             cmd.CommandText = "SELECT SUM(amount) from COACHSPAYMENTS";
             object result = cmd.ExecuteScalar();
-            int nAmount = 0;
+            decimal nAmount = 0;
             if (result != DBNull.Value)
             {
-                nAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                nAmount = Convert.ToDecimal(cmd.ExecuteScalar());
             }
             return nAmount;
         }

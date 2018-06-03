@@ -78,8 +78,8 @@ namespace MembershipSite
                     row["gender"] = mem.Gender;
                     row["child"] = mem.Child;
                     row["alert"] = mem.Alert;
-                    int amount = 0;
-                    int debt = 0;
+                    decimal amount = 0;
+                    decimal debt = 0;
                     foreach (Payment pay in mem.Payments)
                     {
                         amount = amount + pay.Amount;

@@ -50,7 +50,7 @@ namespace Academy
             currentCoachPayment.Month = txtMonth.Text;
             currentCoachPayment.Lessons = Convert.ToInt32(txtLessons.Text);
             currentCoachPayment.Pay = Convert.ToInt32(txtLessonPrice.Text);
-            currentCoachPayment.Amount = Convert.ToInt32(txtAmount.Text);
+            currentCoachPayment.Amount = Convert.ToDecimal(txtAmount.Text);
             currentCoachPayment.Date = dateTimePickerReception.Value;
             if (currentCoachPayment.ID == 0)
             {

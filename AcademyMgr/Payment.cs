@@ -25,10 +25,10 @@ namespace AcademyMgr
         }
 
         private int _ID;
-        private int _amount;
+        private Decimal _amount;
         private typeEnum _type;
         private string _name;
-        private int _debt;
+        private Decimal _debt;
         private bankEnum _bank;
         private DateTime _receptionDate;
         private DateTime _depotDate;
@@ -48,12 +48,12 @@ namespace AcademyMgr
             get { return this._name; }
             set { _name = value; }
         }
-        public int Amount
+        public Decimal Amount
         {
             get { return this._amount; }
             set { _amount = value; }
         }
-        public int Debt
+        public Decimal Debt
         {
             get { return this._debt; }
             set { _debt = value; }

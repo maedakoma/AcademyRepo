@@ -157,7 +157,7 @@ namespace Academy
 
 
             double minV = new DateTime(2017, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
-            double maxV = new DateTime(2018, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = new DateTime(2018, 8, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
             cartesianChart1.AxisX.Clear();
             cartesianChart1.AxisX.Add(new Axis
             {

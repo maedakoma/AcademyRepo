@@ -5,9 +5,6 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
-
-
-
 namespace AcademyMgr
 {
     public class AcademyMgr
@@ -31,7 +28,9 @@ namespace AcademyMgr
             DateTime lastConnectionDate = getLastConnectionDate();
             //Combien de fois on a passé le 5 du mois et pour chaque fois on ajoute un paiement
             //On part de la last connection date on increment le jour et à chaque 5 du mois, on ajoute les prelevements:
-            while(lastConnectionDate<= DateTime.Now)
+            lastConnectionDate = lastConnectionDate.AddDays(1);
+
+            while (lastConnectionDate.Date <= DateTime.Now.Date)
             {
                 if (lastConnectionDate.Day == 5)
                 {
@@ -440,9 +439,10 @@ namespace AcademyMgr
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
             cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 " +
-                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and (M.fullyear=?fullyear OR M.Prelev=?Prelev)";
+                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and M.Coach=?coach and (M.fullyear=?fullyear OR M.Prelev=?Prelev)";
             cmd.Parameters.AddWithValue("?date", sinceDate);
             cmd.Parameters.AddWithValue("?internal", 1);
+            cmd.Parameters.AddWithValue("?coach", 0);
             cmd.Parameters.AddWithValue("?fullyear", 1);
             cmd.Parameters.AddWithValue("?Prelev", 1);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();

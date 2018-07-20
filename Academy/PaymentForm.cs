@@ -71,7 +71,7 @@ namespace Academy
             {
                 if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedItem.ToString() != "Cash" )
                 {
-                    txtDebt.Text = (0.6 * result).ToString();
+                    txtDebt.Text = (AcademyMgr.AcademyMgr.CoefDebt * result).ToString();
                 }
                 else
                 {

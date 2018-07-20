@@ -437,6 +437,7 @@ namespace Academy
             List<Payment> pays = manager.getPayments(false);
             trMoneyReceived.Nodes.Clear();
             trMoneyReceived.BeginUpdate();
+            decimal nAmount = 0;
             foreach (Payment pay in pays)
             {
                 string date = pay.ReceptionDate.ToShortDateString();
@@ -444,12 +445,27 @@ namespace Academy
                 {
                     trMoneyReceived.Nodes.Add(date, date);
                 }
-                if (!trMoneyReceived.Nodes[date].Nodes.ContainsKey(pay.Name))
+                if (!trMoneyReceived.Nodes[date].Nodes.ContainsKey(pay.Type.ToString()))
                 {
-                    trMoneyReceived.Nodes[date].Nodes.Add(pay.Name, pay.Name);
+                    trMoneyReceived.Nodes[date].Nodes.Add(pay.Type.ToString(), pay.Type.ToString());
+                    nAmount = 0;
                 }
+                nAmount = nAmount + pay.Amount;
+                if (!trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.ContainsKey(pay.Name))
+                {
+                    trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.Add(pay.Name, pay.Name + " - " + pay.Amount.ToString());
+                }
+                if (nAmount != 0)
+                {
+                    trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Text = pay.Type.ToString() + " ( " + nAmount.ToString() + " E )";
+                }
+                //----
+                //if (!trMoneyReceived.Nodes[date].Nodes.ContainsKey(pay.Name))
+                //{
+                //    trMoneyReceived.Nodes[date].Nodes.Add(pay.Name, pay.Name);
+                //}
 
-                trMoneyReceived.Nodes[date].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
+                //trMoneyReceived.Nodes[date].Nodes[pay.Name].Nodes.Add(pay.Amount.ToString() + " - " + pay.Type + " - " + pay.Bank);
             }
             trMoneyReceived.EndUpdate();
 
@@ -457,7 +473,7 @@ namespace Academy
             pays = manager.getPayments(true);
             trMoneyDepot.Nodes.Clear();
             trMoneyDepot.BeginUpdate();
-            decimal nAmount = 0;
+            nAmount = 0;
             foreach (Payment pay in pays)
             {
                 string date = pay.DepotDate.ToShortDateString();

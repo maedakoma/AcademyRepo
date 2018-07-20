@@ -9,6 +9,9 @@ namespace AcademyMgr
 {
     public class AcademyMgr
     {
+        public static double CoefDebt = 0.6;
+        public static int PrelevDay = 5;
+        public static int PrelevAmount = 42;
         MySqlConnection dbConn;
         public string activeStudentsMetric = "activeStudents";
         public string activeWhiteStudentsMetric = "activeWhiteStudents";
@@ -32,15 +35,15 @@ namespace AcademyMgr
 
             while (lastConnectionDate.Date <= DateTime.Now.Date)
             {
-                if (lastConnectionDate.Day == 5)
+                if (lastConnectionDate.Day == PrelevDay)
                 {
                     //Ajout des prelevements pour les personnes concernées:
                     List<Member> members =  getMembers(null, true);
                     foreach(Member member in members)
                     {
                         Payment pay = new Payment();
-                        pay.Amount = (decimal)(42*99)/100;
-                        pay.Debt = (decimal) 0.6 * pay.Amount;
+                        pay.Amount = (decimal)(PrelevAmount * 99)/100;
+                        pay.Debt = (decimal)CoefDebt * pay.Amount;
                         pay.Name = member.Firstname + " " + member.Lastname;
                         pay.Type = Payment.typeEnum.Prelev;
                         pay.ReceptionDate = lastConnectionDate;

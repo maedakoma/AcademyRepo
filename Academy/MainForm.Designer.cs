@@ -97,6 +97,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMembersResume = new System.Windows.Forms.TabPage();
+            this.listLost = new System.Windows.Forms.ListBox();
             this.listNew = new System.Windows.Forms.ListBox();
             this.dateTimeRef = new System.Windows.Forms.DateTimePicker();
             this.label19 = new System.Windows.Forms.Label();
@@ -120,7 +121,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMembersCount = new System.Windows.Forms.TextBox();
             this.lblMembers = new System.Windows.Forms.Label();
-            this.listLost = new System.Windows.Forms.ListBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMembers.SuspendLayout();
@@ -307,6 +309,8 @@
             // 
             // tabMoney
             // 
+            this.tabMoney.Controls.Add(this.label21);
+            this.tabMoney.Controls.Add(this.label20);
             this.tabMoney.Controls.Add(this.trMoneyDepot);
             this.tabMoney.Controls.Add(this.trMoneyReceived);
             this.tabMoney.Location = new System.Drawing.Point(4, 32);
@@ -320,16 +324,16 @@
             // 
             // trMoneyDepot
             // 
-            this.trMoneyDepot.Location = new System.Drawing.Point(712, 17);
+            this.trMoneyDepot.Location = new System.Drawing.Point(712, 52);
             this.trMoneyDepot.Name = "trMoneyDepot";
-            this.trMoneyDepot.Size = new System.Drawing.Size(676, 657);
+            this.trMoneyDepot.Size = new System.Drawing.Size(676, 622);
             this.trMoneyDepot.TabIndex = 4;
             // 
             // trMoneyReceived
             // 
-            this.trMoneyReceived.Location = new System.Drawing.Point(6, 17);
+            this.trMoneyReceived.Location = new System.Drawing.Point(6, 52);
             this.trMoneyReceived.Name = "trMoneyReceived";
-            this.trMoneyReceived.Size = new System.Drawing.Size(663, 657);
+            this.trMoneyReceived.Size = new System.Drawing.Size(663, 622);
             this.trMoneyReceived.TabIndex = 3;
             // 
             // tabRefunds
@@ -907,6 +911,14 @@
             this.tabMembersResume.UseVisualStyleBackColor = true;
             this.tabMembersResume.Enter += new System.EventHandler(this.tabMembersResume_Enter);
             // 
+            // listLost
+            // 
+            this.listLost.FormattingEnabled = true;
+            this.listLost.Location = new System.Drawing.Point(952, 104);
+            this.listLost.Name = "listLost";
+            this.listLost.Size = new System.Drawing.Size(227, 277);
+            this.listLost.TabIndex = 48;
+            // 
             // listNew
             // 
             this.listNew.FormattingEnabled = true;
@@ -1121,13 +1133,23 @@
             this.lblMembers.TabIndex = 18;
             this.lblMembers.Text = "Membres actifs:";
             // 
-            // listLost
+            // label20
             // 
-            this.listLost.FormattingEnabled = true;
-            this.listLost.Location = new System.Drawing.Point(952, 104);
-            this.listLost.Name = "listLost";
-            this.listLost.Size = new System.Drawing.Size(227, 277);
-            this.listLost.TabIndex = 48;
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(280, 17);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(62, 13);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "Argent reçu";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(1058, 17);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(76, 13);
+            this.label21.TabIndex = 6;
+            this.label21.Text = "Argent déposé";
             // 
             // MainForm
             // 
@@ -1141,6 +1163,7 @@
             this.tabMembers.ResumeLayout(false);
             this.tabMembers.PerformLayout();
             this.tabMoney.ResumeLayout(false);
+            this.tabMoney.PerformLayout();
             this.tabRefunds.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridRefunds)).EndInit();
             this.tabSeminars.ResumeLayout(false);
@@ -1242,6 +1265,8 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ListBox listNew;
         private System.Windows.Forms.ListBox listLost;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
     }
 }
 

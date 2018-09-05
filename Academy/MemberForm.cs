@@ -45,6 +45,7 @@ namespace Academy
             chkCoach.Checked = member.Coach;
             chkActive.Checked = member.Active;
             chkPrelev.Checked = member.Prelev;
+            txtPrelevAmount.Text = member.PrelevAmount.ToString();
             txtComment.Text = member.Comment;
             txtJob.Text = member.Job;
             txtMail.Text = member.Mail;
@@ -148,6 +149,10 @@ namespace Academy
             currentMember.Competitor = chkCompetitor.Checked;
             currentMember.Coach = chkCoach.Checked;
             currentMember.Prelev = chkPrelev.Checked;
+            if (currentMember.Prelev)
+            {
+                currentMember.PrelevAmount = Convert.ToInt32(txtPrelevAmount.Text);
+            }
             currentMember.Comment = txtComment.Text;
             currentMember.Job = txtJob.Text;
             currentMember.Mail = txtMail.Text;

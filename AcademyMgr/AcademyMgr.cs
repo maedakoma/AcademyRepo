@@ -20,8 +20,8 @@ namespace AcademyMgr
         public string activeBrownStudentsMetric = "activeBrownStudents";
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
-        public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
-        //public string connectionString = "server=35.205.127.92;user id=root;password=iimg4jek;database=cercle";
+        //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
+        public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE";
 
         public void Initialize()
         {
@@ -251,6 +251,7 @@ namespace AcademyMgr
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
                     mem.Prelev = Convert.ToBoolean(reader["Prelev"]);
+                    mem.PrelevAmount = Convert.ToInt32(reader["PrelevAmount"]);
                     if (reader["creationdate"] != DBNull.Value)
                     {
                         mem.Creationdate = Convert.ToDateTime(reader["creationdate"]);
@@ -605,7 +606,7 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, prelev, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?prelev, ?competitor)";
+                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, prelev, prelevamount, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?prelev, ?prelevamount, ?competitor)";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -624,6 +625,7 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?facebook", member.Facebook);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
                 comm.Parameters.AddWithValue("?prelev", member.Prelev);
+                comm.Parameters.AddWithValue("?prelevamount", member.PrelevAmount);
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
 
 
@@ -672,7 +674,7 @@ namespace AcademyMgr
                 }
 
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, prelev=?prelev WHERE ID=?ID";
+                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, prelev=?prelev, prelevAmount=?prelevamount WHERE ID=?ID";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?enddate", member.Enddate);
@@ -691,6 +693,7 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
                 comm.Parameters.AddWithValue("?prelev", member.Prelev);
+                comm.Parameters.AddWithValue("?prelevamount", member.PrelevAmount);
                 comm.Parameters.AddWithValue("?ID", member.ID);
                 comm.ExecuteNonQuery();
 

@@ -46,6 +46,7 @@ namespace AcademyMgr
         private string _phone;
         private string _address;
         private string _facebook;
+        private int _prelevAmount = 0;
 
         public int ID
         {
@@ -160,6 +161,11 @@ namespace AcademyMgr
         {
             get { return this._facebook; }
             set { _facebook = value; }
+        }
+        public int PrelevAmount
+        {
+            get { return this._prelevAmount; }
+            set { _prelevAmount = value; }
         }
         public Member()
         {

@@ -64,6 +64,7 @@
             this.chkCompetitor = new System.Windows.Forms.CheckBox();
             this.chkCoach = new System.Windows.Forms.CheckBox();
             this.chkPrelev = new System.Windows.Forms.CheckBox();
+            this.txtPrelevAmount = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -390,16 +391,24 @@
             this.chkPrelev.AutoSize = true;
             this.chkPrelev.Location = new System.Drawing.Point(550, 97);
             this.chkPrelev.Name = "chkPrelev";
-            this.chkPrelev.Size = new System.Drawing.Size(56, 17);
+            this.chkPrelev.Size = new System.Drawing.Size(62, 17);
             this.chkPrelev.TabIndex = 38;
-            this.chkPrelev.Text = "Prelev";
+            this.chkPrelev.Text = "Prelev :";
             this.chkPrelev.UseVisualStyleBackColor = true;
+            // 
+            // txtPrelevAmount
+            // 
+            this.txtPrelevAmount.Location = new System.Drawing.Point(612, 95);
+            this.txtPrelevAmount.Name = "txtPrelevAmount";
+            this.txtPrelevAmount.Size = new System.Drawing.Size(39, 20);
+            this.txtPrelevAmount.TabIndex = 39;
             // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 680);
+            this.Controls.Add(this.txtPrelevAmount);
             this.Controls.Add(this.chkPrelev);
             this.Controls.Add(this.chkCoach);
             this.Controls.Add(this.chkCompetitor);
@@ -483,5 +492,6 @@
         private System.Windows.Forms.CheckBox chkCompetitor;
         private System.Windows.Forms.CheckBox chkCoach;
         private System.Windows.Forms.CheckBox chkPrelev;
+        private System.Windows.Forms.TextBox txtPrelevAmount;
     }
 }

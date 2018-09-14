@@ -11,7 +11,6 @@ namespace AcademyMgr
     {
         public static double CoefDebt = 0.6;
         public static int PrelevDay = 5;
-        public static int PrelevAmount = 42;
         MySqlConnection dbConn;
         public string activeStudentsMetric = "activeStudents";
         public string activeWhiteStudentsMetric = "activeWhiteStudents";
@@ -42,7 +41,7 @@ namespace AcademyMgr
                     foreach(Member member in members)
                     {
                         Payment pay = new Payment();
-                        pay.Amount = (decimal)(PrelevAmount * 99)/100;
+                        pay.Amount = (decimal)(member.PrelevAmount * 99)/100;
                         pay.Debt = (decimal)CoefDebt * pay.Amount;
                         pay.Name = member.Firstname + " " + member.Lastname;
                         pay.Type = Payment.typeEnum.Prelev;

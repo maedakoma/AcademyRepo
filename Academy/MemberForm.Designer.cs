@@ -402,6 +402,7 @@
             this.txtPrelevAmount.Name = "txtPrelevAmount";
             this.txtPrelevAmount.Size = new System.Drawing.Size(39, 20);
             this.txtPrelevAmount.TabIndex = 39;
+            this.txtPrelevAmount.Text = "42";
             // 
             // MemberForm
             // 

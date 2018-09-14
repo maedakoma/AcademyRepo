@@ -346,7 +346,8 @@ namespace Academy
             c11.DataType = typeof(bool);
             DataColumn c12 = new DataColumn("amount");
             DataColumn c13 = new DataColumn("debt");
-            DataColumn c14 = new DataColumn("comment");
+            DataColumn c14 = new DataColumn("mail");
+            DataColumn c15 = new DataColumn("comment");
 
             //Add the Created Columns to the Datatable
             People.Columns.Add(c0);
@@ -364,6 +365,7 @@ namespace Academy
             People.Columns.Add(c12);
             People.Columns.Add(c13);
             People.Columns.Add(c14);
+            People.Columns.Add(c15);
 
             foreach (Member mem in members)
             {
@@ -392,6 +394,7 @@ namespace Academy
                 row["amount"] = amount;
                 row["debt"] = debt;
                 row["comment"] = mem.Comment;
+                row["mail"] = mem.Mail;
                 row["membershipOK"] = mem.MembershipOK;
                 row["competitor"] = mem.Competitor;
                 People.Rows.Add(row);

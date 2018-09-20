@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `COACHSPAYMENTS` (
   CONSTRAINT `FK_MEMBER` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.COACHSPAYMENTS : ~43 rows (environ)
+-- Export de données de la table CERCLE.COACHSPAYMENTS : ~41 rows (environ)
 DELETE FROM `COACHSPAYMENTS`;
 /*!40000 ALTER TABLE `COACHSPAYMENTS` DISABLE KEYS */;
 INSERT INTO `COACHSPAYMENTS` (`ID`, `MemberID`, `Month`, `Lessons`, `Pay`, `Amount`, `Date`, `Comment`) VALUES
@@ -126,9 +126,9 @@ CREATE TABLE IF NOT EXISTS `MEMBERS` (
   `PrelevAmount` int(11) DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `uq_MEMBERS` (`Firstname`,`Lastname`)
-) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.MEMBERS : ~198 rows (environ)
+-- Export de données de la table CERCLE.MEMBERS : ~192 rows (environ)
 DELETE FROM `MEMBERS`;
 /*!40000 ALTER TABLE `MEMBERS` DISABLE KEYS */;
 INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`, `Belt`, `Gender`, `Comment`, `Job`, `Mail`, `Phone`, `Address`, `Facebook`, `Child`, `Alert`, `FullYear`, `Internal`, `Coach`, `Competitor`, `Prelev`, `PrelevAmount`) VALUES
@@ -156,7 +156,7 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(24, 'Ricardo', 'RIBEIRO', '2019-09-14', '2017-05-10', 'blue', 'M', 'blessé au genou le 3/11. Redonne les cheques ou pas?', 'cuisinier', 'ricridj@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(25, 'Olivier', 'DAURARIO', '2018-10-10', '2017-09-28', 'brown', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
 	(26, 'Christian', 'DEGUIS', '2018-09-05', '2017-09-05', 'white', 'M', 'C\'est quoi ce taro? enfant?', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(27, 'Mamadou?', 'DJOULFAYAN', '2018-10-16', '2017-10-20', 'white', 'M', 'Rapport avec Mamadou konate? Prenom sebastien sur cfjjb!!', '', '', '', '', '', 0, 1, 1, 1, 0, 0, 0, 0),
+	(27, 'Mamadou?', 'DJOULFAYAN', '2018-10-16', '2017-10-20', 'white', 'M', 'Rapport avec Mamadou konate? Prenom sebastien sur cfjjb!!', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(28, 'Fabien', 'DORE', '2019-09-14', '2017-09-07', 'purple', 'M', '', '', 'fabiendore@outlook.fr ', '', '31 rue Laporte , 33200, Bordeaux , FR ', '', 0, 0, 1, 1, 0, 1, 1, 42),
 	(29, 'Raphael', 'DOS SANTOS', '2018-11-09', '2017-09-05', 'blue', 'M', '', '', 'RafiU4@outlook.fr', '', '', '', 0, 0, 1, 1, 0, 1, 0, 0),
 	(31, 'Eric', 'DRIKES', '2018-09-04', '2017-09-14', 'white', 'M', '', '', 'timbargeot@orange.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
@@ -165,11 +165,11 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(34, 'Marc Antoine', 'FIGHIERA', '2018-09-08', '2017-09-12', 'blue', 'M', '', 'graphiste je crois', 'MA.FIGHIERA@GMAIL.COM', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(36, 'Florian', 'FONTRIER', '2018-09-15', '2017-09-15', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
 	(37, 'Jean Paul', 'FOURNET', '2019-09-11', '2017-09-28', 'white', 'M', '', '', 'fournetjeanpaul@gmail.com', '', '17 Rue du General LECLERC 94220 Charenton ', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(38, 'Simon', 'FRANQUET', '2018-09-12', '2017-07-11', 'white', 'M', '', '', 'simon.franquet@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(38, 'Simon', 'FRANQUET', '2019-09-12', '2017-07-11', 'white', 'M', '', '', 'simon.franquet@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(39, 'Bayle', 'GAO', '2018-10-04', '2017-09-25', 'purple', 'M', '', 'ingenieur robotique', '', '', '', '', 0, 0, 1, 1, 0, 1, 0, 0),
 	(42, 'Julien', 'GAZAVE', '2018-12-09', '2017-09-28', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(43, 'Yoann', 'GOLESTIN', '2018-03-11', '2017-09-07', 'white', 'M', 'avait donné 5 cheques de 100. S\'est blessé au ligament du coup j\'ai déchiré les 2 derniers cheques et je l\'ai remboursé de 175 E.', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(44, 'Matias', 'GOURDON', '2018-07-18', '2017-07-18', 'white', 'M', '', '', 'lemail2mathias@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(44, 'Matias', 'GOURDON', '2019-09-19', '2017-07-18', 'white', 'M', '', '', 'lemail2mathias@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(45, 'Raphael', 'GRESSIN', '2018-09-28', '2017-10-05', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0, 0),
 	(46, 'Jules', 'GRUBO', '2018-10-12', '2017-10-10', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
 	(47, 'Adrien', 'HASSID', '2018-09-20', '2017-09-21', 'white', 'M', '', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0, 0),
@@ -195,7 +195,7 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(68, 'Noel', 'ONIZKO', '2017-10-14', '2017-09-14', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
 	(69, 'Alban', 'OUAHAB', '2018-09-20', '2017-09-25', 'blue', 'M', '', 'étudiant / recherche commerce?', 'alban.ouahab@gmail.com', '', '', '', 0, 0, 1, 1, 0, 1, 0, 0),
 	(70, 'Samuel', 'PELLET', '2018-09-21', '2017-09-21', 'white', 'M', 'C\'est quoi son abonnement? enfant?', '', 'marc.pellet26@orange.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(73, 'Emmanuel', 'PEREIRA VIEIRA', '2018-09-21', '2017-09-21', 'white', 'M', '', 'livreur dans les librairies', 'manisnatch@gmail.com', '', '', '', 0, 0, 1, 1, 0, 1, 0, 0),
+	(73, 'Emanuel', 'VIEIRA', '2019-09-18', '2017-09-21', 'blue', 'M', '', 'livreur dans les librairies', 'manisnatch@gmail.com', '', '', '', 0, 0, 1, 1, 0, 1, 1, 42),
 	(74, 'Celine', 'PERREARD', '2018-09-14', '2017-09-14', 'white', 'F', '', '', 'perreard.celine@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(75, 'Jeremy', 'PICOSTE', '2018-10-10', '2017-10-16', 'black', 'M', 'tarif réduit du cercle', '', 'jeremy.picoste@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(76, 'Mirjana', 'POLJAKOVIC', '2018-10-04', '2017-10-05', 'white', 'M', 'Qui est ce derrière??', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
@@ -211,9 +211,9 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(86, 'Christophe', 'TROEL', '2018-09-15', '2017-05-10', 'white', 'M', '', '', 'christophe.troel@hotmail.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(87, 'Alexis', 'TRUJILLO', '2018-09-20', '2017-10-02', 'white', 'M', '', '', 'alexis.atrujill@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(88, 'Arthur', 'TSIMI', '2018-09-12', '2017-09-21', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
-	(89, 'Yohan', 'VERGNE', '2018-09-08', '2017-09-08', 'blue', 'M', '', '', 'ambulance.adam75@gmail.com', '', '48 rue des bruyères 93260 Les Lilas ', '', 0, 0, 1, 1, 0, 1, 0, 0),
+	(89, 'Yohan', 'VERGNE', '2019-09-08', '2017-09-08', 'blue', 'M', '', '', 'ambulance.adam75@gmail.com', '', '48 rue des bruyères 93260 Les Lilas ', '', 0, 0, 1, 1, 0, 1, 0, 0),
 	(90, 'Guillaume', 'VIGNE', '2018-10-04', '2017-10-16', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(91, 'Paul-François', 'YGORRA', '2018-09-20', '2017-05-10', 'blue', 'M', '', '', 'ygorrapf@free.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(91, 'Paul-François', 'YGORRA', '2018-09-20', '2017-05-10', 'blue', 'M', '', '', 'ygorrapf@free.fr', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(92, 'Nissim', 'ZERBIB', '2019-09-08', '2017-09-18', 'white', 'M', '', '', 'nissim.zerbib@ens.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(99, 'Neo', 'ALZIEU', '2018-09-19', '2017-09-19', 'white', 'M', 'C\'est quoi son abo? un enfant?', '', 'ned.alzieu@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(100, 'Frederic', 'AMBROISE', '2019-07-04', '2017-06-28', 'white', 'M', 'Grand martiniquais, inscrit a 2 disciplines, vient de l\'hapkido', '', 'defre2k2@hotmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
@@ -227,7 +227,7 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(108, 'Gwenael', 'HUET', '2019-03-06', '2017-05-10', 'blue', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(109, 'Guillaume', 'LE MAUT', '2018-06-01', '2017-06-01', 'white', 'M', 'Enfant?', '', '', '', '', '', 1, 0, 1, 1, 0, 0, 0, 0),
 	(110, 'Kevin', 'MALGERARD', '2019-09-14', '2017-05-10', 'white', 'M', '', '', 'kevincdf@hotmail.fr', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
-	(111, 'Joan', 'MESINELE', '2018-05-10', '2017-05-10', 'white', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(111, 'Joan', 'MESINELE', '2018-05-10', '2017-05-10', 'white', 'M', '', '', 'angetjoan@hotmail.com', '', '1 Chemin des Coutures , Ivry sur Seine , 94200, FR ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(112, 'Moustakima', 'HASSANI', '2019-09-14', '2017-06-01', 'brown', 'M', '', '', 'mhassani@free-infra.fr ', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(113, 'Samuel', 'OLIVIER', '2019-05-18', '2017-06-01', 'white', 'M', '', '', 'samuel.olivier.bonte@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(114, 'David', 'THOMAS', '2017-07-01', '2017-06-01', 'white', 'M', '', '', NULL, NULL, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, 0),
@@ -263,7 +263,7 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(153, 'David', 'DONNINI', '2018-11-30', '2017-11-30', 'white', 'M', '', '', 'davdons@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(154, 'Juan', 'NERINA', '2018-11-30', '2017-11-30', 'blue', 'M', '', '', 'totochi2i@outlook.fr', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(155, 'Roméo', 'YOMBOU', '2018-08-31', '2017-12-04', 'blue', 'M', 'Seulement le libre, !! non déclaré !! Comment le faire figurer.....????? Mettre en cours part??', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(156, 'Hennaddig', 'HORSKYY', '2018-08-01', '2017-12-07', 'white', 'M', 'ukrainien prof dans sa tete, javais négocié 250E jusqu\'a aout, il a payé que 65 (125) pour l\'instant..', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(156, 'Hennaddig', 'HORSKYY', '2018-08-01', '2017-12-07', 'white', 'M', 'ukrainien prof dans sa tete, javais négocié 250E jusqu\'a aout, il a payé que 65 (125) pour l\'instant..', 'vtc', 'vtchennadiy@gmail.com ', '', '108 rue de picpus, Paris, 75012, FR ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(157, 'Dominique', 'BOYER', '2018-12-07', '2017-12-07', 'white', 'M', 'aikidoka avec une sceance par semaine', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(158, 'Zou', 'THIEN DU CHABERT', '2018-12-07', '2017-12-07', 'purple', 'M', '', '', '', '', '', '', 0, 0, 1, 1, 0, 1, 0, 0),
 	(159, 'Roy', 'HARRIS', '2018-12-07', '2017-12-07', 'brown', 'M', '', '', 'roy.harris@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
@@ -302,7 +302,7 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(194, 'Roméo', 'WAGNER', '2019-03-12', '2018-03-12', 'white', 'M', '', 'jeune éducateur kim noire sympa', 'wagner.romeo@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(195, 'Adams', 'SOULAIMANA', '2019-03-12', '2018-03-12', 'white', 'M', '2 disciplines j\'imagine', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(196, 'Romain', 'VILLA', '2019-03-22', '2018-03-22', 'purple', 'M', '2 disciplines', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(197, 'Stephane', 'BON', '2019-05-18', '2018-05-18', 'white', 'M', 'Il a payé 250 pour une deuxieme discipline, donc l\'autre discipline a recup 100 de trop', '', '', '', '', '', 0, 1, 1, 1, 0, 0, 0, 0),
+	(197, 'Stephane', 'BON', '2019-05-18', '2018-05-18', 'white', 'M', 'Il a payé 250 pour une deuxieme discipline, donc l\'autre discipline a recup 100 de trop', '', '', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(198, 'Paul', 'MAHON', '2019-09-14', '2018-05-18', 'white', 'M', '', '', 'linecb@msn.com', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(199, 'Julien', 'CARBONNELL', '2019-09-14', '2018-05-25', 'white', 'M', '', '', 'julien.carbonnell@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(200, 'Brian', 'MANGOENPAWIRO', '2019-09-14', '2018-05-26', 'white', 'M', '', '', 'bmangoen@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
@@ -323,13 +323,22 @@ INSERT INTO `MEMBERS` (`ID`, `Firstname`, `Lastname`, `Enddate`, `CreationDate`,
 	(215, 'Cyril', 'CHARDONNET', '2019-09-14', '2018-09-04', 'blue', 'M', '', '', 'CYRIL.CHARDONNET@FREE.FR', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(216, 'Julien', 'LUCAS', '2019-09-05', '2018-09-05', 'white', 'M', '', '', 'julien.lucas89@gmail.com ', '', '53 rue Claude Decaen, PARIS, 75012, FR ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(217, 'Damien', 'MILLAN', '2019-09-06', '2018-09-06', 'white', 'M', ' + MMA à vérifier', '', 'dmillan31@gmail.com', '', '11 avenue vergniaud, saint maure ses fosses, 94100, FR ', '', 0, 0, 1, 1, 0, 0, 1, 30),
-	(218, 'Frédéric', 'JACQUET', '2019-09-14', '2018-09-09', 'white', 'M', '', '', 'fredericjacquet@yahoo.fr', '', '80 quai de Polangis 94340 Joinville-Le-Pont ', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(218, 'Frédéric', 'JACQUET', '2019-09-19', '2018-09-09', 'white', 'M', '', '', 'fredericjacquet@yahoo.fr', '', '80 quai de Polangis 94340 Joinville-Le-Pont ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(219, ' Christian', 'PINVILLE', '2019-09-10', '2018-09-10', 'white', 'M', '', '', 'christian.pinville@gmail.com ', '', '6 AVENUE DUCIS, MAISONS-LAFFITTE, 78600, FR ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(220, 'Thibaut', 'BEDOUIN', '2019-09-10', '2018-09-10', 'white', 'M', '', '', 'thibaut.bedouin@gmail.com', '', '8 résidence plein sud , 83 avenue de Versailles , Thiais , 94320, FR ', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(222, 'Iraklis', 'ALEXANDRIDIS', '2019-09-12', '2018-09-12', 'white', 'M', '', '', 'herculesalexandridis@msn.com', '', '15 AVENUE ERNEST RENAN, MONTREUIL, 93100', '', 0, 0, 1, 1, 0, 0, 1, 42),
 	(223, 'Franck', 'BISSON', '2019-09-14', '2018-09-14', 'white', 'M', 'Ne paye pas car beauf de filou', '', 'bissonfranck78@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
 	(224, 'Xavier', 'ROBERT', '2019-09-19', '2018-09-14', 'brown', 'M', '', '', 'xbiancardini@yahoo.fr', '', '91 rue saint fargeau 75020 Paris ', '', 0, 0, 1, 1, 0, 0, 0, 0),
-	(225, 'Jean Christophe', 'BOULADE', '2019-09-14', '2018-09-14', 'white', 'M', 'Paye pas grace a aurelien', '', 'jcboulade94@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0);
+	(225, 'Jean Christophe', 'BOULADE', '2019-09-14', '2018-09-14', 'white', 'M', 'Paye pas grace a aurelien', '', 'jcboulade94@gmail.com', '', '', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(226, 'Philippe', 'HEYDARIAN', '2019-09-14', '2018-09-14', 'white', 'M', '', '', 'heydarian.philippe@gmail.com ', '', ' 21 rue Raymond du temple, Vincennes, 94300', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(227, 'Rémi', 'LESÉNÉCHAL', '2019-09-14', '2018-09-14', 'white', 'M', '', '', 'lesenechal.remi@gmail.com ', '', '11 rue gossec, Paris, 75012', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(228, ' Mikael', 'THOMAS', '2019-09-16', '2018-09-16', 'white', 'M', '', '', 'mikaelts82@gmail.com', '', '8 avenue des entrepreneurs , Mitry-mory, 77290', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(229, ' Damien', 'ROQUES', '2019-09-16', '2018-09-16', 'white', 'M', '', '', 'damienrqes@gmail.com ', '', '35 bis rue pierre brosolette, Neuilly Plaisance', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(230, 'Frederic', 'CHALOPIN', '2019-09-17', '2018-09-17', 'white', 'M', '', '', 'f_chalopin@yahoo.fr', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(231, 'Abdel-Jalhil', 'TEIBI', '2019-09-18', '2018-09-18', 'white', 'M', '', '', 'jalhil.teibi@gmail.com', '', '1 allée des érables 94410 Saint Maurice ', '', 0, 0, 1, 1, 0, 0, 0, 0),
+	(232, 'Ronan', 'BILLAUD', '2019-09-18', '2018-09-18', 'white', 'M', '', '', '', '', '1 rue de la Libération, Nogent sur Marne , 94130', '', 0, 0, 1, 1, 0, 0, 1, 42),
+	(233, 'Guillaume', 'BERNARD', '2019-09-18', '2018-09-19', 'white', 'M', '', '', 'guillaum3.bernard@gmail.com ', '', '35 RUE DE FONTENAY, VINCENNES, 94300', '', 0, 0, 1, 1, 0, 0, 1, 30),
+	(234, 'Mickael', 'DAVOLI', '2019-09-19', '2018-09-19', 'white', 'M', '', '', 'mikka.dav@hotmail.fr ', '', '', '', 0, 0, 1, 1, 0, 0, 1, 42);
 /*!40000 ALTER TABLE `MEMBERS` ENABLE KEYS */;
 
 -- Export de la structure de la table CERCLE. MEMBERS_PAYMENTS
@@ -343,7 +352,7 @@ CREATE TABLE IF NOT EXISTS `MEMBERS_PAYMENTS` (
   CONSTRAINT `FKPayment` FOREIGN KEY (`PaymentID`) REFERENCES `PAYMENTS` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.MEMBERS_PAYMENTS : ~407 rows (environ)
+-- Export de données de la table CERCLE.MEMBERS_PAYMENTS : ~397 rows (environ)
 DELETE FROM `MEMBERS_PAYMENTS`;
 /*!40000 ALTER TABLE `MEMBERS_PAYMENTS` DISABLE KEYS */;
 INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
@@ -410,10 +419,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(158, 2024),
 	(43, 2041),
 	(155, 2043),
-	(156, 2046),
-	(156, 2047),
-	(156, 2048),
-	(27, 2069),
 	(177, 2088),
 	(177, 2089),
 	(177, 2090),
@@ -450,11 +455,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(163, 2220),
 	(163, 2221),
 	(184, 2257),
-	(111, 2275),
-	(111, 2276),
-	(111, 2277),
-	(111, 2278),
-	(111, 2279),
 	(106, 2281),
 	(9, 2289),
 	(22, 2293),
@@ -505,9 +505,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(56, 2577),
 	(56, 2578),
 	(205, 2658),
-	(197, 2659),
-	(89, 2660),
-	(89, 2661),
 	(206, 2663),
 	(187, 2679),
 	(121, 2701),
@@ -543,7 +540,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(179, 2744),
 	(179, 2745),
 	(142, 2746),
-	(218, 2747),
 	(55, 2748),
 	(24, 2749),
 	(24, 2750),
@@ -560,8 +556,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(54, 2761),
 	(54, 2762),
 	(54, 2763),
-	(44, 2764),
-	(44, 2765),
 	(153, 2766),
 	(153, 2767),
 	(153, 2768),
@@ -577,11 +571,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(162, 2778),
 	(162, 2779),
 	(162, 2780),
-	(73, 2781),
-	(73, 2782),
-	(73, 2783),
-	(73, 2784),
-	(73, 2785),
 	(81, 2786),
 	(81, 2787),
 	(81, 2788),
@@ -632,8 +621,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(31, 2834),
 	(31, 2835),
 	(31, 2836),
-	(38, 2837),
-	(38, 2838),
 	(69, 2839),
 	(69, 2840),
 	(69, 2841),
@@ -664,15 +651,6 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(101, 2866),
 	(101, 2867),
 	(101, 2868),
-	(91, 2869),
-	(91, 2870),
-	(91, 2871),
-	(91, 2872),
-	(91, 2873),
-	(91, 2874),
-	(91, 2875),
-	(91, 2876),
-	(91, 2877),
 	(123, 2878),
 	(123, 2879),
 	(173, 2885),
@@ -753,7 +731,42 @@ INSERT INTO `MEMBERS_PAYMENTS` (`MemberID`, `PaymentID`) VALUES
 	(210, 2960),
 	(112, 2961),
 	(112, 2962),
-	(214, 2963);
+	(214, 2963),
+	(44, 2964),
+	(44, 2965),
+	(44, 2966),
+	(156, 2967),
+	(156, 2968),
+	(156, 2969),
+	(111, 2970),
+	(111, 2971),
+	(111, 2972),
+	(111, 2973),
+	(111, 2974),
+	(197, 2975),
+	(27, 2976),
+	(73, 2982),
+	(73, 2983),
+	(73, 2984),
+	(73, 2985),
+	(73, 2986),
+	(231, 2987),
+	(91, 2988),
+	(91, 2989),
+	(91, 2990),
+	(91, 2991),
+	(91, 2992),
+	(91, 2993),
+	(91, 2994),
+	(91, 2995),
+	(91, 2996),
+	(89, 2997),
+	(89, 2998),
+	(38, 2999),
+	(38, 3000),
+	(38, 3001),
+	(38, 3002),
+	(38, 3003);
 /*!40000 ALTER TABLE `MEMBERS_PAYMENTS` ENABLE KEYS */;
 
 -- Export de la structure de la table CERCLE. MEMBERS_STATUS
@@ -767,7 +780,7 @@ CREATE TABLE IF NOT EXISTS `MEMBERS_STATUS` (
   CONSTRAINT `FK_MEMBERS2` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.MEMBERS_STATUS : ~220 rows (environ)
+-- Export de données de la table CERCLE.MEMBERS_STATUS : ~209 rows (environ)
 DELETE FROM `MEMBERS_STATUS`;
 /*!40000 ALTER TABLE `MEMBERS_STATUS` DISABLE KEYS */;
 INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
@@ -990,7 +1003,16 @@ INSERT INTO `MEMBERS_STATUS` (`MemberID`, `Active`, `Date`, `Current`) VALUES
 	(222, 1, '2018-09-12', 1),
 	(223, 1, '2018-09-14', 1),
 	(224, 1, '2018-09-14', 1),
-	(225, 1, '2018-09-14', 1);
+	(225, 1, '2018-09-14', 1),
+	(226, 1, '2018-09-14', 1),
+	(227, 1, '2018-09-14', 1),
+	(228, 1, '2018-09-16', 1),
+	(229, 1, '2018-09-16', 1),
+	(230, 1, '2018-09-17', 1),
+	(231, 1, '2018-09-18', 1),
+	(232, 1, '2018-09-18', 1),
+	(233, 1, '2018-09-19', 1),
+	(234, 1, '2018-09-19', 1);
 /*!40000 ALTER TABLE `MEMBERS_STATUS` ENABLE KEYS */;
 
 -- Export de la structure de la table CERCLE. PAYMENTS
@@ -1005,9 +1027,9 @@ CREATE TABLE IF NOT EXISTS `PAYMENTS` (
   `Bank` enum('None','Academy','Perso','Coach') NOT NULL DEFAULT 'None',
   `DepotDate` date DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2964 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3004 DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.PAYMENTS : ~407 rows (environ)
+-- Export de données de la table CERCLE.PAYMENTS : ~397 rows (environ)
 DELETE FROM `PAYMENTS`;
 /*!40000 ALTER TABLE `PAYMENTS` DISABLE KEYS */;
 INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`, `Bank`, `DepotDate`) VALUES
@@ -1074,10 +1096,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2024, 170.00, 'Check', '2018-02-08', 'Zou THIEN DU CHABERT', 102.00, 'Coach', '2018-03-07'),
 	(2041, 125.00, 'Check', '2017-09-07', 'Yoann GOLESTIN', 75.00, 'Academy', '2017-10-04'),
 	(2043, 150.00, 'Check', '2017-12-04', 'Roméo YOMBOU', 0.00, 'Academy', '2017-12-04'),
-	(2046, 40.00, 'Cash', '2017-12-07', 'inconnnu HORSKYY', 0.00, 'None', '2017-12-07'),
-	(2047, 65.00, 'Cash', '2018-03-06', 'Genedy HORSKYY', 0.00, 'None', '2018-03-06'),
-	(2048, 65.00, 'Cash', '2018-03-12', 'Hennaddig HORSKYY', 0.00, 'None', '2018-03-12'),
-	(2069, 500.00, 'Check', '2017-10-20', 'Mamadou? DJOULFAYAN', 300.00, 'Academy', '2017-11-04'),
 	(2088, 150.00, 'Check', '2018-01-25', 'herve gaillard', 90.00, 'Perso', '2018-03-03'),
 	(2089, 100.00, 'Check', '2018-01-25', 'herve gaillard', 60.00, 'Perso', '2018-03-31'),
 	(2090, 100.00, 'Check', '2018-01-25', 'herve gaillard', 60.00, 'Perso', '2018-02-03'),
@@ -1114,11 +1132,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2220, 80.00, 'Check', '2017-12-19', 'Matthieu LHOSPITALIER', 48.00, 'Academy', '2018-01-03'),
 	(2221, 80.00, 'Check', '2018-02-08', 'Matthieu LHOSPITALIER', 48.00, 'Coach', '2018-02-11'),
 	(2257, 80.00, 'Check', '2018-02-08', 'charles-edouard di giampietro', 48.00, 'Academy', '2018-03-03'),
-	(2275, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-10-04'),
-	(2276, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-09-05'),
-	(2277, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-08-02'),
-	(2278, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-07-05'),
-	(2279, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-06-04'),
 	(2281, 500.00, 'Check', '2017-05-10', 'Jerome DIVAC', 300.00, 'Academy', '2017-05-11'),
 	(2289, 280.00, 'Check', '2017-09-28', 'Lionel BENICHOU', 168.00, 'Academy', '2017-10-04'),
 	(2293, 150.00, 'Check', '2017-09-14', 'Cyril CHIMKIEVITCH', 90.00, 'Academy', '2017-09-15'),
@@ -1169,9 +1182,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2577, 450.00, 'Check', '2017-09-07', 'Yohann LES ENFANT', 270.00, 'Academy', '2017-09-07'),
 	(2578, 500.00, 'Transfert', '2018-09-03', 'Yohann LES ENFANT', 300.00, 'None', '2018-09-03'),
 	(2658, 50.00, 'Cash', '2018-07-03', 'Andrei SATALOV', 0.00, 'None', '2018-07-03'),
-	(2659, 130.00, 'Cash', '2018-05-18', 'Stephane BON', 0.00, 'None', '2018-05-18'),
-	(2660, 200.00, 'Cash', '2017-09-08', 'Yohan VERGNE', 0.00, 'None', '2017-10-26'),
-	(2661, 500.00, 'Transfert', '2018-09-07', 'Yohan VERGNE', 300.00, 'None', '2018-09-07'),
 	(2663, 40.00, 'Cash', '2018-07-03', 'Giusepe VIZZINI', 0.00, 'None', '2018-07-03'),
 	(2679, 500.00, 'Check', '2018-02-11', 'ABDELKRIM AMROUCHE', 300.00, 'Academy', '2018-03-03'),
 	(2701, 80.00, 'Check', '2017-11-09', 'Thomas BISSON', 48.00, 'Academy', '2017-11-10'),
@@ -1207,7 +1217,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2744, 250.00, 'Check', '2018-01-25', 'sebastien bottey', 150.00, 'Academy', '2018-02-05'),
 	(2745, 250.00, 'Check', '2018-01-25', 'sebastien bottey', 150.00, 'Academy', '2018-03-03'),
 	(2746, 500.00, 'Check', '2017-12-19', 'Sylvain DESHORS', 300.00, 'Perso', '2018-01-03'),
-	(2747, 80.00, 'Transfert', '2018-09-09', 'Frédéric JACQUET', 48.00, 'None', '2018-09-09'),
 	(2748, 100.00, 'Cash', '2017-09-18', 'Jonas LEBLANC', 0.00, 'None', '2017-10-26'),
 	(2749, 100.00, 'Check', '2017-09-05', 'Yim DARINA', 60.00, 'Academy', '2017-10-04'),
 	(2750, 100.00, 'Check', '2017-09-05', 'Yim DARINA', 60.00, 'Academy', '2017-09-06'),
@@ -1224,8 +1233,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2761, 100.00, 'Check', '2018-03-06', 'Cedric LE FRANC', 60.00, 'Academy', '2018-04-03'),
 	(2762, 100.00, 'Check', '2018-03-06', 'Cedric LE FRANC', 60.00, 'Academy', '2018-05-03'),
 	(2763, 100.00, 'Check', '2018-03-06', 'Cedric LE FRANC', 60.00, 'Academy', '2018-06-04'),
-	(2764, 170.00, 'Cash', '2017-09-07', 'Matias GOURDON', 0.00, 'None', '2017-10-26'),
-	(2765, 80.00, 'Cash', '2017-07-18', 'Matias GOURDON', 40.00, 'None', '2017-10-26'),
 	(2766, 125.00, 'Check', '2017-11-30', 'David DONNINI', 75.00, 'Academy', '2017-12-04'),
 	(2767, 125.00, 'Check', '2017-11-30', 'David DONNINI', 75.00, 'Academy', '2018-01-03'),
 	(2768, 125.00, 'Check', '2017-11-30', 'David DONNINI', 75.00, 'Academy', '2018-02-05'),
@@ -1241,11 +1248,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2778, 140.00, 'Check', '2017-12-26', 'David ANKRI', 84.00, 'Perso', '2018-02-07'),
 	(2779, 41.58, 'Prelev', '2018-08-05', 'David ANKRI', 24.95, 'Academy', '2018-08-05'),
 	(2780, 41.58, 'Prelev', '2018-09-05', 'David ANKRI', 24.95, 'Academy', '2018-09-05'),
-	(2781, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Perso', '2018-02-01'),
-	(2782, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2018-01-03'),
-	(2783, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-12-04'),
-	(2784, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-11-04'),
-	(2785, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-10-04'),
 	(2786, 200.00, 'Check', '2017-09-14', 'Nelson SILVA', 120.00, 'Academy', '2017-11-04'),
 	(2787, 150.00, 'Check', '2017-09-14', 'Nelson SILVA', 90.00, 'Academy', '2017-10-04'),
 	(2788, 150.00, 'Check', '2017-09-14', 'Nelson SILVA', 90.00, 'Academy', '2017-09-15'),
@@ -1296,8 +1298,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2834, 80.00, 'Cash', '2017-09-14', 'Eric DRIKES', 0.00, 'None', '2017-10-26'),
 	(2835, 80.00, 'Cash', '2017-10-16', 'Eric DRIKES', 0.00, 'None', '2017-10-26'),
 	(2836, 50.00, 'Cash', '2018-03-06', 'Eric DRIKES', 0.00, 'None', '2018-03-06'),
-	(2837, 700.00, 'Check', '2017-09-14', 'Simon FRANQUET', 420.00, 'Academy', '2017-09-15'),
-	(2838, 80.00, 'Check', '2017-07-11', 'Simon FRANQUET', 48.00, 'Academy', '2017-08-02'),
 	(2839, 125.00, 'Check', '2017-09-25', 'Alban OUAHAB', 75.00, 'Academy', '2018-01-03'),
 	(2840, 125.00, 'Check', '2017-09-25', 'Alban OUAHAB', 75.00, 'Academy', '2017-12-04'),
 	(2841, 125.00, 'Check', '2017-09-25', 'Alban OUAHAB', 75.00, 'Academy', '2017-11-04'),
@@ -1328,15 +1328,6 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2866, 41.58, 'Prelev', '2018-08-05', 'Jean-Marc BLOMBOU', 24.95, 'Academy', '2018-08-05'),
 	(2867, 41.58, 'Prelev', '2018-09-05', 'Jean-Marc BLOMBOU', 24.95, 'Academy', '2018-09-05'),
 	(2868, 100.00, 'Check', '2018-09-08', 'Jean-Marc BLOMBOU', 60.00, 'Academy', '2018-09-12'),
-	(2869, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-04-03'),
-	(2870, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-06-04'),
-	(2871, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-03-03'),
-	(2872, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-02-05'),
-	(2873, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2017-12-04'),
-	(2874, 50.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 30.00, 'Academy', '2017-09-05'),
-	(2875, 50.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 30.00, 'Academy', '2017-06-04'),
-	(2876, 60.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 36.00, 'Academy', '2017-08-02'),
-	(2877, 60.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 36.00, 'Academy', '2017-07-05'),
 	(2878, 250.00, 'Check', '2017-11-09', 'Alessandro ZANNI', 150.00, 'Academy', '2018-03-03'),
 	(2879, 100.00, 'Cash', '2017-11-09', 'Alessandro ZANNI', 0.00, 'None', '2017-11-09'),
 	(2885, 250.00, 'Check', '2018-01-09', 'malik n\'diaw', 150.00, 'Academy', '2018-02-05'),
@@ -1417,7 +1408,42 @@ INSERT INTO `PAYMENTS` (`ID`, `Amount`, `Type`, `ReceptionDate`, `Name`, `Debt`,
 	(2960, 41.58, 'Prelev', '2018-09-05', 'Thomas FOURNIER', 24.95, 'Academy', '2018-09-05'),
 	(2961, 250.00, 'Check', '2017-06-01', 'MOUSTAKIM HASSANI', 150.00, 'Academy', '2017-06-04'),
 	(2962, 250.00, 'Check', '2017-12-07', 'Moustakima HASSANI', 150.00, 'Academy', '2017-12-07'),
-	(2963, 41.58, 'Prelev', '2018-09-05', 'Alexis PETITJEAN', 24.95, 'Academy', '2018-09-05');
+	(2963, 41.58, 'Prelev', '2018-09-05', 'Alexis PETITJEAN', 24.95, 'Academy', '2018-09-05'),
+	(2964, 170.00, 'Cash', '2017-09-07', 'Matias GOURDON', 0.00, 'None', '2017-10-26'),
+	(2965, 80.00, 'Cash', '2017-07-18', 'Matias GOURDON', 40.00, 'None', '2017-10-26'),
+	(2966, 250.00, 'Cash', '2018-09-14', 'Matias GOURDON', 0.00, 'None', '2018-09-14'),
+	(2967, 40.00, 'Cash', '2017-12-07', 'inconnnu HORSKYY', 0.00, 'None', '2017-12-07'),
+	(2968, 65.00, 'Cash', '2018-03-06', 'Genedy HORSKYY', 0.00, 'None', '2018-03-06'),
+	(2969, 65.00, 'Cash', '2018-03-12', 'Hennaddig HORSKYY', 0.00, 'None', '2018-03-12'),
+	(2970, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-10-04'),
+	(2971, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-09-05'),
+	(2972, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-08-02'),
+	(2973, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-07-05'),
+	(2974, 100.00, 'Check', '2017-05-10', 'Joan MESINELE', 60.00, 'Academy', '2017-06-04'),
+	(2975, 130.00, 'Cash', '2018-05-18', 'Stephane BON', 0.00, 'None', '2018-05-18'),
+	(2976, 500.00, 'Check', '2017-10-20', 'Mamadou? DJOULFAYAN', 300.00, 'Academy', '2017-11-04'),
+	(2982, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Perso', '2018-02-01'),
+	(2983, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2018-01-03'),
+	(2984, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-12-04'),
+	(2985, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-11-04'),
+	(2986, 100.00, 'Check', '2017-09-21', 'Emmanuel PEREIRA VIEIRA', 60.00, 'Academy', '2017-10-04'),
+	(2987, 500.00, 'Transfert', '2018-09-18', 'Abdel-Jalhil TEIBI', 300.00, 'None', '2018-09-18'),
+	(2988, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-04-03'),
+	(2989, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-06-04'),
+	(2990, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-03-03'),
+	(2991, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2018-02-05'),
+	(2992, 100.00, 'Check', '2017-09-25', 'Paul-François YGORRA', 60.00, 'Academy', '2017-12-04'),
+	(2993, 50.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 30.00, 'Academy', '2017-09-05'),
+	(2994, 50.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 30.00, 'Academy', '2017-06-04'),
+	(2995, 60.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 36.00, 'Academy', '2017-08-02'),
+	(2996, 60.00, 'Check', '2017-05-10', 'Paul-François YGORRA', 36.00, 'Academy', '2017-07-05'),
+	(2997, 200.00, 'Cash', '2017-09-08', 'Yohan VERGNE', 0.00, 'None', '2017-10-26'),
+	(2998, 500.00, 'Transfert', '2018-09-07', 'Yohan VERGNE', 300.00, 'None', '2018-09-07'),
+	(2999, 700.00, 'Check', '2017-09-14', 'Simon FRANQUET', 420.00, 'Academy', '2017-09-15'),
+	(3000, 80.00, 'Check', '2017-07-11', 'Simon FRANQUET', 48.00, 'Academy', '2017-08-02'),
+	(3001, 200.00, 'Check', '2018-09-19', 'Simon FRANQUET', 120.00, 'None', '2018-09-19'),
+	(3002, 200.00, 'Check', '2018-09-19', 'Simon FRANQUET', 120.00, 'None', '2018-09-19'),
+	(3003, 100.00, 'Check', '2018-09-19', 'Simon FRANQUET', 60.00, 'None', '2018-09-19');
 /*!40000 ALTER TABLE `PAYMENTS` ENABLE KEYS */;
 
 -- Export de la structure de la table CERCLE. PRIVATES
@@ -1435,7 +1461,7 @@ CREATE TABLE IF NOT EXISTS `PRIVATES` (
   CONSTRAINT `FK_MEMBERS` FOREIGN KEY (`MemberID`) REFERENCES `MEMBERS` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.PRIVATES : ~34 rows (environ)
+-- Export de données de la table CERCLE.PRIVATES : ~33 rows (environ)
 DELETE FROM `PRIVATES`;
 /*!40000 ALTER TABLE `PRIVATES` DISABLE KEYS */;
 INSERT INTO `PRIVATES` (`ID`, `MemberID`, `Amount`, `Date`, `bookedLessons`, `doneLessons`, `Description`) VALUES
@@ -1541,11 +1567,11 @@ CREATE TABLE IF NOT EXISTS `SETTINGS` (
   PRIMARY KEY (`KeySettings`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Export de données de la table CERCLE.SETTINGS : ~1 rows (environ)
+-- Export de données de la table CERCLE.SETTINGS : ~0 rows (environ)
 DELETE FROM `SETTINGS`;
 /*!40000 ALTER TABLE `SETTINGS` DISABLE KEYS */;
 INSERT INTO `SETTINGS` (`KeySettings`, `Value`) VALUES
-	('LastConnectDate', '14/09/2018 12:31:56');
+	('LastConnectDate', '20/09/2018 10:17:22');
 /*!40000 ALTER TABLE `SETTINGS` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

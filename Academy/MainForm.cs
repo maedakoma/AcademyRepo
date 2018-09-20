@@ -454,9 +454,9 @@ namespace Academy
                     nAmount = 0;
                 }
                 nAmount = nAmount + pay.Amount;
-                if (!trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.ContainsKey(pay.Name))
+                if (!trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.ContainsKey(pay.ID.ToString()))
                 {
-                    trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.Add(pay.Name, pay.Name + " - " + pay.Amount.ToString());
+                    trMoneyReceived.Nodes[date].Nodes[pay.Type.ToString()].Nodes.Add(pay.ID.ToString(), pay.Name + " - " + pay.Amount.ToString());
                 }
                 if (nAmount != 0)
                 {

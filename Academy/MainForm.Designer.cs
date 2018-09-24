@@ -933,7 +933,7 @@
             this.dateTimeRef.Name = "dateTimeRef";
             this.dateTimeRef.Size = new System.Drawing.Size(185, 20);
             this.dateTimeRef.TabIndex = 46;
-            this.dateTimeRef.Value = new System.DateTime(2018, 4, 1, 0, 0, 0, 0);
+            this.dateTimeRef.Value = new System.DateTime(2018, 9, 1, 0, 0, 0, 0);
             this.dateTimeRef.ValueChanged += new System.EventHandler(this.dateTimeRef_ValueChanged);
             // 
             // label19

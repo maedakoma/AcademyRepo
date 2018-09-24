@@ -88,7 +88,6 @@ namespace MembershipSite
                     row["amount"] = amount;
                     row["debt"] = debt;
                     row["comment"] = mem.Comment;
-                    row["membershipOK"] = mem.MembershipOK;
                     People.Rows.Add(row);
                 }
             }

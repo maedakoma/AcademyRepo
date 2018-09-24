@@ -281,12 +281,6 @@ namespace AcademyMgr
                     if (reader["enddate"] != DBNull.Value && mem.Prelev == false)
                     {
                         mem.Enddate = Convert.ToDateTime(reader["enddate"]);
-                        //int result = DateTime.Compare(DateTime.Now, mem.Enddate);
-                        int daydiff = (int)(DateTime.Now - mem.Enddate).TotalDays;
-                        if (daydiff > 10)
-                        {
-                            mem.MembershipOK = false;
-                        }
                     }
                     Payment payment = new Payment();
                     if (reader["amount"] != DBNull.Value)

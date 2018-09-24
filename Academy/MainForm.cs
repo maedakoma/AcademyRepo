@@ -330,24 +330,23 @@ namespace Academy
             //Create the Columns in the DataTable
             DataColumn c0 = new DataColumn("ID");
             DataColumn c1 = new DataColumn("alert");
-            DataColumn c2 = new DataColumn("membershipOK");
-            DataColumn c3 = new DataColumn("fullyear");
-            DataColumn c4 = new DataColumn("lastname");
-            DataColumn c5 = new DataColumn("firstname");
-            DataColumn c6 = new DataColumn("creationdate");
+            DataColumn c2 = new DataColumn("fullyear");
+            DataColumn c3 = new DataColumn("lastname");
+            DataColumn c4 = new DataColumn("firstname");
+            DataColumn c5 = new DataColumn("creationdate");
+            c5.DataType = typeof(DateTime);
+            DataColumn c6 = new DataColumn("enddate");
             c6.DataType = typeof(DateTime);
-            DataColumn c7 = new DataColumn("enddate");
-            c7.DataType = typeof(DateTime);
-            DataColumn c8 = new DataColumn("belt");
-            DataColumn c9 = new DataColumn("gender");
-            DataColumn c10 = new DataColumn("child");
+            DataColumn c7 = new DataColumn("belt");
+            DataColumn c8 = new DataColumn("gender");
+            DataColumn c9 = new DataColumn("child");
+            c9.DataType = typeof(bool);
+            DataColumn c10 = new DataColumn("competitor");
             c10.DataType = typeof(bool);
-            DataColumn c11 = new DataColumn("competitor");
-            c11.DataType = typeof(bool);
-            DataColumn c12 = new DataColumn("amount");
-            DataColumn c13 = new DataColumn("debt");
-            DataColumn c14 = new DataColumn("mail");
-            DataColumn c15 = new DataColumn("comment");
+            DataColumn c11 = new DataColumn("amount");
+            DataColumn c12 = new DataColumn("debt");
+            DataColumn c13 = new DataColumn("mail");
+            DataColumn c14 = new DataColumn("comment");
 
             //Add the Created Columns to the Datatable
             People.Columns.Add(c0);
@@ -365,8 +364,7 @@ namespace Academy
             People.Columns.Add(c12);
             People.Columns.Add(c13);
             People.Columns.Add(c14);
-            People.Columns.Add(c15);
-
+            
             foreach (Member mem in members)
             {
                 if ((!mem.Active && onlyActive) || (!mem.Internal && onlyInternal))
@@ -395,7 +393,6 @@ namespace Academy
                 row["debt"] = debt;
                 row["comment"] = mem.Comment;
                 row["mail"] = mem.Mail;
-                row["membershipOK"] = mem.MembershipOK;
                 row["competitor"] = mem.Competitor;
                 People.Rows.Add(row);
             }
@@ -403,7 +400,6 @@ namespace Academy
             mainGrid.Columns[0].Visible = false;
             mainGrid.Columns[1].Visible = false;
             mainGrid.Columns[2].Visible = false;
-            mainGrid.Columns[3].Visible = false;
             mainGrid.RowHeadersVisible = false;
             mainGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainGrid.AllowUserToAddRows = false;
@@ -788,8 +784,7 @@ namespace Academy
             foreach (DataGridViewRow row in mainGrid.Rows)
             {
                 bool bAlert = Convert.ToBoolean(row.Cells[1].Value);
-                bool bMembershipOK = Convert.ToBoolean(row.Cells[2].Value);
-                bool bFullyear = Convert.ToBoolean(row.Cells[3].Value);
+                bool bFullyear = Convert.ToBoolean(row.Cells[2].Value);
                 if (!bFullyear)
                 {
                     row.DefaultCellStyle.BackColor = Color.Coral;
@@ -800,11 +795,29 @@ namespace Academy
                     row.DefaultCellStyle.BackColor = Color.Orange;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
-                if (!bMembershipOK)
+                DateTime endDate = Convert.ToDateTime(row.Cells[6].Value);
+                if (endDate != DateTime.MinValue)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                    row.DefaultCellStyle.ForeColor = Color.White;
+                    int daydiff = (int)(DateTime.Now - endDate).TotalDays;
+                    if (daydiff > 10)
+                    {
+                        if (daydiff < 30)
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Orange;
+                            row.DefaultCellStyle.ForeColor = Color.White;
+                        }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Red;
+                            row.DefaultCellStyle.ForeColor = Color.White;
+                        }
+                    }
                 }
+                //}
+                //if (!bMembershipOK)
+                //{
+                    
+                //}
             }
         }
 

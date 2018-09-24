@@ -127,11 +127,6 @@ namespace AcademyMgr
             get { return this._internal; }
             set { _internal = value; }
         }
-        public Boolean MembershipOK
-        {
-            get { return this._membershipOK; }
-            set { _membershipOK = value; }
-        }
         public string Comment
         {
             get { return this._comment; }

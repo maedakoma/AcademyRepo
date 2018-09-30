@@ -27,6 +27,14 @@ namespace Academy
             chkActive.Checked = true;
             chkInternal.Checked = true;
             dateEnd.Value = DateTime.Now.AddYears(1);
+            List<Plan> plansAbo = AcademyMgr.getPlans(Plan.typeEnum.Abonnement);
+            cbPlanAbo.Items.Add("");
+            cbPlanAbo.Items.AddRange(plansAbo.ToArray());
+            cbPlanAbo.DisplayMember = "Label";
+            List<Plan> plansPrivate = AcademyMgr.getPlans(Plan.typeEnum.Private);
+            cbPlanPrivate.Items.Add("");
+            cbPlanPrivate.Items.AddRange(plansPrivate.ToArray());
+            cbPlanPrivate.DisplayMember = "Label";
         }
         public void Populate(Member member, int index)
         {
@@ -42,10 +50,16 @@ namespace Academy
             chkInternal.Checked = member.Internal;
             chkFullYear.Checked = member.FullYear;
             chkCompetitor.Checked = member.Competitor;
+            if (member.AboPlan != null)
+            {
+                cbPlanAbo.SelectedIndex = cbPlanAbo.FindStringExact(member.AboPlan.Label);
+            }
+            if (member.PrivatePlan != null)
+            {
+                cbPlanPrivate.SelectedIndex = cbPlanPrivate.FindStringExact(member.PrivatePlan.Label);
+            }
             chkCoach.Checked = member.Coach;
             chkActive.Checked = member.Active;
-            chkPrelev.Checked = member.Prelev;
-            txtPrelevAmount.Text = member.PrelevAmount.ToString();
             txtComment.Text = member.Comment;
             txtJob.Text = member.Job;
             txtMail.Text = member.Mail;
@@ -148,10 +162,21 @@ namespace Academy
             currentMember.FullYear = chkFullYear.Checked;
             currentMember.Competitor = chkCompetitor.Checked;
             currentMember.Coach = chkCoach.Checked;
-            currentMember.Prelev = chkPrelev.Checked;
-            if (currentMember.Prelev)
+            if (cbPlanAbo.SelectedItem == null || cbPlanAbo.SelectedItem.ToString() == string.Empty)
             {
-                currentMember.PrelevAmount = Convert.ToInt32(txtPrelevAmount.Text);
+                currentMember.AboPlan = null;
+            }
+            else
+            {
+                currentMember.AboPlan = (Plan)cbPlanAbo.SelectedItem;
+            }
+            if (cbPlanPrivate.SelectedItem == null ||  cbPlanPrivate.SelectedItem.ToString() == string.Empty)
+            {
+                currentMember.PrivatePlan = null;
+            }
+            else
+            {
+                currentMember.PrivatePlan = (Plan)cbPlanPrivate.SelectedItem;
             }
             currentMember.Comment = txtComment.Text;
             currentMember.Job = txtJob.Text;
@@ -193,5 +218,6 @@ namespace Academy
                 }
             }
         }
+
     }
 }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcademyMgr.cs" />
+    <Compile Include="Plan.cs" />
     <Compile Include="Private.cs" />
     <Compile Include="CoachPay.cs" />
     <Compile Include="Seminar.cs" />
@@ -52,7 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Init.sql" />
+    <Content Include="Init.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Empty.sql" />

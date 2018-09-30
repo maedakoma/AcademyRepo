@@ -71,7 +71,7 @@ namespace MembershipSite
                     //if (count > 0) returnValue = true;
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Log your error
                 }

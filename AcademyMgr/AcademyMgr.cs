@@ -10,7 +10,8 @@ namespace AcademyMgr
     public class AcademyMgr
     {
         public static double CoefDebt = 0.6;
-        public static int PrelevDay = 5;
+        public static int PlanAboDay = 5;
+        public static int PlanPrivateDay = 1;
         MySqlConnection dbConn;
         public string activeStudentsMetric = "activeStudents";
         public string activeWhiteStudentsMetric = "activeWhiteStudents";
@@ -20,7 +21,8 @@ namespace AcademyMgr
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
         //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
-        public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
+        //public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
+        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE";
 
         public void Initialize()
         {
@@ -34,15 +36,15 @@ namespace AcademyMgr
 
             while (lastConnectionDate.Date <= DateTime.Now.Date)
             {
-                if (lastConnectionDate.Day == PrelevDay)
+                if (lastConnectionDate.Day == PlanAboDay)
                 {
                     //Ajout des prelevements pour les personnes concernées:
                     List<Member> members =  getMembers(null, true);
                     foreach(Member member in members)
                     {
                         Payment pay = new Payment();
-                        pay.Amount = (decimal)(member.PrelevAmount * 99)/100;
-                        pay.Debt = (decimal)CoefDebt * pay.Amount;
+                        pay.Amount = (decimal)(member.AboPlan.Amount * 99)/100;
+                        pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount)/100;
                         pay.Name = member.Firstname + " " + member.Lastname;
                         pay.Type = Payment.typeEnum.Prelev;
                         pay.ReceptionDate = lastConnectionDate;
@@ -50,6 +52,21 @@ namespace AcademyMgr
                         pay.DepotDate = lastConnectionDate;
                         member.Payments.Add(pay);
                         UpdateMember(member);
+                    }
+                }
+                if (lastConnectionDate.Day == PlanPrivateDay)
+                {
+                    //Ajout des prelevements pour les personnes concernées:
+                    List<Member> members = getMembers(null, null,true);
+                    foreach (Member member in members)
+                    {
+                        Private priv = new Private();
+                        priv.BookedLessons = 1;
+                        priv.DoneLessons = 1;
+                        priv.Date = DateTime.Now;
+                        priv.member = member;
+                        priv.Amount = (decimal)(member.PrivatePlan.Amount * 99) / 100;
+                        InsertPrivate(priv);
                     }
                 }
 
@@ -154,6 +171,34 @@ namespace AcademyMgr
             reader.Close();
             return seminars;
         }
+        public List<Plan> getPlans(Plan.typeEnum type)
+        {
+            List<Plan> plans = new List<Plan>();
+
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.Parameters.AddWithValue("?type", type.ToString());
+            cmd.CommandText = "SELECT * from PLANS WHERE type=?type order by ID";
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+                Plan plan = new Plan();
+                plan.ID = (int)reader["ID"];
+                plan.Label = reader["label"].ToString();
+                plan.Amount = (int)reader["amount"];
+                plan.DebtPercentage = (int)reader["debtPercentage"];
+                String sType = reader["type"].ToString();
+                if (sType != String.Empty)
+                {
+                    plan.Type = (Plan.typeEnum)Enum.Parse(typeof(Plan.typeEnum), sType, true);
+                }
+
+                plans.Add(plan);
+            }
+            reader.Close();
+            return plans;
+        }
         public List<Private> getPrivates()
         {
             List<Private> privates = new List<Private>();
@@ -181,16 +226,19 @@ namespace AcademyMgr
             reader.Close();
             return privates;
         }
-        public List<Member> getMembers(bool? coach = null, bool? prelev = null)
+        public List<Member> getMembers(bool? coach = null, bool? planAbo = null, bool? planPriv = null)
         {
             List<Member> members = new List<Member>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
 
-            cmd.CommandText = "SELECT *, P.ID as paymentID, MS.Active as active from MEMBERS M " +
-                                "inner join MEMBERS_STATUS MS on MS.MemberID = M.ID AND MS.Current=1 " +
+            cmd.CommandText = "SELECT *, P.ID as paymentID, MS.Active as active, ABO.ID as aboid, ABO.amount as aboamount, " +
+                "ABO.Label as abolabel, ABO.debtPercentage as abodebtPercentage, PRIVATE.ID as privateid, PRIVATE.amount as privateamount, PRIVATE.Label as privatelabel, " +
+                "PRIVATE.debtPercentage as privatedebtPercentage from MEMBERS M inner join MEMBERS_STATUS MS on MS.MemberID = M.ID AND MS.Current=1 " +
                                 "left outer join MEMBERS_PAYMENTS MP on MP.MemberID = M.ID " +
-                                "left outer join PAYMENTS P on P.ID = MP.PaymentID";
+                                "left outer join PAYMENTS P on P.ID = MP.PaymentID " +
+                                "left outer join PLANS ABO on ABO.ID = M.AboID " +
+                                "left outer join PLANS PRIVATE on PRIVATE.ID = M.PrivateID";
             if (coach != null)
             {
                 cmd.CommandText += " WHERE M.coach=?coach";
@@ -201,56 +249,79 @@ namespace AcademyMgr
                 }
                 cmd.Parameters.AddWithValue("?coach", nCoach);
             }
-            if (prelev != null)
+            if (planAbo != null && planAbo == true)
             {
-                cmd.CommandText += " WHERE M.prelev=?prelev";
-                int nPrelev = 0;
-                if (prelev == true)
-                {
-                    nPrelev = 1;
-                }
-                cmd.Parameters.AddWithValue("?prelev", nPrelev);
+                cmd.CommandText += " WHERE M.aboID is not null";
+            }
+            if (planPriv != null && planPriv == true)
+            {
+                cmd.CommandText += " WHERE M.privateID is not null";
             }
 
-            cmd.CommandText += " ORDER BY lastname";
+            cmd.CommandText += " ORDER BY lastname, P.ID";
             //dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             //dbConn.Close();
             Member mem = new Member();
+            //int paymentID = 0;
             while (reader.Read())
             {
                 if ((mem.Firstname == reader["firstname"].ToString()) && (mem.Lastname == reader["lastname"].ToString()))
                 {
-                    Payment payment = new Payment();
-                    payment.ID = (int)reader["paymentID"];
-                    payment.Amount = (decimal)reader["amount"];
-                    payment.Debt = (decimal)reader["debt"];
-                    String sType = reader["type"].ToString();
-                    if (sType != String.Empty)
-                    {
-                        payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
-                    }
-                    payment.Name = reader["name"].ToString();
-                    payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
-                    String sBank = reader["bank"].ToString();
-                    if (sBank != String.Empty)
-                    {
-                        payment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), sBank, true);
-                    }
-                    if (reader["DepotDate"] != DBNull.Value)
-                    {
-                        payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
-                    }
-                    mem.Payments.Add(payment);
+                    //if ((int)reader["paymentID"] != paymentID)
+                    //{
+                        Payment payment = new Payment();
+                        //paymentID = (int)reader["paymentID"];
+                        payment.ID = (int)reader["paymentID"]; ;
+                        payment.Amount = (decimal)reader["amount"];
+                        payment.Debt = (decimal)reader["debt"];
+                        String sType = reader["type"].ToString();
+                        if (sType != String.Empty)
+                        {
+                            payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                        }
+                        payment.Name = reader["name"].ToString();
+                        payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
+                        String sBank = reader["bank"].ToString();
+                        if (sBank != String.Empty)
+                        {
+                            payment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), sBank, true);
+                        }
+                        if (reader["DepotDate"] != DBNull.Value)
+                        {
+                            payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
+                        }
+                        mem.Payments.Add(payment);
+                        //Plan plan = new Plan();
+                        //if (reader["planID"] != DBNull.Value)
+                        //{
+                        //    plan.ID = (int)reader["planID"];
+                        //    plan.Amount = (int)reader["planamount"];
+                        //    plan.DebtPercentage = (int)reader["debtPercentage"];
+                        //    plan.Label = reader["planlabel"].ToString();
+                        //    mem.Plans.Add(plan);
+                        //}
+                    //}
+                    //else
+                    //{
+                    //    Plan plan = new Plan();
+                    //    if (reader["planID"] != DBNull.Value)
+                    //    {
+                    //        plan.ID = (int)reader["planID"];
+                    //        plan.Amount = (int)reader["planamount"];
+                    //        plan.DebtPercentage = (int)reader["debtPercentage"];
+                    //        plan.Label = reader["planlabel"].ToString();
+                    //        mem.Plans.Add(plan);
+                    //    }
+                    //}
                 }
                 else
                 {
+                    //paymentID = 0;
                     mem = new Member();
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
                     mem.Lastname = reader["lastname"].ToString();
-                    mem.Prelev = Convert.ToBoolean(reader["Prelev"]);
-                    mem.PrelevAmount = Convert.ToInt32(reader["PrelevAmount"]);
                     if (reader["creationdate"] != DBNull.Value)
                     {
                         mem.Creationdate = Convert.ToDateTime(reader["creationdate"]);
@@ -278,7 +349,7 @@ namespace AcademyMgr
                     mem.Phone = reader["phone"].ToString();
                     mem.Address = reader["address"].ToString();
                     mem.Facebook = reader["facebook"].ToString();
-                    if (reader["enddate"] != DBNull.Value && mem.Prelev == false)
+                    if (reader["enddate"] != DBNull.Value && mem.AboPlan == null)
                     {
                         mem.Enddate = Convert.ToDateTime(reader["enddate"]);
                     }
@@ -305,6 +376,24 @@ namespace AcademyMgr
                             payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
                         }
                         mem.Payments.Add(payment);
+                    }
+                    if (reader["aboID"] != DBNull.Value)
+                    {
+                        Plan aboPlan = new Plan();
+                        aboPlan.ID = (int)reader["aboID"];
+                        aboPlan.Amount = (int)reader["aboamount"];
+                        aboPlan.DebtPercentage = (int)reader["abodebtPercentage"];
+                        aboPlan.Label = reader["abolabel"].ToString();
+                        mem.AboPlan = aboPlan;
+                    }
+                    if (reader["privateID"] != DBNull.Value)
+                    {
+                        Plan privatePlan = new Plan();
+                        privatePlan.ID = (int)reader["privateID"];
+                        privatePlan.Amount = (int)reader["privateamount"];
+                        privatePlan.DebtPercentage = (int)reader["privatedebtPercentage"];
+                        privatePlan.Label = reader["privatelabel"].ToString();
+                        mem.PrivatePlan = privatePlan;
                     }
                     members.Add(mem);
                 }
@@ -436,12 +525,11 @@ namespace AcademyMgr
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
             cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 " +
-                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and M.Coach=?coach and (M.fullyear=?fullyear OR M.Prelev=?Prelev)";
+                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and M.Coach=?coach and (M.fullyear=?fullyear OR M.aboID is not null)";
             cmd.Parameters.AddWithValue("?date", sinceDate);
             cmd.Parameters.AddWithValue("?internal", 1);
             cmd.Parameters.AddWithValue("?coach", 0);
             cmd.Parameters.AddWithValue("?fullyear", 1);
-            cmd.Parameters.AddWithValue("?Prelev", 1);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -599,16 +687,17 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, prelev, prelevamount, competitor) VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, ?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?prelev, ?prelevamount, ?competitor)";
+                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, " +
+                    "fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor, aboid, privateid) " +
+                    "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, " +
+                    "?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor, ?aboid, ?privateid)";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
-                comm.Parameters.AddWithValue("?enddate", member.Enddate);
                 comm.Parameters.AddWithValue("?creationdate", DateTime.Now);
                 comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
                 comm.Parameters.AddWithValue("?internal", member.Internal);
-                comm.Parameters.AddWithValue("?fullyear", member.FullYear);
                 comm.Parameters.AddWithValue("?alert", member.Alert);
                 comm.Parameters.AddWithValue("?comment", member.Comment);
                 comm.Parameters.AddWithValue("?job", member.Job);
@@ -617,9 +706,27 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?address", member.Address);
                 comm.Parameters.AddWithValue("?facebook", member.Facebook);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
-                comm.Parameters.AddWithValue("?prelev", member.Prelev);
-                comm.Parameters.AddWithValue("?prelevamount", member.PrelevAmount);
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
+                if (member.AboPlan != null)
+                {
+                    comm.Parameters.AddWithValue("?aboid", member.AboPlan.ID);
+                    comm.Parameters.AddWithValue("?fullyear", true);
+                    comm.Parameters.AddWithValue("?enddate", DateTime.MinValue);
+                }
+                else
+                {
+                    comm.Parameters.AddWithValue("?aboid", DBNull.Value);
+                    comm.Parameters.AddWithValue("?fullyear", member.FullYear);
+                    comm.Parameters.AddWithValue("?enddate", member.Enddate);
+                }
+                if (member.PrivatePlan != null)
+                {
+                    comm.Parameters.AddWithValue("?privateid", member.PrivatePlan.ID);
+                }
+                else
+                {
+                    comm.Parameters.AddWithValue("?privateid", DBNull.Value);
+                }
 
 
                 comm.ExecuteNonQuery();
@@ -667,15 +774,17 @@ namespace AcademyMgr
                 }
 
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, prelev=?prelev, prelevAmount=?prelevamount WHERE ID=?ID";
+                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, " +
+                    "child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, " +
+                    "phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, " +
+                    "aboid=?aboid, privateid=?privateid  WHERE ID=?ID";
+
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
-                comm.Parameters.AddWithValue("?enddate", member.Enddate);
                 comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
                 comm.Parameters.AddWithValue("?alert", member.Alert);
-                comm.Parameters.AddWithValue("?fullyear", member.FullYear);
                 comm.Parameters.AddWithValue("?internal", member.Internal);
                 comm.Parameters.AddWithValue("?comment", member.Comment);
                 comm.Parameters.AddWithValue("?job", member.Job);
@@ -685,8 +794,27 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?facebook", member.Facebook);
                 comm.Parameters.AddWithValue("?competitor", member.Competitor);
                 comm.Parameters.AddWithValue("?coach", member.Coach);
-                comm.Parameters.AddWithValue("?prelev", member.Prelev);
-                comm.Parameters.AddWithValue("?prelevamount", member.PrelevAmount);
+
+                if (member.AboPlan != null)
+                {
+                    comm.Parameters.AddWithValue("?aboid", member.AboPlan.ID);
+                    comm.Parameters.AddWithValue("?fullyear", true);
+                    comm.Parameters.AddWithValue("?enddate", DateTime.MinValue);
+                }
+                else
+                {
+                    comm.Parameters.AddWithValue("?aboid", DBNull.Value);
+                    comm.Parameters.AddWithValue("?fullyear", member.FullYear);
+                    comm.Parameters.AddWithValue("?enddate", member.Enddate);
+                }
+                if (member.PrivatePlan != null)
+                {
+                    comm.Parameters.AddWithValue("?privateid", member.PrivatePlan.ID);
+                }
+                else
+                {
+                    comm.Parameters.AddWithValue("?privateid", DBNull.Value);
+                }
                 comm.Parameters.AddWithValue("?ID", member.ID);
                 comm.ExecuteNonQuery();
 

@@ -31,22 +31,21 @@ namespace AcademyMgr
         private genderEnum _gender;
         private beltEnum _belt;
         private List<Payment> _payments;
+        private Plan _aboPlan;
+        private Plan _privatePlan;
         private Boolean _child;
         private Boolean _alert;
         private Boolean _active;
-        private Boolean _prelev;
         private Boolean _fullyear;
         private Boolean _competitor;
         private Boolean _coach;
         private Boolean _internal;
-        private Boolean _membershipOK = true;
         private string _comment;
         private string _job;
         private string _mail;
         private string _phone;
         private string _address;
         private string _facebook;
-        private int _prelevAmount = 0;
 
         public int ID
         {
@@ -56,6 +55,16 @@ namespace AcademyMgr
         public List<Payment> Payments
         {
             get { return this._payments; }
+        }
+        public Plan AboPlan
+        {
+            get { return this._aboPlan; }
+            set { _aboPlan = value; }
+        }
+        public Plan PrivatePlan
+        {
+            get { return this._privatePlan; }
+            set { _privatePlan = value; }
         }
         public string Firstname
         {
@@ -117,11 +126,6 @@ namespace AcademyMgr
             get { return this._active; }
             set { _active = value; }
         }
-        public Boolean Prelev
-        {
-            get { return this._prelev; }
-            set { _prelev = value; }
-        }
         public Boolean Internal
         {
             get { return this._internal; }
@@ -156,11 +160,6 @@ namespace AcademyMgr
         {
             get { return this._facebook; }
             set { _facebook = value; }
-        }
-        public int PrelevAmount
-        {
-            get { return this._prelevAmount; }
-            set { _prelevAmount = value; }
         }
         public Member()
         {

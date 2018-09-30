@@ -63,8 +63,10 @@
             this.chkInternal = new System.Windows.Forms.CheckBox();
             this.chkCompetitor = new System.Windows.Forms.CheckBox();
             this.chkCoach = new System.Windows.Forms.CheckBox();
-            this.chkPrelev = new System.Windows.Forms.CheckBox();
-            this.txtPrelevAmount = new System.Windows.Forms.TextBox();
+            this.lblPlanAbo = new System.Windows.Forms.Label();
+            this.cbPlanAbo = new System.Windows.Forms.ComboBox();
+            this.cbPlanPrivate = new System.Windows.Forms.ComboBox();
+            this.lblPlanPrivate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -233,7 +235,7 @@
             // 
             this.txtComment.Location = new System.Drawing.Point(70, 409);
             this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(538, 20);
+            this.txtComment.Size = new System.Drawing.Size(625, 20);
             this.txtComment.TabIndex = 20;
             // 
             // chkAlert
@@ -259,7 +261,7 @@
             // 
             this.txtJob.Location = new System.Drawing.Point(70, 440);
             this.txtJob.Name = "txtJob";
-            this.txtJob.Size = new System.Drawing.Size(538, 20);
+            this.txtJob.Size = new System.Drawing.Size(625, 20);
             this.txtJob.TabIndex = 23;
             // 
             // chkActive
@@ -285,7 +287,7 @@
             // 
             this.txtMail.Location = new System.Drawing.Point(70, 479);
             this.txtMail.Name = "txtMail";
-            this.txtMail.Size = new System.Drawing.Size(538, 20);
+            this.txtMail.Size = new System.Drawing.Size(625, 20);
             this.txtMail.TabIndex = 26;
             // 
             // label1
@@ -326,14 +328,14 @@
             // 
             this.txtAddress.Location = new System.Drawing.Point(69, 547);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(538, 20);
+            this.txtAddress.Size = new System.Drawing.Size(626, 20);
             this.txtAddress.TabIndex = 31;
             // 
             // txtPhone
             // 
             this.txtPhone.Location = new System.Drawing.Point(69, 511);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(538, 20);
+            this.txtPhone.Size = new System.Drawing.Size(626, 20);
             this.txtPhone.TabIndex = 32;
             // 
             // btnGo
@@ -386,31 +388,49 @@
             this.chkCoach.Text = "Coach";
             this.chkCoach.UseVisualStyleBackColor = true;
             // 
-            // chkPrelev
+            // lblPlanAbo
             // 
-            this.chkPrelev.AutoSize = true;
-            this.chkPrelev.Location = new System.Drawing.Point(550, 97);
-            this.chkPrelev.Name = "chkPrelev";
-            this.chkPrelev.Size = new System.Drawing.Size(62, 17);
-            this.chkPrelev.TabIndex = 38;
-            this.chkPrelev.Text = "Prelev :";
-            this.chkPrelev.UseVisualStyleBackColor = true;
+            this.lblPlanAbo.AutoSize = true;
+            this.lblPlanAbo.Location = new System.Drawing.Point(392, 351);
+            this.lblPlanAbo.Name = "lblPlanAbo";
+            this.lblPlanAbo.Size = new System.Drawing.Size(91, 13);
+            this.lblPlanAbo.TabIndex = 40;
+            this.lblPlanAbo.Text = "Plan Abonnement";
             // 
-            // txtPrelevAmount
+            // cbPlanAbo
             // 
-            this.txtPrelevAmount.Location = new System.Drawing.Point(612, 95);
-            this.txtPrelevAmount.Name = "txtPrelevAmount";
-            this.txtPrelevAmount.Size = new System.Drawing.Size(39, 20);
-            this.txtPrelevAmount.TabIndex = 39;
-            this.txtPrelevAmount.Text = "42";
+            this.cbPlanAbo.FormattingEnabled = true;
+            this.cbPlanAbo.Location = new System.Drawing.Point(489, 343);
+            this.cbPlanAbo.Name = "cbPlanAbo";
+            this.cbPlanAbo.Size = new System.Drawing.Size(206, 21);
+            this.cbPlanAbo.TabIndex = 41;
+            // 
+            // cbPlanPrivate
+            // 
+            this.cbPlanPrivate.FormattingEnabled = true;
+            this.cbPlanPrivate.Location = new System.Drawing.Point(489, 373);
+            this.cbPlanPrivate.Name = "cbPlanPrivate";
+            this.cbPlanPrivate.Size = new System.Drawing.Size(206, 21);
+            this.cbPlanPrivate.TabIndex = 43;
+            // 
+            // lblPlanPrivate
+            // 
+            this.lblPlanPrivate.AutoSize = true;
+            this.lblPlanPrivate.Location = new System.Drawing.Point(392, 381);
+            this.lblPlanPrivate.Name = "lblPlanPrivate";
+            this.lblPlanPrivate.Size = new System.Drawing.Size(64, 13);
+            this.lblPlanPrivate.TabIndex = 42;
+            this.lblPlanPrivate.Text = "Plan Private";
             // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 680);
-            this.Controls.Add(this.txtPrelevAmount);
-            this.Controls.Add(this.chkPrelev);
+            this.Controls.Add(this.cbPlanPrivate);
+            this.Controls.Add(this.lblPlanPrivate);
+            this.Controls.Add(this.cbPlanAbo);
+            this.Controls.Add(this.lblPlanAbo);
             this.Controls.Add(this.chkCoach);
             this.Controls.Add(this.chkCompetitor);
             this.Controls.Add(this.chkInternal);
@@ -492,7 +512,9 @@
         private System.Windows.Forms.CheckBox chkInternal;
         private System.Windows.Forms.CheckBox chkCompetitor;
         private System.Windows.Forms.CheckBox chkCoach;
-        private System.Windows.Forms.CheckBox chkPrelev;
-        private System.Windows.Forms.TextBox txtPrelevAmount;
+        private System.Windows.Forms.Label lblPlanAbo;
+        private System.Windows.Forms.ComboBox cbPlanAbo;
+        private System.Windows.Forms.ComboBox cbPlanPrivate;
+        private System.Windows.Forms.Label lblPlanPrivate;
     }
 }

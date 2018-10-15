@@ -42,8 +42,6 @@ namespace MembershipSite
             int nMonth = Math.Abs((beginDate.Month - DateTime.Now.Month) + 12 * (beginDate.Year - DateTime.Now.Year));
             txtBlackMonth.Text = (nTotalBenef / nMonth).ToString();
             txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
-            txtPrevBlackMonth.Text = (nTotalBenef / 12).ToString();
-            txtPrevOfficialMonth.Text = ((nTotalBenef * 75) / (12 * 100)).ToString();
         }
         protected void Signout_Click(object sender, EventArgs e)
         {

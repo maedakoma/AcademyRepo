@@ -42,16 +42,19 @@ namespace AcademyMgr
                     List<Member> members =  getMembers(null, true);
                     foreach(Member member in members)
                     {
-                        Payment pay = new Payment();
-                        pay.Amount = (decimal)(member.AboPlan.Amount * 99)/100;
-                        pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount)/100;
-                        pay.Name = member.Firstname + " " + member.Lastname;
-                        pay.Type = Payment.typeEnum.Prelev;
-                        pay.ReceptionDate = lastConnectionDate;
-                        pay.Bank = Payment.bankEnum.Academy;
-                        pay.DepotDate = lastConnectionDate;
-                        member.Payments.Add(pay);
-                        UpdateMember(member);
+                        if (member.Active)
+                        {
+                            Payment pay = new Payment();
+                            pay.Amount = (decimal)(member.AboPlan.Amount * 99) / 100;
+                            pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount) / 100;
+                            pay.Name = member.Firstname + " " + member.Lastname;
+                            pay.Type = Payment.typeEnum.Prelev;
+                            pay.ReceptionDate = lastConnectionDate;
+                            pay.Bank = Payment.bankEnum.Academy;
+                            pay.DepotDate = lastConnectionDate;
+                            member.Payments.Add(pay);
+                            UpdateMember(member);
+                        }
                     }
                 }
                 if (lastConnectionDate.Day == PlanPrivateDay)
@@ -122,7 +125,7 @@ namespace AcademyMgr
         {
             List<CoachPay> CoachPays = new List<CoachPay>();
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT * from COACHSPAYMENTS C INNER JOIN MEMBERS M on M.ID=C.MemberID";
+            cmd.CommandText = "SELECT * from COACHSPAYMENTS C INNER JOIN MEMBERS M on M.ID=C.MemberID order by date desc";
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -204,7 +207,7 @@ namespace AcademyMgr
             List<Private> privates = new List<Private>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID order by date";
+            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID order by date desc";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -259,19 +262,13 @@ namespace AcademyMgr
             }
 
             cmd.CommandText += " ORDER BY lastname, P.ID";
-            //dbConn.Open();
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
-            //dbConn.Close();
             Member mem = new Member();
-            //int paymentID = 0;
             while (reader.Read())
             {
                 if ((mem.Firstname == reader["firstname"].ToString()) && (mem.Lastname == reader["lastname"].ToString()))
                 {
-                    //if ((int)reader["paymentID"] != paymentID)
-                    //{
                         Payment payment = new Payment();
-                        //paymentID = (int)reader["paymentID"];
                         payment.ID = (int)reader["paymentID"]; ;
                         payment.Amount = (decimal)reader["amount"];
                         payment.Debt = (decimal)reader["debt"];
@@ -292,32 +289,9 @@ namespace AcademyMgr
                             payment.DepotDate = Convert.ToDateTime(reader["DepotDate"]);
                         }
                         mem.Payments.Add(payment);
-                        //Plan plan = new Plan();
-                        //if (reader["planID"] != DBNull.Value)
-                        //{
-                        //    plan.ID = (int)reader["planID"];
-                        //    plan.Amount = (int)reader["planamount"];
-                        //    plan.DebtPercentage = (int)reader["debtPercentage"];
-                        //    plan.Label = reader["planlabel"].ToString();
-                        //    mem.Plans.Add(plan);
-                        //}
-                    //}
-                    //else
-                    //{
-                    //    Plan plan = new Plan();
-                    //    if (reader["planID"] != DBNull.Value)
-                    //    {
-                    //        plan.ID = (int)reader["planID"];
-                    //        plan.Amount = (int)reader["planamount"];
-                    //        plan.DebtPercentage = (int)reader["debtPercentage"];
-                    //        plan.Label = reader["planlabel"].ToString();
-                    //        mem.Plans.Add(plan);
-                    //    }
-                    //}
                 }
                 else
                 {
-                    //paymentID = 0;
                     mem = new Member();
                     mem.ID = (int)reader["ID"];
                     mem.Firstname = reader["firstname"].ToString();
@@ -342,7 +316,6 @@ namespace AcademyMgr
                     mem.Competitor = Convert.ToBoolean(reader["Competitor"]);
                     mem.Coach = Convert.ToBoolean(reader["Coach"]);
                     mem.Active = Convert.ToBoolean(reader["active"]);
-                    mem.Internal = Convert.ToBoolean(reader["internal"]);
                     mem.Comment = reader["comment"].ToString();
                     mem.Job = reader["job"].ToString();
                     mem.Mail = reader["mail"].ToString();
@@ -423,11 +396,11 @@ namespace AcademyMgr
             MySqlCommand cmd = dbConn.CreateCommand();
 
             cmd.CommandText = "SELECT *, MS.Active as active from MEMBERS M " +
-                                "inner join MEMBERS_STATUS MS on MS.MemberID = M.ID WHERE Internal=1 ";
+                                "inner join MEMBERS_STATUS MS on MS.MemberID = M.ID";
 
             if (coach != null)
             {
-                cmd.CommandText += " AND M.coach=?coach";
+                cmd.CommandText += " WHERE M.coach=?coach";
                 int nCoach = 0;
                 if (coach == true)
                 {
@@ -483,11 +456,11 @@ namespace AcademyMgr
 
             if (bydepot)
             {
-                cmd.CommandText = "SELECT * FROM PAYMENTS WHERE Bank<>'None' and type ='Check' ORDER BY depotdate DESC, bank, name";
+                cmd.CommandText = "SELECT * FROM PAYMENTS WHERE Bank<>'None' and type ='Check' ORDER BY depotdate DESC, type, bank, name";
             }
             else
             {
-                cmd.CommandText = "SELECT * FROM PAYMENTS ORDER BY receptiondate DESC, name";
+                cmd.CommandText = "SELECT * FROM PAYMENTS ORDER BY receptiondate DESC, type, name";
             }
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             Payment pay = new Payment();
@@ -525,9 +498,8 @@ namespace AcademyMgr
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
             cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 " +
-                                "and MS.active=1 and MS.Date>?date and M.internal=?internal and M.Coach=?coach and (M.fullyear=?fullyear OR M.aboID is not null)";
+                                "and MS.active=1 and MS.Date>?date and M.Coach=?coach and (M.fullyear=?fullyear OR M.aboID is not null)";
             cmd.Parameters.AddWithValue("?date", sinceDate);
-            cmd.Parameters.AddWithValue("?internal", 1);
             cmd.Parameters.AddWithValue("?coach", 0);
             cmd.Parameters.AddWithValue("?fullyear", 1);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
@@ -543,9 +515,9 @@ namespace AcademyMgr
             List<String> lostStudents = new List<string>();
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and M.fullyear=1 and MS.active=0 and MS.Date>?date and M.internal=?internal";
+            cmd.CommandText = "SELECT DISTINCT FirstName, LastName from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID " +
+                "where MS.current = 1 and M.fullyear=1 and MS.active=0 and MS.Date>?date";
             cmd.Parameters.AddWithValue("?date", sinceDate);
-            cmd.Parameters.AddWithValue("?internal", 1);
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -559,8 +531,7 @@ namespace AcademyMgr
         {
             MySqlCommand cmd = dbConn.CreateCommand();
             //dbConn.Open();
-            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1 and M.internal=?internal";
-            cmd.Parameters.AddWithValue("?internal", 1);
+            cmd.CommandText = "SELECT count(*) from MEMBERS_STATUS MS INNER JOIN MEMBERS M on MS.memberID=M.ID where MS.current = 1 and MS.active=1";
             object result = cmd.ExecuteScalar();
             int nCount = 0;
             if (result != DBNull.Value)
@@ -687,9 +658,9 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, internal, " +
+                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, " +
                     "fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor, aboid, privateid) " +
-                    "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?internal, ?fullyear, ?child, ?alert, " +
+                    "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?fullyear, ?child, ?alert, " +
                     "?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor, ?aboid, ?privateid)";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
@@ -697,7 +668,6 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
-                comm.Parameters.AddWithValue("?internal", member.Internal);
                 comm.Parameters.AddWithValue("?alert", member.Alert);
                 comm.Parameters.AddWithValue("?comment", member.Comment);
                 comm.Parameters.AddWithValue("?job", member.Job);
@@ -775,7 +745,7 @@ namespace AcademyMgr
 
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, " +
-                    "child=?child, alert=?alert, fullyear=?fullyear, internal=?internal, comment=?comment, job=?job, mail=?mail, " +
+                    "child=?child, alert=?alert, fullyear=?fullyear, comment=?comment, job=?job, mail=?mail, " +
                     "phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, " +
                     "aboid=?aboid, privateid=?privateid  WHERE ID=?ID";
 
@@ -785,7 +755,6 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
                 comm.Parameters.AddWithValue("?alert", member.Alert);
-                comm.Parameters.AddWithValue("?internal", member.Internal);
                 comm.Parameters.AddWithValue("?comment", member.Comment);
                 comm.Parameters.AddWithValue("?job", member.Job);
                 comm.Parameters.AddWithValue("?mail", member.Mail);
@@ -861,11 +830,6 @@ namespace AcademyMgr
             comm.CommandText = "UPDATE MEMBERS_STATUS SET Current = 0 WHERE MemberID= ?MemberID";
             comm.Parameters.AddWithValue("?MemberID", member.ID);
             comm.ExecuteNonQuery();
-
-            if (!member.Internal)
-            {
-                member.Active = false;
-            }
             comm = dbConn.CreateCommand();
             comm.CommandText = "INSERT INTO MEMBERS_STATUS(MemberID, Active, Date, Current ) VALUES(?MemberID, ?Active, ?Date, ?Current)";
             comm.Parameters.AddWithValue("?MemberID", member.ID);
@@ -876,13 +840,8 @@ namespace AcademyMgr
         }
         private void UpdateStatus(Member member)
         {
-            if (!member.Internal)
-            {
-                member.Active = false;
-            }
             //le status a t'il changé?
             MySqlCommand cmd = dbConn.CreateCommand();
-            //dbConn.Open();
             cmd.CommandText = "SELECT Active from MEMBERS_STATUS where memberID=?memberID and current = 1";
             cmd.Parameters.AddWithValue("?MemberID", member.ID);
             bool nCurrentActive = Convert.ToBoolean(cmd.ExecuteScalar());

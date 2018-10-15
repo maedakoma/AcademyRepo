@@ -47,8 +47,7 @@ namespace MembershipSite
             DataColumn c8 = new DataColumn("amount");
             DataColumn c9 = new DataColumn("debt");
             DataColumn c10 = new DataColumn("comment");
-            DataColumn c11 = new DataColumn("membershipOK");
-            //c11.DataType = typeof(bool);
+            DataColumn c11 = new DataColumn("fullyear");
 
 
             //Add the Created Columns to the Datatable
@@ -88,6 +87,7 @@ namespace MembershipSite
                     row["amount"] = amount;
                     row["debt"] = debt;
                     row["comment"] = mem.Comment;
+                    row["fullyear"] = mem.FullYear;
                     People.Rows.Add(row);
                 }
             }
@@ -104,13 +104,43 @@ namespace MembershipSite
             e.Row.Cells[13].Visible = false;
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if (e.Row.Cells[13].Text != "True")
+                bool bAlert = e.Row.Cells[9].Text == "True";
+                bool bFullyear = e.Row.Cells[13].Text == "True";
+                if (!bFullyear)
                 {
-                    e.Row.BackColor = System.Drawing.Color.Red;
+                    e.Row.BackColor = System.Drawing.Color.Coral;
+                    e.Row.ForeColor = System.Drawing.Color.White;
                 }
-                if (e.Row.Cells[9].Text == "True")
+                if (bAlert)
                 {
                     e.Row.BackColor = System.Drawing.Color.Orange;
+                    e.Row.ForeColor = System.Drawing.Color.White;
+                }
+                if (e.Row.Cells[5].Text != string.Empty)
+                {
+                    DateTime endDate = Convert.ToDateTime(e.Row.Cells[5].Text);
+                    if (endDate != DateTime.MinValue)
+                    {
+                        int daydiff = (int)(DateTime.Now - endDate).TotalDays;
+                        if (daydiff > 10)
+                        {
+                            if (daydiff < 30)
+                            {
+                                e.Row.BackColor = System.Drawing.Color.Orange;
+                                e.Row.ForeColor = System.Drawing.Color.White;
+                            }
+                            else if (daydiff < 50)
+                            {
+                                e.Row.BackColor = System.Drawing.Color.Red;
+                                e.Row.ForeColor = System.Drawing.Color.White;
+                            }
+                            else
+                            {
+                                e.Row.BackColor = System.Drawing.Color.Black;
+                                e.Row.ForeColor = System.Drawing.Color.White;
+                            }
+                        }
+                    }
                 }
                 // Make sure the current GridViewRow is either 
                 // in the normal state or an alternate row.

@@ -54,7 +54,7 @@
             <br />
             <br />
         </asp:Panel>
-        <asp:GridView ID="mainGrid" runat="server" OnRowDataBound="mainGrid_RowDataBound" EnableModelValidation="True" OnRowDeleting="RowDeleting" OnRowEditing="RowEditing">
+        <asp:GridView ID="mainGrid" runat="server" OnRowDataBound="mainGrid_RowDataBound" OnRowDeleting="RowDeleting" OnRowEditing="RowEditing">
             <Columns>
                 <asp:CommandField ShowEditButton="True" />
                 <asp:CommandField ShowDeleteButton="True" Visible="False" />

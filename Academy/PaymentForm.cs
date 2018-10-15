@@ -58,6 +58,7 @@ namespace Academy
             currentPayment.DepotDate = DateTimePickerBank.Value;
             if (currentPayment.ID == 0)
             {
+                currentPayment.ID = 1; // truc a la con....
                 parentMember.Payments.Add(currentPayment);
             }
             parentForm.PopulatePayments(parentMember);

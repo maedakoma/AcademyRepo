@@ -25,7 +25,6 @@ namespace Academy
             cbBelt.SelectedIndex = 0;
             cbGender.SelectedIndex = 0;
             chkActive.Checked = true;
-            chkInternal.Checked = true;
             dateEnd.Value = DateTime.Now.AddYears(1);
             List<Plan> plansAbo = AcademyMgr.getPlans(Plan.typeEnum.Abonnement);
             cbPlanAbo.Items.Add("");
@@ -47,7 +46,6 @@ namespace Academy
             cbGender.Text = member.Gender.ToString();
             chkChild.Checked = member.Child;
             chkAlert.Checked = member.Alert;
-            chkInternal.Checked = member.Internal;
             chkFullYear.Checked = member.FullYear;
             chkCompetitor.Checked = member.Competitor;
             if (member.AboPlan != null)
@@ -157,7 +155,6 @@ namespace Academy
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
             currentMember.Child = chkChild.Checked;
             currentMember.Active = chkActive.Checked;
-            currentMember.Internal = chkInternal.Checked;
             currentMember.Alert = chkAlert.Checked;
             currentMember.FullYear = chkFullYear.Checked;
             currentMember.Competitor = chkCompetitor.Checked;

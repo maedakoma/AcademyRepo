@@ -39,7 +39,6 @@ namespace AcademyMgr
         private Boolean _fullyear;
         private Boolean _competitor;
         private Boolean _coach;
-        private Boolean _internal;
         private string _comment;
         private string _job;
         private string _mail;
@@ -125,11 +124,6 @@ namespace AcademyMgr
         {
             get { return this._active; }
             set { _active = value; }
-        }
-        public Boolean Internal
-        {
-            get { return this._internal; }
-            set { _internal = value; }
         }
         public string Comment
         {

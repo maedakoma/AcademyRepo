@@ -71,13 +71,6 @@
         <asp:TextBox ID="txtOfficialMonth" runat="server"></asp:TextBox>
         <br />
         <br />
-        <asp:Label ID="Label17" runat="server" Text="Mensuel prevu au black:"></asp:Label>
-        <asp:TextBox ID="txtPrevBlackMonth" runat="server"></asp:TextBox>
-        <asp:Label ID="Label18" runat="server" Text="Mensuel prévu déclaré:"></asp:Label>
-        <asp:TextBox ID="txtPrevOfficialMonth" runat="server"></asp:TextBox>
-        <br />
-        <br />
-        <br />
     </form>
 </body>
 </html>

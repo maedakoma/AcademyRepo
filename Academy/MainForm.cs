@@ -70,8 +70,6 @@ namespace Academy
             int nMonth = Math.Abs((beginDate.Month - DateTime.Now.Month) + 12 * (beginDate.Year - DateTime.Now.Year));
             txtBlackMonth.Text = (nTotalBenef / nMonth).ToString();
             txtOfficialMonth.Text = ((nTotalBenef * 75) / (nMonth * 100)).ToString();
-            txtPrevBlackMonth.Text = (nTotalBenef / 12).ToString();
-            txtPrevOfficialMonth.Text = ((nTotalBenef * 75) / (12 * 100)).ToString();
 
             var dayConfig = Mappers.Xy<DateModel>()
                                   .X(dateModel => dateModel.DateTime.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
@@ -157,7 +155,7 @@ namespace Academy
 
 
             double minV = new DateTime(2017, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
-            double maxV = new DateTime(2018, 8, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = new DateTime(2018, 11, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
             cartesianChart1.AxisX.Clear();
             cartesianChart1.AxisX.Add(new Axis
             {
@@ -323,7 +321,6 @@ namespace Academy
         public void FillMembersGrid(int rowIndex = 0)
         {
             bool onlyActive = !chkInactive.Checked;
-            bool onlyInternal = !chkExternal.Checked;
             members = manager.getMembers();
             //Create a New DataTable to store the Data
             DataTable People = new DataTable("People");
@@ -367,7 +364,7 @@ namespace Academy
             
             foreach (Member mem in members)
             {
-                if ((!mem.Active && onlyActive) || (!mem.Internal && onlyInternal))
+                if (!mem.Active && onlyActive)
                 {
                     continue;
                 }
@@ -618,6 +615,71 @@ namespace Academy
                 gridPrivates.CurrentCell = null;
             }
         }
+        public void FillPrivateMembersGrid()
+        {
+            members = manager.getMembers(null,null,true);
+            //Create a New DataTable to store the Data
+            DataTable People = new DataTable("People");
+            //Create the Columns in the DataTable
+            DataColumn c0 = new DataColumn("ID");
+            DataColumn c1 = new DataColumn("alert");
+            DataColumn c2 = new DataColumn("lastname");
+            DataColumn c3 = new DataColumn("firstname");
+            DataColumn c4 = new DataColumn("belt");
+            DataColumn c5 = new DataColumn("mail");
+            DataColumn c6 = new DataColumn("comment");
+            DataColumn c7 = new DataColumn("abonnement");
+            DataColumn c8 = new DataColumn("amount");
+
+            //Add the Created Columns to the Datatable
+            People.Columns.Add(c0);
+            People.Columns.Add(c1);
+            People.Columns.Add(c2);
+            People.Columns.Add(c3);
+            People.Columns.Add(c4);
+            People.Columns.Add(c5);
+            People.Columns.Add(c6);
+            People.Columns.Add(c7);
+            People.Columns.Add(c8);
+
+
+            foreach (Member mem in members)
+            {
+                DataRow row = People.NewRow();
+                row["ID"] = mem.ID;
+                row["alert"] = mem.Alert;
+                row["lastname"] = mem.Lastname;
+                row["firstname"] = mem.Firstname;
+                row["belt"] = mem.Belt;
+                row["mail"] = mem.Mail;
+                row["comment"] = mem.Comment;
+                row["abonnement"] = mem.PrivatePlan.Label;
+                row["amount"] = mem.PrivatePlan.Amount;
+                People.Rows.Add(row);
+            }
+            PrivateGrid.DataSource = People;
+            PrivateGrid.Columns[0].Visible = false;
+            PrivateGrid.Columns[1].Visible = false;
+            PrivateGrid.RowHeadersVisible = false;
+            PrivateGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            PrivateGrid.AllowUserToAddRows = false;
+            PrivateGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            PrivateGrid.Columns[PrivateGrid.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            PrivateGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            PrivateGrid.ReadOnly = true;
+            PrivateGrid.CurrentCell = null;
+
+            PrivateGrid.BorderStyle = BorderStyle.Fixed3D;
+            PrivateGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            PrivateGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            PrivateGrid.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
+            PrivateGrid.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
+            PrivateGrid.BackgroundColor = Color.White;
+            PrivateGrid.EnableHeadersVisualStyles = false;
+            PrivateGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            PrivateGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
+            PrivateGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+        }
         public void FillRefundsGrid(int rowIndex = 0)
         {
             //AcademyMgr.AcademyMgr manager = new AcademyMgr.AcademyMgr();
@@ -806,18 +868,18 @@ namespace Academy
                             row.DefaultCellStyle.BackColor = Color.Orange;
                             row.DefaultCellStyle.ForeColor = Color.White;
                         }
-                        else
+                        else if(daydiff < 50)
                         {
                             row.DefaultCellStyle.BackColor = Color.Red;
                             row.DefaultCellStyle.ForeColor = Color.White;
                         }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Black;
+                            row.DefaultCellStyle.ForeColor = Color.White;
+                        }
                     }
                 }
-                //}
-                //if (!bMembershipOK)
-                //{
-                    
-                //}
             }
         }
 
@@ -871,6 +933,7 @@ namespace Academy
         private void tabPrivates_Enter(object sender, EventArgs e)
         {
             FillPrivatesGrid();
+            FillPrivateMembersGrid();
         }
 
         private void tabCoachPay_Enter(object sender, EventArgs e)
@@ -962,6 +1025,11 @@ namespace Academy
             {
                 listLost.Items.Add(student);
             }
+        }
+
+        private void txtPrevBlackMonth_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

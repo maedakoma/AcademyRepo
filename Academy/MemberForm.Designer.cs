@@ -60,7 +60,6 @@
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.btnGo = new System.Windows.Forms.Button();
             this.chkFullYear = new System.Windows.Forms.CheckBox();
-            this.chkInternal = new System.Windows.Forms.CheckBox();
             this.chkCompetitor = new System.Windows.Forms.CheckBox();
             this.chkCoach = new System.Windows.Forms.CheckBox();
             this.lblPlanAbo = new System.Windows.Forms.Label();
@@ -358,16 +357,6 @@
             this.chkFullYear.Text = "FullYear";
             this.chkFullYear.UseVisualStyleBackColor = true;
             // 
-            // chkInternal
-            // 
-            this.chkInternal.AutoSize = true;
-            this.chkInternal.Location = new System.Drawing.Point(346, 97);
-            this.chkInternal.Name = "chkInternal";
-            this.chkInternal.Size = new System.Drawing.Size(61, 17);
-            this.chkInternal.TabIndex = 35;
-            this.chkInternal.Text = "Internal";
-            this.chkInternal.UseVisualStyleBackColor = true;
-            // 
             // chkCompetitor
             // 
             this.chkCompetitor.AutoSize = true;
@@ -433,7 +422,6 @@
             this.Controls.Add(this.lblPlanAbo);
             this.Controls.Add(this.chkCoach);
             this.Controls.Add(this.chkCompetitor);
-            this.Controls.Add(this.chkInternal);
             this.Controls.Add(this.chkFullYear);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.txtPhone);
@@ -509,7 +497,6 @@
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.CheckBox chkFullYear;
-        private System.Windows.Forms.CheckBox chkInternal;
         private System.Windows.Forms.CheckBox chkCompetitor;
         private System.Windows.Forms.CheckBox chkCoach;
         private System.Windows.Forms.Label lblPlanAbo;

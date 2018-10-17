@@ -103,6 +103,15 @@ namespace MembershipSite {
         protected global::System.Web.UI.WebControls.DropDownList ddBelt;
         
         /// <summary>
+        /// chkChild control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkChild;
+        
+        /// <summary>
         /// chkActive control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,24 @@ namespace MembershipSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkActive;
+        
+        /// <summary>
+        /// chkCompetitor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCompetitor;
+        
+        /// <summary>
+        /// chkCoach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCoach;
         
         /// <summary>
         /// chkAlert control.
@@ -121,6 +148,33 @@ namespace MembershipSite {
         protected global::System.Web.UI.WebControls.CheckBox chkAlert;
         
         /// <summary>
+        /// chkFullyear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFullyear;
+        
+        /// <summary>
+        /// ddAbo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddAbo;
+        
+        /// <summary>
+        /// ddPrivates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddPrivates;
+        
+        /// <summary>
         /// tbComment control.
         /// </summary>
         /// <remarks>
@@ -128,6 +182,33 @@ namespace MembershipSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbComment;
+        
+        /// <summary>
+        /// tbJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbJob;
+        
+        /// <summary>
+        /// tbMail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMail;
+        
+        /// <summary>
+        /// tbAdress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAdress;
         
         /// <summary>
         /// btnCancel control.

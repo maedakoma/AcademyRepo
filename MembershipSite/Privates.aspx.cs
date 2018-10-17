@@ -119,6 +119,7 @@ namespace MembershipSite
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             pnlPrivate.Visible = false;
+            GridPrivates.EditIndex = -1;
         }
 
         protected void btnOK_Click(object sender, EventArgs e)
@@ -146,6 +147,7 @@ namespace MembershipSite
             }
             pnlPrivate.Visible = false;
             // Populate the GridView.
+            GridPrivates.EditIndex = -1;
             BindGridView();
         }
         protected void btnAddPrivate_Click(object sender, EventArgs e)

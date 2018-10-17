@@ -849,12 +849,12 @@ namespace Academy
                 bool bFullyear = Convert.ToBoolean(row.Cells[2].Value);
                 if (!bFullyear)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Coral;
+                    row.DefaultCellStyle.BackColor = Color.Gray;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 if (bAlert)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Orange;
+                    row.DefaultCellStyle.BackColor = Color.BlueViolet;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 DateTime endDate = Convert.ToDateTime(row.Cells[6].Value);

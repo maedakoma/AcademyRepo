@@ -22,7 +22,7 @@
         <asp:Button ID="btnAddMember" runat="server" OnClick="btnAddMember_Click" Text="Add new member" />
         <br />
     </div>
-        <asp:Panel ID="pnlMember" runat="server" Height="191px" Visible="False">
+        <asp:Panel ID="pnlMember" runat="server" Height="306px" Visible="False">
             Firstname:
             <asp:TextBox ID="tbFirstname" runat="server" Width="164px"></asp:TextBox>
             <br />
@@ -33,14 +33,39 @@
             <asp:DropDownList ID="ddBelt" runat="server">
             </asp:DropDownList>
             <br />
-            Active:
+            Child:
+            <asp:CheckBox ID="chkChild" runat="server" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Active:
             <asp:CheckBox ID="chkActive" runat="server" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Competitor:
+            <asp:CheckBox ID="chkCompetitor" runat="server" />
             <br />
-            Alert:
+            Coach:
+            <asp:CheckBox ID="chkCoach" runat="server" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alert:
             <asp:CheckBox ID="chkAlert" runat="server" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fullyear:
+            <asp:CheckBox ID="chkFullyear" runat="server" />
+            <br />
+            Abonnement:
+            <asp:DropDownList ID="ddAbo" runat="server">
+            </asp:DropDownList>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Privates:
+            <asp:DropDownList ID="ddPrivates" runat="server">
+            </asp:DropDownList>
+            <br />
             <br />
             Comment:
             <asp:TextBox ID="tbComment" runat="server" Width="705px"></asp:TextBox>
+            <br />
+            Job:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:TextBox ID="tbJob" runat="server" Width="705px"></asp:TextBox>
+            <br />
+            Mail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:TextBox ID="tbMail" runat="server" Width="705px"></asp:TextBox>
+            <br />
+            Adress:&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:TextBox ID="tbAdress" runat="server" Width="705px"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="btnCancel" runat="server" OnClick="btnCancel_Click" Text="Cancel" />

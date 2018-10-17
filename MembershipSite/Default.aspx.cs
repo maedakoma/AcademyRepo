@@ -19,11 +19,31 @@ namespace MembershipSite
         {
             manager = new AcademyMgr.AcademyMgr();
             manager.Initialize();
-            ddBelt.Items.Add("White");
-            ddBelt.Items.Add("Blue");
-            ddBelt.Items.Add("Purple");
-            ddBelt.Items.Add("Brown");
-            ddBelt.Items.Add("Black");
+            //ddBelt.Items.Clear();
+            if (!IsPostBack)
+            {
+                ddBelt.Items.Add("White");
+                ddBelt.Items.Add("Blue");
+                ddBelt.Items.Add("Purple");
+                ddBelt.Items.Add("Brown");
+                ddBelt.Items.Add("Black");
+
+                List<Plan> plans = manager.getPlans(Plan.typeEnum.Abonnement);
+                ddAbo.Items.Add("");
+                foreach (Plan p in plans)
+                {
+                    ListItem i = new ListItem(p.Label, p.ID.ToString());
+                    ddAbo.Items.Add(i);
+                }
+
+                List<Plan> privates = manager.getPlans(Plan.typeEnum.Private);
+                ddPrivates.Items.Add("");
+                foreach (Plan p in privates)
+                {
+                    ListItem i = new ListItem(p.Label, p.ID.ToString());
+                    ddPrivates.Items.Add(i);
+                }
+            }
             // Populate the GridView.
             BindGridView();
         }
@@ -108,12 +128,12 @@ namespace MembershipSite
                 bool bFullyear = e.Row.Cells[13].Text == "True";
                 if (!bFullyear)
                 {
-                    e.Row.BackColor = System.Drawing.Color.Coral;
+                    e.Row.BackColor = System.Drawing.Color.Gray;
                     e.Row.ForeColor = System.Drawing.Color.White;
                 }
                 if (bAlert)
                 {
-                    e.Row.BackColor = System.Drawing.Color.Orange;
+                    e.Row.BackColor = System.Drawing.Color.BlueViolet;
                     e.Row.ForeColor = System.Drawing.Color.White;
                 }
                 if (e.Row.Cells[5].Text != string.Empty)
@@ -181,14 +201,40 @@ namespace MembershipSite
             tbFirstname.Text = member.Firstname;
             tbLastname.Text = member.Lastname;
             ddBelt.SelectedValue = member.Belt.ToString();
+            if (member.AboPlan != null)
+            {
+                ddAbo.SelectedValue = member.AboPlan.ID.ToString();
+            }
+            else
+            {
+                ddAbo.SelectedValue = "";
+            }
+            if (member.PrivatePlan != null)
+            {
+                ddPrivates.SelectedValue = member.PrivatePlan.ID.ToString();
+            }
+            else
+            {
+                ddPrivates.SelectedValue = "";
+            }
+            chkChild.Checked = member.Child;
             chkActive.Checked = member.Active;
+            chkCompetitor.Checked = member.Competitor;
+            chkCoach.Checked = member.Coach;
             chkAlert.Checked = member.Alert;
+            chkFullyear.Checked = member.FullYear;
             tbComment.Text = member.Comment;
+            tbJob.Text = member.Job;
+            tbMail.Text = member.Mail;
+            tbAdress.Text = member.Address;
+
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             pnlMember.Visible = false;
+            mainGrid.EditIndex = -1;
+            BindGridView();
         }
 
         protected void btnOK_Click(object sender, EventArgs e)
@@ -202,9 +248,29 @@ namespace MembershipSite
             member.Firstname = tbFirstname.Text;
             member.Lastname = tbLastname.Text;
             member.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), ddBelt.SelectedValue.ToString(), true);
+            if (ddAbo.SelectedValue != "")
+            {
+                Plan abo = new Plan();
+                abo.ID = Convert.ToInt32(ddAbo.SelectedValue);
+                member.AboPlan = abo;
+            }
+            if (ddPrivates.SelectedValue != "")
+            {
+                Plan priv = new Plan();
+                priv.ID = Convert.ToInt32(ddPrivates.SelectedValue);
+                member.PrivatePlan = priv;
+            }
+            member.Child = chkChild.Checked;
             member.Active = chkActive.Checked;
+            member.Competitor = chkCompetitor.Checked;
+            member.Coach = chkCoach.Checked;
             member.Alert = chkAlert.Checked;
+            member.FullYear = chkFullyear.Checked;
             member.Comment = tbComment.Text;
+            member.Job = tbJob.Text;
+            member.Mail = tbMail.Text;
+            member.Address = tbAdress.Text;
+
             if (currentMemberID != 0)
             { 
                 manager.UpdateMember(member);
@@ -215,6 +281,7 @@ namespace MembershipSite
             }
             pnlMember.Visible = false;
             // Populate the GridView.
+            mainGrid.EditIndex = -1;
             BindGridView();
         }
 
@@ -224,9 +291,14 @@ namespace MembershipSite
             tbFirstname.Text = "";
             tbLastname.Text = "";
             ddBelt.SelectedIndex = 0;
+            ddAbo.SelectedIndex = 0;
+            ddPrivates.SelectedIndex = 0;
             chkActive.Checked = true;
             chkAlert.Checked = false;
             tbComment.Text = "";
+            tbJob.Text = "";
+            tbMail.Text = "";
+            tbAdress.Text = "";
             pnlMember.Visible = true;
         }
     }

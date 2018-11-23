@@ -10,8 +10,8 @@ namespace AcademyMgr
     public class AcademyMgr
     {
         public static double CoefDebt = 0.6;
-        public static int PlanAboDay = 5;
-        public static int PlanPrivateDay = 1;
+        public static int PlanAboDay = 7;
+        public static int PlanPrivateDay = 5;
         MySqlConnection dbConn;
         public string activeStudentsMetric = "activeStudents";
         public string activeWhiteStudentsMetric = "activeWhiteStudents";
@@ -22,7 +22,7 @@ namespace AcademyMgr
 
         //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
         //public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
-        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE";
+        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE;connection timeout=300000";
 
         public void Initialize()
         {
@@ -68,7 +68,10 @@ namespace AcademyMgr
                         priv.DoneLessons = 1;
                         priv.Date = DateTime.Now;
                         priv.member = member;
-                        priv.Amount = (decimal)(member.PrivatePlan.Amount * 99) / 100;
+                        decimal debt = (decimal)(member.PrivatePlan.Amount * 1) / 100;
+                        if (debt > 2) debt = 2;
+                        priv.Amount = (decimal)(member.PrivatePlan.Amount - priv.Amount-debt);
+                        priv.Description = "#PRELEVEMENT#";
                         InsertPrivate(priv);
                     }
                 }

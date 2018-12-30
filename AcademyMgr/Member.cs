@@ -30,6 +30,7 @@ namespace AcademyMgr
         private DateTime _enddate;
         private genderEnum _gender;
         private beltEnum _belt;
+        private byte _stripe;
         private List<Payment> _payments;
         private Plan _aboPlan;
         private Plan _privatePlan;
@@ -94,6 +95,11 @@ namespace AcademyMgr
         {
             get { return this._belt; }
             set { _belt = value; }
+        }
+        public Byte Stripe
+        {
+            get { return this._stripe; }
+            set { _stripe = value; }
         }
         public Boolean Child
         {

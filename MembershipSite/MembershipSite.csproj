@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="logoCercleTissier.png" />
+    <Content Include="logoCercleTissierRouge.png" />
     <Content Include="Logon.aspx" />
     <Content Include="Privates.aspx" />
     <Content Include="Resume.aspx" />

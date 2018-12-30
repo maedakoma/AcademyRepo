@@ -66,6 +66,7 @@
             this.cbPlanAbo = new System.Windows.Forms.ComboBox();
             this.cbPlanPrivate = new System.Windows.Forms.ComboBox();
             this.lblPlanPrivate = new System.Windows.Forms.Label();
+            this.txtStripe = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.payGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -411,11 +412,19 @@
             this.lblPlanPrivate.TabIndex = 42;
             this.lblPlanPrivate.Text = "Plan Private";
             // 
+            // txtStripe
+            // 
+            this.txtStripe.Location = new System.Drawing.Point(198, 66);
+            this.txtStripe.Name = "txtStripe";
+            this.txtStripe.Size = new System.Drawing.Size(26, 20);
+            this.txtStripe.TabIndex = 44;
+            // 
             // MemberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 680);
+            this.Controls.Add(this.txtStripe);
             this.Controls.Add(this.cbPlanPrivate);
             this.Controls.Add(this.lblPlanPrivate);
             this.Controls.Add(this.cbPlanAbo);
@@ -503,5 +512,6 @@
         private System.Windows.Forms.ComboBox cbPlanAbo;
         private System.Windows.Forms.ComboBox cbPlanPrivate;
         private System.Windows.Forms.Label lblPlanPrivate;
+        private System.Windows.Forms.TextBox txtStripe;
     }
 }

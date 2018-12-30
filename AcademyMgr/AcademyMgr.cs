@@ -308,6 +308,7 @@ namespace AcademyMgr
                     {
                         mem.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), sBelt, true);
                     }
+                    mem.Stripe = Convert.ToByte(reader["stripe"]);
                     String sGender = reader["gender"].ToString();
                     if (sGender != String.Empty)
                     {
@@ -663,12 +664,13 @@ namespace AcademyMgr
                 comm.Prepare();
                 comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, " +
                     "fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor, aboid, privateid) " +
-                    "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?gender, ?fullyear, ?child, ?alert, " +
+                    "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?stripe, ?gender, ?fullyear, ?child, ?alert, " +
                     "?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor, ?aboid, ?privateid)";
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?creationdate", DateTime.Now);
                 comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
+                comm.Parameters.AddWithValue("?stripe", member.Stripe);
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
                 comm.Parameters.AddWithValue("?alert", member.Alert);
@@ -747,7 +749,7 @@ namespace AcademyMgr
                 }
 
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, gender=?gender, " +
+                comm.CommandText = "UPDATE MEMBERS SET firstname=?firstname, lastname=?lastname, enddate=?enddate, belt=?belt, stripe=?stripe, gender=?gender, " +
                     "child=?child, alert=?alert, fullyear=?fullyear, comment=?comment, job=?job, mail=?mail, " +
                     "phone=?phone, address=?address, facebook=?facebook, competitor=?competitor, coach=?coach, " +
                     "aboid=?aboid, privateid=?privateid  WHERE ID=?ID";
@@ -755,6 +757,7 @@ namespace AcademyMgr
                 comm.Parameters.AddWithValue("?firstname", CultureInfo.InvariantCulture.TextInfo.ToTitleCase(member.Firstname.ToLower()));
                 comm.Parameters.AddWithValue("?lastname", member.Lastname.ToUpper());
                 comm.Parameters.AddWithValue("?belt", member.Belt.ToString());
+                comm.Parameters.AddWithValue("?stripe", member.Stripe);
                 comm.Parameters.AddWithValue("?gender", member.Gender.ToString());
                 comm.Parameters.AddWithValue("?child", member.Child);
                 comm.Parameters.AddWithValue("?alert", member.Alert);

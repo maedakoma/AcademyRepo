@@ -4,13 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            width: 447px;
+            height: 145px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <h2>Home Page</h2>
-        <asp:Label ID="Label1" runat="server" Text="Welcome to my site!"></asp:Label>
-        <br />
+    <div style="text-align: center">
+        <h2 style="text-align: center">
+            <img class="auto-style1" src="logoCercleTissierRouge.png" /></h2>
         <asp:Button ID="Button1" runat="server" OnClick="Signout_Click" Text="LogOut" />
         <br />
         <br />
@@ -22,16 +27,20 @@
         <asp:Button ID="btnAddMember" runat="server" OnClick="btnAddMember_Click" Text="Add new member" />
         <br />
     </div>
-        <asp:Panel ID="pnlMember" runat="server" Height="306px" Visible="False">
+        <asp:Panel ID="pnlMember" runat="server" Height="421px" Visible="False" style="text-align: center">
+            <br />
             Firstname:
             <asp:TextBox ID="tbFirstname" runat="server" Width="164px"></asp:TextBox>
-            <br />
-            Lastname:
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lastname:
             <asp:TextBox ID="tbLastname" runat="server" EnableTheming="True" Width="166px"></asp:TextBox>
+            <br />
             <br />
             Belt:
             <asp:DropDownList ID="ddBelt" runat="server">
             </asp:DropDownList>
+            &nbsp;&nbsp;
+            <asp:TextBox ID="tbStripe" runat="server" Width="18px"></asp:TextBox>
+&nbsp;
             <br />
             Child:
             <asp:CheckBox ID="chkChild" runat="server" />
@@ -47,12 +56,14 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fullyear:
             <asp:CheckBox ID="chkFullyear" runat="server" />
             <br />
+            <br />
             Abonnement:
             <asp:DropDownList ID="ddAbo" runat="server">
             </asp:DropDownList>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Privates:
             <asp:DropDownList ID="ddPrivates" runat="server">
             </asp:DropDownList>
+            <br />
             <br />
             <br />
             Comment:
@@ -79,13 +90,15 @@
             <br />
             <br />
         </asp:Panel>
-        <asp:GridView ID="mainGrid" runat="server" OnRowDataBound="mainGrid_RowDataBound" OnRowDeleting="RowDeleting" OnRowEditing="RowEditing">
+        <br />
+        <div align="center">
+        <asp:GridView ID="mainGrid" runat="server" OnRowDataBound="mainGrid_RowDataBound" OnRowDeleting="RowDeleting" OnRowEditing="RowEditing" Width="1462px">
             <Columns>
                 <asp:CommandField ShowEditButton="True" />
                 <asp:CommandField ShowDeleteButton="True" Visible="False" />
             </Columns>
         </asp:GridView>
-        <br />
+        </div>
     </form>
 </body>
 </html>

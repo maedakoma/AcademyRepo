@@ -335,15 +335,16 @@ namespace Academy
             DataColumn c6 = new DataColumn("enddate");
             c6.DataType = typeof(DateTime);
             DataColumn c7 = new DataColumn("belt");
-            DataColumn c8 = new DataColumn("gender");
-            DataColumn c9 = new DataColumn("child");
-            c9.DataType = typeof(bool);
-            DataColumn c10 = new DataColumn("competitor");
+            DataColumn c8 = new DataColumn("stripe");
+            DataColumn c9 = new DataColumn("gender");
+            DataColumn c10 = new DataColumn("child");
             c10.DataType = typeof(bool);
-            DataColumn c11 = new DataColumn("amount");
-            DataColumn c12 = new DataColumn("debt");
-            DataColumn c13 = new DataColumn("mail");
-            DataColumn c14 = new DataColumn("comment");
+            DataColumn c11 = new DataColumn("competitor");
+            c11.DataType = typeof(bool);
+            DataColumn c12 = new DataColumn("amount");
+            DataColumn c13 = new DataColumn("debt");
+            DataColumn c14 = new DataColumn("mail");
+            DataColumn c15 = new DataColumn("comment");
 
             //Add the Created Columns to the Datatable
             People.Columns.Add(c0);
@@ -361,7 +362,8 @@ namespace Academy
             People.Columns.Add(c12);
             People.Columns.Add(c13);
             People.Columns.Add(c14);
-            
+            People.Columns.Add(c15);
+
             foreach (Member mem in members)
             {
                 if (!mem.Active && onlyActive)
@@ -375,6 +377,7 @@ namespace Academy
                 row["creationdate"] = mem.Creationdate;
                 row["enddate"] = mem.Enddate;
                 row["belt"] = mem.Belt;
+                row["stripe"] = mem.Stripe;
                 row["gender"] = mem.Gender;
                 row["child"] = mem.Child;
                 row["alert"] = mem.Alert;

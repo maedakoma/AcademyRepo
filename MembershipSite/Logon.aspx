@@ -5,18 +5,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            width: 240px;
+            height: 68px;
+        }
+        .auto-style2 {
+            text-align: left;
+        }
+        .auto-style3 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <h2>LogIn Page</h2>
-        <asp:Label ID="Label1" runat="server" Text="Please log in below to access the membership area."></asp:Label>
-        <br />
-        <br />
+        <div align="center" style="width: 1464px">
+            <br />
+            <br />
+            <br />
+            <img class="auto-style1" src="logoCercleTissier.png" /><br />
+            <br />
+            <br />
         <asp:Login ID="LoginControl" runat="server" 
-            onauthenticate="LoginControl_Authenticate">
+            onauthenticate="LoginControl_Authenticate" PasswordLabelText="Pass" RememberMeText="Remember me" TextLayout="TextOnTop" TitleText="" UserNameLabelText="Name">
         </asp:Login>
-    </div>
+        </div>
     </form>
 </body>
 </html>

@@ -59,15 +59,16 @@ namespace MembershipSite
             DataColumn c3 = new DataColumn("enddate");
             c3.DataType = typeof(DateTime);
             DataColumn c4 = new DataColumn("belt");
-            DataColumn c5 = new DataColumn("gender");
-            DataColumn c6 = new DataColumn("child");
-            c6.DataType = typeof(bool);
-            DataColumn c7 = new DataColumn("alert");
+            DataColumn c5 = new DataColumn("stripe");
+            DataColumn c6 = new DataColumn("gender");
+            DataColumn c7 = new DataColumn("child");
+            c7.DataType = typeof(bool);
+            DataColumn c8 = new DataColumn("alert");
             //c7.DataType = typeof(bool);
-            DataColumn c8 = new DataColumn("amount");
-            DataColumn c9 = new DataColumn("debt");
-            DataColumn c10 = new DataColumn("comment");
-            DataColumn c11 = new DataColumn("fullyear");
+            DataColumn c9 = new DataColumn("amount");
+            DataColumn c10 = new DataColumn("debt");
+            DataColumn c11 = new DataColumn("comment");
+            DataColumn c12 = new DataColumn("fullyear");
 
 
             //Add the Created Columns to the Datatable
@@ -83,6 +84,7 @@ namespace MembershipSite
             People.Columns.Add(c9);
             People.Columns.Add(c10);
             People.Columns.Add(c11);
+            People.Columns.Add(c12);
 
             foreach (Member mem in members)
             {
@@ -94,6 +96,7 @@ namespace MembershipSite
                     row["firstname"] = mem.Firstname;
                     row["enddate"] = mem.Enddate;
                     row["belt"] = mem.Belt;
+                    row["stripe"] = mem.Stripe;
                     row["gender"] = mem.Gender;
                     row["child"] = mem.Child;
                     row["alert"] = mem.Alert;
@@ -118,14 +121,15 @@ namespace MembershipSite
         protected void mainGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             e.Row.Cells[2].Visible = false;
-            e.Row.Cells[7].Visible = false;
+            e.Row.Cells[5].Visible = false;
             e.Row.Cells[8].Visible = false;
             e.Row.Cells[9].Visible = false;
-            e.Row.Cells[13].Visible = false;
+            e.Row.Cells[10].Visible = false;
+            e.Row.Cells[14].Visible = false;
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                bool bAlert = e.Row.Cells[9].Text == "True";
-                bool bFullyear = e.Row.Cells[13].Text == "True";
+                bool bAlert = e.Row.Cells[10].Text == "True";
+                bool bFullyear = e.Row.Cells[14].Text == "True";
                 if (!bFullyear)
                 {
                     e.Row.BackColor = System.Drawing.Color.Gray;
@@ -224,6 +228,7 @@ namespace MembershipSite
             chkAlert.Checked = member.Alert;
             chkFullyear.Checked = member.FullYear;
             tbComment.Text = member.Comment;
+            tbStripe.Text = member.Stripe.ToString();
             tbJob.Text = member.Job;
             tbMail.Text = member.Mail;
             tbAdress.Text = member.Address;
@@ -267,6 +272,7 @@ namespace MembershipSite
             member.Alert = chkAlert.Checked;
             member.FullYear = chkFullyear.Checked;
             member.Comment = tbComment.Text;
+            member.Stripe = Convert.ToByte(tbStripe.Text);
             member.Job = tbJob.Text;
             member.Mail = tbMail.Text;
             member.Address = tbAdress.Text;
@@ -291,6 +297,7 @@ namespace MembershipSite
             tbFirstname.Text = "";
             tbLastname.Text = "";
             ddBelt.SelectedIndex = 0;
+            tbStripe.Text = "0";
             ddAbo.SelectedIndex = 0;
             ddPrivates.SelectedIndex = 0;
             chkActive.Checked = true;

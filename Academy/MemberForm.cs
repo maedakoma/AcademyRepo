@@ -43,6 +43,7 @@ namespace Academy
             txtFirstname.Text = member.Firstname;
             txtLastname.Text = member.Lastname;
             cbBelt.Text = member.Belt.ToString();
+            txtStripe.Text = member.Stripe.ToString();
             cbGender.Text = member.Gender.ToString();
             chkChild.Checked = member.Child;
             chkAlert.Checked = member.Alert;
@@ -152,6 +153,7 @@ namespace Academy
             currentMember.Firstname = txtFirstname.Text;
             currentMember.Lastname = txtLastname.Text;
             currentMember.Belt = (Member.beltEnum)Enum.Parse(typeof(Member.beltEnum), cbBelt.Text, true);
+            currentMember.Stripe = Convert.ToByte(txtStripe.Text);
             currentMember.Gender = (Member.genderEnum)Enum.Parse(typeof(Member.genderEnum), cbGender.Text, true);
             currentMember.Child = chkChild.Checked;
             currentMember.Active = chkActive.Checked;

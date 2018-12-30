@@ -630,6 +630,8 @@ namespace Academy
             DataColumn c6 = new DataColumn("comment");
             DataColumn c7 = new DataColumn("abonnement");
             DataColumn c8 = new DataColumn("amount");
+            DataColumn c9 = new DataColumn("tel");
+
 
             //Add the Created Columns to the Datatable
             People.Columns.Add(c0);
@@ -641,6 +643,7 @@ namespace Academy
             People.Columns.Add(c6);
             People.Columns.Add(c7);
             People.Columns.Add(c8);
+            People.Columns.Add(c9);
 
 
             foreach (Member mem in members)
@@ -655,6 +658,7 @@ namespace Academy
                 row["comment"] = mem.Comment;
                 row["abonnement"] = mem.PrivatePlan.Label;
                 row["amount"] = mem.PrivatePlan.Amount;
+                row["tel"] = mem.Phone;
                 People.Rows.Add(row);
             }
             PrivateGrid.DataSource = People;

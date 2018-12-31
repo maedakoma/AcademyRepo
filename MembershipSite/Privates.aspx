@@ -21,7 +21,7 @@
         <br />
         <asp:Button ID="btnAddPrivate" runat="server" OnClick="btnAddPrivate_Click" Text="Add New Private" />
     </div>
-        <asp:Panel ID="pnlPrivate" runat="server" Height="154px" Visible="False">
+        <asp:Panel ID="pnlPrivate" runat="server" Height="376px" Visible="False">
             &nbsp;Name:&nbsp;&nbsp;&nbsp;
             <asp:DropDownList ID="ddMembers" runat="server" Height="41px" style="margin-left: 0px" Width="122px">
             </asp:DropDownList>
@@ -34,6 +34,10 @@
             <br />
             Done:&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="txtDone" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            Description:
+            <asp:TextBox ID="txtDescription" runat="server" Height="108px" Width="912px"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="btnCancel" runat="server" OnClick="btnCancel_Click" Text="Cancel" />

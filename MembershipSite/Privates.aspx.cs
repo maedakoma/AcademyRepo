@@ -114,12 +114,14 @@ namespace MembershipSite
             txtAmount.Text = prv.Amount.ToString();
             txtBooked.Text = prv.BookedLessons.ToString();
             txtDone.Text = prv.DoneLessons.ToString();
+            txtDescription.Text = prv.Description.ToString();
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             pnlPrivate.Visible = false;
             GridPrivates.EditIndex = -1;
+            BindGridView();
         }
 
         protected void btnOK_Click(object sender, EventArgs e)
@@ -136,6 +138,7 @@ namespace MembershipSite
             prv.Amount = Convert.ToDecimal(txtAmount.Text);
             prv.BookedLessons = Convert.ToInt32(txtBooked.Text);
             prv.DoneLessons = Convert.ToInt32(txtDone.Text);
+            prv.Description = txtDescription.Text;
             prv.Date = DateTime.Now;
             if (currentPrivateID != 0)
             {
@@ -157,6 +160,7 @@ namespace MembershipSite
             txtAmount.Text = "";
             txtBooked.Text = "";
             txtDone.Text = "";
+            txtDescription.Text = "";
             pnlPrivate.Visible = true;
         }
         // GridView.RowDeleting Event

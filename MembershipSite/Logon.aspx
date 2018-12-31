@@ -20,7 +20,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div align="center" style="width: 1464px">
+        <div align="center">
             <br />
             <br />
             <br />

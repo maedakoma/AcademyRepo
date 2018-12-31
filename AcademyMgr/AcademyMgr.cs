@@ -662,7 +662,7 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, gender, " +
+                comm.CommandText = "INSERT INTO MEMBERS(firstname, lastname, enddate, creationDate, belt, stripe, gender, " +
                     "fullyear, child, alert, comment, job, mail, phone, address, facebook, coach, competitor, aboid, privateid) " +
                     "VALUES(?firstname, ?lastname, ?enddate, ?creationdate, ?belt, ?stripe, ?gender, ?fullyear, ?child, ?alert, " +
                     "?comment, ?job, ?mail, ?phone, ?address, ?facebook, ?coach, ?competitor, ?aboid, ?privateid)";

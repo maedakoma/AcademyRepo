@@ -23,6 +23,7 @@ namespace Academy
             currentMember = new Member();
             mainform = parentForm;
             cbBelt.SelectedIndex = 0;
+            txtStripe.Text = "0";
             cbGender.SelectedIndex = 0;
             chkActive.Checked = true;
             dateEnd.Value = DateTime.Now.AddYears(1);

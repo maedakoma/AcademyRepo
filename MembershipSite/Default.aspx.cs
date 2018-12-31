@@ -69,6 +69,9 @@ namespace MembershipSite
             DataColumn c10 = new DataColumn("debt");
             DataColumn c11 = new DataColumn("comment");
             DataColumn c12 = new DataColumn("fullyear");
+            DataColumn c13 = new DataColumn("phone");
+            DataColumn c14 = new DataColumn("mail");
+
 
 
             //Add the Created Columns to the Datatable
@@ -85,6 +88,9 @@ namespace MembershipSite
             People.Columns.Add(c10);
             People.Columns.Add(c11);
             People.Columns.Add(c12);
+            People.Columns.Add(c13);
+            People.Columns.Add(c14);
+
 
             foreach (Member mem in members)
             {
@@ -111,6 +117,8 @@ namespace MembershipSite
                     row["debt"] = debt;
                     row["comment"] = mem.Comment;
                     row["fullyear"] = mem.FullYear;
+                    row["phone"] = mem.Phone;
+                    row["mail"] = mem.Mail;
                     People.Rows.Add(row);
                 }
             }

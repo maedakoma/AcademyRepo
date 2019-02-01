@@ -28,58 +28,68 @@ namespace AcademyMgr
         {
             dbConn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             dbConn.Open();
-            //On verifie si il y a eu des prevelements a prendre en compte:
-            DateTime lastConnectionDate = getLastConnectionDate();
-            //Combien de fois on a passé le 5 du mois et pour chaque fois on ajoute un paiement
-            //On part de la last connection date on increment le jour et à chaque 5 du mois, on ajoute les prelevements:
-            lastConnectionDate = lastConnectionDate.AddDays(1);
-
-            while (lastConnectionDate.Date <= DateTime.Now.Date)
+            MySqlTransaction transaction = dbConn.BeginTransaction();
+            try
             {
-                if (lastConnectionDate.Day == PlanAboDay)
+                //On verifie si il y a eu des prevelements a prendre en compte:
+                DateTime lastConnectionDate = getLastConnectionDate();
+                //Combien de fois on a passé le 5 du mois et pour chaque fois on ajoute un paiement
+                //On part de la last connection date on increment le jour et à chaque 5 du mois, on ajoute les prelevements:
+                lastConnectionDate = lastConnectionDate.AddDays(1);
+
+                while (lastConnectionDate.Date <= DateTime.Now.Date)
                 {
-                    //Ajout des prelevements pour les personnes concernées:
-                    List<Member> members =  getMembers(null, true);
-                    foreach(Member member in members)
+                    if (lastConnectionDate.Day == PlanAboDay)
                     {
-                        if (member.Active)
+                        //Ajout des prelevements pour les personnes concernées:
+                        List<Member> members = getMembers(null, true);
+                        foreach (Member member in members)
                         {
-                            Payment pay = new Payment();
-                            pay.Amount = (decimal)(member.AboPlan.Amount * 99) / 100;
-                            pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount) / 100;
-                            pay.Name = member.Firstname + " " + member.Lastname;
-                            pay.Type = Payment.typeEnum.Prelev;
-                            pay.ReceptionDate = lastConnectionDate;
-                            pay.Bank = Payment.bankEnum.Academy;
-                            pay.DepotDate = lastConnectionDate;
-                            member.Payments.Add(pay);
-                            UpdateMember(member);
+                            if (member.Active)
+                            {
+                                Payment pay = new Payment();
+                                pay.Amount = (decimal)(member.AboPlan.Amount * 99) / 100;
+                                pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount) / 100;
+                                pay.Name = member.Firstname + " " + member.Lastname;
+                                pay.Type = Payment.typeEnum.Prelev;
+                                pay.ReceptionDate = lastConnectionDate;
+                                pay.Bank = Payment.bankEnum.Academy;
+                                pay.DepotDate = lastConnectionDate;
+                                member.Payments.Add(pay);
+                                UpdateMember(member, true);
+                            }
                         }
                     }
-                }
-                if (lastConnectionDate.Day == PlanPrivateDay)
-                {
-                    //Ajout des prelevements pour les personnes concernées:
-                    List<Member> members = getMembers(null, null,true);
-                    foreach (Member member in members)
+                    if (lastConnectionDate.Day == PlanPrivateDay)
                     {
-                        Private priv = new Private();
-                        priv.BookedLessons = 1;
-                        priv.DoneLessons = 1;
-                        priv.Date = DateTime.Now;
-                        priv.member = member;
-                        decimal debt = (decimal)(member.PrivatePlan.Amount * 1) / 100;
-                        if (debt > 2) debt = 2;
-                        priv.Amount = (decimal)(member.PrivatePlan.Amount - priv.Amount-debt);
-                        priv.Description = "#PRELEVEMENT#";
-                        InsertPrivate(priv);
+                        //Ajout des prelevements pour les personnes concernées:
+                        List<Member> members = getMembers(null, null, true);
+                        foreach (Member member in members)
+                        {
+                            Private priv = new Private();
+                            priv.BookedLessons = 1;
+                            priv.DoneLessons = 1;
+                            priv.Date = DateTime.Now;
+                            priv.member = member;
+                            decimal debt = (decimal)(member.PrivatePlan.Amount * 1) / 100;
+                            if (debt > 2) debt = 2;
+                            priv.Amount = (decimal)(member.PrivatePlan.Amount - priv.Amount - debt);
+                            priv.Description = "#PRELEVEMENT#";
+                            InsertPrivate(priv, true);
+                        }
                     }
-                }
 
-                lastConnectionDate = lastConnectionDate.AddDays(1);
+                    lastConnectionDate = lastConnectionDate.AddDays(1);
+                }
+                //On met à jour la date de connection:
+                updateLastConnectionDate();
+                transaction.Commit();
             }
-            //On met à jour la date de connection:
-            updateLastConnectionDate();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public DateTime getLastConnectionDate()
@@ -725,9 +735,10 @@ namespace AcademyMgr
                 throw;
             }
         }
-        public void UpdateMember(Member member)
+        public void UpdateMember(Member member, bool inTransaction = false)
         {
-            MySqlTransaction transaction = dbConn.BeginTransaction();
+            MySqlTransaction transaction = null;
+            if (!inTransaction) transaction= dbConn.BeginTransaction();
             try
             {
                 if (!member.Active)
@@ -799,11 +810,11 @@ namespace AcademyMgr
 
                 //On met à jour le status si il a changé
                 UpdateStatus(member);
-                transaction.Commit();
+                if (!inTransaction) transaction.Commit();
             }
             catch
             {
-                transaction.Rollback();
+                if (!inTransaction) transaction.Rollback();
                 throw;
             }
         }
@@ -923,9 +934,10 @@ namespace AcademyMgr
             comm.ExecuteNonQuery();
         }
 
-        public void InsertPrivate(Private priv)
+        public void InsertPrivate(Private priv, bool inTransaction = false)
         {
-            MySqlTransaction transaction = dbConn.BeginTransaction();
+            MySqlTransaction transaction = null;
+            if (!inTransaction) dbConn.BeginTransaction();
             try
             {
                 MySqlCommand comm = dbConn.CreateCommand();
@@ -949,11 +961,11 @@ namespace AcademyMgr
                 reader.Close();
                 //dbConn.Open();
                 priv.ID = id;
-                transaction.Commit();
+                if (!inTransaction) transaction.Commit();
             }
             catch
             {
-                transaction.Rollback();
+                if (!inTransaction) transaction.Rollback();
                 throw;
             }
         }

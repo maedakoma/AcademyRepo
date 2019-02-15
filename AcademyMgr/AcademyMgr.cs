@@ -937,7 +937,7 @@ namespace AcademyMgr
         public void InsertPrivate(Private priv, bool inTransaction = false)
         {
             MySqlTransaction transaction = null;
-            if (!inTransaction) dbConn.BeginTransaction();
+            if (!inTransaction) transaction = dbConn.BeginTransaction();
             try
             {
                 MySqlCommand comm = dbConn.CreateCommand();

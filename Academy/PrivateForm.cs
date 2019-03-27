@@ -25,14 +25,14 @@ namespace Academy
             //On remplit la combo des eleves:
             List<Member> members = AcademyMgr.getMembers();
             cbMember.Items.AddRange(members.ToArray());
-            cbMember.DisplayMember = "Lastname";
+            cbMember.DisplayMember = "Fullname";
         }
         public void Populate(Private privateLesson, int index)
         {
             this.Text = privateLesson.member.Lastname;
             rowIndex = index;
             currentPrivate = privateLesson;
-            cbMember.SelectedIndex = cbMember.FindStringExact(privateLesson.member.Lastname);
+            cbMember.SelectedIndex = cbMember.FindStringExact(privateLesson.member.Fullname);
             txtAmount.Text = privateLesson.Amount.ToString();
             txtBooked.Text = privateLesson.BookedLessons.ToString();
             txtDescription.Text = privateLesson.Description;

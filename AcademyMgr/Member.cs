@@ -76,6 +76,10 @@ namespace AcademyMgr
             get { return this._lastname; }
             set { _lastname = value; }
         }
+        public string Fullname
+        {
+            get { return this._firstname + " " + this._lastname; }
+        }
         public DateTime Creationdate
         {
             get { return this._creationdate; }

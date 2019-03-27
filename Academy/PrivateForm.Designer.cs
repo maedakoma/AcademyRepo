@@ -81,7 +81,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(239, 9);
+            this.lblDate.Location = new System.Drawing.Point(357, 9);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 17;
@@ -89,7 +89,7 @@
             // 
             // date
             // 
-            this.date.Location = new System.Drawing.Point(287, 6);
+            this.date.Location = new System.Drawing.Point(405, 6);
             this.date.Name = "date";
             this.date.Size = new System.Drawing.Size(200, 20);
             this.date.TabIndex = 18;
@@ -131,7 +131,7 @@
             this.cbMember.FormattingEnabled = true;
             this.cbMember.Location = new System.Drawing.Point(70, 6);
             this.cbMember.Name = "cbMember";
-            this.cbMember.Size = new System.Drawing.Size(121, 21);
+            this.cbMember.Size = new System.Drawing.Size(260, 21);
             this.cbMember.TabIndex = 24;
             // 
             // txtDescription
@@ -155,7 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 385);
+            this.ClientSize = new System.Drawing.Size(627, 385);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbMember);

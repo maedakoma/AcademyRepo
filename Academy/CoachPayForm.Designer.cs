@@ -41,6 +41,8 @@
             this.txtLessonPrice = new System.Windows.Forms.TextBox();
             this.lblLessonPrice = new System.Windows.Forms.Label();
             this.cbCoachs = new System.Windows.Forms.ComboBox();
+            this.lblComment = new System.Windows.Forms.Label();
+            this.txtComment = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblAmount
@@ -61,7 +63,7 @@
             // 
             // dateTimePickerReception
             // 
-            this.dateTimePickerReception.Location = new System.Drawing.Point(99, 190);
+            this.dateTimePickerReception.Location = new System.Drawing.Point(99, 222);
             this.dateTimePickerReception.Name = "dateTimePickerReception";
             this.dateTimePickerReception.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerReception.TabIndex = 4;
@@ -69,7 +71,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(21, 196);
+            this.lblDate.Location = new System.Drawing.Point(21, 228);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 5;
@@ -102,7 +104,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(24, 240);
+            this.btnOK.Location = new System.Drawing.Point(24, 266);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 10;
@@ -150,11 +152,29 @@
             this.cbCoachs.Size = new System.Drawing.Size(121, 21);
             this.cbCoachs.TabIndex = 15;
             // 
+            // lblComment
+            // 
+            this.lblComment.AutoSize = true;
+            this.lblComment.Location = new System.Drawing.Point(21, 179);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(51, 13);
+            this.lblComment.TabIndex = 16;
+            this.lblComment.Text = "Comment";
+            // 
+            // txtComment
+            // 
+            this.txtComment.Location = new System.Drawing.Point(100, 176);
+            this.txtComment.Name = "txtComment";
+            this.txtComment.Size = new System.Drawing.Size(121, 20);
+            this.txtComment.TabIndex = 17;
+            // 
             // CoachPayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 275);
+            this.ClientSize = new System.Drawing.Size(413, 299);
+            this.Controls.Add(this.txtComment);
+            this.Controls.Add(this.lblComment);
             this.Controls.Add(this.cbCoachs);
             this.Controls.Add(this.txtLessonPrice);
             this.Controls.Add(this.lblLessonPrice);
@@ -191,5 +211,7 @@
         private System.Windows.Forms.TextBox txtLessonPrice;
         private System.Windows.Forms.Label lblLessonPrice;
         private System.Windows.Forms.ComboBox cbCoachs;
+        private System.Windows.Forms.Label lblComment;
+        private System.Windows.Forms.TextBox txtComment;
     }
 }

@@ -1168,13 +1168,14 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO COACHSPAYMENTS(month, memberID, lessons, pay, amount, date) VALUES(?month, ?memberID, ?lessons, ?pay, ?amount, ?date)";
+                comm.CommandText = "INSERT INTO COACHSPAYMENTS(month, memberID, lessons, pay, amount, date, comment) VALUES(?month, ?memberID, ?lessons, ?pay, ?amount, ?date, ?comment)";
                 comm.Parameters.AddWithValue("?month", pay.Month);
                 comm.Parameters.AddWithValue("?memberID", pay.Coach.ID);
                 comm.Parameters.AddWithValue("?lessons", pay.Lessons);
                 comm.Parameters.AddWithValue("?pay", pay.Pay);
                 comm.Parameters.AddWithValue("?amount", pay.Amount);
                 comm.Parameters.AddWithValue("?date", pay.Date);
+                comm.Parameters.AddWithValue("?comment", pay.Comment);
 
                 comm.ExecuteNonQuery();
 
@@ -1201,13 +1202,14 @@ namespace AcademyMgr
             try
             {
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE COACHSPAYMENTS SET month=?month, memberID=?memberID, lessons=?lessons, pay=?pay, amount=?amount, date=?date WHERE ID=?ID";
+                comm.CommandText = "UPDATE COACHSPAYMENTS SET month=?month, memberID=?memberID, lessons=?lessons, pay=?pay, amount=?amount, date=?date, comment=?comment WHERE ID=?ID";
                 comm.Parameters.AddWithValue("?month", pay.Month);
                 comm.Parameters.AddWithValue("?memberID", pay.Coach.ID);
                 comm.Parameters.AddWithValue("?lessons", pay.Lessons);
                 comm.Parameters.AddWithValue("?pay", pay.Pay);
                 comm.Parameters.AddWithValue("?amount", pay.Amount);
                 comm.Parameters.AddWithValue("?date", pay.Date);
+                comm.Parameters.AddWithValue("?comment", pay.Comment);
                 comm.Parameters.AddWithValue("?ID", pay.ID);
                 comm.ExecuteNonQuery();
                 transaction.Commit();

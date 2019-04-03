@@ -38,6 +38,7 @@ namespace Academy
             txtLessons.Text = pay.Lessons.ToString();
             txtLessonPrice.Text = pay.Pay.ToString();
             txtAmount.Text = pay.Amount.ToString();
+            txtComment.Text = pay.Comment.ToString();
             if (pay.Date != DateTime.MinValue)
             {
                 dateTimePickerReception.Value = pay.Date;
@@ -51,6 +52,7 @@ namespace Academy
             currentCoachPayment.Lessons = Convert.ToInt32(txtLessons.Text);
             currentCoachPayment.Pay = Convert.ToInt32(txtLessonPrice.Text);
             currentCoachPayment.Amount = Convert.ToDecimal(txtAmount.Text);
+            currentCoachPayment.Comment = txtComment.Text;
             currentCoachPayment.Date = dateTimePickerReception.Value;
             if (currentCoachPayment.ID == 0)
             {

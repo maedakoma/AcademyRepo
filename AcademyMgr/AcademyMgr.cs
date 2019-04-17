@@ -20,9 +20,9 @@ namespace AcademyMgr
         public string activeBrownStudentsMetric = "activeBrownStudents";
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
-        //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
+        public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
         //public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
-        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=cercle;connection timeout=300000";
+        //public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=cercle;connection timeout=300000";
 
         public void Initialize()
         {
@@ -50,7 +50,7 @@ namespace AcademyMgr
                                 Payment pay = new Payment();
                                 pay.Amount = (decimal)(member.AboPlan.Amount * 99) / 100;
                                 pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount) / 100;
-                                pay.Name = member.Firstname + " " + member.Lastname;
+                                pay.Name = member.Fullname;
                                 pay.Type = Payment.typeEnum.Prelev;
                                 pay.prestationType = Payment.PrestationTypeEnum.Abo;
                                 pay.ReceptionDate = lastConnectionDate;
@@ -73,8 +73,12 @@ namespace AcademyMgr
                             decimal debt = (decimal)(member.PrivatePlan.Amount * 1) / 100;
                             if (debt > 2) debt = 2;
                             pay.Amount = (decimal)(member.PrivatePlan.Amount - debt);
+                            pay.Debt = 0;
                             pay.Type = Payment.typeEnum.Prelev;
+                            pay.Bank = Payment.bankEnum.Academy;
+                            pay.Name = member.Fullname;
                             pay.prestationType = Payment.PrestationTypeEnum.Private;
+                            member.Payments.Add(pay);
                             DeletePayments(member.ID);
                             InsertPayments(member);
                         }

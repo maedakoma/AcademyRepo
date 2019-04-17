@@ -777,7 +777,7 @@ namespace Academy
                 DataRow row = Coachpay.NewRow();
                 row["ID"] = pay.ID;
                 row["Month"] = pay.Month;
-                row["Coach"] = pay.Coach.Firstname + " " + pay.Coach.Lastname;
+                row["Coach"] = pay.Coach.Fullname;
                 row["Lessons"] = pay.Lessons;
                 row["Pay"] = pay.Pay;
                 row["Amount"] = pay.Amount;

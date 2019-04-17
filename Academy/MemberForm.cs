@@ -38,7 +38,7 @@ namespace Academy
         }
         public void Populate(Member member, int index)
         {
-            this.Text = member.Firstname + " " + member.Lastname;
+            this.Text = member.Fullname;
             rowIndex = index;
             currentMember = member;
             txtFirstname.Text = member.Firstname;

@@ -28,6 +28,7 @@ namespace Academy
                 txtAmount.Text = payment.Amount.ToString();
                 txtDebt.Text = payment.Debt.ToString();
                 cbType.Text = payment.Type.ToString();
+                cbPrestationType.Text = payment.prestationType.ToString();
                 cbBank.Text = payment.Bank.ToString();
                 if (payment.ReceptionDate != DateTime.MinValue)
                 {
@@ -43,6 +44,7 @@ namespace Academy
                 currentPayment = new Payment();
                 txtName.Text = form.txtFirstname.Text + " " + form.txtLastname.Text;
                 cbType.SelectedItem = "Check";
+                cbPrestationType.SelectedItem = "Abo";
                 cbBank.SelectedIndex = 0;
             }
         }
@@ -53,6 +55,7 @@ namespace Academy
             currentPayment.Debt = Convert.ToDecimal(Convert.ToDouble(txtDebt.Text));
             currentPayment.Name = txtName.Text;
             currentPayment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), cbType.Text, true);
+            currentPayment.prestationType = (Payment.PrestationTypeEnum)Enum.Parse(typeof(Payment.PrestationTypeEnum), cbPrestationType.Text, true);
             currentPayment.ReceptionDate = dateTimePickerReception.Value;
             currentPayment.Bank = (Payment.bankEnum)Enum.Parse(typeof(Payment.bankEnum), cbBank.Text, true);
             currentPayment.DepotDate = DateTimePickerBank.Value;
@@ -67,12 +70,12 @@ namespace Academy
 
         private void txtAmount_TextValidated(object sender, EventArgs e)
         {
-            int result;
+            decimal result;
             if (currentPayment.ID == 0)
             {
-                if (int.TryParse(txtAmount.Text, out result) && cbType.SelectedItem.ToString() != "Cash" )
+                if (decimal.TryParse(txtAmount.Text, out result) && cbType.SelectedItem.ToString() != "Cash" && cbPrestationType.SelectedItem.ToString() != "Private")
                 {
-                    txtDebt.Text = (AcademyMgr.AcademyMgr.CoefDebt * result).ToString();
+                    txtDebt.Text = ((decimal)AcademyMgr.AcademyMgr.CoefDebt * result).ToString();
                 }
                 else
                 {

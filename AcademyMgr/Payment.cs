@@ -24,9 +24,16 @@ namespace AcademyMgr
             Prelev = 3
         }
 
+        public enum PrestationTypeEnum
+        {
+            Abo = 0,
+            Private = 1
+        }
+
         private int _ID;
         private Decimal _amount;
         private typeEnum _type;
+        private PrestationTypeEnum _prestationType;
         private string _name;
         private Decimal _debt;
         private bankEnum _bank;
@@ -42,6 +49,11 @@ namespace AcademyMgr
         {
             get { return this._type; }
             set { _type = value; }
+        }
+        public PrestationTypeEnum prestationType
+        {
+            get { return this._prestationType; }
+            set { _prestationType = value; }
         }
         public string Name
         {

@@ -20,9 +20,9 @@ namespace AcademyMgr
         public string activeBrownStudentsMetric = "activeBrownStudents";
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
-        //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
+        public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
         //public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
-        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE;connection timeout=300000";
+        //public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE;connection timeout=300000";
 
         public void Initialize()
         {
@@ -52,6 +52,7 @@ namespace AcademyMgr
                                 pay.Debt = (decimal)(member.AboPlan.DebtPercentage * pay.Amount) / 100;
                                 pay.Name = member.Firstname + " " + member.Lastname;
                                 pay.Type = Payment.typeEnum.Prelev;
+                                pay.prestationType = Payment.PrestationTypeEnum.Abo;
                                 pay.ReceptionDate = lastConnectionDate;
                                 pay.Bank = Payment.bankEnum.Academy;
                                 pay.DepotDate = lastConnectionDate;
@@ -66,16 +67,16 @@ namespace AcademyMgr
                         List<Member> members = getMembers(null, null, true);
                         foreach (Member member in members)
                         {
-                            Private priv = new Private();
-                            priv.BookedLessons = 1;
-                            priv.DoneLessons = 1;
-                            priv.Date = DateTime.Now;
-                            priv.member = member;
+                            Payment pay = new Payment();
+                            pay.DepotDate = DateTime.Now;
+                            pay.ReceptionDate = DateTime.Now;
                             decimal debt = (decimal)(member.PrivatePlan.Amount * 1) / 100;
                             if (debt > 2) debt = 2;
-                            priv.Amount = (decimal)(member.PrivatePlan.Amount - priv.Amount - debt);
-                            priv.Description = "#PRELEVEMENT#";
-                            InsertPrivate(priv, true);
+                            pay.Amount = (decimal)(member.PrivatePlan.Amount - debt);
+                            pay.Type = Payment.typeEnum.Prelev;
+                            pay.prestationType = Payment.PrestationTypeEnum.Private;
+                            DeletePayments(member.ID);
+                            InsertPayments(member);
                         }
                     }
 
@@ -142,7 +143,6 @@ namespace AcademyMgr
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-
                 CoachPay pay = new CoachPay();
                 pay.ID = (int)reader["ID"];
                 pay.Month = reader["Month"].ToString();
@@ -171,7 +171,6 @@ namespace AcademyMgr
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-
                 Seminar seminar = new Seminar();
                 seminar.ID = (int)reader["ID"];
                 seminar.Theme = reader["Theme"].ToString();
@@ -220,7 +219,7 @@ namespace AcademyMgr
             List<Private> privates = new List<Private>();
 
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID order by date desc";
+            cmd.CommandText = "SELECT *, M.ID AS memberID from PRIVATES P inner join MEMBERS M on M.ID = P.memberID order by Lastname, date desc";
 
             MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -232,7 +231,6 @@ namespace AcademyMgr
                 member.Firstname = reader["Firstname"].ToString();
                 member.Lastname = reader["Lastname"].ToString();
                 priv.member = member;
-                priv.Amount = (decimal)reader["amount"];
                 priv.Date = Convert.ToDateTime(reader["Date"]);
                 priv.BookedLessons = (int)reader["bookedLessons"];
                 priv.DoneLessons = (int)reader["doneLessons"];
@@ -289,6 +287,11 @@ namespace AcademyMgr
                         if (sType != String.Empty)
                         {
                             payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                        }
+                        String sprestationType = reader["prestationtype"].ToString();
+                        if (sprestationType != String.Empty)
+                        {
+                            payment.prestationType = (Payment.PrestationTypeEnum)Enum.Parse(typeof(Payment.PrestationTypeEnum), sprestationType, true);
                         }
                         payment.Name = reader["name"].ToString();
                         payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
@@ -351,6 +354,11 @@ namespace AcademyMgr
                         if (sType != String.Empty)
                         {
                             payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
+                        }
+                        String sprestationType = reader["prestationtype"].ToString();
+                        if (sprestationType != String.Empty)
+                        {
+                            payment.prestationType = (Payment.PrestationTypeEnum)Enum.Parse(typeof(Payment.PrestationTypeEnum), sprestationType, true);
                         }
                         payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
                         String sBank = reader["bank"].ToString();
@@ -489,6 +497,11 @@ namespace AcademyMgr
                 {
                     payment.Type = (Payment.typeEnum)Enum.Parse(typeof(Payment.typeEnum), sType, true);
                 }
+                String sprestationType = reader["prestationtype"].ToString();
+                if (sprestationType != String.Empty)
+                {
+                    payment.prestationType = (Payment.PrestationTypeEnum)Enum.Parse(typeof(Payment.PrestationTypeEnum), sprestationType, true);
+                }
                 payment.Name = reader["name"].ToString();
                 payment.ReceptionDate = Convert.ToDateTime(reader["ReceptionDate"]);
                 String sBank = reader["bank"].ToString();
@@ -583,7 +596,8 @@ namespace AcademyMgr
         public decimal getLicencesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT SUM(amount) from PAYMENTS";
+            cmd.CommandText = "SELECT SUM(amount) from PAYMENTS WHERE prestationType=?prestationType";
+            cmd.Parameters.AddWithValue("?prestationType", Payment.PrestationTypeEnum.Abo.ToString());
             object result = cmd.ExecuteScalar();
             decimal nAmount = 0;
             if (result != DBNull.Value)
@@ -595,7 +609,8 @@ namespace AcademyMgr
         public decimal getLicencesDebt()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT SUM(debt) from PAYMENTS";
+            cmd.CommandText = "SELECT SUM(debt) from PAYMENTS  WHERE prestationType=?prestationType";
+            cmd.Parameters.AddWithValue("?prestationType", Payment.PrestationTypeEnum.Abo.ToString());
             object result = cmd.ExecuteScalar();
             decimal nAmount = 0;
             if (result != DBNull.Value)
@@ -607,7 +622,8 @@ namespace AcademyMgr
         public decimal getPrivatesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();
-            cmd.CommandText = "SELECT SUM(amount) from PRIVATES";
+            cmd.CommandText = "SELECT SUM(amount) from PAYMENTS WHERE prestationType=?prestationType";
+            cmd.Parameters.AddWithValue("?prestationType", Payment.PrestationTypeEnum.Private.ToString());
             object result = cmd.ExecuteScalar();
             decimal nAmount = 0;
             if (result != DBNull.Value)
@@ -895,9 +911,10 @@ namespace AcademyMgr
             foreach (Payment pay in member.Payments)
             {
                 comm = dbConn.CreateCommand();
-                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
+                comm.CommandText = "INSERT INTO PAYMENTS(Amount, Type, prestationType, receptionDate, Name, Debt, Bank, DepotDate ) VALUES(?amount, ?type, ?prestationtype, ?receptionDate, ?name, ?debt, ?Bank, ?DepotDate)";
                 comm.Parameters.AddWithValue("?amount", pay.Amount);
                 comm.Parameters.AddWithValue("?type", pay.Type.ToString());
+                comm.Parameters.AddWithValue("?prestationType", pay.prestationType.ToString());
                 comm.Parameters.AddWithValue("?receptionDate", pay.ReceptionDate);
                 comm.Parameters.AddWithValue("?name", pay.Name);
                 comm.Parameters.AddWithValue("?debt", pay.Debt);
@@ -942,10 +959,9 @@ namespace AcademyMgr
             {
                 MySqlCommand comm = dbConn.CreateCommand();
                 comm.Prepare();
-                comm.CommandText = "INSERT INTO PRIVATES(memberID, amount, date, bookedLessons, donelessons, description) VALUES(?memberID, ?amount, ?date, ?bookedLessons, ?donelessons, ?description)";
+                comm.CommandText = "INSERT INTO PRIVATES(memberID, date, bookedLessons, donelessons, description) VALUES(?memberID, ?date, ?bookedLessons, ?donelessons, ?description)";
                 comm.Parameters.AddWithValue("?memberID", priv.member.ID);
                 comm.Parameters.AddWithValue("?date", priv.Date);
-                comm.Parameters.AddWithValue("?amount", priv.Amount);
                 comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
                 comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
                 comm.Parameters.AddWithValue("?description", priv.Description);
@@ -975,10 +991,9 @@ namespace AcademyMgr
             try
             {
                 MySqlCommand comm = dbConn.CreateCommand();
-                comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, amount=?amount, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons, description=?description WHERE ID=?ID";
+                comm.CommandText = "UPDATE PRIVATES SET memberID=?memberID, date=?date, bookedLessons=?bookedLessons, donelessons=?donelessons, description=?description WHERE ID=?ID";
                 comm.Parameters.AddWithValue("?memberID", priv.member.ID);
                 comm.Parameters.AddWithValue("?date", priv.Date);
-                comm.Parameters.AddWithValue("?amount", priv.Amount);
                 comm.Parameters.AddWithValue("?bookedLessons", priv.BookedLessons);
                 comm.Parameters.AddWithValue("?donelessons", priv.DoneLessons);
                 comm.Parameters.AddWithValue("?description", priv.Description);

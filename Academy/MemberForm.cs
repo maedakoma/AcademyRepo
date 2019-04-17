@@ -80,11 +80,13 @@ namespace Academy
             DataColumn c0 = new DataColumn("ID");
             DataColumn c1 = new DataColumn("Amount");
             DataColumn c2 = new DataColumn("Type");
-            DataColumn c3 = new DataColumn("Name");
-            DataColumn c4 = new DataColumn("Debt");
-            DataColumn c5 = new DataColumn("ReceptionDate");
-            DataColumn c6 = new DataColumn("Bank");
-            DataColumn c7 = new DataColumn("BankDate");
+            DataColumn c3 = new DataColumn("PrestationType");
+            DataColumn c4 = new DataColumn("Name");
+            DataColumn c5 = new DataColumn("Debt");
+            DataColumn c6 = new DataColumn("ReceptionDate");
+            DataColumn c7 = new DataColumn("Bank");
+            DataColumn c8 = new DataColumn("BankDate");
+            
 
             //Add the Created Columns to the Datatable
             Payments.Columns.Add(c0);
@@ -95,6 +97,7 @@ namespace Academy
             Payments.Columns.Add(c5);
             Payments.Columns.Add(c6);
             Payments.Columns.Add(c7);
+            Payments.Columns.Add(c8);
 
             foreach (Payment pay in member.Payments)
             {
@@ -102,6 +105,7 @@ namespace Academy
                 row["ID"] = pay.ID;
                 row["Amount"] = pay.Amount;
                 row["Type"] = pay.Type.ToString();
+                row["PrestationType"] = pay.prestationType.ToString();
                 row["Name"] = pay.Name;
                 row["Debt"] = pay.Debt;
                 row["ReceptionDate"] = pay.ReceptionDate;

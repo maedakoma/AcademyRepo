@@ -41,10 +41,9 @@ namespace MembershipSite
             DataColumn c1 = new DataColumn("name");
             DataColumn c2 = new DataColumn("date");
             c2.DataType = typeof(DateTime);
-            DataColumn c3 = new DataColumn("amount");
-            DataColumn c4 = new DataColumn("booked");
-            DataColumn c5 = new DataColumn("done");
-            DataColumn c6 = new DataColumn("description");
+            DataColumn c3 = new DataColumn("booked");
+            DataColumn c4 = new DataColumn("done");
+            DataColumn c5 = new DataColumn("description");
 
 
             //Add the Created Columns to the Datatable
@@ -54,8 +53,6 @@ namespace MembershipSite
             Privates.Columns.Add(c3);
             Privates.Columns.Add(c4);
             Privates.Columns.Add(c5);
-            Privates.Columns.Add(c6);
-
 
             foreach (Private prv in privates)
             {
@@ -63,7 +60,6 @@ namespace MembershipSite
                 row["ID"] = prv.ID;
                 row["name"] = prv.member.Lastname;
                 row["date"] = prv.Date;
-                row["amount"] = prv.Amount;
                 row["booked"] = prv.BookedLessons;
                 row["done"] = prv.DoneLessons;
                 row["description"] = prv.Description;
@@ -111,7 +107,6 @@ namespace MembershipSite
         private void PopulatePrivatePanel(Private prv)
         {
             ddMembers.SelectedValue = prv.member.ID.ToString();
-            txtAmount.Text = prv.Amount.ToString();
             txtBooked.Text = prv.BookedLessons.ToString();
             txtDone.Text = prv.DoneLessons.ToString();
             txtDescription.Text = prv.Description.ToString();
@@ -135,7 +130,6 @@ namespace MembershipSite
             Member member = new Member();
             member.ID = Convert.ToInt32(ddMembers.SelectedValue);
             prv.member = member;
-            prv.Amount = Convert.ToDecimal(txtAmount.Text);
             prv.BookedLessons = Convert.ToInt32(txtBooked.Text);
             prv.DoneLessons = Convert.ToInt32(txtDone.Text);
             prv.Description = txtDescription.Text;
@@ -157,7 +151,6 @@ namespace MembershipSite
         {
             Application["currentPrivateID"] = 0;
             ddMembers.SelectedIndex = 0;
-            txtAmount.Text = "";
             txtBooked.Text = "";
             txtDone.Text = "";
             txtDescription.Text = "";

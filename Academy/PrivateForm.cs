@@ -33,7 +33,6 @@ namespace Academy
             rowIndex = index;
             currentPrivate = privateLesson;
             cbMember.SelectedIndex = cbMember.FindStringExact(privateLesson.member.Fullname);
-            txtAmount.Text = privateLesson.Amount.ToString();
             txtBooked.Text = privateLesson.BookedLessons.ToString();
             txtDescription.Text = privateLesson.Description;
             txtDone.Text = privateLesson.DoneLessons.ToString();
@@ -46,7 +45,6 @@ namespace Academy
         private void btnOK_Click(object sender, EventArgs e)
         {
             currentPrivate.member = (Member)cbMember.SelectedItem;
-            currentPrivate.Amount = Convert.ToDecimal(txtAmount.Text);
             currentPrivate.BookedLessons = Convert.ToInt32(txtBooked.Text);
             currentPrivate.DoneLessons = Convert.ToInt32(txtDone.Text);
             currentPrivate.Description = txtDescription.Text;

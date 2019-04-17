@@ -43,12 +43,14 @@
             this.DateTimePickerBank = new System.Windows.Forms.DateTimePicker();
             this.cbBank = new System.Windows.Forms.ComboBox();
             this.lblBank = new System.Windows.Forms.Label();
+            this.cbPrestationType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblAmount
             // 
             this.lblAmount.AutoSize = true;
-            this.lblAmount.Location = new System.Drawing.Point(20, 52);
+            this.lblAmount.Location = new System.Drawing.Point(22, 112);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.Size = new System.Drawing.Size(43, 13);
             this.lblAmount.TabIndex = 0;
@@ -56,7 +58,7 @@
             // 
             // txtAmount
             // 
-            this.txtAmount.Location = new System.Drawing.Point(73, 49);
+            this.txtAmount.Location = new System.Drawing.Point(75, 109);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(121, 20);
             this.txtAmount.TabIndex = 1;
@@ -73,7 +75,7 @@
             // 
             // dateTimePickerReception
             // 
-            this.dateTimePickerReception.Location = new System.Drawing.Point(73, 115);
+            this.dateTimePickerReception.Location = new System.Drawing.Point(75, 175);
             this.dateTimePickerReception.Name = "dateTimePickerReception";
             this.dateTimePickerReception.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerReception.TabIndex = 4;
@@ -81,7 +83,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(21, 121);
+            this.lblDate.Location = new System.Drawing.Point(23, 181);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 5;
@@ -89,7 +91,7 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(73, 152);
+            this.txtName.Location = new System.Drawing.Point(75, 212);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(117, 20);
             this.txtName.TabIndex = 7;
@@ -97,7 +99,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(21, 155);
+            this.lblName.Location = new System.Drawing.Point(23, 215);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 6;
@@ -105,7 +107,7 @@
             // 
             // txtDebt
             // 
-            this.txtDebt.Location = new System.Drawing.Point(73, 80);
+            this.txtDebt.Location = new System.Drawing.Point(75, 140);
             this.txtDebt.Name = "txtDebt";
             this.txtDebt.Size = new System.Drawing.Size(122, 20);
             this.txtDebt.TabIndex = 9;
@@ -113,7 +115,7 @@
             // lblDebt
             // 
             this.lblDebt.AutoSize = true;
-            this.lblDebt.Location = new System.Drawing.Point(21, 83);
+            this.lblDebt.Location = new System.Drawing.Point(23, 143);
             this.lblDebt.Name = "lblDebt";
             this.lblDebt.Size = new System.Drawing.Size(30, 13);
             this.lblDebt.TabIndex = 8;
@@ -121,7 +123,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(24, 277);
+            this.btnOK.Location = new System.Drawing.Point(25, 352);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 10;
@@ -138,7 +140,7 @@
             "Check",
             "Transfert",
             "Prelev"});
-            this.cbType.Location = new System.Drawing.Point(73, 16);
+            this.cbType.Location = new System.Drawing.Point(104, 19);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(121, 21);
             this.cbType.TabIndex = 11;
@@ -146,7 +148,7 @@
             // lblPutDate
             // 
             this.lblPutDate.AutoSize = true;
-            this.lblPutDate.Location = new System.Drawing.Point(21, 191);
+            this.lblPutDate.Location = new System.Drawing.Point(23, 251);
             this.lblPutDate.Name = "lblPutDate";
             this.lblPutDate.Size = new System.Drawing.Size(46, 13);
             this.lblPutDate.TabIndex = 14;
@@ -154,7 +156,7 @@
             // 
             // DateTimePickerBank
             // 
-            this.DateTimePickerBank.Location = new System.Drawing.Point(73, 185);
+            this.DateTimePickerBank.Location = new System.Drawing.Point(75, 245);
             this.DateTimePickerBank.Name = "DateTimePickerBank";
             this.DateTimePickerBank.Size = new System.Drawing.Size(200, 20);
             this.DateTimePickerBank.TabIndex = 13;
@@ -167,7 +169,7 @@
             "Academy",
             "Perso",
             "Coach"});
-            this.cbBank.Location = new System.Drawing.Point(73, 223);
+            this.cbBank.Location = new System.Drawing.Point(75, 283);
             this.cbBank.Name = "cbBank";
             this.cbBank.Size = new System.Drawing.Size(121, 21);
             this.cbBank.TabIndex = 15;
@@ -176,17 +178,40 @@
             // lblBank
             // 
             this.lblBank.AutoSize = true;
-            this.lblBank.Location = new System.Drawing.Point(24, 226);
+            this.lblBank.Location = new System.Drawing.Point(26, 286);
             this.lblBank.Name = "lblBank";
             this.lblBank.Size = new System.Drawing.Size(32, 13);
             this.lblBank.TabIndex = 16;
             this.lblBank.Text = "Bank";
             // 
+            // cbPrestationType
+            // 
+            this.cbPrestationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPrestationType.FormattingEnabled = true;
+            this.cbPrestationType.Items.AddRange(new object[] {
+            "Abo",
+            "Private"});
+            this.cbPrestationType.Location = new System.Drawing.Point(104, 58);
+            this.cbPrestationType.Name = "cbPrestationType";
+            this.cbPrestationType.Size = new System.Drawing.Size(121, 21);
+            this.cbPrestationType.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 61);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(78, 13);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "PrestationType";
+            // 
             // PaymentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 324);
+            this.ClientSize = new System.Drawing.Size(417, 405);
+            this.Controls.Add(this.cbPrestationType);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblBank);
             this.Controls.Add(this.cbBank);
             this.Controls.Add(this.lblPutDate);
@@ -226,5 +251,7 @@
         private System.Windows.Forms.DateTimePicker DateTimePickerBank;
         private System.Windows.Forms.ComboBox cbBank;
         private System.Windows.Forms.Label lblBank;
+        private System.Windows.Forms.ComboBox cbPrestationType;
+        private System.Windows.Forms.Label label1;
     }
 }

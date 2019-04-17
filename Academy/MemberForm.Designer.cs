@@ -135,7 +135,7 @@
             this.payGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.payGrid.Location = new System.Drawing.Point(15, 146);
             this.payGrid.Name = "payGrid";
-            this.payGrid.Size = new System.Drawing.Size(680, 184);
+            this.payGrid.Size = new System.Drawing.Size(944, 184);
             this.payGrid.TabIndex = 10;
             this.payGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.payGrid_CellMouseDoubleClick);
             this.payGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.payGrid_DataBindingComplete);
@@ -152,7 +152,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(620, 645);
+            this.btnOK.Location = new System.Drawing.Point(884, 645);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 12;
@@ -235,7 +235,7 @@
             // 
             this.txtComment.Location = new System.Drawing.Point(70, 409);
             this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(625, 20);
+            this.txtComment.Size = new System.Drawing.Size(889, 20);
             this.txtComment.TabIndex = 20;
             // 
             // chkAlert
@@ -261,7 +261,7 @@
             // 
             this.txtJob.Location = new System.Drawing.Point(70, 440);
             this.txtJob.Name = "txtJob";
-            this.txtJob.Size = new System.Drawing.Size(625, 20);
+            this.txtJob.Size = new System.Drawing.Size(889, 20);
             this.txtJob.TabIndex = 23;
             // 
             // chkActive
@@ -287,7 +287,7 @@
             // 
             this.txtMail.Location = new System.Drawing.Point(70, 479);
             this.txtMail.Name = "txtMail";
-            this.txtMail.Size = new System.Drawing.Size(625, 20);
+            this.txtMail.Size = new System.Drawing.Size(889, 20);
             this.txtMail.TabIndex = 26;
             // 
             // label1
@@ -321,26 +321,26 @@
             // 
             this.txtFacebook.Location = new System.Drawing.Point(69, 578);
             this.txtFacebook.Name = "txtFacebook";
-            this.txtFacebook.Size = new System.Drawing.Size(538, 20);
+            this.txtFacebook.Size = new System.Drawing.Size(830, 20);
             this.txtFacebook.TabIndex = 30;
             // 
             // txtAddress
             // 
             this.txtAddress.Location = new System.Drawing.Point(69, 547);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(626, 20);
+            this.txtAddress.Size = new System.Drawing.Size(890, 20);
             this.txtAddress.TabIndex = 31;
             // 
             // txtPhone
             // 
             this.txtPhone.Location = new System.Drawing.Point(69, 511);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(626, 20);
+            this.txtPhone.Size = new System.Drawing.Size(890, 20);
             this.txtPhone.TabIndex = 32;
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(613, 578);
+            this.btnGo.Location = new System.Drawing.Point(917, 578);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(42, 20);
             this.btnGo.TabIndex = 33;
@@ -381,7 +381,7 @@
             // lblPlanAbo
             // 
             this.lblPlanAbo.AutoSize = true;
-            this.lblPlanAbo.Location = new System.Drawing.Point(392, 351);
+            this.lblPlanAbo.Location = new System.Drawing.Point(656, 351);
             this.lblPlanAbo.Name = "lblPlanAbo";
             this.lblPlanAbo.Size = new System.Drawing.Size(91, 13);
             this.lblPlanAbo.TabIndex = 40;
@@ -390,7 +390,7 @@
             // cbPlanAbo
             // 
             this.cbPlanAbo.FormattingEnabled = true;
-            this.cbPlanAbo.Location = new System.Drawing.Point(489, 343);
+            this.cbPlanAbo.Location = new System.Drawing.Point(753, 343);
             this.cbPlanAbo.Name = "cbPlanAbo";
             this.cbPlanAbo.Size = new System.Drawing.Size(206, 21);
             this.cbPlanAbo.TabIndex = 41;
@@ -398,7 +398,7 @@
             // cbPlanPrivate
             // 
             this.cbPlanPrivate.FormattingEnabled = true;
-            this.cbPlanPrivate.Location = new System.Drawing.Point(489, 373);
+            this.cbPlanPrivate.Location = new System.Drawing.Point(753, 373);
             this.cbPlanPrivate.Name = "cbPlanPrivate";
             this.cbPlanPrivate.Size = new System.Drawing.Size(206, 21);
             this.cbPlanPrivate.TabIndex = 43;
@@ -406,7 +406,7 @@
             // lblPlanPrivate
             // 
             this.lblPlanPrivate.AutoSize = true;
-            this.lblPlanPrivate.Location = new System.Drawing.Point(392, 381);
+            this.lblPlanPrivate.Location = new System.Drawing.Point(656, 381);
             this.lblPlanPrivate.Name = "lblPlanPrivate";
             this.lblPlanPrivate.Size = new System.Drawing.Size(64, 13);
             this.lblPlanPrivate.TabIndex = 42;
@@ -423,7 +423,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 680);
+            this.ClientSize = new System.Drawing.Size(971, 680);
             this.Controls.Add(this.txtStripe);
             this.Controls.Add(this.cbPlanPrivate);
             this.Controls.Add(this.lblPlanPrivate);

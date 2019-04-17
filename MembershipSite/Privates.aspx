@@ -26,9 +26,6 @@
             <asp:DropDownList ID="ddMembers" runat="server" Height="41px" style="margin-left: 0px" Width="122px">
             </asp:DropDownList>
             <br />
-            Amount:
-            <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
-            <br />
             Booked:
             <asp:TextBox ID="txtBooked" runat="server"></asp:TextBox>
             <br />

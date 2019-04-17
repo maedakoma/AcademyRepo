@@ -11,11 +11,10 @@ namespace AcademyMgr
 
         private int _ID;
         private Member _member;
-        private decimal _amount;
         private DateTime _date;
         private int _bookedLessons;
         private int _doneLessons;
-        private string _descritpion;
+        private string _description;
 
         public int ID
         {
@@ -26,11 +25,6 @@ namespace AcademyMgr
         {
             get { return this._member; }
             set { _member = value; }
-        }
-        public decimal Amount
-        {
-            get { return this._amount; }
-            set { _amount = value; }
         }
         public DateTime Date
         {
@@ -44,8 +38,8 @@ namespace AcademyMgr
         }
         public string Description
         {
-            get { return this._descritpion; }
-            set { _descritpion = value; }
+            get { return this._description; }
+            set { _description = value; }
         }
         public int DoneLessons
         {

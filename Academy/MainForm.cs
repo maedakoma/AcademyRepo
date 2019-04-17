@@ -132,26 +132,26 @@ namespace Academy
             }
             cartesianChart1.Series[1].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
-            List<Private> privates = manager.getPrivates();
-            //aggregation des montants
-            datetemp = DateTime.MinValue;
-            amounttemp = 0;
-            foreach (Private priv in privates)
-            {
-                //On n'affiche pas le mois courant car incomplet
-                if (priv.Date.Month != DateTime.Now.Month)
-                {
-                    if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
-                    {
-                        //on est sur un nouveau paiement on ajoute le précedent:
-                        cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
-                        amounttemp = 0;
-                    }
-                    datetemp = priv.Date;
-                    amounttemp += (priv.Amount);
-                }
-            }
-            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+            //List<Private> privates = manager.getPrivates();
+            ////aggregation des montants
+            //datetemp = DateTime.MinValue;
+            //amounttemp = 0;
+            //foreach (Private priv in privates)
+            //{
+            //    //On n'affiche pas le mois courant car incomplet
+            //    if (priv.Date.Month != DateTime.Now.Month)
+            //    {
+            //        if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
+            //        {
+            //            //on est sur un nouveau paiement on ajoute le précedent:
+            //            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+            //            amounttemp = 0;
+            //        }
+            //        datetemp = priv.Date;
+            //        amounttemp += (priv.Amount);
+            //    }
+            //}
+            //cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
 
             double minV = new DateTime(2017, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
@@ -570,12 +570,11 @@ namespace Academy
             //Create the Columns in the DataTable
             DataColumn c0 = new DataColumn("ID");
             DataColumn c1 = new DataColumn("name");
-            DataColumn c2 = new DataColumn("amount");
-            DataColumn c3 = new DataColumn("date");
-            c3.DataType = typeof(DateTime);
-            DataColumn c4 = new DataColumn("bookedLessons");
-            DataColumn c5 = new DataColumn("doneLessons");
-            DataColumn c6 = new DataColumn("description");
+            DataColumn c2 = new DataColumn("date");
+            c2.DataType = typeof(DateTime);
+            DataColumn c3 = new DataColumn("bookedLessons");
+            DataColumn c4 = new DataColumn("doneLessons");
+            DataColumn c5 = new DataColumn("description");
 
 
             //Add the Created Columns to the Datatable
@@ -585,18 +584,23 @@ namespace Academy
             Private.Columns.Add(c3);
             Private.Columns.Add(c4);
             Private.Columns.Add(c5);
-            Private.Columns.Add(c6);
 
             foreach (Private priv in privates)
             {
                 DataRow row = Private.NewRow();
                 row["ID"] = priv.ID;
                 row["name"] = priv.member.Lastname;
-                row["amount"] = priv.Amount;
                 row["date"] = priv.Date;
                 row["bookedLessons"] = priv.BookedLessons;
                 row["doneLessons"] = priv.DoneLessons;
                 row["description"] = priv.Description;
+                if (!chkCompleted.Checked)
+                {
+                    if (priv.BookedLessons== priv.DoneLessons)
+                    {
+                        continue;
+                    }
+                }
                 Private.Rows.Add(row);
             }
             gridPrivates.DataSource = Private;
@@ -917,6 +921,21 @@ namespace Academy
             pf.Show();
         }
 
+        private void btnDelPrivate_Click(object sender, EventArgs e)
+        {
+            int currentPrivateID = Convert.ToInt32(gridPrivates.SelectedRows[0].Cells[0].Value);
+            if (currentPrivateID != 0)
+            {
+                Private priv = privates.Where(x => x.ID == currentPrivateID).ToList<Private>()[0];
+                manager.DeletePrivate(currentPrivateID);
+                FillPrivatesGrid();
+            }
+            else
+            {
+                gridPrivates.Rows.Remove(gridPrivates.SelectedRows[0]);
+            }
+        }
+
         private void tabResume_Enter(object sender, EventArgs e)
         {
             FillFinancialResume();
@@ -1034,9 +1053,9 @@ namespace Academy
             }
         }
 
-        private void txtPrevBlackMonth_TextChanged(object sender, EventArgs e)
+        private void chkCompleted_CheckedChanged(object sender, EventArgs e)
         {
-
+            FillPrivatesGrid();
         }
     }
 

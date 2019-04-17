@@ -20,9 +20,9 @@ namespace AcademyMgr
         public string activeBrownStudentsMetric = "activeBrownStudents";
         public string activeBlackStudentsMetric = "activeBlackStudents";
 
-        public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
+        //public string connectionString = "server=localhost;user id=root;password=iimg4jek;database=cercle";
         //public string connectionString = "server=ot22457-001.dbaas.ovh.net;port=35443;user id=cercle;password=iimg666JEK;database=CERCLE;connection timeout=600";
-        //public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=CERCLE;connection timeout=300000";
+        public string connectionString = "server=35.205.127.92; user id=root;password=iimg4jek;database=cercle;connection timeout=300000";
 
         public void Initialize()
         {

@@ -214,8 +214,8 @@ namespace Academy
         {
             foreach (DataGridViewRow row in payGrid.Rows)
             {
-                string sBank = Convert.ToString(row.Cells[6].Value);
-                string sType = Convert.ToString(row.Cells[2].Value);
+                string sBank = Convert.ToString(row.Cells["Bank"].Value);
+                string sType = Convert.ToString(row.Cells["Type"].Value);
                 if (sType != "Check" || sBank != "None")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightGreen;

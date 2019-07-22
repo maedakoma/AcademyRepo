@@ -70,6 +70,11 @@ namespace Academy
             {
                 dateEnd.Value = member.Enddate;
             }
+            else
+            {
+                dateEnd.Format = DateTimePickerFormat.Custom;
+                dateEnd.CustomFormat = " ";
+            }
             PopulatePayments(member);
         }
         public void PopulatePayments(Member member)

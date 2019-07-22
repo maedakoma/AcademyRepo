@@ -807,6 +807,12 @@ namespace AcademyMgr
                     comm.Parameters.AddWithValue("?fullyear", true);
                     comm.Parameters.AddWithValue("?enddate", DateTime.MinValue);
                 }
+                else if (member.Coach == true)
+                {
+                    comm.Parameters.AddWithValue("?aboid", DBNull.Value);
+                    comm.Parameters.AddWithValue("?fullyear", true);
+                    comm.Parameters.AddWithValue("?enddate", DateTime.MinValue);
+                }
                 else
                 {
                     comm.Parameters.AddWithValue("?aboid", DBNull.Value);

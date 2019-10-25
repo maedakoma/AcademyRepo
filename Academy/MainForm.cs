@@ -100,17 +100,20 @@ namespace Academy
             decimal amounttemp = 0;
             foreach(Payment pay in payments)
             {
-                //On n'affiche pas le mois courant car incomplet
-                if (pay.ReceptionDate.Month != DateTime.Now.Month)
+                if (pay.prestationType == Payment.PrestationTypeEnum.Abo)
                 {
-                    if (amounttemp != 0 && pay.ReceptionDate.Month != datetemp.Month)
+                    //On n'affiche pas le mois courant car incomplet
+                    if (pay.ReceptionDate.Month != DateTime.Now.Month)
                     {
-                        //on est sur un nouveau paiement on ajoute le précedent:
-                        cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
-                        amounttemp = 0;
+                        if (amounttemp != 0 && pay.ReceptionDate.Month != datetemp.Month)
+                        {
+                            //on est sur un nouveau paiement on ajoute le précedent:
+                            cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                            amounttemp = 0;
+                        }
+                        datetemp = pay.ReceptionDate;
+                        amounttemp += (pay.Amount - pay.Debt);
                     }
-                    datetemp = pay.ReceptionDate;
-                    amounttemp += (pay.Amount - pay.Debt);
                 }
             }
             cartesianChart1.Series[0].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
@@ -132,30 +135,33 @@ namespace Academy
             }
             cartesianChart1.Series[1].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
-            //List<Private> privates = manager.getPrivates();
-            ////aggregation des montants
-            //datetemp = DateTime.MinValue;
-            //amounttemp = 0;
-            //foreach (Private priv in privates)
-            //{
-            //    //On n'affiche pas le mois courant car incomplet
-            //    if (priv.Date.Month != DateTime.Now.Month)
-            //    {
-            //        if (amounttemp != 0 && priv.Date.Month != datetemp.Month)
-            //        {
-            //            //on est sur un nouveau paiement on ajoute le précedent:
-            //            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
-            //            amounttemp = 0;
-            //        }
-            //        datetemp = priv.Date;
-            //        amounttemp += (priv.Amount);
-            //    }
-            //}
-            //cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+            List<Private> privates = manager.getPrivates();
+            //aggregation des montants
+            datetemp = DateTime.MinValue;
+            amounttemp = 0;
+            foreach (Payment pay in payments)
+            {
+                if (pay.prestationType == Payment.PrestationTypeEnum.Private)
+                {
+                    //On n'affiche pas le mois courant car incomplet
+                    if (pay.ReceptionDate.Month != DateTime.Now.Month)
+                    {
+                        if (amounttemp != 0 && pay.ReceptionDate.Month != datetemp.Month)
+                        {
+                            //on est sur un nouveau paiement on ajoute le précedent:
+                            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
+                            amounttemp = 0;
+                        }
+                        datetemp = pay.ReceptionDate;
+                        amounttemp += (pay.Amount - pay.Debt);
+                    }
+                }
+            }
+            cartesianChart1.Series[2].Values.Add(new DateModel { DateTime = datetemp, Value = amounttemp });
 
 
             double minV = new DateTime(2017, 4, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
-            double maxV = new DateTime(2018, 11, 1).Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
+            double maxV = DateTime.Now.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44);
             cartesianChart1.AxisX.Clear();
             cartesianChart1.AxisX.Add(new Axis
             {
@@ -427,7 +433,12 @@ namespace Academy
             mainGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             mainGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             mainGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            lblLines.Text = mainGrid.RowCount.ToString() +  " lignes affichées";
+            
+            int nTotal = manager.getActiveStudentsFullYearCount();
+            lblCotise.Text = nTotal.ToString() + " année complète";
+            int nChild = manager.getActiveStudentsChildCount();
+            lblEnfants.Text = nChild.ToString() + " enfants";
+            lblLines.Text = mainGrid.RowCount.ToString() + " lignes affichées";
         }
         public void FillMoneyGrid()
         {
@@ -612,7 +623,7 @@ namespace Academy
             gridPrivates.Columns[gridPrivates.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             gridPrivates.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             gridPrivates.ReadOnly = true;
-            if (rowIndex != 0)
+            if (rowIndex != 0 && rowIndex < gridPrivates.RowCount)
             {
                 gridPrivates.CurrentCell = gridPrivates.Rows[rowIndex].Cells[1];
                 gridPrivates.Rows[rowIndex].Selected = true;

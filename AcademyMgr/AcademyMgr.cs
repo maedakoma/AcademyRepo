@@ -597,6 +597,32 @@ namespace AcademyMgr
             }
             return nCount;
         }
+        public int getActiveStudentsFullYearCount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and fullyear=?fullyear";
+            cmd.Parameters.AddWithValue("?fullyear", true);
+            object result = cmd.ExecuteScalar();
+            int nCount = 0;
+            if (result != DBNull.Value)
+            {
+                nCount = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return nCount;
+        }
+        public int getActiveStudentsChildCount()
+        {
+            MySqlCommand cmd = dbConn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) from MEMBERS M inner join MEMBERS_STATUS MS on MS.memberID=M.ID and MS.current = 1 where MS.active=1 and child=?child";
+            cmd.Parameters.AddWithValue("?child", true);
+            object result = cmd.ExecuteScalar();
+            int nCount = 0;
+            if (result != DBNull.Value)
+            {
+                nCount = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return nCount;
+        }
         public decimal getLicencesAmount()
         {
             MySqlCommand cmd = dbConn.CreateCommand();

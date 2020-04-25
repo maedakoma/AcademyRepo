@@ -261,7 +261,7 @@
             // 
             this.txtJob.Location = new System.Drawing.Point(70, 440);
             this.txtJob.Name = "txtJob";
-            this.txtJob.Size = new System.Drawing.Size(889, 20);
+            this.txtJob.Size = new System.Drawing.Size(334, 20);
             this.txtJob.TabIndex = 23;
             // 
             // chkActive
@@ -287,7 +287,7 @@
             // 
             this.txtMail.Location = new System.Drawing.Point(70, 479);
             this.txtMail.Name = "txtMail";
-            this.txtMail.Size = new System.Drawing.Size(889, 20);
+            this.txtMail.Size = new System.Drawing.Size(334, 20);
             this.txtMail.TabIndex = 26;
             // 
             // label1
@@ -335,7 +335,7 @@
             // 
             this.txtPhone.Location = new System.Drawing.Point(69, 511);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(890, 20);
+            this.txtPhone.Size = new System.Drawing.Size(335, 20);
             this.txtPhone.TabIndex = 32;
             // 
             // btnGo
@@ -361,7 +361,7 @@
             // chkCompetitor
             // 
             this.chkCompetitor.AutoSize = true;
-            this.chkCompetitor.Location = new System.Drawing.Point(407, 97);
+            this.chkCompetitor.Location = new System.Drawing.Point(358, 97);
             this.chkCompetitor.Name = "chkCompetitor";
             this.chkCompetitor.Size = new System.Drawing.Size(76, 17);
             this.chkCompetitor.TabIndex = 36;
@@ -371,7 +371,7 @@
             // chkCoach
             // 
             this.chkCoach.AutoSize = true;
-            this.chkCoach.Location = new System.Drawing.Point(489, 97);
+            this.chkCoach.Location = new System.Drawing.Point(462, 97);
             this.chkCoach.Name = "chkCoach";
             this.chkCoach.Size = new System.Drawing.Size(57, 17);
             this.chkCoach.TabIndex = 37;

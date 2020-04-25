@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using MySql.Data.MySqlClient;
+using RestSharp;
 
 namespace AcademyMgr
 {
@@ -13,6 +12,10 @@ namespace AcademyMgr
         public static int PlanAboDay = 7;
         public static int PlanPrivateDay = 5;
         MySqlConnection dbConn;
+        public string apiKey = "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";
+        public string apiURL = "https://api.sendinblue.com/v3/contacts";
+        public static int ListCercle = 2;
+        public static int ListStudentCercle = 8;
         public string activeStudentsMetric = "activeStudents";
         public string activeWhiteStudentsMetric = "activeWhiteStudents";
         public string activeBlueStudentsMetric = "activeBlueStudents";
@@ -743,6 +746,7 @@ namespace AcademyMgr
                     comm.Parameters.AddWithValue("?aboid", member.AboPlan.ID);
                     comm.Parameters.AddWithValue("?fullyear", true);
                     comm.Parameters.AddWithValue("?enddate", DateTime.MinValue);
+                    member.Enddate = DateTime.MinValue;
                 }
                 else
                 {
@@ -759,9 +763,7 @@ namespace AcademyMgr
                     comm.Parameters.AddWithValue("?privateid", DBNull.Value);
                 }
 
-
                 comm.ExecuteNonQuery();
-
                 comm = dbConn.CreateCommand();
                 comm.CommandText = "SELECT LAST_INSERT_ID();";
                 MySql.Data.MySqlClient.MySqlDataReader reader = comm.ExecuteReader();
@@ -769,10 +771,13 @@ namespace AcademyMgr
                 reader.Read();
                 id = Convert.ToInt32(reader[0]);
                 reader.Close();
-                //dbConn.Open();
                 member.ID = id;
                 InsertStatus(member);
                 InsertPayments(member);
+                if (member.Mail != string.Empty && member.Active)
+                {
+                    InsertMailingList(member);
+                }
                 transaction.Commit();
             }
             catch
@@ -938,6 +943,50 @@ namespace AcademyMgr
             comm.CommandText = "DELETE FROM MEMBERS_STATUS WHERE MemberID=?MemberID";
             comm.Parameters.AddWithValue("?MemberID", memberID);
             comm.ExecuteNonQuery();
+        }
+
+        private void InsertMailingList(Member member)
+        {
+            //On test si le contact existe déja:
+            int numericStatusCode;
+            var client = new RestClient(apiURL + "/" + member.Mail);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("api-key", apiKey);
+            IRestResponse response = client.Execute(request);
+            String parameters = "{\"listIds\":[" + ListCercle + ", " + ListStudentCercle +
+                "],\"updateEnabled\":false,\"attributes\":{\"PRENOM\":\"" +
+                member.Firstname + "\",\"NOM\":\"" + member.Lastname + "\"";
+
+            if (member.Enddate != DateTime.MinValue)
+            {
+                parameters += ",\"FIN_ABO\":\"" + member.Enddate.ToString("yyyy-MM-dd") + "\"";
+            }
+            parameters += "}";
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //Le contact existe on maj les lists et les attributs:
+                request = new RestRequest(Method.PUT);
+                parameters += "}";
+            }
+            else
+            {
+                //le contact n'existe pas, on l'ajoute a la base et aux listes
+                client = new RestClient(apiURL);
+                request = new RestRequest(Method.POST);
+                parameters += ",\"email\":\"" + member.Mail + "\"}";
+            }
+            request.AddParameter("application/json", parameters, ParameterType.RequestBody);
+            request.AddHeader("api-key", apiKey);
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("content-type", "application/json");
+            response = client.Execute(request);
+            numericStatusCode = (int)response.StatusCode;
+            if (200 > (numericStatusCode) || (numericStatusCode) >= 400)
+            {
+                throw new Exception(response.Content);
+            }
         }
 
         private void InsertPayments(Member member)
